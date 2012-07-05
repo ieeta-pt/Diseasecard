@@ -1,0 +1,1 @@
+<iframe src="${actionBean.url}" id="_content" width="100%" height="100%" />
