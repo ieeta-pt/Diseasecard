@@ -25,6 +25,33 @@ public class HGNC {
     private ArrayList<Ensembl> ensembl = new ArrayList<Ensembl>();
     private ArrayList<OMIM> omim = new ArrayList<OMIM>();
     private ArrayList<ClinicalTrial> clinicaltrial = new ArrayList<ClinicalTrial>();
+    private ArrayList<GWASCentral> gwascentral = new ArrayList<GWASCentral>();
+    private ArrayList<Enzyme> enzyme = new ArrayList<Enzyme>();
+    private ArrayList<KEGG> kegg =  new ArrayList<KEGG>();
+
+    public ArrayList<Enzyme> getEnzyme() {
+        return enzyme;
+    }
+
+    public void setEnzyme(ArrayList<Enzyme> enzyme) {
+        this.enzyme = enzyme;
+    }
+
+    public ArrayList<KEGG> getKegg() {
+        return kegg;
+    }
+
+    public void setKegg(ArrayList<KEGG> kegg) {
+        this.kegg = kegg;
+    }
+
+    public ArrayList<GWASCentral> getGwascentral() {
+        return gwascentral;
+    }
+
+    public void setGwascentral(ArrayList<GWASCentral> gwascentral) {
+        this.gwascentral = gwascentral;
+    }
 
     public ArrayList<ClinicalTrial> getClinicaltrial() {
         return clinicaltrial;
@@ -115,7 +142,7 @@ public class HGNC {
             if (uri.startsWith("http://")) {
                 query = "SELECT ?p ?o {<" + this.uri + "> ?p ?o }";
             } else {
-                query = "SELECT ?p ?o {coeus:omim_" + this.id + " ?p ?o }";
+                query = "SELECT ?p ?o {diseasecard:omim_" + this.id + " ?p ?o }";
             }
             ResultSet results = Boot.getAPI().selectRS(query, false);
             while (results.hasNext()) {
@@ -151,6 +178,33 @@ public class HGNC {
                             this.disease.getStudy().getClinicaltrials().put(ct.getId(), ct);
                         } else {
                             this.clinicaltrial.add(this.disease.getStudy().getClinicaltrials().get(code));
+                        }
+                    }  else if (row.get("o").toString().contains("gwascentral")) {
+                        String code = ItemFactory.getTokenFromItem(row.get("o").toString());
+                        if (!this.disease.getStudy().getGwascentral().containsKey(code)) {
+                            GWASCentral gc = new GWASCentral(row.get("o").toString(), this);
+                            this.gwascentral.add(gc);
+                            this.disease.getStudy().getGwascentral().put(gc.getId(), gc);
+                        } else {
+                            this.gwascentral.add(this.disease.getStudy().getGwascentral().get(code));
+                        }
+                    }  else if (row.get("o").toString().contains("enzyme")) {
+                        String code = ItemFactory.getTokenFromItem(row.get("o").toString());
+                        if (!this.disease.getPathway().getEnzyme().containsKey(code)) {
+                            Enzyme e = new Enzyme(row.get("o").toString(), this);
+                            this.enzyme.add(e);
+                            this.disease.getPathway().getEnzyme().put(e.getId(), e);
+                        } else {
+                            this.enzyme.add(this.disease.getPathway().getEnzyme().get(code));
+                        }
+                    } else if (row.get("o").toString().contains("kegg")) {
+                        String code = ItemFactory.getTokenFromItem(row.get("o").toString());
+                        if (!this.disease.getPathway().getKegg().containsKey(code)) {
+                            KEGG k = new KEGG(row.get("o").toString(), this);
+                            this.kegg.add(k);
+                            this.disease.getPathway().getKegg().put(k.getId(), k);
+                        } else {
+                            this.kegg.add(this.disease.getPathway().getKegg().get(code));
                         }
                     }
                 }

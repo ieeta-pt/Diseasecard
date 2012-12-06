@@ -4,10 +4,7 @@
  */
 package pt.ua.bioinformatics.coeus.common;
 
-import com.hp.hpl.jena.query.larq.IndexBuilderString;
-import com.hp.hpl.jena.query.larq.IndexLARQ;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 /**
  *
@@ -20,7 +17,7 @@ public class Indexer {
             Boot.start();
             Model m = Boot.getAPI().getModel();
             // ---- Read and index all literal strings.
-            IndexBuilderString larqBuilder = new IndexBuilderString();
+         //   IndexBuilderString larqBuilder = new IndexBuilderString();
 
             // Index statements as they are added to the model.
 
@@ -31,7 +28,7 @@ public class Indexer {
 
 
             // ---- Alternatively build the index after the model has been created. 
-            StmtIterator iter = m.listStatements();
+           /* StmtIterator iter = m.listStatements();
             larqBuilder.indexStatements(iter);
             //larqBuilder.indexStatements(Boot.getAPI().getModel().listStatements()) ;
 
@@ -39,7 +36,7 @@ public class Indexer {
             larqBuilder.closeWriter();
 
             // ---- Create the access index  
-            IndexLARQ index = larqBuilder.getIndex();
+            IndexLARQ index = larqBuilder.getIndex();*/
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
 

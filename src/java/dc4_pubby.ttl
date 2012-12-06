@@ -36,16 +36,16 @@
 @prefix void:     <http://rdfs.org/ns/void#> .
 @prefix ir:       <http://www.ontologydesignpatterns.org/cp/owl/informationrealization.owl#> .
 @prefix coeus:     <http://bioinformatics.ua.pt/coeus/> .
-@prefix diseasecard:     <http://bioinformatics.ua.pt/diseasecard/> .
+@prefix diseasecard:     <http://bioinformatics.ua.pt/diseasecard/resource/> .
 
 # Server configuration section
 <> a conf:Configuration;
     # Project name for display in page titles
     conf:projectName "COEUS";
     # Homepage with description of the project for the link in the page header
-    conf:projectHomepage <http://bioinformatics.ua.pt/coeus/>;
+    conf:projectHomepage <http://bioinformatics.ua.pt/diseasecard/>;
     # The Pubby root, where the webapp is running inside the servlet container.
-    conf:webBase <http://bioinformatics.ua.pt/coeus/>;
+    conf:webBase <http://localhost:8084/diseasecard/>;
     # URL of an RDF file whose prefix mapping is to be used by the
     # server; defaults to <>, which is *this* file.
     conf:usePrefixesFrom <>;
@@ -62,12 +62,12 @@
 # URIs on the Web:             http://localhost:8080/resource/*
     conf:dataset [
         # SPARQL endpoint URL of the dataset
-        #conf:sparqlEndpoint <http://localhost:8080/coeus/sparql>;
-        conf:sparqlEndpoint <http://bioinformatics.ua.pt/coeus/sparql>;
+        conf:sparqlEndpoint <http://localhost:8084/diseasecard/sparql>;
+        #conf:sparqlEndpoint <http://bioinformatics.ua.pt/coeus/sparql>;
         # Default graph name to query (not necessary for most endpoints)
         # conf:sparqlDefaultGraph <>;
         # Common URI prefix of all resource URIs in the SPARQL dataset
-        conf:datasetBase <http://bioinformatics.ua.pt/coeus/>;
+        conf:datasetBase <http://bioinformatics.ua.pt/diseasecard/resource/>;
         # Will be appended to the conf:webBase to form the public
         # resource URIs; if not present, defaults to ""
         conf:webResourcePrefix "resource/";

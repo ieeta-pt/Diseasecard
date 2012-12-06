@@ -8,7 +8,8 @@ package pt.ua.bioinformatics.coeus.api;
 public class ItemFactory {
 
     /**
-     * Converts a COEUS-formatted item name into a single token, usable on any other method.
+     * Converts a COEUS-formatted item name into a single token, usable on any
+     * other method.
      *
      * @param item the Item to be converted.
      * @return the converted token.
@@ -18,11 +19,15 @@ public class ItemFactory {
         String check = "";
         if (item.contains("_")) {
             String[] full = item.split("\\_");
-            check = full[1];
+            if (full.length == 2) {
+                check = full[1];
+            } else if (full.length > 2) {
+                check = full[1] + full[2];
+            }
         } else {
             check = item;
         }
-        
+
         if (check.contains("~")) {
             String[] tmp = check.split("~");
             token = tmp[0];

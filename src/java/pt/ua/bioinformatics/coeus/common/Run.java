@@ -37,24 +37,36 @@ public class Run {
         try {
             // LEVEL 0
 
-            //Boot.start();
+            Boot.start();
             
+            //SingleImport single_clinical = new SingleImport("resource_clinicaltrials");
+            //Thread clinical = new Thread(single_clinical);
+            //clinical.start();
+           // SingleImport single_kegg = new SingleImport("resource_kegg");
+            //Thread kegg = new Thread(single_kegg);
+            //kegg.start();
             
             // LEVEL 1
-            /*SingleImport single_uniprot = new SingleImport("resource_uniprot");
+        /*  SingleImport single_uniprot = new SingleImport("resource_uniprot");
             SingleImport single_entrez = new SingleImport("resource_entrezgene");
             SingleImport single_hpo = new SingleImport("resource_hpo");
+            SingleImport single_orphanet = new SingleImport("resource_orphanet");
             
             Thread uniprot = new Thread(single_uniprot);
             Thread entrez = new Thread(single_entrez);
             Thread hpo = new Thread(single_hpo);
+            Thread orphanet = new Thread(single_orphanet);
             uniprot.start(); 
-            entrez.start();           
+            entrez.start();     
+            orphanet.start();      
             hpo.start(); */
 
             // LEVEL 2
-           
-           /* SingleImport single_drugbank = new SingleImport("resource_drugbank");
+            
+          
+            
+         /*  
+            SingleImport single_drugbank = new SingleImport("resource_drugbank");
             SingleImport single_interpro = new SingleImport("resource_interpro");
             SingleImport single_mesh = new SingleImport("resource_mesh");
             SingleImport single_pdb = new SingleImport("resource_pdb");
@@ -68,43 +80,50 @@ public class Run {
             Thread enzyme = new Thread(single_enzyme);            
             Thread pubmed = new Thread(single_pubmed);
             
-            //drugbank.start();
-            //interpro.start();
-            //mesh.start();
-            //pdb.start();
-            //enzyme.start();
-            //pubmed.start();
+            drugbank.start();
+            interpro.start();
+            mesh.start();
+            pdb.start();
+            enzyme.start();
+            pubmed.start();
+             
+             SingleImport single_icd10 = new SingleImport("resource_icd10");
+            Thread icd10 = new Thread(single_icd10);
+            icd10.start();
 
-            */
+            
             // LEVEL 3
             /*
             SingleImport single_pharmgkb = new SingleImport("resource_pharmgkb");            
             SingleImport single_ensembl = new SingleImport("resource_ensembl");
             SingleImport single_umls = new SingleImport("resource_umls");
-            SingleImport single_medlineplus = new SingleImport("resource_medlineplus");
-            SingleImport single_dailymed = new SingleImport("resource_dailymed");
             SingleImport single_prosite = new SingleImport("resource_prosite");
             
             Thread pharmgkb = new Thread(single_pharmgkb);
             Thread ensembl = new Thread(single_ensembl);
-            Thread umls = new Thread(single_umls);
-            Thread medlineplus = new Thread(single_medlineplus);
-            //Thread dailymed = new Thread(single_dailymed);            
+            Thread umls = new Thread(single_umls);           
             Thread prosite = new Thread(single_prosite);
             
             pharmgkb.start();
             ensembl.start();
             umls.start();
-            medlineplus.start();
-            //dailymed.start();
             prosite.start();
-            */ 
+             
+        /*   SingleImport single_gwas = new SingleImport("resource_gwascentral");
+            Thread gwas  = new Thread(single_gwas);
+            gwas.start();*/
+            
+           // SingleImport single_swiss = new SingleImport("resource_swissvar");
+            //Thread swissvar = new Thread(single_swiss);
+            //swissvar.start();
+            
 
-            // FULL
+            // FULL&
             // Boot.start();
             //Builder.build();
             
-            Indexer.index();
+           // Indexer.index();
+            
         } catch (Exception ex) {
             Logger.getLogger(Run.class.getName()).log(Level.SEVERE, null, ex);
         }

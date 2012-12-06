@@ -4,7 +4,7 @@
  */
 package pt.ua.bioinformatics.diseasecard.domain;
 
-import java.util.ArrayList;
+import pt.ua.bioinformatics.coeus.api.ItemFactory;
 
 /**
  *
@@ -12,11 +12,17 @@ import java.util.ArrayList;
  */
 public class DrugBank {
     private String id;
-    private String name;
-    private String pharmacology;
-    private String description;
     private UniProt uniprot;
-    private String uri;
+    private String uri;    
+    private Disease disease;
+
+    public Disease getDisease() {
+        return disease;
+    }
+
+    public void setDisease(Disease disease) {
+        this.disease = disease;
+    }
 
     public String getUri() {
         return uri;
@@ -26,36 +32,12 @@ public class DrugBank {
         this.uri = uri;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getId() {
         return id;
     }
 
     public void setId(String drugbank_id) {
         this.id = drugbank_id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPharmacology() {
-        return pharmacology;
-    }
-
-    public void setPharmacology(String pharmacology) {
-        this.pharmacology = pharmacology;
     }
 
     public UniProt getUniprot() {
@@ -75,9 +57,12 @@ public class DrugBank {
 
     public DrugBank(String drugbank_id, String name, String pharmacology, String description, UniProt uniprot) {
         this.id = drugbank_id;
-        this.name = name;
-        this.pharmacology = pharmacology;
-        this.description = description;
         this.uniprot = uniprot;
+    }
+
+    public DrugBank(String uri, Disease disease) {
+        this.uri = uri;
+        this.disease = disease;
+        this.id = ItemFactory.getTokenFromItem(uri);
     }
 }

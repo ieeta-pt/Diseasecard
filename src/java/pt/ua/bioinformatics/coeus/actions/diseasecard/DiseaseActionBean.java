@@ -69,6 +69,6 @@ public class DiseaseActionBean implements ActionBean {
                 Logger.getLogger(DiseaseActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return new ForwardResolution("/beta/view/disease.jsp");
+        return new ForwardResolution("/final/view/disease.jsp");
     }
 }

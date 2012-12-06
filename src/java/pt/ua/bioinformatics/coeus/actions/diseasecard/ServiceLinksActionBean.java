@@ -60,6 +60,6 @@ public class ServiceLinksActionBean implements ActionBean {
                 Logger.getLogger(ServiceLinksActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return new ForwardResolution("/beta/view/links.jsp");
+        return new ForwardResolution("/final/view/links.jsp");
     }
 }

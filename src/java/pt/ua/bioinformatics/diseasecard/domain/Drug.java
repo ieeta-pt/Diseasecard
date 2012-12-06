@@ -9,6 +9,15 @@ import java.util.HashMap;
 public class Drug {
     private Disease disease;
     private HashMap<String,PharmGKB> pharmgkb = new HashMap<String, PharmGKB>();
+    private HashMap<String, DrugBank> drugbank = new HashMap<String, DrugBank>();
+
+    public HashMap<String, DrugBank> getDrugbank() {
+        return drugbank;
+    }
+
+    public void setDrugbank(HashMap<String, DrugBank> drugbank) {
+        this.drugbank = drugbank;
+    }
 
     public Disease getDisease() {
         return disease;

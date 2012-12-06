@@ -35,7 +35,7 @@ public class Storage {
     private static boolean connected = false;
     private static Model model = null;
     private static Store store = null;
-    private static Reasoner reasoner = ReasonerRegistry.getRDFSSimpleReasoner(); //what's the best reasoner?
+    private static Reasoner reasoner = ReasonerRegistry.getTransitiveReasoner(); // getRDFSSimpleReasoner(); //what's the best reasoner?
     private static InfModel infmodel = null;
 
     public static boolean isConnected() {

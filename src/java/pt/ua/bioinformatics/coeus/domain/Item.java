@@ -98,7 +98,7 @@ public class Item {
         if (key.startsWith("http://")) {
         } else {
             try {
-                ResultSet results = Boot.getAPI().selectRS("SELECT ?p ?o {coeus:" + key + " ?p ?o }", false);
+                ResultSet results = Boot.getAPI().selectRS("SELECT ?p ?o {diseasecard:" + key + " ?p ?o }", false);
                 while (results.hasNext()) {
                     QuerySolution row = results.next();
                     if (PrefixFactory.encode(row.get("p").toString()).equals("diseasecard:omim")) {

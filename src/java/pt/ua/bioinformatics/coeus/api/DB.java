@@ -127,6 +127,29 @@ public class DB {
             return success;
         }
     }
+    
+        /**
+     * Establishes a new connection to the database.
+     * <p><b>Feature:</b><br />
+     * Performs the required operations to establish a new database connection to non-default database
+     * </p>
+     *
+     * @return Success of the operation (true if connects, false if fails to connect)
+     */
+    public boolean connect() {
+        boolean success = false;
+        try {
+            connection = DriverManager.getConnection(connectionString);
+            statement = connection.createStatement();
+            success = true;
+        } catch (SQLException e) {
+            System.out.println("[DB] Unable to connect to " + database + "\n\t" + e.toString());
+            success = false;
+        } finally {
+            // System.out.println("[DB] Connected to " + database);
+            return success;
+        }
+    }
 
     /**
      * Closes current database connection.

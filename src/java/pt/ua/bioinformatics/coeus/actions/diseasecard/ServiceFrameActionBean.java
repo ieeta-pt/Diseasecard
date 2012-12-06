@@ -87,8 +87,8 @@ public class ServiceFrameActionBean implements ActionBean {
             if (Config.isDebug()) {
                 Logger.getLogger(ServiceFrameActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-            url = getContext().getRequest().getContextPath() + "/beta/view/empty_frame.jsp";
+            url = getContext().getRequest().getContextPath() + "/final/view/empty_frame.jsp";
         }
-        return new ForwardResolution("/beta/view/frame.jsp");
+        return new ForwardResolution("/final/view/frame.jsp");
     }
 }

@@ -1,0 +1,1824 @@
+<?xml version="1.0"?>
+
+
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY coeus "http://bioinformatics.ua.pt/coeus/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY diseasecard "http://bioinformatics.ua.pt/diseasecard/resource/" >
+]>
+
+
+<rdf:RDF xmlns="http://bioinformatics.ua.pt/diseasecard/resource/"
+     xml:base="http://bioinformatics.ua.pt/diseasecard/resource/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:coeus="http://bioinformatics.ua.pt/coeus/"
+     xmlns:diseasecard="http://bioinformatics.ua.pt/diseasecard/resource/">
+    <owl:Ontology rdf:about="http://bioinformatics.ua.pt/diseasecard/resource/">
+        <rdfs:label rdf:datatype="&xsd;string">coeusontology</rdfs:label>
+        <owl:versionInfo rdf:datatype="&xsd;string">1.0b</owl:versionInfo>
+        <dc:date rdf:datatype="&xsd;date">2011-03-24</dc:date>
+        <dc:title rdf:datatype="&xsd;string">COEUS Ontology</dc:title>
+        <dc:description rdf:datatype="&xsd;string">COEUS Ontology 1.0 beta</dc:description>
+        <dc:subject rdf:datatype="&xsd;string">COEUS Semantic Web Application Framework</dc:subject>
+        <dc:rights rdf:datatype="&xsd;string">COEUS and COEUS Ontology are licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.</dc:rights>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:language rdf:datatype="&xsd;string">en</dc:language>
+        <dc:publisher rdf:datatype="&xsd;string">http://bioinformatics.ua.pt</dc:publisher>
+        <owl:imports rdf:resource="http://protege.stanford.edu/plugins/owl/dc/protege-dc.owl"/>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <owl:AnnotationProperty rdf:about="&dc;creator"/>
+    <owl:AnnotationProperty rdf:about="&dc;publisher"/>
+    <owl:AnnotationProperty rdf:about="&dc;subject"/>
+    <owl:AnnotationProperty rdf:about="&dc;description"/>
+    <owl:AnnotationProperty rdf:about="&dc;language"/>
+    <owl:AnnotationProperty rdf:about="&dc;date"/>
+    <owl:AnnotationProperty rdf:about="&dc;title"/>
+    <owl:AnnotationProperty rdf:about="&dc;rights"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+    <rdfs:Datatype rdf:about="&xsd;date"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_ClinicalTrials -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_ClinicalTrials">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_clinicaltrials</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">ClinicalTrials</dc:title>
+        <dc:description rdf:datatype="&xsd;string">Concept relating ClinicalTrials study data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating ClinicalTrials study data.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Study"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_ClinicalTrials"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_DailyMed -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_DailyMed">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_dailymed</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating DailyMed drug data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating DailyMed drug data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">DailyMed</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Drug"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_DailyMed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_Drugbank -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_Drugbank">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_drugbank</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating Drugbank drug data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating Drugbank drug data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">Drugbank</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Drug"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_DailyMed"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_DrugBank"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_ENZYME -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_ENZYME">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_enzyme</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-02</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating ENZYME metabolism data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating ENZYME metabolism data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">ENZYME</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Metabolism"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_ENZYME"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_Ensembl -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_Ensembl">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_ensembl</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-04</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating Ensembl genome browser data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating Ensembl genome browser data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">Ensembl</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</rdfs:comment>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Locus"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_Ensembl"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_EntrezGene -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_EntrezGene">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_entrezgene</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-04</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating EntrezGene data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating EntrezGene data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">EntrezGene</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</rdfs:comment>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Locus"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_EntrezGene"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_PharmGKB"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_PubMed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_GWASCentral -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_GWASCentral">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_gwascentral</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating GWASCentral study data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating GWASCentral study data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">GWASCentral</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Study"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_GeneCards -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_GeneCards">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_genecards</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-04</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating GeneCards data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating GeneCards data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">GeneCards</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</rdfs:comment>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Locus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_HGNC -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_HGNC">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_hgnc</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-04</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Concept relating HGNC data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating HGNC data.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">HGNC</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</rdfs:comment>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Locus"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_ClinicalTrials"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_ENZYME"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_Ensembl"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_HGNC"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_HGNC"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_KEGG"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_MedlinePlus"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_UniProt"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_HPO -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_HPO">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_hpo</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating HPO ontology data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating HPO ontology data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">HPO</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Ontology"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_HPO"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_UMLS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_ICD10 -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_ICD10">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_icd10</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2012-11-20</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.1a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept for ICD 10 ontology data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept for ICD 10 ontology data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">ICD10</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Disease"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_icd10"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_InterPro -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_InterPro">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_interpro</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating InterPro protein data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating InterPro protein data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">InterPro</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Protein"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_InterPro"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_KEGG -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_KEGG">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_kegg</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-02</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Concept relating KEGG metabolism data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating KEGG metabolism data.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">KEGG</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Metabolism"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_KEGG"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_MapView -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_MapView">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_mapview</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-04</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating MapView genome browser data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating MapView genome browser data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">MapView</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</rdfs:comment>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Locus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_MeSH -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_MeSH">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_mesh</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Concept relating MeSH ontology data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating MeSH ontology data.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">MeSH</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Ontology"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_MeSH"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_MedlinePlus -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_MedlinePlus">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_medlineplus</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-03-31</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Concept relating MedlinePlus data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating MedlinePlus data.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">MedlinePlus</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Disease"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_MedlinePlus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_OMIM -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_OMIM">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_omim</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-03-31</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating OMIM data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating OMIM data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">OMIM</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Disease"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_EntrezGene"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_HPO"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_OMIM"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_OMIM"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_orphanet"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_PDB -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_PDB">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_pdb</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating PDB protein data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating PDB protein data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">PDB</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Protein"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_PDB"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_PROSITE -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_PROSITE">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_prosite</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Concept relating PROSITE protein data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating PROSITE protein data.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">PROSITE</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Protein"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_PROSITE"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_PharmGKB -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_PharmGKB">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_pharmgkb</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating PharmGKB drug data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating PharmGKB drug data.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">PharmGKB</dc:title>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Drug"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_PharmGKB"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_PubMed -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_PubMed">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_pubmed</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating PubMed literature data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating PubMed literature data.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">PubMed</dc:title>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Literature"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_PubMed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_UCSC -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_UCSC">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_ucsc</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-04</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating UCSC genome browser data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating UCSC genome browser data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">UCSC</dc:title>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Locus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_UMLS -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_UMLS">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_umls</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Concept relating UMLS ontology data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating UMLS ontology data.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">UMLS</dc:title>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Ontology"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_UMLS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_UniProt -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_UniProt">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_uniprot</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-04-01</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating UniProt protein data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating UniProt protein data.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">UniProt</dc:title>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Protein"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_DrugBank"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_InterPro"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_MeSH"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_PDB"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_PROSITE"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_UniProt"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_orphanet -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_orphanet">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_orphanet</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2012-11-19</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.1a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Concept for OrphaNet data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept for OrphaNet data.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">OrphaNet</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Disease"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_icd10"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_orphanet"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/csv_ENZYME_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;csv_ENZYME_id">
+        <rdf:type rdf:resource="&coeus;CSV"/>
+        <rdfs:label rdf:datatype="&xsd;string">csv_enzyme_id</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">0</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">ENZYME_id</dc:title>
+        <dc:description rdf:datatype="&xsd;string">Information for ENZYME CSV resource loading: loads ENZYME id.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for ENZYME CSV resource loading: loads ENZYME id.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:regex rdf:datatype="&xsd;string">[0-9|-]+[.][0-9|-]+[.][0-9|-]+[.][0-9|-]+</coeus:regex>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:title</coeus:property>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_ENZYME"/>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_ENZYME"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/csv_HGNC_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;csv_HGNC_id">
+        <rdf:type rdf:resource="&coeus;CSV"/>
+        <rdfs:label rdf:datatype="&xsd;string">csv_hgnc_id</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">0</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-08</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">HGNC_id</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for HGNC CSV resource loading: loads HGNC id.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for HGNC CSV resource loading: loads HGNC id.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:source|dc:identifier</coeus:property>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_HGNC"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_HGNC"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/csv_HGNC_name -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;csv_HGNC_name">
+        <rdf:type rdf:resource="&coeus;CSV"/>
+        <rdfs:label rdf:datatype="&xsd;string">csv_hgnc_name</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">2</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-08</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">HGNC_name</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for HGNC CSV resource loading: loads HGNC name.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for HGNC CSV resource loading: loads HGNC name.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">rdfs:comment|dc:description</coeus:property>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_HGNC"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/csv_UniProt_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;csv_UniProt_id">
+        <rdf:type rdf:resource="&coeus;CSV"/>
+        <rdfs:label rdf:datatype="&xsd;string">xml_uniprot_id</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">0</coeus:query>
+        <owl:versionInfo rdf:datatype="&xsd;string">1.0a</owl:versionInfo>
+        <dc:date rdf:datatype="&xsd;date">2011-02-21</dc:date>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Setup for loading UniProt Accession IDs.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Setup for loading UniProt Accession IDs.</rdfs:comment>
+        <coeus:regex rdf:datatype="&xsd;string">[P|Q][0-9]{5}</coeus:regex>
+        <coeus:property rdf:datatype="&xsd;string">dc:source|dc:title|dc:identifier</coeus:property>
+        <dc:title rdf:datatype="&xsd;string">xml_UniProt_id</dc:title>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_UniProt"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_UniProt"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/entity_Disease -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;entity_Disease">
+        <rdf:type rdf:resource="&coeus;Entity"/>
+        <rdfs:label rdf:datatype="&xsd;string">entity_disease</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-03-25</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Collects Disase entity knowledge.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Collects Disase entity knowledge.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">Disease</dc:title>
+        <dc:subject rdf:datatype="&xsd;string">Disease</dc:subject>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_ICD10"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_MedlinePlus"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_OMIM"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_orphanet"/>
+        <coeus:isIncludedIn rdf:resource="&diseasecard;seed_Diseasecard4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/entity_Drug -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;entity_Drug">
+        <rdf:type rdf:resource="&coeus;Entity"/>
+        <rdfs:label rdf:datatype="&xsd;string">entity_Drug</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-03-25</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Collects Drug entity knowledge.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Collects Drug entity knowledge.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">Drug</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_DailyMed"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_Drugbank"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_PharmGKB"/>
+        <coeus:isIncludedIn rdf:resource="&diseasecard;seed_Diseasecard4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/entity_Literature -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;entity_Literature">
+        <rdf:type rdf:resource="&coeus;Entity"/>
+        <rdfs:label rdf:datatype="&xsd;string">entity_literature</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-03-25</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Collects Literature entity knowledge.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Collects Literature entity knowledge.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">Literature</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_PubMed"/>
+        <coeus:isIncludedIn rdf:resource="&diseasecard;seed_Diseasecard4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/entity_Locus -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;entity_Locus">
+        <rdf:type rdf:resource="&coeus;Entity"/>
+        <rdfs:label rdf:datatype="&xsd;string">entity_Locus</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-03-25</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Collects Locus entity knowledge.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Collects Locus entity knowledge.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">Locus</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_Ensembl"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_EntrezGene"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_GeneCards"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_HGNC"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_MapView"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_UCSC"/>
+        <coeus:isIncludedIn rdf:resource="&diseasecard;seed_Diseasecard4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/entity_Metabolism -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;entity_Metabolism">
+        <rdf:type rdf:resource="&coeus;Entity"/>
+        <rdfs:label rdf:datatype="&xsd;string">entity_metabolism</rdfs:label>
+        <dc:date rdf:datatype="&xsd;string">2011-03-25</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Collects Metabolism entity knowledge.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Collects Metabolism entity knowledge.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">Metabolism</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_ENZYME"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_KEGG"/>
+        <coeus:isIncludedIn rdf:resource="&diseasecard;seed_Diseasecard4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/entity_Ontology -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;entity_Ontology">
+        <rdf:type rdf:resource="&coeus;Entity"/>
+        <rdfs:label rdf:datatype="&xsd;string">entity_ontology</rdfs:label>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Collects Ontology entity knowledge.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Collects Ontology entity knowledge.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">Ontology</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_HPO"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_MeSH"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_UMLS"/>
+        <coeus:isIncludedIn rdf:resource="&diseasecard;seed_Diseasecard4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/entity_Protein -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;entity_Protein">
+        <rdf:type rdf:resource="&coeus;Entity"/>
+        <rdfs:label rdf:datatype="&xsd;string">entity_protein</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-03-25</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Collects Protein entity knowledge.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Collects Protein entity knowledge.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">Protein</dc:title>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_InterPro"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_PDB"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_PROSITE"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_UniProt"/>
+        <coeus:isIncludedIn rdf:resource="&diseasecard;seed_Diseasecard4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/entity_Study -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;entity_Study">
+        <rdf:type rdf:resource="&coeus;Entity"/>
+        <rdfs:label rdf:datatype="&xsd;string">entity_Study</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-03-25</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Collects Study entity knowledge.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Collects Study entity knowledge.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">Study</dc:title>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_ClinicalTrials"/>
+        <coeus:isEntityOf rdf:resource="&diseasecard;concept_GWASCentral"/>
+        <coeus:isIncludedIn rdf:resource="&diseasecard;seed_Diseasecard4"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_ClinicalTrials -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_ClinicalTrials">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_clinicaltrials</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">//clinical_study</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <coeus:order rdf:datatype="&xsd;integer">300</coeus:order>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">ClinicalTrials</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting Clinical Trials information.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting Clinical Trials information.</rdfs:comment>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">http://clinicaltrials.gov/search?term=#replace#&amp;displayxml=true&amp;count=1000</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">xml</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_ClinicalTrials"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_HGNC"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;xml_ClinicalTrials_id"/>
+        <coeus:hasKey rdf:resource="&diseasecard;xml_ClinicalTrials_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;xml_ClinicalTrials_summary"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;xml_ClinicalTrials_title"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_DailyMed -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_DailyMed">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_dailymed</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <coeus:order rdf:datatype="&xsd;integer">21</coeus:order>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting DailyMed information.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting DailyMed information.</rdfs:comment>
+        <coeus:endpoint rdf:datatype="&xsd;string">SELECT ?drugid ?drugname ?pharma ?desc WHERE{ SERVICE &lt;http://www4.wiwiss.fu-berlin.de/dailymed/sparql&gt;{ ?drug dailymed:fullName ?drugname . ?drug dailymed:clinicalPharmacology ?pharma . ?drug dailymed:description ?desc . ?drug dailymed:name ?drugid . ?drug dailymed:genericDrug &lt;http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugs/#replace#&gt;}}</coeus:endpoint>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <dc:publisher rdf:datatype="&xsd;string">sparql</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_DailyMed"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_Drugbank"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sparql_DailyMed_description"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sparql_DailyMed_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sparql_DailyMed_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sparql_DailyMed_name"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sparql_DailyMed_pharma"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_DrugBank -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_DrugBank">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_drugbank</rdfs:label>
+        <coeus:order rdf:datatype="&xsd;integer">20</coeus:order>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">DrugBank</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting DrugBank information.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting DrugBank information.</rdfs:comment>
+        <coeus:endpoint rdf:datatype="&xsd;string">SELECT ?drugid ?drugname ?pharma ?description WHERE{ SERVICE &lt;http://www4.wiwiss.fu-berlin.de/drugbank/sparql&gt; { ?drug drugbank:genericName ?drugname . ?drug drugbank:pharmacology ?pharma . ?drug drugbank:primaryAccessionNo ?drugid . ?drug drugbank:description ?description . ?drug drugbank:swissprotId &lt;http://bio2rdf.org/uniprot:#replace#&gt;}}</coeus:endpoint>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <dc:publisher rdf:datatype="&xsd;string">sparql</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_Drugbank"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_UniProt"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sparql_DrugBank_description"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sparql_DrugBank_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sparql_DrugBank_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sparql_DrugBank_name"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sparql_DrugBank_pharma"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_ENZYME -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_ENZYME">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_enzyme</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <coeus:order rdf:datatype="&xsd;integer">80</coeus:order>
+        <dc:title rdf:datatype="&xsd;string">ENZYME</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting ENZYME information.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting ENZYME information.</rdfs:comment>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <dc:publisher rdf:datatype="&xsd;string">csv</dc:publisher>
+        <coeus:endpoint rdf:datatype="&xsd;string">http://www.genenames.org/cgi-bin/hgnc_downloads.cgi?title=HGNC+output+data&amp;col=gd_enz_ids&amp;status=Approved&amp;status=Entry+Withdrawn&amp;status_opt=2&amp;level=pri&amp;where=gd_app_sym+LIKE+%27#replace#%27&amp;order_by=gd_app_sym_sort&amp;limit=&amp;format=text&amp;submit=submit&amp;.cgifields=&amp;.cgifields=level&amp;.cgifields=chr&amp;.cgifields=status&amp;.cgifields=hgnc_dbtag</coeus:endpoint>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_ENZYME"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_HGNC"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;csv_ENZYME_id"/>
+        <coeus:hasKey rdf:resource="&diseasecard;csv_ENZYME_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_Ensembl -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_Ensembl">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_ensembl</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <coeus:order rdf:datatype="&xsd;integer">70</coeus:order>
+        <dc:title rdf:datatype="&xsd;string">Ensembl</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting Ensembl information.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting Ensembl information.</dc:description>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=8 AND a LIKE &apos;#replace#&apos; </coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_Ensembl"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_HGNC"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_Ensembl_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_Ensembl_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_EntrezGene -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_EntrezGene">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_entrezgene</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-11</dc:date>
+        <coeus:order rdf:datatype="&xsd;integer">3</coeus:order>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">EntrezGene</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting Entrez Gene information.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting Entrez Gene information.</rdfs:comment>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=3 AND a LIKE &apos;#replace#&apos;</coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_EntrezGene"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_OMIM"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_EntrezGene_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_EntrezGene_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_HGNC -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_HGNC">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_hgnc</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-08</dc:date>
+        <coeus:order rdf:datatype="&xsd;integer">3</coeus:order>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">HGNC</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting gene HGNC information.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting gene HGNC information.</dc:description>
+        <coeus:method rdf:datatype="&xsd;string">complete</coeus:method>
+        <dc:publisher rdf:datatype="&xsd;string">csv</dc:publisher>
+        <coeus:endpoint rdf:datatype="&xsd;string">http://www.genenames.org/cgi-bin/hgnc_downloads.cgi?title=HGNC+output+data&amp;col=gd_hgnc_id&amp;col=gd_app_sym&amp;col=gd_app_name&amp;col=gd_pub_chrom_map&amp;status=Approved&amp;status_opt=1&amp;level=pri&amp;where=gd_app_sym+like+%27#replace#%27&amp;order_by=gd_app_sym_sort&amp;limit=&amp;format=text&amp;submit=submit&amp;.cgifields=&amp;.cgifields=level&amp;.cgifields=chr&amp;.cgifields=status&amp;.cgifields=hgnc_dbtag</coeus:endpoint>
+        <coeus:extension rdf:datatype="&xsd;string">rdfs:label</coeus:extension>
+        <coeus:extends rdf:resource="&diseasecard;concept_HGNC"/>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_HGNC"/>
+        <coeus:hasKey rdf:resource="&diseasecard;csv_HGNC_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;csv_HGNC_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;csv_HGNC_name"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_HPO -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_HPO">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_hpo</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-13</dc:date>
+        <coeus:order rdf:datatype="&xsd;integer">3</coeus:order>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">HPO</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource configuration for HPO Phenotype data loading.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource configuration for HPO Phenotype data loading.</rdfs:comment>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=10 AND a LIKE &apos;#replace#&apos; </coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_HPO"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_OMIM"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_HPO_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_HPO_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_InterPro -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_InterPro">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_interpro</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">//entry</coeus:query>
+        <coeus:order rdf:datatype="&xsd;integer">10</coeus:order>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">InterPro</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting InterPro information.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting InterPro information.</rdfs:comment>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">http://uniprot.org/uniprot/#replace#.xml</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">xml</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_InterPro"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_UniProt"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;xml_InterPro_id"/>
+        <coeus:hasKey rdf:resource="&diseasecard;xml_InterPro_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_KEGG -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_KEGG">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_kegg</rdfs:label>
+        <coeus:order rdf:datatype="&xsd;integer">11</coeus:order>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-15</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">KEGG</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting Metabolistm KEGG information.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting Metabolistm KEGG information.</dc:description>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=28 AND a = (SELECT b FROM hummer WHERE rel = 32 AND a LIKE &apos;#replace#&apos;) 
+</coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:extends rdf:resource="&diseasecard;concept_HGNC"/>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_KEGG"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_KEGG_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_KEGG_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_MeSH -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_MeSH">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_mesh</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-13</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <coeus:order rdf:datatype="&xsd;integer">5</coeus:order>
+        <dc:title rdf:datatype="&xsd;string">MeSH</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource configuration for MeSH Ontology data loading.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource configuration for MeSH Ontology data loading.</rdfs:comment>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=15 AND a LIKE &apos;#replace#&apos;</coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_MeSH"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_UniProt"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_MeSH_id"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_MeSH_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_MedlinePlus -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_MedlinePlus">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_medlineplus</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">//document</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-15</dc:date>
+        <coeus:order rdf:datatype="&xsd;integer">33</coeus:order>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Loads MedlinePlus resource data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Loads MedlinePlus resource data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">MedlinePlus</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">http://wsearch.nlm.nih.gov/ws/query?db=healthTopics&amp;term=#replace#</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">xml</dc:publisher>
+        <coeus:extends rdf:resource="&diseasecard;concept_HGNC"/>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_MedlinePlus"/>
+        <coeus:hasKey rdf:resource="&diseasecard;xml_MedlinePlus_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;xml_MedlinePlus_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;xml_MedlinePlus_url"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_OMIM -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_OMIM">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_omim</rdfs:label>
+        <coeus:order rdf:datatype="&xsd;integer">1</coeus:order>
+        <dc:date rdf:datatype="&xsd;date">2011-04-04</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">OMIM</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource configuration for OMIM data loading.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Resource configuration for OMIM data loading.</dc:description>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">omim://Users/pedrolopes/Development/Software/COEUS/COEUS0.3/src/java/resource/morbidmap</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">plugin</dc:publisher>
+        <coeus:extends rdf:resource="&diseasecard;concept_OMIM"/>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_OMIM"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_PDB -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_PDB">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_pdb</rdfs:label>
+        <coeus:order rdf:datatype="&xsd;integer">11</coeus:order>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">PDB</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting PDB information.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting PDB information.</rdfs:comment>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=18 AND a LIKE &apos;#replace#&apos; </coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_PDB"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_UniProt"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_PDB_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_PDB_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_PROSITE -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_PROSITE">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_prosite</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">//entry</coeus:query>
+        <coeus:order rdf:datatype="&xsd;integer">10</coeus:order>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">PROSITE</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting PROSITE information.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting PROSITE information.</rdfs:comment>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">http://uniprot.org/uniprot/#replace#.xml</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">xml</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_PROSITE"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_UniProt"/>
+        <coeus:hasKey rdf:resource="&diseasecard;xml_PROSITE_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;xml_PROSITE_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_PharmGKB -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_PharmGKB">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_pharmgkb</rdfs:label>
+        <coeus:order rdf:datatype="&xsd;integer">11</coeus:order>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">PharmGKB</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting PharmGKB information.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting PharmGKB information.</dc:description>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=20 AND a LIKE &apos;#replace#&apos; </coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:extends rdf:resource="&diseasecard;concept_EntrezGene"/>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_PharmGKB"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_PharmGKB_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_PharmGKB_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_PubMed -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_PubMed">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_pubmed</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-11</dc:date>
+        <coeus:order rdf:datatype="&xsd;integer">30</coeus:order>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">PubMed</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting PubMed Literature information.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Resource connecting PubMed Literature information.</dc:description>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=2 AND a LIKE &apos;#replace#&apos; </coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:extends rdf:resource="&diseasecard;concept_EntrezGene"/>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_PubMed"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_PubMed_id"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_PubMed_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_UMLS -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_UMLS">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_umls</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-13</dc:date>
+        <coeus:order rdf:datatype="&xsd;integer">30</coeus:order>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource configuration for UMLS Phenotype data loading</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource configuration for UMLS Phenotype data loading.</rdfs:comment>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=13 AND a LIKE &apos;#replace#&apos; </coeus:query>
+        <dc:title rdf:datatype="&xsd;string">UMLS</dc:title>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:extends rdf:resource="&diseasecard;concept_HPO"/>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_UMLS"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_UMLS_id"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_UMLS_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_UniProt -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_UniProt">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label>resource_uniprot</rdfs:label>
+        <owl:versionInfo rdf:datatype="&xsd;string">1.0a</owl:versionInfo>
+        <coeus:order rdf:datatype="&xsd;integer">2</coeus:order>
+        <dc:date rdf:datatype="&xsd;date">2011-01-27</dc:date>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">UniProt</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">UniProt resource</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">UniProt resource</dc:description>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <dc:publisher rdf:datatype="&xsd;string">csv</dc:publisher>
+        <coeus:endpoint rdf:datatype="&xsd;string">http://www.genenames.org/cgi-bin/hgnc_downloads.cgi?title=HGNC+output+data&amp;hgnc_dbtag=on&amp;col=md_prot_id&amp;status=Approved&amp;status=Entry+Withdrawn&amp;status_opt=2&amp;level=pri&amp;where=gd_app_sym+LIKE+%27#replace#%27&amp;order_by=gd_app_sym_sort&amp;limit=&amp;format=text&amp;submit=submit&amp;.cgifields=&amp;.cgifields=level&amp;.cgifields=chr&amp;.cgifields=status&amp;.cgifields=hgnc_dbtag</coeus:endpoint>
+        <coeus:extends rdf:resource="&diseasecard;concept_HGNC"/>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_UniProt"/>
+        <coeus:hasKey rdf:resource="&diseasecard;csv_UniProt_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;csv_UniProt_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_icd10 -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_icd10">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_icd10</rdfs:label>
+        <coeus:order rdf:datatype="&xsd;int">10</coeus:order>
+        <dc:date rdf:datatype="&xsd;date">2012-11-20</dc:date>
+        <dc:title rdf:datatype="&xsd;string">ICD10</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource for ICD 10 ontology data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Resource for ICD 10 ontology data.</dc:description>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=35 AND a LIKE &apos;#replace#&apos;;</coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=hummer&amp;password=hummer</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_ICD10"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_orphanet"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_icd10_id"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_icd10_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_orphanet -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_orphanet">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_orphanet</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2012-11-19</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.1a</owl:versionInfo>
+        <coeus:order rdf:datatype="&xsd;int">6</coeus:order>
+        <dc:title rdf:datatype="&xsd;string">OrphaNet</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Resource for OrphaNet data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource for OrphaNet data.</rdfs:comment>
+        <coeus:query rdf:datatype="&xsd;string">SELECT b AS entry FROM hummer WHERE rel=33 AND a LIKE &apos;#replace#&apos;</coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=hummer&amp;password=hummer</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:extends rdf:resource="&diseasecard;concept_OMIM"/>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_orphanet"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_orphanet_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_orphanet_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/seed_Diseasecard4 -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;seed_Diseasecard4">
+        <rdf:type rdf:resource="&coeus;Seed"/>
+        <rdfs:label rdf:datatype="&xsd;string">seed_diseasecard</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-03-25</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:identifier rdf:datatype="&xsd;string">DC4</dc:identifier>
+        <dc:title rdf:datatype="&xsd;string">Diseasecard4</dc:title>
+        <dc:description rdf:datatype="&xsd;string">Diseasecard4 COEUS instance</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Diseasecard4 COEUS instance</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes</dc:creator>
+        <dc:source rdf:datatype="&xsd;string">UA.PT Bioinformatics</dc:source>
+        <coeus:includes rdf:resource="&diseasecard;entity_Disease"/>
+        <coeus:includes rdf:resource="&diseasecard;entity_Drug"/>
+        <coeus:includes rdf:resource="&diseasecard;entity_Literature"/>
+        <coeus:includes rdf:resource="&diseasecard;entity_Locus"/>
+        <coeus:includes rdf:resource="&diseasecard;entity_Metabolism"/>
+        <coeus:includes rdf:resource="&diseasecard;entity_Ontology"/>
+        <coeus:includes rdf:resource="&diseasecard;entity_Protein"/>
+        <coeus:includes rdf:resource="&diseasecard;entity_Study"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sparql_DailyMed_description -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sparql_DailyMed_description">
+        <rdf:type rdf:resource="&coeus;SPARQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sparql_dailymed_description</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">DailyMed_description</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for DailyMed SPARQL resource loading: loads DailyMed description.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for DailyMed SPARQL resource loading: loads DailyMed description.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:query rdf:datatype="&xsd;string">desc</coeus:query>
+        <coeus:property rdf:datatype="&xsd;string">rdfs:comment|dc:description</coeus:property>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_DailyMed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sparql_DailyMed_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sparql_DailyMed_id">
+        <rdf:type rdf:resource="&coeus;SPARQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sparql_dailymed_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">DailyMed_id</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for DailyMed SPARQL resource loading: loads DailyMed id.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for DailyMed SPARQL resource loading: loads DailyMed id.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">drugid</coeus:query>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_DailyMed"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_DailyMed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sparql_DailyMed_name -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sparql_DailyMed_name">
+        <rdf:type rdf:resource="&coeus;SPARQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sparql_dailymed_name</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">DailyMed_name</dc:title>
+        <dc:description rdf:datatype="&xsd;string">Information for DailyMed SPARQL resource loading: loads DailyMed name.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for DailyMed SPARQL resource loading: loads DailyMed name.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:title</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">drugname</coeus:query>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_DailyMed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sparql_DailyMed_pharma -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sparql_DailyMed_pharma">
+        <rdf:type rdf:resource="&coeus;SPARQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sparql_dailymed_pharma</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">DailyMed_pharma</dc:title>
+        <dc:description rdf:datatype="&xsd;string">Information for DailyMed SPARQL resource loading: loads DailyMed pharmacology.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for DailyMed SPARQL resource loading: loads DailyMed pharmacology.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dailymed:clinicalPharmacology</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">pharma</coeus:query>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_DailyMed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sparql_DrugBank_description -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sparql_DrugBank_description">
+        <rdf:type rdf:resource="&coeus;SPARQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sparql_drugbank_description</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for DrugBank SPARQL resource loading: loads DrugBank description.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for DrugBank SPARQL resource loading: loads DrugBank description.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:description|rdfs:comment</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">description</coeus:query>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_DrugBank"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sparql_DrugBank_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sparql_DrugBank_id">
+        <rdf:type rdf:resource="&coeus;SPARQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sparql_drugbank_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">DrugBank_id</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for DrugBank SPARQL resource loading: loads DrugBank id.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for DrugBank SPARQL resource loading: loads DrugBank id.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">drugid</coeus:query>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_DrugBank"/>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_DrugBank"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sparql_DrugBank_name -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sparql_DrugBank_name">
+        <rdf:type rdf:resource="&coeus;SPARQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sparql_drugbank_name</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">DrugBank_name</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for DrugBank SPARQL resource loading: loads DrugBank name.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for DrugBank SPARQL resource loading: loads DrugBank name.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:title</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">drugname</coeus:query>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_DrugBank"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sparql_DrugBank_pharma -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sparql_DrugBank_pharma">
+        <rdf:type rdf:resource="&coeus;SPARQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sparql_drugbank_pharma</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">DrugBank_pharma</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for DrugBank SPARQL resource loading: loads DrugBank pharmacology.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for DrugBank SPARQL resource loading: loads DrugBank pharmacology.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">drugbank:pharmacology</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">pharma</coeus:query>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_DrugBank"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_Ensembl_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_Ensembl_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_ensembl_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">Ensembl_id</dc:title>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for Ensembl SQL resource loading: loads Ensembl id.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for Ensembl SQL resource loading: loads Ensembl id.</dc:description>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:title|dc:identifier</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_Ensembl"/>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_Ensembl"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_EntrezGene_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_EntrezGene_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">csv_entrezgene_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-12</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">EntrezGene_id</dc:title>
+        <dc:description rdf:datatype="&xsd;string">Information for EntrezGene CSV resource loading: loads EntrezGene id.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for EntrezGene SQL resource loading: loads EntrezGene id.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:source</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_EntrezGene"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_EntrezGene"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_HGNC2HPO_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_HGNC2HPO_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_hgnc2hpo_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-13</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">HGNC2HPO_id</dc:title>
+        <dc:description rdf:datatype="&xsd;string">Information for HGNC2HPO SQL resource loading: loads HPO id.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for HGNC2HPO SQL resource loading: loads HPO id.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">concept_HPO</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_HPO_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_HPO_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_hpo_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-13</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">HPO_id</dc:title>
+        <dc:description rdf:datatype="&xsd;string">Information for HPO SQL resource loading: loads HPO id.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for HPO SQL resource loading: loads HPO id.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:source</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_HPO"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_HPO"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_KEGG_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_KEGG_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_kegg_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-15</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for KEGG SQL resource loading: loads KEGG id.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for KEGG SQL resource loading: loads KEGG id.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">KEGG_id</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:title|dc:identifier</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_KEGG"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_KEGG"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_MeSH_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_MeSH_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_mesh_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-13</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Information for MeSH SQL resource loading: loads MeSH id.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for MeSH SQL resource loading: loads MeSH id.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">MeSH_id</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:title</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_MeSH"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_MeSH"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_PDB_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_PDB_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_pdb_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;string">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">PDB_id</dc:title>
+        <dc:creator rdf:datatype="&xsd;dateTime">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">SQL loader for PDB id.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">SQL loader for PDB id.</rdfs:comment>
+        <coeus:property rdf:datatype="&xsd;string">dc:title|dc:identifier</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_PDB"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_PDB"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_PharmGKB_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_PharmGKB_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_pharmgkb_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-13</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Information for PharmGKB SQL resource loading: loads PharmGKB id.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for PharmGKB SQL resource loading: loads PharmGKB id.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">PharmGKB_id</dc:title>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:source</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_PharmGKB"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_PharmGKB"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_PubMed_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_PubMed_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">csv_pubmed_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-12</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Information for PubMed CSV resource loading: loads PubMed id id.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for PubMed SQL resource loading: loads PubMed id id.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">PubMed_id</dc:title>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:source</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_PubMed"/>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_PubMed"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_UMLS_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_UMLS_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_umls_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-13</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">Information for UMLS SQL resource loading: loads UMLS id.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for UMLS SQL resource loading: loads UMLS id.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">UMLS_id</dc:title>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:source</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_UMLS"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_UMLS"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_icd10_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_icd10_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_icd10_id</rdfs:label>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.1a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">ICD10 Identifier</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">SQL loader for ICD 10 ontology data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">SQL loader for ICD 10 ontology data.</rdfs:comment>
+        <coeus:property rdf:datatype="&xsd;string">dc:title|dc:identifier</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_icd10"/>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_icd10"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_orphanet_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_orphanet_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_orphanet_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2012-11-19</dc:date>
+        <dc:title rdf:datatype="&xsd;string">OrphaNet</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">SQL loader for OrphaNet data.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">SQL loader for OrphaNet data.</rdfs:comment>
+        <coeus:property rdf:datatype="&xsd;string">dc:title|dc:identifier</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_orphanet"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_orphanet"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/xml_ClinicalTrials_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;xml_ClinicalTrials_id">
+        <rdf:type rdf:resource="&coeus;XML"/>
+        <rdfs:label rdf:datatype="&xsd;string">xml_clinicaltrials_id</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">//nct_id</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">ClinicalTrials_id</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Setup for loading ClinicalTrials info: loads id.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Setup for loading ClinicalTrials info: loads id.</dc:description>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier</coeus:property>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_ClinicalTrials"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_ClinicalTrials"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/xml_ClinicalTrials_summary -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;xml_ClinicalTrials_summary">
+        <rdf:type rdf:resource="&coeus;XML"/>
+        <rdfs:label rdf:datatype="&xsd;string">xml_clinicaltrials_summary</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">//condition_summary</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">ClinicalTrials_summary</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Setup for loading ClinicalTrials info: loads summary.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Setup for loading ClinicalTrials info: loads summary.</dc:description>
+        <coeus:property rdf:datatype="&xsd;string">rdfs:comment|dc:description</coeus:property>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_ClinicalTrials"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/xml_ClinicalTrials_title -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;xml_ClinicalTrials_title">
+        <rdf:type rdf:resource="&coeus;XML"/>
+        <rdfs:label rdf:datatype="&xsd;string">xml_clinicaltrials_title</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">//title</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">ClinicalTrials_title</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Setup for loading ClinicalTrials info: loads title.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Setup for loading ClinicalTrials info: loads title.</dc:description>
+        <coeus:property rdf:datatype="&xsd;string">dc:title</coeus:property>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_ClinicalTrials"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/xml_InterPro_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;xml_InterPro_id">
+        <rdf:type rdf:resource="&coeus;XML"/>
+        <rdfs:label rdf:datatype="&xsd;string">xml_interpro_id</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">//dbReference[@type=&apos;InterPro&apos;]/@id</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">InterPro_id</dc:title>
+        <dc:description rdf:datatype="&xsd;string">Loading InterPro information.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Loading InterPro information.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:title</coeus:property>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_InterPro"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_InterPro"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/xml_MedlinePlus_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;xml_MedlinePlus_id">
+        <rdf:type rdf:resource="&coeus;XML"/>
+        <rdfs:label rdf:datatype="&xsd;string">xml_medlineplus_id</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">//content[@name=&apos;title&apos;]</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-15</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">MedlinePlus_id</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Setup for loading MedlinePlus ids (the title) from MedlinePlus.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Setup for loading MedlinePlus ids (the title) from MedlinePlus.</dc:description>
+        <coeus:property rdf:datatype="&xsd;string">dc:title</coeus:property>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_MedlinePlus"/>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_MedlinePlus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/xml_MedlinePlus_url -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;xml_MedlinePlus_url">
+        <rdf:type rdf:resource="&coeus;XML"/>
+        <rdfs:label rdf:datatype="&xsd;string">xml_medlineplus_url</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-15</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:title rdf:datatype="&xsd;string">MedlinePlus_url</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Setup for loading MedlinePlus URLs from MedlinePlus.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Setup for loading MedlinePlus URLs from MedlinePlus.</rdfs:comment>
+        <coeus:query rdf:datatype="&xsd;string">document/@url</coeus:query>
+        <coeus:property rdf:datatype="&xsd;string">rdfs:comment|dc:description</coeus:property>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_MedlinePlus"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/xml_PROSITE_id -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;xml_PROSITE_id">
+        <rdf:type rdf:resource="&coeus;XML"/>
+        <rdfs:label rdf:datatype="&xsd;string">xml_prosite_id</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string">//dbReference[@type=&apos;PROSITE&apos;]/@id</coeus:query>
+        <dc:date rdf:datatype="&xsd;dateTime">2011-04-14</dc:date>
+        <dc:description rdf:datatype="&xsd;string">Loading PROSITE information.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Loading PROSITE information.</rdfs:comment>
+        <dc:title rdf:datatype="&xsd;string">PROSITE_id</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:title</coeus:property>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_PROSITE"/>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_PROSITE"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/xml_UniProt_fullname -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;xml_UniProt_fullname">
+        <rdf:type rdf:resource="&coeus;XML"/>
+        <rdfs:label rdf:datatype="&xsd;string">xml_uniprot_fullname</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2011-02-21</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.0a</owl:versionInfo>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Setup for loading Protein Names from UniProt.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Setup for loading Protein Names from UniProt.</dc:description>
+        <coeus:property rdf:datatype="&xsd;string">dc:description|rdfs:comment</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">protein/recommendedName/fullName</coeus:query>
+        <dc:title rdf:datatype="&xsd;string">xml_UniProt_fullname</dc:title>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/xml_UniProt_name -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;xml_UniProt_name">
+        <rdf:type rdf:resource="&coeus;XML"/>
+        <rdfs:label rdf:datatype="&xsd;string">xml_uniprot_name</rdfs:label>
+        <owl:versionInfo rdf:datatype="&xsd;string">1.0a</owl:versionInfo>
+        <dc:date rdf:datatype="&xsd;date">2011-02-21</dc:date>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes</dc:creator>
+        <dc:description rdf:datatype="&xsd;string">Setup for loading Entry Names from UniProt.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">Setup for loading Entry Names from UniProt.</rdfs:comment>
+        <coeus:property rdf:datatype="&xsd;string">dc:subject</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">name</coeus:query>
+        <dc:title rdf:datatype="&xsd;string">xml_UniProt_name</dc:title>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 3.3.1957) http://owlapi.sourceforge.net -->
+

@@ -28,6 +28,7 @@ public class Resource {
     private String subject;
     private String method;
     private String publisher;
+    private String delimiter;
     private ArrayList<Object> loadsFrom = new ArrayList<Object>();  // List containing the Resource heritage: property-specific data handling
     private Concept isResourceOf;
     private String extendsConcept;
@@ -35,6 +36,14 @@ public class Resource {
     private String extension;
     private String query;
     private boolean built = false;
+
+    public String getDelimiter() {
+        return delimiter;
+    }
+
+    public void setDelimiter(String delimiter) {
+        this.delimiter = delimiter;
+    }
 
     public String getQuery() {
         return query;
@@ -202,7 +211,7 @@ public class Resource {
             }
         }
         if (Config.isDebug()) {
-            System.out.println("\tExtension data loaded");
+            System.out.println("[COEUS][Resource] Extension data loaded");
         }
         return extensions;
     }
@@ -226,6 +235,7 @@ public class Resource {
                 JSONObject binding = (JSONObject) obj;
                 JSONObject tit = (JSONObject) binding.get("title");
                 extensions.add(tit.get("value").toString());
+                System.out.println("****" + tit.get("value").toString());
             }
         } catch (Exception ex) {
             if (Config.isDebug()) {
@@ -234,7 +244,7 @@ public class Resource {
             }
         }
         if (Config.isDebug()) {
-            System.out.println("\tExtension data loaded");
+            System.out.println("[COEUS][Resource] Extension data loaded");
         }
         return extensions;
     }

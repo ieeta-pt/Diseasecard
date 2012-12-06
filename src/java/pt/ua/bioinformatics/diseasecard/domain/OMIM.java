@@ -7,6 +7,7 @@ package pt.ua.bioinformatics.diseasecard.domain;
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
@@ -28,10 +29,37 @@ public class OMIM {
     private ArrayList<EntrezGene> entrezgene = new ArrayList<EntrezGene>();
     private ArrayList<HGNC> hgnc = new ArrayList<HGNC>();
     private ArrayList<HPO> hpo = new ArrayList<HPO>();
+    private ArrayList<SwissVar> svar = new ArrayList<SwissVar>();
+    private ArrayList<Orphanet> orphanets = new ArrayList<Orphanet>();
+    private HashMap<String, Orphanet> orphanet = new HashMap<String, Orphanet>();
     private String location;
     private boolean phenotype;
     private Disease disease;
     private boolean loaded = false;
+
+    public ArrayList<Orphanet> getOrphanets() {
+        return orphanets;
+    }
+
+    public void setOrphanets(ArrayList<Orphanet> orphanets) {
+        this.orphanets = orphanets;
+    }
+
+    public HashMap<String, Orphanet> getOrphanet() {
+        return orphanet;
+    }
+
+    public void setOrphanet(HashMap<String, Orphanet> orphanet) {
+        this.orphanet = orphanet;
+    }
+
+    public ArrayList<SwissVar> getSvar() {
+        return svar;
+    }
+
+    public void setSvar(ArrayList<SwissVar> svar) {
+        this.svar = svar;
+    }
 
     public boolean isLoaded() {
         return loaded;
@@ -144,7 +172,7 @@ public class OMIM {
             if (uri.startsWith("http://")) {
                 query = "SELECT ?p ?o {<" + this.uri + "> ?p ?o }";
             } else {
-                query = "SELECT ?p ?o {coeus:omim_" + this.id + " ?p ?o }";
+                query = "SELECT ?p ?o {diseasecard:omim_" + this.id + " ?p ?o }";
             }
             ResultSet results = Boot.getAPI().selectRS(query, false);
             while (results.hasNext()) {
@@ -198,6 +226,24 @@ public class OMIM {
                             this.disease.getOntology().getHpo().put(code, hp);
                         } else {
                             this.hpo.add(this.disease.getOntology().getHpo().get(code));
+                        }
+                    }  else if (row.get("o").toString().contains("swissvar_")) {
+                        String code = ItemFactory.getTokenFromItem(row.get("o").toString());
+                        if(!this.disease.getVariome().getSwissvar().containsKey(code)) {
+                            SwissVar sv = new SwissVar(row.get("o").toString(), this);
+                            this.svar.add(sv);
+                            this.disease.getVariome().getSwissvar().put(code, sv);
+                        } else {
+                            this.svar.add(this.disease.getVariome().getSwissvar().get(code));
+                        }
+                    } else if (row.get("o").toString().contains("orphanet")) {
+                        String code = ItemFactory.getTokenFromItem(row.get("o").toString());
+                        if(!this.disease.getOmim().getOrphanet().containsKey(code)) {
+                            Orphanet orpha = new Orphanet(row.get("o").toString(), this);
+                            this.orphanets.add(orpha);
+                            this.disease.getOmim().getOrphanet().put(code, orpha);
+                        } else {
+                            this.orphanets.add(this.disease.getOmim().getOrphanet().get(code));
                         }
                     }
                 }

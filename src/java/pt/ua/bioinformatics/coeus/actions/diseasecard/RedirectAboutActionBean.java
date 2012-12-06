@@ -27,6 +27,6 @@ public class RedirectAboutActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution about() {
-        return new ForwardResolution("/beta/about.jsp");
+        return new ForwardResolution("/final/about.jsp");
     }
 }

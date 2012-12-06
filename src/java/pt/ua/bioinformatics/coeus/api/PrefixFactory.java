@@ -30,7 +30,6 @@ public class PrefixFactory {
      */
     public static String encode(String uri) {
         String prefix = getPrefixForURI(uri);
-        //System.out.println("\t" + prefix);
         return uri.replace(prefixes.get(prefix), prefix + ":");// + ":" + value;
     }
 

@@ -36,6 +36,6 @@ public class SearchActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution html() {
-        return new ForwardResolution("/beta/view/search.jsp");
+        return new ForwardResolution("/final/view/search.jsp");
     }
 }

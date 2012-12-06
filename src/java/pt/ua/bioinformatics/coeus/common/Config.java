@@ -28,11 +28,20 @@ public class Config {
     private static String sdb = null;
     private static String keyPrefix = null;
     private static String predicates = null;
+    private static String index = null;
     private static JSONArray data = new JSONArray();
     private static boolean debug = false;
     private static boolean built = false;
     private static String path = "";
     private static String environment = "development";
+
+    public static String getIndex() {
+        return index;
+    }
+
+    public static void setIndex(String index) {
+        Config.index = index;
+    }
 
     public static String getEnvironment() {
         return environment;
@@ -178,6 +187,7 @@ public class Config {
                 built = (Boolean) config.get("built");                                          
                 predicates = (String) config.get("predicates");                                 
                 environment = (String) config.get("environment");                               
+                index = (String) config.get("index");                               
                 sdb = ((String) config.get("sdb")).replace(".ttl", "_" + environment + ".ttl");
                 keyPrefix = (String) config.get("keyprefix");
                 JSONObject prefixes = (JSONObject) file.get("prefixes");

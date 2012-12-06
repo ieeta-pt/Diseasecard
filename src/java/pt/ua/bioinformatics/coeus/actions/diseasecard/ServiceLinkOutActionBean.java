@@ -84,7 +84,7 @@ public class ServiceLinkOutActionBean implements ActionBean {
             if (Config.isDebug()) {
                 Logger.getLogger(ServiceLinkOutActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
-            url = getContext().getRequest().getContextPath() + "/beta/view/empty_frame.jsp";
+            url = getContext().getRequest().getContextPath() + "/final/view/empty_frame.jsp";
         }
         if (getContext().getRequest().getRequestURI().endsWith("+")) {
             return new StreamingResolution("txt", url);

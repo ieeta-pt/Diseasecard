@@ -60,6 +60,6 @@ public class ViewReportDiseaseActionBean implements ActionBean {
                 Logger.getLogger(ViewReportDiseaseActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return new ForwardResolution("/beta/view/report.jsp");
+        return new ForwardResolution("/final/view/report.jsp");
     }
 }

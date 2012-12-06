@@ -2,15 +2,16 @@
     "config": {
         "name": "Diseasecard",
         "description": "Diseasecard v4",
-        "keyprefix":"coeus",
-        "version": "4.0",
-        "ontology": "http://bioinformatics.ua.pt/diseasecard/diseasecard.owl",
+        "keyprefix":"diseasecard",
+        "version": "4.1",
+        "ontology": "/Users/pedrolopes/Dropbox/Development/Software/COEUS/ontology/coeus_1.0.owl",
         "setup": "dc4_setup.rdf",
         "sdb":"dc4_sdb.ttl",
         "predicates":"dc4_predicates.csv",
         "built": true,
-        "debug": false,
-        "environment": "testing"
+        "debug": true,
+        "environment": "testing",
+        "index": "http://localhost:8983/solr"
     },
     "prefixes" : {
         "coeus": "http://bioinformatics.ua.pt/coeus/",
@@ -23,6 +24,6 @@
         "dailymed":"http://www4.wiwiss.fu-berlin.de/dailymed/resource/dailymed/",
         "drugbank":"http://www4.wiwiss.fu-berlin.de/drugbank/resource/drugbank/",
         "d2r":"http://sites.wiwiss.fu-berlin.de/suhl/bizer/d2r-server/config.rdf#",
-        "diseasecard":"http://bioinformatics.ua.pt/diseasecard/"
+        "diseasecard":"http://bioinformatics.ua.pt/diseasecard/resource/"
     }
 }

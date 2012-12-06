@@ -56,15 +56,12 @@ public class CSVFactory implements ResourceFactory {
     }
 
     /**
-     * Reads CSV data according to Resource information.
-     * <p>Workflow</b><ol>
-     *  <li>Check if resource is starter/extends</li>
-     *  <li>Load CSV resource into URL and to CSVReader</li>
-     *  <li>Start Triplify with factory Resource</li>
-     *  <li>Get data for Item key into Triplify</li>
-     *  <li>Load data for each InheritedResource property into Triplify hashmap based on CSV columns</li>
-     *  <li>Itemize single item</li>
-     * </ol></p>
+     * Reads CSV data according to Resource information. <p>Workflow</b><ol>
+     * <li>Check if resource is starter/extends</li> <li>Load CSV resource into
+     * URL and to CSVReader</li> <li>Start Triplify with factory Resource</li>
+     * <li>Get data for Item key into Triplify</li> <li>Load data for each
+     * InheritedResource property into Triplify hashmap based on CSV
+     * columns</li> <li>Itemize single item</li> </ol></p>
      */
     public void read() {
         if (res.getMethod().equals("complete")) {
@@ -111,7 +108,7 @@ public class CSVFactory implements ResourceFactory {
                 ArrayList<String> extensions = res.getExtended();
 
                 for (String item : extensions) {
-                    u = new URL(res.getEndpoint());
+                    u = new URL(res.getEndpoint().replace("#replace#", ItemFactory.getTokenFromItem(item)));
                     in = new BufferedReader(new InputStreamReader(u.openStream()));
                     reader = new CSVReader(in, '\t', '"', 1);
                     list = reader.readAll();
@@ -140,7 +137,12 @@ public class CSVFactory implements ResourceFactory {
                 if (res.getExtendsConcept().equals(res.getIsResourceOf().getUri())) {
                     u = new URL(res.getEndpoint());
                     in = new BufferedReader(new InputStreamReader(u.openStream()));
-                    reader = new CSVReader(in, '\t', '"', 1);
+                    if (res.getDelimiter().equals("")) {
+                        reader = new CSVReader(in, '\t', '"', 1);
+                    } else {
+                        reader = new CSVReader(in, res.getDelimiter().charAt(0), '"', 1);
+                    }
+
                     list = reader.readAll();
                     try {
                         for (String[] s : list) {
@@ -181,7 +183,11 @@ public class CSVFactory implements ResourceFactory {
                     for (String l : extensions) {
                         u = new URL(res.getEndpoint().replace("#replace#", ItemFactory.getTokenFromItem(l)));
                         in = new BufferedReader(new InputStreamReader(u.openStream()));
-                        reader = new CSVReader(in, '\t', '"', 1);
+                        if (res.getDelimiter().equals("")) {
+                            reader = new CSVReader(in, '\t', '"', 1);
+                        } else {
+                            reader = new CSVReader(in, res.getDelimiter().charAt(0), '"', 1);
+                        }
                         list = reader.readAll();
                         try {
                             for (String[] s : list) {
@@ -223,7 +229,8 @@ public class CSVFactory implements ResourceFactory {
     }
 
     /**
-     * Updates the resource coeus:built property once the resource finished building.
+     * Updates the resource coeus:built property once the resource finished
+     * building.
      *
      * @return success of the operation
      */

@@ -2,7 +2,6 @@ package pt.ua.bioinformatics.coeus.actions.diseasecard;
 
 import javax.servlet.ServletContextEvent;
 import pt.ua.bioinformatics.coeus.common.Boot;
-import pt.ua.bioinformatics.diseasecard.domain.Disease;
 
 /**
  *
@@ -17,7 +16,6 @@ public class StartupListener implements javax.servlet.ServletContextListener {
      */
     public void contextInitialized(ServletContextEvent sce) {
         Boot.start();
-        Disease d = new Disease(114480);
     }
 
     /**

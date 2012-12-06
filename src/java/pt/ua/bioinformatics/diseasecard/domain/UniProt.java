@@ -120,7 +120,7 @@ public class UniProt {
     public boolean load() {
         boolean success = false;
         try {
-            ResultSet results = Boot.getAPI().selectRS("SELECT ?p ?o {coeus:uniprot_" + id + " ?p ?o }", false);
+            ResultSet results = Boot.getAPI().selectRS("SELECT ?p ?o {diseasecard:uniprot_" + id + " ?p ?o }", false);
             while (results.hasNext()) {
                 QuerySolution row = results.next();
                 if (PrefixFactory.encode(row.get("p").toString()).equals("rdfs:label")) {
@@ -149,7 +149,6 @@ public class UniProt {
                         }
                     } else if (row.get("o").toString().contains("prosite")) {
                         String code = ItemFactory.getTokenFromItem(row.get("o").toString());
-
                         if (!this.disease.getProtein().getProsite().containsKey(code)) {
                             PROSITE prot = new PROSITE(ItemFactory.getTokenFromItem(row.get("o").toString()), row.get("o").toString(), this);
                             prosite.add(prot);
@@ -159,13 +158,21 @@ public class UniProt {
                         }
                     } else if (row.get("o").toString().contains("mesh")) {
                         String code = ItemFactory.getTokenFromItem(row.get("o").toString());
-
                         if (!this.disease.getOntology().getMesh().containsKey(code)) {
                             MeSH msh = new MeSH(row.get("o").toString(), this);
                             mesh.add(msh);
                             this.disease.getOntology().getMesh().put(msh.getId(), msh);
                         } else {
                             mesh.add(this.disease.getOntology().getMesh().get(code));
+                        }
+                    } else if (row.get("o").toString().contains("drugbank")) {
+                        String code = ItemFactory.getTokenFromItem(row.get("o").toString());
+                        if (!this.disease.getDrug().getDrugbank().containsKey(code)) {
+                            DrugBank db = new DrugBank(row.get("o").toString(), this.disease);
+                            drugbank.add(db);
+                            this.disease.getDrug().getDrugbank().put(db.getId(), db);
+                        } else {
+                            drugbank.add(this.disease.getDrug().getDrugbank().get(code));
                         }
                     }
                 }

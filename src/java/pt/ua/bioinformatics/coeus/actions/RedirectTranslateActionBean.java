@@ -25,6 +25,6 @@ public class RedirectTranslateActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution handle() {
-        return new ForwardResolution("/xml-to-html.xsl");
+        return new ForwardResolution("/coeus/xml-to-html.xsl");
     }
 }

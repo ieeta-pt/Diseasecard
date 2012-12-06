@@ -1,20 +1,24 @@
 package pt.ua.bioinformatics.diseasecard.services;
 
-import com.hp.hpl.jena.query.ResultSet;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.params.ModifiableSolrParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pt.ua.bioinformatics.coeus.api.DB;
-import pt.ua.bioinformatics.coeus.api.ItemFactory;
 import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.diseasecard.domain.Disease;
+import pt.ua.bioinformatics.diseasecard.domain.SearchResult;
 
 /**
  *
@@ -29,6 +33,16 @@ public class Finder {
     private DB db = new DB("DC4");
     private JSONObject result = new JSONObject();
     private HashMap<Integer, Disease> map = new HashMap<Integer, Disease>();
+    private HashMap<String, ArrayList<String>> results = new HashMap<String, ArrayList<String>>();
+    private HashMap<String, SearchResult> network = new HashMap<String, SearchResult>();
+
+    public HashMap<String, ArrayList<String>> getResults() {
+        return results;
+    }
+
+    public void setResults(HashMap<String, ArrayList<String>> results) {
+        this.results = results;
+    }
 
     public DB getDb() {
         return db;
@@ -93,32 +107,68 @@ public class Finder {
     }
 
     /**
-     * Finds disease matches in COEUS S3DB.
-     * <p>
-     *  Used in search.
-     * </p>
-     * 
-     * @return 
+     * Finds disease matches in COEUS S3DB. <p> Used in search. </p>
+     *
+     * @return
      */
-    public ArrayList<Disease> find() {
+    // public ArrayList<Disease> find() {
+    public String find() {
         try {
-            match_omim_id = omimid.matcher(query);
-            while (match_omim_id.find()) {
-                map.put(Integer.parseInt(query), new Disease(Integer.parseInt(match_omim_id.group())));
+            SolrServer server = new HttpSolrServer(Config.getIndex());
+            ModifiableSolrParams params = new ModifiableSolrParams();
+            params.set("q", query + "*");
+            params.set("rows", 1000);
+            QueryResponse response = server.query(params);
+            SolrDocumentList docs = response.getResults();
+            if (docs.isEmpty()) {
+                result.put("status", 110);
+            } else if (docs.size() == 1) {
+                result.put("status", 121);
+            } else {
+                result.put("status", 122);
             }
-            if (!match_omim_id.find()) {
-                db.connect(DC4.getIndexString());
-                String q = "SELECT omim FROM dc4_index WHERE info like ? ORDER BY omim";
-                PreparedStatement p = db.getConnection().prepareStatement(q);
-                p.setString(1, "%" + query.replace("%20", " ") + "%");
-                java.sql.ResultSet results = p.executeQuery();
-                while (results.next()) {
-                    if (!map.containsKey(results.getInt("omim"))) {
-                        map.put(results.getInt("omim"), new Disease(results.getInt("omim")));
+            result.put("size", docs.size());
+            JSONArray mtp = new JSONArray();
+
+            for (SolrDocument sol : docs) {
+                if (!network.containsKey(sol.get("omim").toString())) {
+                    SearchResult sr = new SearchResult(sol.get("omim").toString());
+                    sr.setName(Boot.getAPI().getOmimName(sol.get("omim").toString()));
+                    if (sol.get("id").toString().contains("name")) {
+                        sr.getAlias().add(sol.get("id").toString());
+                    } else {
+                        sr.getNetwork().add(sol.get("id").toString());
                     }
+                    network.put(sol.get("omim").toString(), sr);
+
+                } else {
+                    network.get(sol.get("omim").toString()).getNetwork().add(sol.get("id").toString());
                 }
-                db.close();
             }
+
+            for (SearchResult s : network.values()) {
+                JSONObject o = new JSONObject();
+                o.put("name", s.getName());
+                o.put("omim", s.getOmim());
+                JSONArray alias = new JSONArray();
+                for (String link : s.getAlias()) {
+                    alias.put(link);
+                }
+                JSONArray links = new JSONArray();
+                for (String link : s.getNetwork()) {
+                    links.put(link);
+                }
+                o.put("alias", alias);
+                o.put("links", links);
+                mtp.put(o);
+            }
+
+            result.put("results", mtp);
+
+
+
+
+
         } catch (Exception ex) {
             if (Config.isDebug()) {
                 System.out.println("[COEUS][Diseasecard][Finder] Unable to find disease");
@@ -126,32 +176,30 @@ public class Finder {
             }
         }
 
-        return (ArrayList<Disease>) new ArrayList(map.values());
+        //return (ArrayList<Disease>) new ArrayList(map.values());
+        return result.toString();
     }
 
     /**
-     * Finds disease matches in DC4 index.
-     * <p>
-     *  Used in Autocomplete.
-     * </p>
-     * 
-     * @return 
+     * Finds disease matches in DC4 index. <p> Used in Autocomplete. </p>
+     *
+     * @return
      */
     public String get() {
         JSONArray list = new JSONArray();
         try {
-            db.connect(DC4.getIndexString());
-            String q = "SELECT DISTINCT info, omim FROM dc4_index WHERE info like ? ORDER BY omim;";
-            PreparedStatement p = db.getConnection().prepareStatement(q);
-            p.setString(1, "%" + query.replace("%20", " ") + "%");
-            java.sql.ResultSet results = p.executeQuery();
-            while (results.next()) {
+            SolrServer server = new HttpSolrServer(Config.getIndex());
+            ModifiableSolrParams params = new ModifiableSolrParams();
+            params.set("q", query + "*");
+            params.set("rows", 100);
+            QueryResponse response = server.query(params);
+            SolrDocumentList docs = response.getResults();
+            for (SolrDocument sol : docs) {
                 JSONObject obj = new JSONObject();
-                obj.put("info", results.getString("info"));
-                obj.put("omim", results.getString("omim"));
+                obj.put("info", sol.get("title").toString());
+                obj.put("omim", sol.get("omim"));
                 list.put(obj);
             }
-            db.close();
             result.put("results", list);
         } catch (Exception ex) {
 
@@ -160,24 +208,6 @@ public class Finder {
                 Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return (String) list.toString();
-    }
-
-    public ArrayList<Disease> browse() {
-        try {
-            ResultSet results = Boot.getAPI().selectRS("SELECT DISTINCT ?d {?d coeus:hasConcept coeus:concept_OMIM . ?d  dc:description ?desc . FILTER regex(?desc, \"(" + query + ")\", \"i\")} ORDER BY ASC(?desc) LIMIT 100", false);
-            while (results.hasNext()) {
-                map.put(Integer.parseInt(ItemFactory.getTokenFromItem(results.next().get("d").toString())), new Disease(Integer.parseInt(ItemFactory.getTokenFromItem(results.next().get("d").toString()))));
-            }
-
-            diseases = new ArrayList(map.values());
-        } catch (Exception ex) {
-
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][Diseasecard][Finder] Unable to browse disease");
-                Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return (ArrayList<Disease>) diseases;
+        return list.toString();
     }
 }

@@ -9,7 +9,16 @@ import java.util.HashMap;
 public class Study {
 
     private HashMap<String, ClinicalTrial> clinicaltrials = new HashMap<String, ClinicalTrial>();
+    private HashMap<String, GWASCentral> gwascentral = new HashMap<String, GWASCentral>();
     private Disease disease;
+
+    public HashMap<String, GWASCentral> getGwascentral() {
+        return gwascentral;
+    }
+
+    public void setGwascentral(HashMap<String, GWASCentral> gwascentral) {
+        this.gwascentral = gwascentral;
+    }
 
     public HashMap<String, ClinicalTrial> getClinicaltrials() {
         return clinicaltrials;

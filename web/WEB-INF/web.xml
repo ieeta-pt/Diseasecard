@@ -126,7 +126,7 @@
     </servlet>    
     
     <welcome-file-list>
-        <welcome-file>beta/index.jsp</welcome-file>
+        <welcome-file>final/index.jsp</welcome-file>
     </welcome-file-list>
     <mime-mapping>
         <extension>ico</extension>

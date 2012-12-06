@@ -60,6 +60,6 @@ public class PrintActionBean implements ActionBean {
                 Logger.getLogger(PrintActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return new ForwardResolution("/beta/view/print.jsp");
+        return new ForwardResolution("/final/view/print.jsp");
     }
 }

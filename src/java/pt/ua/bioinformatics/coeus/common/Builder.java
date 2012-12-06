@@ -16,11 +16,9 @@ import pt.ua.bioinformatics.coeus.data.connect.XMLFactory;
 import pt.ua.bioinformatics.coeus.domain.Resource;
 
 /**
- * Seed builder class. 
- * <p>
- * General class handler for loading new data into COEUS SDB.
- * </p>
- * 
+ * Seed builder class. <p> General class handler for loading new data into COEUS
+ * SDB. </p>
+ *
  * @author pedrolopes
  */
 public class Builder {
@@ -36,8 +34,9 @@ public class Builder {
     }
 
     /**
-     * Reads resources from COEUS SDB and populates Resource object list for further building.
-     * 
+     * Reads resources from COEUS SDB and populates Resource object list for
+     * further building.
+     *
      */
     public static void readResources() {
         try {
@@ -45,7 +44,7 @@ public class Builder {
                 System.out.println("[COEUS][Builder] Reading resources for " + Config.getName());
             }
             JSONParser parser = new JSONParser();
-            JSONObject response = (JSONObject) parser.parse(Boot.getAPI().select("SELECT ?s ?method ?comment ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built ?query WHERE { ?s rdf:type coeus:Resource ."
+            JSONObject response = (JSONObject) parser.parse(Boot.getAPI().select("SELECT ?s ?method ?comment ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built ?query ?delimiter WHERE { ?s rdf:type coeus:Resource ."
                     + " ?s rdfs:comment ?comment ."
                     + " ?s rdfs:label ?label ."
                     + " ?s dc:title ?title ."
@@ -54,7 +53,7 @@ public class Builder {
                     + " ?s coeus:method ?method ."
                     + " ?s coeus:endpoint ?endpoint ."
                     + " ?s coeus:order ?order . "
-                    + "OPTIONAL { ?s coeus:built ?buil} . OPTIONAL { ?s coeus:extension ?extension} . OPTIONAL {?s coeus:query ?query}} ORDER BY ?order", "js", false));
+                    + "OPTIONAL { ?s coeus:built ?built} . OPTIONAL { ?s coeus:extension ?extension} . OPTIONAL {?s coeus:query ?query} . OPTIONAL {?s dc:format ?delimiter}} ORDER BY ?order", "js", false));
             JSONObject results = (JSONObject) response.get("results");
             JSONArray bindings = (JSONArray) results.get("bindings");
 
@@ -71,10 +70,12 @@ public class Builder {
                 JSONObject extension = (JSONObject) binding.get("extension");
                 JSONObject built = (JSONObject) binding.get("built");
                 JSONObject query = (JSONObject) binding.get("query");
+                JSONObject delimiter = (JSONObject) binding.get("delimiter");
                 Resource r = new Resource(s.get("value").toString(), t.get("value").toString(), l.get("value").toString(), d.get("value").toString(), publisher.get("value").toString(), endpoint.get("value").toString(), method.get("value").toString());
                 r.setExtendsConcept(ext.get("value").toString());
                 r.setExtension(!(extension == null) ? extension.get("value").toString() : "");
                 r.setQuery(!(query == null) ? query.get("value").toString() : "");
+                r.setDelimiter(!(delimiter == null) ? delimiter.get("value").toString() : "");
                 r.setBuilt(!(built == null) ? Boolean.parseBoolean(built.get("value").toString()) : false);
                 resources.add(r);
             }
@@ -91,11 +92,10 @@ public class Builder {
 
     /**
      * Reads Resource object information from COEUS SDB for further building.
-     * <p>Method used for single resource imports.
-     * </p>
-     * 
+     * <p>Method used for single resource imports. </p>
+     *
      * @param whatResource the resource label that will be read.
-     * @return  a new Resource object.
+     * @return a new Resource object.
      */
     public static Resource readResource(String whatResource) {
         Resource r = null;
@@ -105,7 +105,7 @@ public class Builder {
             }
             System.out.println(whatResource);
             JSONParser parser = new JSONParser();
-            JSONObject response = (JSONObject) parser.parse(Boot.getAPI().select("SELECT ?res ?method ?comment ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built ?query WHERE { ?res a coeus:Resource . ?res rdfs:comment ?comment . ?res rdfs:label ?label . ?res dc:title ?title . ?res dc:publisher ?publisher . ?res coeus:extends ?extends . ?res coeus:method ?method . ?res coeus:endpoint ?endpoint . ?res coeus:order ?order . OPTIONAL { ?res coeus:built ?buil} . OPTIONAL {?res coeus:extension ?extension} . OPTIONAL {?res coeus:query ?query} . FILTER regex(str(?label), '" + whatResource + "')} ORDER BY ?order LIMIT 1", "js", false));
+            JSONObject response = (JSONObject) parser.parse(Boot.getAPI().select("SELECT ?res ?method ?comment ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built ?query ?delimiter WHERE { ?res a coeus:Resource . ?res rdfs:comment ?comment . ?res rdfs:label ?label . ?res dc:title ?title . ?res dc:publisher ?publisher . ?res coeus:extends ?extends . ?res coeus:method ?method . ?res coeus:endpoint ?endpoint . ?res coeus:order ?order . OPTIONAL { ?res coeus:built ?buil} . OPTIONAL {?res coeus:extension ?extension} . OPTIONAL {?res dc:format ?delimiter} . OPTIONAL {?res coeus:query ?query} . FILTER regex(str(?label), '" + whatResource + "')} ORDER BY ?order LIMIT 1", "js", false));
             JSONObject results = (JSONObject) response.get("results");
             JSONArray bindings = (JSONArray) results.get("bindings");
             for (Object o : bindings) {
@@ -121,10 +121,12 @@ public class Builder {
                 JSONObject extension = (JSONObject) binding.get("extension");
                 JSONObject built = (JSONObject) binding.get("built");
                 JSONObject query = (JSONObject) binding.get("query");
+                JSONObject delimiter = (JSONObject) binding.get("delimiter");
                 r = new Resource(s.get("value").toString(), t.get("value").toString(), l.get("value").toString(), d.get("value").toString(), publisher.get("value").toString(), endpoint.get("value").toString(), method.get("value").toString());
                 r.setExtendsConcept(ext.get("value").toString());
                 r.setExtension(!(extension == null) ? extension.get("value").toString() : "");
                 r.setQuery(!(query == null) ? query.get("value").toString() : "");
+                r.setDelimiter(!(delimiter == null) ? delimiter.get("value").toString() : "");
                 r.setBuilt(!(built == null) ? Boolean.parseBoolean(built.get("value").toString()) : false);
             }
             if (Config.isDebug()) {
@@ -141,7 +143,7 @@ public class Builder {
 
     /**
      * Initiates data conversion process from Resource to RDF in COEUS Data SDB.
-     * 
+     *
      * @param r resource whose data will be read.
      * @return success of the operation.
      */
@@ -180,12 +182,11 @@ public class Builder {
     }
 
     /**
-     * Instance builder.
-     * <p><b>Workflow</b><ol>
-     *  <li>Reads resource information from COEUS Data SDB</li>
-     *  <li>Reads information for each resource (Key, Concept and LoadsFrom)</li>
-     *  <li>Reads data for each resource</li>
+     * Instance builder. <p><b>Workflow</b><ol> <li>Reads resource information
+     * from COEUS Data SDB</li> <li>Reads information for each resource (Key,
+     * Concept and LoadsFrom)</li> <li>Reads data for each resource</li>
      * </ol></p>
+     *
      * @return
      */
     public static boolean build() {
@@ -227,13 +228,12 @@ public class Builder {
     }
 
     /**
-     * Instance builder for a single Resource.
-     * <p><b>Workflow</b><ol>
-     *  <li>Reads resource information from COEUS Data SDB</li>
-     *  <li>Reads data for  resource</li>
-     * </ol></p>
+     * Instance builder for a single Resource. <p><b>Workflow</b><ol> <li>Reads
+     * resource information from COEUS Data SDB</li> <li>Reads data for
+     * resource</li> </ol></p>
+     *
      * @param resource
-     * @return 
+     * @return
      */
     public static boolean build(String resource) {
         boolean success = false;

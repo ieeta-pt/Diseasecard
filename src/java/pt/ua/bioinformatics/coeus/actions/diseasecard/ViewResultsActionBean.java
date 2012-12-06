@@ -65,12 +65,14 @@ public class ViewResultsActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution search() {
-        if (query.length() > 2) {
+        finder = new Finder(query);
+      /*  if (query.length() > 2) {
             try {
                 diseases = (ArrayList<Disease>) getContext().getSearchResults("search:" + query);
                 if (diseases == null) {
                     finder = new Finder(query);
-                    diseases = finder.find();
+                 //   diseases = finder.find();
+                    out = finder.find();
                 }
                 process();
             } catch (Exception ex) {
@@ -83,27 +85,10 @@ public class ViewResultsActionBean implements ActionBean {
                 response.put("status", 140);
             } catch (Exception ex) {
             }
-        }
-        return new StreamingResolution("application/js", response.toString());
-    }
-
-    public Resolution browse() {
-        // // disabled browsing, who uses this anyway?
-        query = String.valueOf(query.charAt(0));
-        try {
-            diseases = (ArrayList<Disease>) getContext().getSearchResults("browse:" + query);
-            if (diseases == null) {
-                finder = new Finder("^" + query + "{1}.+");
-                diseases = finder.browse();
-            }
-            process();
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                Logger.getLogger(ViewResultsActionBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
-        return new StreamingResolution("application/js", response.toString());
+        }*/
+        //return new StreamingResolution("application/js", response.toString());
+        
+        return new StreamingResolution("application/js", finder.find());
     }
 
     void process() {

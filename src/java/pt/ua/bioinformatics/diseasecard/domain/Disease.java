@@ -22,14 +22,41 @@ public class Disease {
     private Ontology ontology = new Ontology(this);
     private Drug drug = new Drug(this);
     private Study study = new Study(this);
+    private Pathway pathway = new Pathway(this);
+    private Variome variome = new Variome(this);
     private ArrayList<String> genes = new ArrayList<String>();
     private ArrayList<String> names = new ArrayList<String>();
     private ArrayList<Disease> genotypes = new ArrayList<Disease>();
     private ArrayList<Disease> phenotypes = new ArrayList<Disease>();
     private ArrayList<EntrezGene> entrezgene = new ArrayList<EntrezGene>();
+    private ArrayList<Orphanet> orphanet = new ArrayList<Orphanet>();
     private HashMap<String, OMIM> mapGenotype = new HashMap<String, OMIM>();
     private HashMap<String, OMIM> mapPhenotype = new HashMap<String, OMIM>();
     private HashMap<String, OMIM> diseaseMap = new HashMap<String, OMIM>();
+
+    public ArrayList<Orphanet> getOrphanet() {
+        return orphanet;
+    }
+
+    public void setOrphanet(ArrayList<Orphanet> orphanet) {
+        this.orphanet = orphanet;
+    }
+
+    public Pathway getPathway() {
+        return pathway;
+    }
+
+    public void setPathway(Pathway pathway) {
+        this.pathway = pathway;
+    }
+
+    public Variome getVariome() {
+        return variome;
+    }
+
+    public void setVariome(Variome variome) {
+        this.variome = variome;
+    }
 
     public String getEntry() {
         return entry;
@@ -189,6 +216,7 @@ public class Disease {
             locus.load();
             protein.load();
             ontology.load();
+            variome.load();
         } catch (Exception ex) {
             Logger.getLogger(Item.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -199,6 +227,7 @@ public class Disease {
         this.genotypes = new ArrayList<Disease>();
         this.phenotypes = new ArrayList<Disease>();
         this.names = new ArrayList<String>();
+        this.omimId = omim;
     }
 
     public ArrayList<Disease> getGenotypes() {
