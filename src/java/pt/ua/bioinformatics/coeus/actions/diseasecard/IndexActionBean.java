@@ -16,12 +16,21 @@ import pt.ua.bioinformatics.diseasecard.domain.Disease;
  *
  * @author pedrolopes
  */
-@UrlBinding("/print/{key}.{$event}")
-public class PrintActionBean implements ActionBean {
+@UrlBinding("/entry/{key}.{$event}")
+public class EntryActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
     private String key;
     private Disease disease;
+    private String item;
+    
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
 
     public void setContext(ActionBeanContext context) {
         this.context = (COEUSActionBeanContext) context;
@@ -57,9 +66,9 @@ public class PrintActionBean implements ActionBean {
             }
         } catch (Exception ex) {
             if (Config.isDebug()) {
-                Logger.getLogger(PrintActionBean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(EntryActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return new ForwardResolution("/final/view/print.jsp");
+        return new ForwardResolution("/final/view/disease.jsp");
     }
 }

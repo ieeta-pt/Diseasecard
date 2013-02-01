@@ -1,13 +1,13 @@
-<%@include file="/beta/layout/taglib.jsp" %>
-<s:layout-render name="/beta/layout/html.jsp">
+<%@include file="/final/layout/taglib.jsp" %>
+<s:layout-render name="/final/layout/html.jsp">
     <s:layout-component name="title">Diseasecard</s:layout-component>
     <s:layout-component name="custom_scripts">
-        <script src="<c:url value="/beta/assets/script/dc4.index.js" />"></script>
+        <script src="<c:url value="/final/assets/script/dc4.index.js" />"></script>
     </s:layout-component>
     <s:layout-component name="body"> 
         <div id="index">
             <div class="logo">
-                <a href="<c:url value="/about" />" title="About Diseasecard" class="tooltip" data-tooltip="About Diseasecard"><img src="<c:url value="/beta/assets/image/logo.png" />" /></a>
+                <a href="<c:url value="/about" />" title="About Diseasecard" class="tooltip" data-tooltip="About Diseasecard"><img src="<c:url value="/final/assets/image/logo.png" />" /></a>
             </div>
             <div class="tag tooltip" data-tooltip="You can search Diseasecard for disease names, OMIM disease codes or approved gene symbols.">
                 search for rare diseases
