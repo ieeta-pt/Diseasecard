@@ -22,7 +22,7 @@ public class Links {
 
     static private void load() {
         // Disease
-        links.put("omim", "http://omim.org/entry/#replace#");
+        links.put("omim", "http://bioinformatics.ua.pt/omim/#replace#");
         links.put("orphanet", "http://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=#replace#");
         links.put("nord", "http://www.rarediseases.org/rare-disease-information/rare-diseases/viewSearchResults?term=#replace#");
         // Protein
@@ -33,7 +33,6 @@ public class Links {
         //Literature
         links.put("pubmedsearch", "http://www.ncbi.nlm.nih.gov/pubmed?term=#replace#");
         links.put("pubmed", "http://www.ncbi.nlm.nih.gov/pubmed/#replace#");
-        links.put("omimref", "http://bioinformatics.ua.pt/omim/#replace##references");
         // Locus
         links.put("hgnc", "http://www.genenames.org/data/hgnc_data.php?match=#replace#");
         links.put("genecards", "http://www.genecards.org/cgi-bin/carddisp.pl?gene=#replace#");
@@ -54,6 +53,7 @@ public class Links {
         links.put("mesh", "http://www.nlm.nih.gov/cgi/mesh/2011/MB_cgi?term=#replace#&field=uid&exact=Find%20Exact%20Term");
         links.put("hp", "http://www.berkeleybop.org/obo/#replace#.pro");
         links.put("icd10","http://apps.who.int/classifications/icd10/browse/2010/en#/#replace#");
+        links.put("umls", "http://ncim.nci.nih.gov/ncimbrowser/ConceptReport.jsp?code=#replace#");
         // Variome
         links.put("wave", "http://bioinformatics.ua.pt/WAVe/gene/#replace#");
         links.put("swissvar","http://web.expasy.org/cgi-bin/variant_pages/get-sprot-variant.pl?#replace#");

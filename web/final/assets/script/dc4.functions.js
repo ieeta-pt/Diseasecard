@@ -1,14 +1,3 @@
-var spin_opts = {
-    lines: 8, // The number of lines to draw
-    length: 8, // The length of each line
-    width: 3, // The line thickness
-    radius: 6, // The radius of the inner circle
-    color: '#000', // #rgb or #rrggbb
-    speed: 1, // Rounds per second
-    trail: 64, // Afterglow percentage
-    shadow: false // Whether to render a shadow
-};
-
 var jsontree = {};
 
 String.prototype.capitalize = function() {
@@ -22,25 +11,11 @@ String.prototype.startsWith = function(str)
 {
     return (this.match("^"+str)==str)
 }
-
-function generateReport() {
-    var report = '<div class="report"><div class="report_tools"><a class="show tooltip" data-tooltip="Show all report links">Show all links</a><a class="hide tooltip" data-tooltip="Hide all report links">Hide all links</a></div>';
-    var content = jsontree.children;
-    for(var i in content) {
-        report += '<div class="report_box" data-entity="' + content[i].id + '"><div class="report_box_entity">' + content[i].name;
-        for (var j in content[i].children) {
-            report += '<div class="report_box_concept"><div class="report_box_concept_title" data-concept="' + content[i].children[j].id + '">' + content[i].children[j].name + '</div>  <div class="report_box_items" id="' + content[i].children[j].id + '">';
-            for(var k in content[i].children[j].children) {
-                report += '<div class="report_box_item">' + content[i].children[j].children[k].name + '</div>'
-            }
-            report += '</div></div>'
-        }
-        report += '</div></div>'
+Array.prototype.contains = function ( needle ) {
+    for (i in this) {
+        if (this[i] == needle) return true;
     }
-    
-    report += '</div>';
-    return report;
-    s
+    return false;
 }
 
 function getFrame() {
@@ -69,50 +44,88 @@ function debug(what) {
     var div = '<div id="debug">' + what + '</div>';
     $('body').append(div);
 }
-
-
-function loadLinks() {
-    $('.links').each(function () {
-        var id = $(this).data('id');
-        $.ajax({
-            url: path + '/service/links/' + id + '.html',
-            async: true,
-            success: function(data) {
-                $('#info-' + id).html(data);
-            }
-        });    
-    });
-}
             
-function loadResults(id) {
-    $('#results_search').spin(spin_opts); 
+function loadResults(id) { 
     var uri = encodeURI(path + '/view/results/search/' + id);
     $.getJSON(uri, function(data) {
-        if(data.status === '110') {
-            $('#results_content').html('<div id="error"><h1>Diseasecard found no matching diseases for "' + id + '"</h1><div id="busy"></div></div>');
-        } else if (data.status === "121") {
+        if(data.status === 110) {   
+            $('#loading').fadeOut().remove();         
+            $('#errors').fadeIn();  
+            $('#alert_noresults').fadeIn();
+            toggleTopButton('mag');
+            setTimeout(function(){                            
+                $('#text_search').focus();
+            }, 400); 
+        } else if (data.status === 121) {
             window.location = path + '/entry/' + data.results[0].omim;
-        } else  if (data.status === "140") {
-            $('#results_content').html('<div id="error"><h1>You search query must be at least 3 characters long</h1><div id="busy"></div></div>');
+        } else if (data.status === 140) { 
+            $('#loading').fadeOut().remove();
+            $('#errors').fadeIn();  
+            $('#alert_short').fadeIn();
+            toggleTopButton('mag');
+            setTimeout(function(){                            
+                $('#text_search').focus();
+            }, 400); 
         } else { 
-            $('#results_content').html('<div id="results"></div>');
-            $('#results_size').html(data.size + ' matches');
-            $.tmpl('results', data.results).appendTo('#results');                  
-            //$.tmpl('results_others', data.results).appendTo('#others');
-            //loadLinks();
-        }        
-        $('#results_search').spin(false);
-        // add tooltips to results
-        $('.tooltip').tipsy({
-            title: function() {
-                return $(this).data('tooltip');
-            },
-            fade: true,
-            live: true,
-            delayIn: 344
-        });
-    }); 
+            $('#results_size').html(data.size);
+            $.tmpl('results', data.results).appendTo('#results_list');                  
+            $.each(data.results, function(i, value) {
+                var box = $('<div/>', {
+                    'class' : 'results_list well', 
+                    'data-omim' : value.omim,
+                    'id' : value.omim
+                });
+                box.append('<a href="../entry/' + value.omim + '"><h3><small><i class="icon-play"></i></small> ' + value.omim + ' <small> ' + value.name + '</small></h3></a>');
+                
+                $.each(value.links, function(j, link) {
+                    var dlink = $('<ul/>', {
+                        'class' : 'results_items', 
+                        'data-id' : link
+                    }).append('<li><i class="icon-angle-right"></i><a href="../entry/' + value.omim + '#' + link.substring(7, link.length) + '"> ' + link.substring(7, link.length) + '</a></li>');
+                    box.append(dlink);
+                })                
+                $('#results_links').append(box);
+            })  
+            $('#loading').fadeOut().remove();
+            $('#meta').fadeIn(); /*show();*/
+            $('#results_list').fadeIn(); /*show();*/
+            $('#results').fadeIn(); /*show();*/
+            $('#results_search').height($('html').height() - 110);
+            $('#results_links').height($('html').height() - 110);
+            $('#results').width($('#meta').width());
+            var tour = new Tour({
+                name: "diseasecard_search_tour",
+                keyboard: true
+            });
     
+            tour.addStep({
+                next: 1, 
+                animation: true,
+                placement: 'right',
+                element: "#results_search",
+                title: "Identifiers", 
+                content: "Browse the results for the OMIM identifiers associated with your <strong>" + id + "</strong> query<br />Identifiers are ordered by <strong>relevance</strong><br/>" 
+            });
+            tour.addStep({
+                prev: 0, // number
+                animation: true,
+                placement: 'left',
+                element: "#results_links",
+                title: "Full results", 
+                content: "View and access all the pages where <strong>" + id + "</strong> was found<br/>"
+            });
+            tour.addStep({
+                prev: 0, // number
+                animation: true,
+                placement: 'bottom',
+                element: "#tour_filter",
+                title: "Filter", 
+                content: "Reduce the result set by adding new <strong>filtering</strong> criteria<br/>"
+            });
+            tour.start();
+            $('#filter').focus();
+        }        
+    });     
 }
 
 function toggleTopButton(id) {
@@ -120,10 +133,9 @@ function toggleTopButton(id) {
         case 'mag':
             if( ($('.mag').data('active')).toString() == 'false') {
                 hideTopButton('syns');
-                $('.search').show();
+                $('.search').fadeIn(300);
                 $('.mag').addClass('mag_enabled');
                 $('.mag').data('active', 'true');
-                $('#text_search').focus();
             } else if(($('.mag').data('active')).toString() == 'true') {
                 $('.search').hide();
                 $('.mag').data('active', 'false');
@@ -137,10 +149,21 @@ function toggleTopButton(id) {
     }
 }
 
+function showSearch(i) {
+    if( (i.data('active')).toString() == 'false') {
+        i.addClass('mag_enabled').data('active', 'true');
+        $('.search').fadeIn(300);
+    } else if((i.data('active')).toString() == 'true') {
+        $('.search').hide();
+        i.data('active', 'false');
+        i.removeClass('mag_enabled');
+    }
+}
+
 function hideTopButton(id) {
     switch(id) {
         case 'mag':
-            $('.search').hide();
+            $('.search').fadeOut(300);
             $('.mag').data('active', 'false');
             $('.mag').removeClass('mag_enabled');
             break;
@@ -203,11 +226,14 @@ $(document).ready(function(){
         $("#text_search" ).val( ui.item.info );
         return false;
         },
+        open :function(){
+        $(this).autocomplete('widget').css('z-index', 1000);
+        return false; },
         select: function( event, ui ) {
         event.preventDefault();
         $('#text_search').data('omim',ui.item.omim);
         if (ui.item.info.indexOf(':') > 0) {
-        window.location = path + '/entry/' + ui.item.omim + '#' + ui.item.info;       
+        window.location = path + '/entry/' + ui.item.omim + '#' + ui.item.info.replace('[','').replace(']','');       
         } else {
         window.location = path + '/entry/' + ui.item.omim;
         }
@@ -217,7 +243,7 @@ $(document).ready(function(){
         return $( "<li></li>" )
         .data( "item.autocomplete", item )
         .data("item.omim",item.omim)
-        .append( "<a>" + item.omim + " | "  + item.info + "</a>" )
+        .append( '<a>' + item.omim + ' <i class="icon-angle-right"></i> '  + item.info + '</a>' )
         .appendTo( ul );
     };     
     
@@ -226,41 +252,4 @@ $(document).ready(function(){
     $('.logo').click(function(){
         window.location = path;
     })
-    
-    /** feedback click action **/
-    $('#dc4_feedback_submit').click(function() {
-        var email = $('#dc4_feedback_email').attr('value');
-        var message = $('#dc4_feedback_message').attr('value');
-        if(email != '' && message != '') {
-            if(email.indexOf('@') < 1) {
-                $('#dc4_feedback_warning').html('Please provide a valid email address');
-            } else {
-                $.ajax({
-                    url: path + '/feedback',
-                    async: false,
-                    dataType: 'json',
-                    success: function(what) {
-                        if(what.status == 100) {
-                            $('.feedback_form').html('<h1>Thank you for your feedback!</h1>');   
-                            setTimeout(function(){                            
-                                $('#dc4_feedback_content').slideUp();
-                            }, 1280)
-                        }
-                    },
-                    type: 'POST',
-                    data: {
-                        email: email, 
-                        message: message
-                    }
-                }); 
-            }
-        } else {
-            $('#dc4_feedback_warning').html('Please fill in all fields');
-        }
-    });
-    
-    /** Feedback **/
-    $('#dc4_feedback').click(function(){
-        $('#dc4_feedback_content').slideToggle();
-    });
 });

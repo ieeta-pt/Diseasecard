@@ -12,134 +12,140 @@
     <s:layout-component name="body">
         <c:choose>
             <c:when test="${actionBean.disease.omim.label != ''}">
-                <div id="top">
-                    <div class="info">
-                        <div class="logo tooltip" data-tooltip="Go to Diseasecard home"></div>
-                        <div class="omim tooltip" id="omim" data-tooltip="Go to ${actionBean.key} OMIM page" data-id="${actionBean.key}">
-                            <c:if test="${actionBean.disease.omim.phenotype}" >
-                                #${actionBean.disease.omim.id}                           
-                            </c:if>
-                            <c:if test="${actionBean.disease.omim.phenotype == false}" >
-                                ${actionBean.disease.omim.id}                               
-                            </c:if>
+                <div class="navbar navbar-inverse navbar-fixed-top">
+                    <div class="navbar-inner">
+                        <div class="container pull-left">
+                            <a class="brand" href="../"><img src="/diseasecard/final/assets/image/logo_bw.png" height="18" /></a>
+                            <div class="nav-collapse collapse">
+                                <ul class="nav">
+                                    <li class="active">
+                                        <a href="#" id="key" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-chevron-down"></i> <c:if test="${actionBean.disease.omim.phenotype}" >#${actionBean.disease.omim.id}</c:if><c:if test="${actionBean.disease.omim.phenotype == false}" >${actionBean.disease.omim.id}</c:if></a>
+                                        <ul class="dropdown-menu synonyms" role="menu" aria-labelledby="dropdownMenu" >
+                                            <c:forEach var="entry" items="${actionBean.disease.diseaseMap}">
+                                                <li><a class="small synonym" data-omim="${entry.key}" href="${path}/entry/${entry.key}"></a></li>
+                                            </c:forEach>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="nav">
+                                    <li>
+                                        <a href="#" id="omim" data-id="${actionBean.disease.omim.id}" rel="popover" data-original-title="Synonyms" data-animate="false"> ${actionBean.disease.omim.description}</a>     
+                                    </li>
+                                </ul>
+
+                            </div><!--/.nav-collapse -->
                         </div>
-                        <div class="description tooltip" data-tooltip="View ${actionBean.key} disease network" id="syns">${actionBean.disease.omim.description} <span id="arrow">&#x25BE;</span></div>
-                        <div class="synonyms">                                
-                            <c:forEach var="entry" items="${actionBean.disease.diseaseMap}">
-                                <a class="small synonym tooltip" data-tooltip="Open ${entry.key}" data-omim="${entry.key}" href="${path}/disease/${entry.key}"></a>
-                            </c:forEach>
+                        <ul class="nav pull-right">
+                            <!-- <li id="nav_about"><a href="../about">about</a></li>-->
+                            <li><a href="../about" id="tour_about"><i class="icon-book"></i></a></li>
+                            <li><a href="../browse"><i class="icon-reorder"></i></a></li>
+                            <li><a href="#" class="mag" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>     
+            <!-- Top search bar -->
+            <div id="top">
+                <div class="search menu">
+                    <form>
+                        <div class="input-append pull-right">
+                            <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
+                            <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
+                        </div>
+                    </form>
+                </div>  
+            </div>
+            <div id="wrap">
+                <div id="diseasebar">
+                    <div id="sidebar_menu">
+                        <div class="btn-group" id="dc4_tree_control">
+                            <a href="#" id="dc4_tree_collapse" class="btn"><i class="icon-double-angle-up"></i></a>
+                            <a href="#" id="dc4_tree_expand" class="btn"><i class="icon-double-angle-down"></i></a>
+                        </div>
+                        <div class="btn-group" id="dc4_disease_control">
+                            <button class="btn" id="dc4_disease_hypertree"><i class="icon-sitemap"></i></button>
+                            <button class="btn" id="dc4_page_external"><i class="icon-external-link"></i></button>
+                            <button class="btn" id="dc4_page_help"><i class="icon-question-sign"></i></button>
                         </div>
                     </div>
-                    <div class="right_box">
+                    <div id="tree">
 
-                        <div class="about tooltip" data-tooltip="Go to About page">
-                            <a href="${path}/about" target="_top">about</a>
+                    </div> 
+                </div>
+                <div id="content">
+                    <div id="container">
+                        <div id="center-container">
+                            <div id="infovis"></div>
+                        </div>  
+                     <!--   <div id="details">
+                            <div id="card">
+                                <div class="synopsis" id="info_table">
+
+                                </div>
+                            </div>
                         </div>
-                        <div class="mag tooltip" data-tooltip="Launch search box" data-active="false"></div>
-                    </div>
+                     -->    
 
-                    <div class="search">
-                        <form>
-                            <input type="text" id="text_search" class="searcher" placeholder="Search..." type="search" />
-                            <div class="cancel">
+                    </div>
+                </div>
+            </div>
+            <script>
+                var synonyms_html = '<ul class="synonym_list"><c:forEach var="entry" items="${actionBean.disease.omim.names}"><li><i class="icon-angle-right"></i>${entry}</li></c:forEach></ul>';
+            </script>
+        </c:when>
+        <c:otherwise>
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container pull-left">
+                        <a class="brand" href="../"><img src="/diseasecard/final/assets/image/logo_bw.png" height="18" /></a>
+                        <ul class="nav">
+                            <li class="active"><a href="#">No data for entry <em>${key}</em></a></li>
+                        </ul>
+
+                    </div>
+                    <ul class="nav pull-right">
+                        <li id="nav_about"><a href="../about">about</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>    
+        <div id="wrap">
+            <div class="container" id="index">
+                <div class="row-fluid">
+                    <div class="left span8">
+                        <div id="no_entry">
+                        </div>
+                        <form class="form" id="home_search" >
+                            <div class="input-append center">
+                                <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
+                                <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
                             </div>
                         </form>
-                    </div>          
-                </div>
-                <div id="wrap">
-                    <div id="diseasebar">
-                        <div id="sidebar_menu">
-                            <div id="dc4_tree_control">
-                                <a id="dc4_tree_collapse" class="tooltip" data-tooltip="Collapse tree content">Collapse tree content</a>
-                                <a id="dc4_tree_expand" class="tooltip" data-tooltip="Expand tree content">Expand tree content</a>
-                            </div>
-                            <div id="dc4_disease_control">
-                                <span id="dc4_disease_hypertree" class="tooltip" data-tooltip="Go to ${actionBean.key} home">Go to disease home</span>
-                                <span id="dc4_disease_report" data-id="${actionBean.key}" class="tooltip" data-tooltip="Go to ${actionBean.key} report view">Go to disease report</span>
-                                <span id="dc4_disease_print" data-id="${actionBean.key}" class="tooltip" data-tooltip="Go to ${actionBean.key} print view">Go to disease print view</span>
-                            </div>
-                            <div id="dc4_page_control">
-                                <span id="dc4_page_external" class="tooltip" data-tooltip="Open this page in a new window" data-id="${actionBean.key}">Go to disease OMIM page</span>
-                                <span id="dc4_page_help" class="tooltip" data-tooltip="View Diseasecard help" >View Diseasecard help</span>
-                            </div>
+                        <div id="helper">
+                            Need help? You can search Diseasecard for disease names, OMIM disease codes or any of the connected identifiers.<br /><br />Try <a href="#" class="search_help" title="Search for OMIM code" rel="tooltip" data-animation="true">114480</a>, <a class="search_help" title="Add disease name to search box" rel="tooltip" data-animation="true">breast cancer</a> or <a href="#" class="search_help" rel="tooltip" data-animation="true" title="Add gene HGNC symbol to search box">BRCA2</a>
                         </div>
-                        <div id="tree">
+                    </div>
+                    <div class="right span4">
+                        <div class="top_hits">
+                            <h3>Browse rare diseases</h3>
+                            <ul>
+                                <li><a href="./125853" rel="tooltip" title="Visit Diabetes mellitus, noninsulin-dependent's disease card">Diabetes mellitus</a><i class="icon-angle-left"></i></li>
+                                <li><a href="./601665" rel="tooltip" title="Visit Obesity, autosomal dominant's disease card">Obesity</a><i class="icon-angle-left"></i></li>
+                                <li><a href="./211980" rel="tooltip" title="Visit Adenocarcinoma of lung, response to tyrosine kinase inhibitor's disease card">Lung cancer</a><i class="icon-angle-left"></i></li>
+                                <li><a href="./176807" rel="tooltip" title="Visit Prostate cancer's disease card">Prostate cancer</a><i class="icon-angle-left"></i></li>
+                                <li><a href="./137215" rel="tooltip" title="Visit Gastric cancer's disease card">Gastric cancer</a><i class="icon-angle-left"></i></li>
+                                <li><a href="./601626" rel="tooltip" title="Visit Leukemia's disease card">Leukemia</a><i class="icon-angle-left"></i></li>
+                                <li><a href="./181500" rel="tooltip" title="Visit Schizophrenia's disease card">Schizophrenia</a><i class="icon-angle-left"></i></li>
+                                <li><a href="./609423" rel="tooltip" title="Visit AIDS's disease card">AIDS</a><i class="icon-angle-left"></i></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>              
+            </div>            
+        </div>
+    </c:otherwise>
+</c:choose>
 
-                        </div> 
-                    </div>
-                    <div id="content">
-                        <div id="container">
-                            <div id="center-container">
-                                <div id="infovis"></div>
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-            </c:when>
-            <c:otherwise>
-                <div id="top">
-                    <div class="info">
-                        <div class="logo"></div>
-                        <div class="description">No data available for ${actionBean.key}</div>
-                    </div>
-                    <div class="right_box">
-                        <div class="about tooltip" data-tooltip="Go to About page">
-                            <a href="${path}/about" target="_top">about</a>
-                        </div>
-                        <div class="mag tooltip" data-tooltip="Launch search box" data-active="false"></div>
-                    </div>
-                    <div class="search">
-                        <form>
-                            <input type="text" id="text_search" class="searcher" placeholder="Search..." type="search" />
-                            <div class="cancel">
-                            </div>
-                        </form>
-                    </div>          
-                </div>
-                <div id="index">
-                    <div class="null_search">
-                        <form class="form" >
-                            <input type="text" class="searcher" id="null_text_search" placeholder="Search here..." /><input type="button" id="button_search" value="GO" /><span data-id="" id="omim"></span>
-                        </form>
-                    </div>
-                </div>
-                <script>
-                    $('#null_text_search').keypress(function(e){
-                        if ( e.which == 13 ) {
-                            e.preventDefault();
-                            if($('#null_text_search').data('omim') != undefined) {
-                                window.location = path + '/disease/' + $('#null_text_search').data('omim');                
-                            } else {
-                                window.location = path + '/search/' + $('#null_text_search').attr('value');
-                            }
-                        }         
-                    });
-    
-                    $( "#null_text_search" ).autocomplete({
-                        minLength: 3,
-                        delay: 500,
-                        source: path + '/autocomplete',
-                        focus: function( event, ui ) {            
-                            $('#null_text_search').data('omim',ui.item.omim);
-                            $( "#null_text_search" ).val( ui.item.info );
-                            return false;
-                        },
-                        select: function( event, ui ) {
-                            event.preventDefault();
-                            $('#null_text_search').data('omim',ui.item.omim);
-                            window.location = path + '/disease/' + ui.item.omim;       
-                        }
-                    })
-                    .data( "autocomplete" )._renderItem = function( ul, item ) {
-                        return $( "<li></li>" )
-                        .data( "item.autocomplete", item )
-                        .data("item.omim",item.omim)
-                        .append( "<a>" + item.omim + " | "  + item.info + "</a>" )
-                        .appendTo( ul );
-                    }; 
-                </script>
-            </c:otherwise>
-        </c:choose>
-
-    </s:layout-component>
+</s:layout-component>
 </s:layout-render>

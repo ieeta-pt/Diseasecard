@@ -11,6 +11,7 @@ import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.domain.Disease;
+import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
  *
@@ -68,6 +69,10 @@ public class DiseaseActionBean implements ActionBean {
             if (Config.isDebug()) {
                 Logger.getLogger(DiseaseActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        try {
+            Activity.log(key, "entry", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+        } catch (Exception e) {
         }
         return new ForwardResolution("/final/view/disease.jsp");
     }

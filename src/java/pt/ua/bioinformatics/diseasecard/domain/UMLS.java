@@ -10,10 +10,10 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
  *
  * @author pedrolopes
  */
-public class ICD {
+public class UMLS {
         private String id;
     private String uri;
-    private Orphanet orphanet;
+    private HPO hpo;
 
     public String getId() {
         return id;
@@ -31,18 +31,18 @@ public class ICD {
         this.uri = uri;
     }
 
-    public Orphanet getOrphanet() {
-        return orphanet;
+    public HPO getHpo() {
+        return hpo;
     }
 
-    public void setOrphanet(Orphanet orphanet) {
-        this.orphanet = orphanet;
+    public void setHpo(HPO hpo) {
+        this.hpo = hpo;
     }
 
-    public ICD(String uri, Orphanet orphanet) {
+    public UMLS(String uri, HPO hpo) {
         this.id = ItemFactory.getTokenFromItem(uri);
         this.uri = uri;
-        this.orphanet = orphanet;
+        this.hpo = hpo;
     }
     
     

@@ -109,13 +109,14 @@ public class Run {
             umls.start();
             prosite.start();
              
-        /*   SingleImport single_gwas = new SingleImport("resource_gwascentral");
+           SingleImport single_gwas = new SingleImport("resource_gwascentral");
             Thread gwas  = new Thread(single_gwas);
-            gwas.start();*/
+            gwas.start();
+            */
             
-           // SingleImport single_swiss = new SingleImport("resource_swissvar");
-            //Thread swissvar = new Thread(single_swiss);
-            //swissvar.start();
+           SingleImport single_swiss = new SingleImport("resource_swissvar");
+           Thread swissvar = new Thread(single_swiss);
+            swissvar.start();
             
 
             // FULL&

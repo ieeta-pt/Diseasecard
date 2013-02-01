@@ -33,14 +33,16 @@ import pt.ua.bioinformatics.diseasecard.domain.PDB;
 import pt.ua.bioinformatics.diseasecard.domain.PROSITE;
 import pt.ua.bioinformatics.diseasecard.domain.PharmGKB;
 import pt.ua.bioinformatics.diseasecard.domain.SwissVar;
+import pt.ua.bioinformatics.diseasecard.domain.UMLS;
 import pt.ua.bioinformatics.diseasecard.domain.UniProt;
+import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
  *
  * @author pedrolopes
  */
-@UrlBinding("/content/{key}.{$event}")
-public class ContentActionBean implements ActionBean {
+@UrlBinding("/services/content/{key}.{$event}")
+public class ServicesContentActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
     private String key;
@@ -109,8 +111,12 @@ public class ContentActionBean implements ActionBean {
             return new StreamingResolution("application/json", jsondata);
         } catch (Exception ex) {
             if (Config.isDebug()) {
-                Logger.getLogger(ContentActionBean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ServicesContentActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        try {
+            Activity.log(key, "content", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+        } catch (Exception e) {
         }
         return new StreamingResolution("application/json", "");
     }
@@ -120,19 +126,19 @@ public class ContentActionBean implements ActionBean {
         JSONObject objUp = null;
         try {
             data.put("id", key);
-            data.put("name", "<h1>" + disease.getOmim().getDescription() + "<h1>");
+            data.put("name", "<h6>" + disease.getOmim().getDescription() + "</h6>");
             JSONArray entities = new JSONArray();
 
             // processing Entity Protein
             JSONObject protein = new JSONObject();
             protein.put("id", "entity:protein");
-            protein.put("name", "<h2>Protein</h2>");
+            protein.put("name", "<h5>Protein</h5>");
             JSONArray proteins = new JSONArray();
 
             // interpro
             JSONObject ip = new JSONObject();
             ip.put("id", "concept:interpro");
-            ip.put("name", "<h3>InterPro</h3>");
+            ip.put("name", "<h6>InterPro</h6>");
             if (!disease.getProtein().getInterpro().isEmpty()) {
                 ip.put("size", disease.getProtein().getInterpro().size());
                 JSONArray ip_children = new JSONArray();
@@ -149,7 +155,7 @@ public class ContentActionBean implements ActionBean {
             // pdb
             JSONObject pdb = new JSONObject();
             pdb.put("id", "concept:pdb");
-            pdb.put("name", "<h3>PDB</h3>");
+            pdb.put("name", "<h6>PDB</h6>");
             if (!disease.getProtein().getPdb().isEmpty()) {
                 pdb.put("size", disease.getProtein().getPdb().size());
                 JSONArray pdb_children = new JSONArray();
@@ -170,7 +176,7 @@ public class ContentActionBean implements ActionBean {
             // prosite
             JSONObject prosite = new JSONObject();
             prosite.put("id", "concept:prosite");
-            prosite.put("name", "<h3>PROSITE</h3>");
+            prosite.put("name", "<h6>PROSITE</h6>");
             if (!disease.getProtein().getProsite().isEmpty()) {
                 prosite.put("size", disease.getProtein().getProsite().size());
                 JSONArray prosite_children = new JSONArray();
@@ -187,7 +193,7 @@ public class ContentActionBean implements ActionBean {
             // uniprot
             JSONObject uniprot = new JSONObject();
             uniprot.put("id", "concept:uniprot");
-            uniprot.put("name", "<h3>UniProt</h3>");
+            uniprot.put("name", "<h6>UniProt</h6>");
             if (!disease.getProtein().getUniprot().isEmpty()) {
                 uniprot.put("size", disease.getProtein().getUniprot().size());
                 JSONArray uniprot_children = new JSONArray();
@@ -207,13 +213,13 @@ public class ContentActionBean implements ActionBean {
             // processing Entity Locus
             JSONObject locus = new JSONObject();
             locus.put("id", "entity:locus");
-            locus.put("name", "<h2>Locus</h2>");
+            locus.put("name", "<h5>Locus</h5>");
             JSONArray loci = new JSONArray();
 
             // Ensembl
             JSONObject ensembl = new JSONObject();
             ensembl.put("id", "concept:ensembl");
-            ensembl.put("name", "<h3>Ensembl</h3>");
+            ensembl.put("name", "<h6>Ensembl</h6>");
             if (!disease.getLocus().getEnsembl().isEmpty()) {
                 ensembl.put("size", disease.getLocus().getEnsembl().size());
                 JSONArray ensembl_children = new JSONArray();
@@ -230,7 +236,7 @@ public class ContentActionBean implements ActionBean {
             // EntrezGene
             JSONObject entrez = new JSONObject();
             entrez.put("id", "concept:entrez");
-            entrez.put("name", "<h3>Entrez</h3>");
+            entrez.put("name", "<h6>Entrez</h6>");
             if (!disease.getLocus().getEntrezgene().isEmpty()) {
                 entrez.put("size", disease.getLocus().getEntrezgene().size());
                 JSONArray entrez_children = new JSONArray();
@@ -247,7 +253,7 @@ public class ContentActionBean implements ActionBean {
             // GeneCards
             JSONObject genecards = new JSONObject();
             genecards.put("id", "concept:genecards");
-            genecards.put("name", "<h3>GeneCards</h3>");
+            genecards.put("name", "<h6>GeneCards</h6>");
             if (!disease.getLocus().getHgnc().isEmpty()) {
                 genecards.put("size", disease.getLocus().getHgnc().size());
                 JSONArray genecards_children = new JSONArray();
@@ -264,7 +270,7 @@ public class ContentActionBean implements ActionBean {
             // GeneNames
             JSONObject hgnc = new JSONObject();
             hgnc.put("id", "concept:hgnc");
-            hgnc.put("name", "<h3>HGNC</h3>");
+            hgnc.put("name", "<h6>HGNC</h6>");
             if (!disease.getLocus().getHgnc().isEmpty()) {
                 hgnc.put("size", disease.getLocus().getHgnc().size());
                 JSONArray hgnc_children = new JSONArray();
@@ -284,13 +290,13 @@ public class ContentActionBean implements ActionBean {
             // processing Entity Drug
             JSONObject drug = new JSONObject();
             drug.put("id", "entity:drug");
-            drug.put("name", "<h2>Drug</h2>");
+            drug.put("name", "<h5>Drug</h5>");
             JSONArray drugs = new JSONArray();
 
             // PharmGKB
             JSONObject pharmgkb = new JSONObject();
             pharmgkb.put("id", "concept:pharmgkb");
-            pharmgkb.put("name", "<h3>PharmGKB</h3>");
+            pharmgkb.put("name", "<h6>PharmGKB</h6>");
             if (!disease.getDrug().getPharmgkb().isEmpty()) {
                 pharmgkb.put("size", disease.getDrug().getPharmgkb().size());
                 JSONArray pharmgkb_children = new JSONArray();
@@ -307,7 +313,7 @@ public class ContentActionBean implements ActionBean {
             // DrugBank
             JSONObject drugbank = new JSONObject();
             drugbank.put("id", "concept:drugbank");
-            drugbank.put("name", "<h3>DrugBank</h3>");
+            drugbank.put("name", "<h6>DrugBank</h6>");
             if (!disease.getDrug().getDrugbank().isEmpty()) {
                 drugbank.put("size", disease.getDrug().getDrugbank().size());
                 JSONArray db_children = new JSONArray();
@@ -319,20 +325,20 @@ public class ContentActionBean implements ActionBean {
                 }
                 drugbank.put("children", db_children);
             }
-            drugs.put(drugbank);            
+           // drugs.put(drugbank);            
             drug.put("children", drugs);
 
 
             // processing Entity Ontology
             JSONObject ontology = new JSONObject();
             ontology.put("id", "entity:ontology");
-            ontology.put("name", "<h2>Ontology</h2>");
+            ontology.put("name", "<h5>Ontology</h5>");
             JSONArray ontologies = new JSONArray();
 
             // HPO
             JSONObject hpo = new JSONObject();
             hpo.put("id", "concept:hpo");
-            hpo.put("name", "<h3>HPO</h3>");
+            hpo.put("name", "<h6>HPO</h6>");
             if (!disease.getOntology().getHpo().isEmpty()) {
                 hpo.put("size", disease.getOntology().getHpo().size());
                 JSONArray hpo_children = new JSONArray();
@@ -344,12 +350,12 @@ public class ContentActionBean implements ActionBean {
                 }
                 hpo.put("children", hpo_children);
             }
-            ontologies.put(hpo);
+           // ontologies.put(hpo);
 
             // MeSH
             JSONObject mesh = new JSONObject();
             mesh.put("id", "concept:mesh");
-            mesh.put("name", "<h3>MeSH</h3>");
+            mesh.put("name", "<h6>MeSH</h6>");
             if (!disease.getOntology().getMesh().isEmpty()) {
                 mesh.put("size", disease.getOntology().getMesh().size());
                 JSONArray mesh_children = new JSONArray();
@@ -366,7 +372,7 @@ public class ContentActionBean implements ActionBean {
             // ICD10
             JSONObject icd10 = new JSONObject();
             icd10.put("id", "concept:icd10");
-            icd10.put("name", "<h3>ICD 10</h3>");
+            icd10.put("name", "<h6>ICD 10</h6>");
             if (!disease.getOntology().getIcd().isEmpty()) {
                 icd10.put("size", disease.getOntology().getIcd().size());
                 JSONArray icd_children = new JSONArray();
@@ -379,19 +385,36 @@ public class ContentActionBean implements ActionBean {
                 icd10.put("children", icd_children);
             }
             ontologies.put(icd10);
+            
+            // UMLS
+            JSONObject umls = new JSONObject();
+            umls.put("id", "concept:umls");
+            umls.put("name", "<h6>UMLS</h6>");
+            if (!disease.getOntology().getUmls().isEmpty()) {
+                umls.put("size", disease.getOntology().getUmls().size());
+                JSONArray umls_children = new JSONArray();
+                for (UMLS up : disease.getOntology().getUmls().values()) {
+                    objUp = new JSONObject();
+                    objUp.put("id", "umls:" + up.getId());
+                    objUp.put("name", "<a data-id=\"umls:" + up.getId() + "\" target=\"_content\" class=\"framer dc4_ht\">" + up.getId() + "</a>");
+                    umls_children.put(objUp);
+                }
+                umls.put("children", umls_children);
+            }
+            ontologies.put(umls);
 
             ontology.put("children", ontologies);
 
             // processing Entity Pathway
             JSONObject pathway = new JSONObject();
             pathway.put("id", "entity:pathway");
-            pathway.put("name", "<h2>Pathway</h2>");
+            pathway.put("name", "<h5>Pathway</h5>");
             JSONArray pathways = new JSONArray();
 
             // KEGG
             JSONObject kegg = new JSONObject();
             kegg.put("id", "concept:kegg");
-            kegg.put("name", "<h3>KEGG</h3>");
+            kegg.put("name", "<h6>KEGG</h6>");
             if (!disease.getPathway().getKegg().isEmpty()) {
                 kegg.put("size", disease.getPathway().getKegg().size());
                 JSONArray kegg_children = new JSONArray();
@@ -408,7 +431,7 @@ public class ContentActionBean implements ActionBean {
             // Enzyme
             JSONObject enzyme = new JSONObject();
             enzyme.put("id", "concept:enzyme");
-            enzyme.put("name", "<h3>Enzyme</h3>");
+            enzyme.put("name", "<h6>Enzyme</h6>");
             if (!disease.getPathway().getEnzyme().isEmpty()) {
                 enzyme.put("size", disease.getPathway().getEnzyme().size());
                 JSONArray enzyme_children = new JSONArray();
@@ -426,13 +449,13 @@ public class ContentActionBean implements ActionBean {
             // processing Entity Study
             JSONObject study = new JSONObject();
             study.put("id", "entity:study");
-            study.put("name", "<h2>Study</h2>");
+            study.put("name", "<h5>Study</h5>");
             JSONArray studies = new JSONArray();
 
             // GWAS Central
             JSONObject gwascentral = new JSONObject();
             gwascentral.put("id", "concept:gwacentral");
-            gwascentral.put("name", "<h3>GWASCentral</h3>");
+            gwascentral.put("name", "<h6>GWASCentral</h6>");
             if (!disease.getStudy().getGwascentral().isEmpty()) {
                 gwascentral.put("size", disease.getStudy().getGwascentral().size());
                 JSONArray gwas_children = new JSONArray();
@@ -444,12 +467,12 @@ public class ContentActionBean implements ActionBean {
                 }
                 gwascentral.put("children", gwas_children);
             }
-            studies.put(gwascentral);
+            //studies.put(gwascentral);
 
             // Clinical Trials
             JSONObject clinicaltrials = new JSONObject();
             clinicaltrials.put("id", "concept:clinicaltrials");
-            clinicaltrials.put("name", "<h3>Cinical Trials</h3>");
+            clinicaltrials.put("name", "<h6>Cinical Trials</h6>");
             if (!disease.getStudy().getClinicaltrials().isEmpty()) {
                 clinicaltrials.put("size", disease.getStudy().getClinicaltrials().size());
                 JSONArray ct_children = new JSONArray();
@@ -467,13 +490,13 @@ public class ContentActionBean implements ActionBean {
             // processing Entity Variome
             JSONObject variome = new JSONObject();
             variome.put("id", "entity:variome");
-            variome.put("name", "<h2>Variome</h2>");
+            variome.put("name", "<h5>Variome</h5>");
             JSONArray variomes = new JSONArray();
 
             // WAVe
             JSONObject wave = new JSONObject();
             wave.put("id", "concept:wave");
-            wave.put("name", "<h3>WAVe</h3>");
+            wave.put("name", "<h6>WAVe</h6>");
             if (!disease.getLocus().getHgnc().isEmpty()) {
                 wave.put("size", disease.getLocus().getHgnc().size());
                 JSONArray wave_children = new JSONArray();
@@ -490,7 +513,7 @@ public class ContentActionBean implements ActionBean {
             // SwissVar
             JSONObject swissvar = new JSONObject();
             swissvar.put("id", "concept:swissvar");
-            swissvar.put("name", "<h3>SwissVar</h3>");
+            swissvar.put("name", "<h6>SwissVar</h6>");
             if (!disease.getVariome().getSwissvar().isEmpty()) {
                 swissvar.put("size", disease.getVariome().getSwissvar().size());
                 JSONArray swissvar_children = new JSONArray();
@@ -502,20 +525,20 @@ public class ContentActionBean implements ActionBean {
                 }
                 swissvar.put("children", swissvar_children);
             }
-            variomes.put(swissvar);
+            //variomes.put(swissvar);
             variome.put("children", variomes);
 
 
             // processing Entity Literature
             JSONObject literature = new JSONObject();
             literature.put("id", "entity:literature");
-            literature.put("name", "<h2>Literature</h2>");
+            literature.put("name", "<h5>Literature</h5>");
             JSONArray literatures = new JSONArray();
 
             // PubMed
             JSONObject pubmed = new JSONObject();
             pubmed.put("id", "concept:pubmed");
-            pubmed.put("name", "<h3>PubMed</h3>");
+            pubmed.put("name", "<h6>PubMed</h6>");
             pubmed.put("size", 1);
             JSONArray pubmed_children = new JSONArray();
             objUp = new JSONObject();
@@ -527,7 +550,7 @@ public class ContentActionBean implements ActionBean {
             // OMIM references
             JSONObject omim_ref = new JSONObject();
             omim_ref.put("id", "concept:omimref");
-            omim_ref.put("name", "<h3>OMIM</h3>");
+            omim_ref.put("name", "<h6>OMIM</h6>");
             omim_ref.put("size", 1);
             JSONArray omim_ref_children = new JSONArray();
             objUp = new JSONObject();
@@ -536,20 +559,20 @@ public class ContentActionBean implements ActionBean {
             omim_ref_children.put(objUp);
             omim_ref.put("children", omim_ref_children);
 
-            literatures.put(omim_ref);
+            //literatures.put(omim_ref);
             literatures.put(pubmed);
             literature.put("children", literatures);
 
             // processing Entity Disease
             JSONObject j_disease = new JSONObject();
             j_disease.put("id", "entity:disease");
-            j_disease.put("name", "<h2>Disease</h2>");
+            j_disease.put("name", "<h5>Disease</h5>");
             JSONArray diseases = new JSONArray();
 
             // NORD
             JSONObject nord = new JSONObject();
             nord.put("id", "concept:nord");
-            nord.put("name", "<h3>NORD</h3>");
+            nord.put("name", "<h6>NORD</h6>");
             nord.put("size", 1);
             JSONArray nord_children = new JSONArray();
             objUp = new JSONObject();
@@ -557,12 +580,12 @@ public class ContentActionBean implements ActionBean {
             objUp.put("name", "<a data-id=\"nord:" + disease.getOmim().getDescription() + "\" target=\"_content\" class=\"framer dc4_ht\">" + disease.getOmim().getDescription() + "</a>");
             nord_children.put(objUp);
             nord.put("children", nord_children);
-            diseases.put(nord);
+            //diseases.put(nord);
 
             // OMIM
             JSONObject omim = new JSONObject();
             omim.put("id", "concept:omim");
-            omim.put("name", "<h3>OMIM</h3>");
+            omim.put("name", "<h6>OMIM</h6>");
             if (!disease.getDiseaseMap().isEmpty()) {
                 omim.put("size", disease.getDiseaseMap().size());
                 JSONArray omim_children = new JSONArray();
@@ -579,7 +602,7 @@ public class ContentActionBean implements ActionBean {
             // Orphanet
             JSONObject orphanet = new JSONObject();
             orphanet.put("id", "concept:orphanet");
-            orphanet.put("name", "<h3>Orphanet</h3>");
+            orphanet.put("name", "<h6>Orphanet</h6>");
             if (!disease.getOmim().getOrphanet().isEmpty()) {
                 orphanet.put("size", disease.getOmim().getOrphanet().size());
                 JSONArray orp_children = new JSONArray();
@@ -608,7 +631,7 @@ public class ContentActionBean implements ActionBean {
             data.put("children", entities);
         } catch (Exception ex) {
             if (Config.isDebug()) {
-                Logger.getLogger(ContentActionBean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ServicesContentActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return data;

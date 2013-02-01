@@ -1,70 +1,45 @@
-var results_item_markup = '<div class="results_item" data-id="\${omim}"><span class="id disease_link tooltip" data-tooltip="Go to \${omim}" data-omim="\${omim}">\${omim}</span><br /><span class="name tooltip" data-tooltip="Go to \${omim}" data-omim="\${omim}">\${name}</span><a href="http://omim.org/entry/\${id}" class="omim tooltip" data-tooltip="Go to \${omim} OMIM page" target="_blank" title="\${name}">OMIM</a><a data-tooltip="Show \${omim} links" class="links tooltip" data-id="\${omim}">Links</a><div class="info" id="info-\${omim}"></div></div>';
-             
+// OMIM result list template
+var results_item_markup = '<li><a data-id="\${omim}" href="#\${omim}" class="opensearch"><i class="icon-chevron-right"></i>\${omim}</a></li>';//<span class="id disease_link" data-tooltip="Go to \${omim}" data-omim="\${omim}">\${omim}</span><br /><span class="name" data-tooltip="Go to \${omim}" data-omim="\${omim}">\${name}</span><a href="http://omim.org/entry/\${id}" class="omim" data-tooltip="Go to \${omim} OMIM page" target="_blank" title="\${name}">OMIM</a><a data-tooltip="Show \${omim} links" class="links" data-id="\${omim}">Links</a><div class="info" id="info-\${omim}"></div></li>';
+
 $(document).ready(function(){
-    /** on page filtering **/
-    $('#filter').keyup(function(){
+    
+    
+    // event handler to fix components sizes on resize
+    $(window).resize(function() {
+        if(this.resizeTO) clearTimeout(this.resizeTO);
+        this.resizeTO = setTimeout(function() {
+            $(this).trigger('resizeEnd');
+        }, 50);
+    });
+    
+    $(window).bind('resizeEnd', function() {
+        $('#results_search').height($('html').height() - 110);
+        $('#results_links').height($('html').height() - 110);
+        $('#results').width($('#meta').width());
+    });
+    
+    // page content filter
+    $('#filter').live('keyup', function(){
         var value = $(this).attr('value');
         if(value.length >= 3) {
-            $('.results_item').each(function(){
-                if ($(this).find('.name').html().toLowerCase().indexOf(value) === -1) {
+            $('.results_list').each(function(){
+                if ($(this).html().toLowerCase().indexOf(value) === -1) {
                     $(this).hide();
                 }
             });
         } else {
-            $('.results_item').show();
+            $('.results_list').show();
         }
     });
     
-    $.template('results', results_item_markup);
-    $('.disease_link').live('click', function(){
-        window.location = path + '/disease/' + $(this).data('omim');
-    });
-                
-    $('.name').live('click', function(){
-        window.location = path + '/disease/' + $(this).data('omim');
-    });
-                
+    $.template('results', results_item_markup);     
                 
     $('.mag').click(function() {
-        if( ($(this).data('active')).toString() == 'false') {
-            $('.search').show();
-            $(this).addClass('mag_enabled');
-            $(this).data('active', 'true');
+        showSearch($(this));
+        setTimeout(function(){                            
             $('#text_search').focus();
-        } else if(($(this).data('active')).toString() == 'true') {
-            $('.search').hide();
-            $(this).data('active', 'false');
-            $(this).removeClass('mag_enabled');
-        }
-    });
-                
-                
-    $('.cancel').click(function(){
-        $('.search').toggle();
-        $('.mag').data('active', 'false');
-        $('.mag').toggleClass('mag_enabled');                                     
-                    
-    });
-                
-    $('.links').live('click', function() {
-        $('#info-' + $(this).data('id')).slideToggle();
-    });
-                
-                
-    $('.close').live('click', function() {
-        $(this).parent().slideUp();
-    });
+        }, 400);                    
+    });    
     
-    $('.solr_link').live('click', function() {
-        var item = $('.disease_link').first().data('omim');
-        if(item != undefined) {
-            window.location = path + '/disease/' + item + '#' + $(this).data('link')
-        } else {
-            window.location = $(this).data('link');
-        }
-    })
-    
-    $('.internal_link').live('click', function() {
-       window.location = path + '/disease/' + $(this).data('omim') + '#' + $(this).data('type') + ':' + $(this).data('id'); 
-    });
+
 });

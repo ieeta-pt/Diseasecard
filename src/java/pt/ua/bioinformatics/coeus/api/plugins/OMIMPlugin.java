@@ -135,7 +135,7 @@ public class OMIMPlugin {
                 try {
                     if (m.find()) {
                         pheno_omim = m.group(0);
-                        dis_name = disease[0].substring(0, disease[0].length() - 14);
+                        dis_name = disease[0].substring(0, disease[0].length() - 12);
 
                         // check if disease is already on list
                         if (diseases.containsKey(pheno_omim)) {

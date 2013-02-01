@@ -1,7 +1,10 @@
 package pt.ua.bioinformatics.diseasecard.services;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -30,11 +33,14 @@ public class Finder {
     private ArrayList<Disease> diseases;
     private Matcher match_omim_id;
     private Pattern omimid = Pattern.compile("[0-9]{6}");
-    private DB db = new DB("DC4");
+    private DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
     private JSONObject result = new JSONObject();
     private HashMap<Integer, Disease> map = new HashMap<Integer, Disease>();
     private HashMap<String, ArrayList<String>> results = new HashMap<String, ArrayList<String>>();
-    private HashMap<String, SearchResult> network = new HashMap<String, SearchResult>();
+    private LinkedHashMap<String, SearchResult> network = new LinkedHashMap<String, SearchResult>();
+
+    public Finder() {
+    }
 
     public HashMap<String, ArrayList<String>> getResults() {
         return results;
@@ -113,66 +119,78 @@ public class Finder {
      */
     // public ArrayList<Disease> find() {
     public String find() {
-        try {
-            SolrServer server = new HttpSolrServer(Config.getIndex());
-            ModifiableSolrParams params = new ModifiableSolrParams();
-            params.set("q", query + "*");
-            params.set("rows", 1000);
-            QueryResponse response = server.query(params);
-            SolrDocumentList docs = response.getResults();
-            if (docs.isEmpty()) {
-                result.put("status", 110);
-            } else if (docs.size() == 1) {
-                result.put("status", 121);
-            } else {
-                result.put("status", 122);
-            }
-            result.put("size", docs.size());
-            JSONArray mtp = new JSONArray();
-
-            for (SolrDocument sol : docs) {
-                if (!network.containsKey(sol.get("omim").toString())) {
-                    SearchResult sr = new SearchResult(sol.get("omim").toString());
-                    sr.setName(Boot.getAPI().getOmimName(sol.get("omim").toString()));
-                    if (sol.get("id").toString().contains("name")) {
-                        sr.getAlias().add(sol.get("id").toString());
-                    } else {
-                        sr.getNetwork().add(sol.get("id").toString());
-                    }
-                    network.put(sol.get("omim").toString(), sr);
-
+        if (query.length() > 3) {
+            try {
+                SolrServer server = new HttpSolrServer(Config.getIndex());
+                ModifiableSolrParams params = new ModifiableSolrParams();
+                params.set("q", query + "*");
+                params.set("rows", 1000);
+                params.set("defType", "edismax");
+                params.set("qf", "content^0.1 title^0.9 id^1");
+                QueryResponse response = server.query(params);
+                SolrDocumentList docs = response.getResults();
+                if (docs.isEmpty()) {
+                    result.put("status", 110);
+                } else if (docs.size() == 1) {
+                    result.put("status", 121);
                 } else {
-                    network.get(sol.get("omim").toString()).getNetwork().add(sol.get("id").toString());
+                    result.put("status", 122);
+                }
+                result.put("size", docs.size());
+                JSONArray mtp = new JSONArray();
+
+                for (SolrDocument sol : docs) {
+                    if (!network.containsKey(sol.get("omim").toString())) {
+                        SearchResult sr = new SearchResult(sol.get("omim").toString());
+                        sr.setName(Boot.getAPI().getOmimName(sol.get("omim").toString()));
+                        if (sol.get("id").toString().contains("name")) {
+                            sr.getAlias().add(sol.get("id").toString());
+                        } else {
+                            sr.getNetwork().add(sol.get("id").toString());
+                        }
+                        network.put(sol.get("omim").toString(), sr);
+
+                    } else {
+                        network.get(sol.get("omim").toString()).getNetwork().add(sol.get("id").toString());
+                    }
+                }
+
+                for (SearchResult s : network.values()) {
+                    JSONObject o = new JSONObject();
+                    if (!s.getName().equals("")) {
+                        o.put("name", s.getName());
+                        o.put("omim", s.getOmim());
+                        JSONArray alias = new JSONArray();
+                        for (String link : s.getAlias()) {
+
+                            alias.put(link);
+                        }
+                        JSONArray links = new JSONArray();
+                        for (String link : s.getNetwork()) {
+                            if (!link.contains("hpo")) {
+                                links.put(link);
+                            }
+                        }
+                        o.put("alias", alias);
+                        o.put("links", links);
+                        mtp.put(o);
+                    }
+                }
+                result.put("results", mtp);
+            } catch (Exception ex) {
+                if (Config.isDebug()) {
+                    System.out.println("[COEUS][Diseasecard][Finder] Unable to find disease");
+                    Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
-            for (SearchResult s : network.values()) {
-                JSONObject o = new JSONObject();
-                o.put("name", s.getName());
-                o.put("omim", s.getOmim());
-                JSONArray alias = new JSONArray();
-                for (String link : s.getAlias()) {
-                    alias.put(link);
+        } else {
+            try {
+                result.put("status", 140);
+            } catch (Exception ex) {
+                if (Config.isDebug()) {
+                    System.out.println("[COEUS][Diseasecard][Finder] Unable to find disease");
+                    Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                JSONArray links = new JSONArray();
-                for (String link : s.getNetwork()) {
-                    links.put(link);
-                }
-                o.put("alias", alias);
-                o.put("links", links);
-                mtp.put(o);
-            }
-
-            result.put("results", mtp);
-
-
-
-
-
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][Diseasecard][Finder] Unable to find disease");
-                Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
@@ -192,6 +210,8 @@ public class Finder {
             ModifiableSolrParams params = new ModifiableSolrParams();
             params.set("q", query + "*");
             params.set("rows", 100);
+            params.set("defType", "edismax");
+            params.set("qf", "content^0.1 title^0.9 id^1");
             QueryResponse response = server.query(params);
             SolrDocumentList docs = response.getResults();
             for (SolrDocument sol : docs) {
@@ -202,12 +222,59 @@ public class Finder {
             }
             result.put("results", list);
         } catch (Exception ex) {
-
             if (Config.isDebug()) {
                 System.out.println("[COEUS][Diseasecard][Finder] Unable to get disease");
                 Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return list.toString();
+    }
+
+    public String browse(String key) {
+        JSONObject alldiseases = new JSONObject();
+        JSONArray list = new JSONArray();
+        PreparedStatement p = null;
+        try {
+            db.connect();
+            p = db.getConnection().prepareStatement("SELECT * FROM Diseases WHERE name REGEXP ? ORDER BY name ASC;");
+            if (key.equals("0")) {
+                p.setString(1, "^[0-9\\[\\{].*");
+            } else {
+                p.setString(1, "^[" + key + "].*");
+            }
+            ResultSet rs = p.executeQuery();
+            while (rs.next()) {
+                JSONArray o = new JSONArray();
+                o.put("<a rel=\"tooltip\" title=\"View " + rs.getString("name") + "\" href=\"./entry/" + rs.getInt("omim") + "\">" + rs.getInt("omim") + "</a>");
+                o.put("<i class=\"icon-angle-right\"></i> <a rel=\"tooltip\" title=\"View " + rs.getString("name") + "\" href=\"./entry/" + rs.getInt("omim") + "\">" + rs.getString("name") + "</a><a href=\"http://omim.org/entry/" + rs.getInt("omim") + "\" class=\"pull-right\" target=\"_blank\"><i class=\"icon-external-link\"></i></a>");
+                //o.put("<span class=\"link\">" + rs.getInt("omim") + "</span>");
+                
+              //  o.put(rs.getString("name"));
+                double progress = (rs.getInt("c") / 565.0) * 100;
+                String type;
+                if(progress > 50.0) {
+                    type = "";
+                } else if (progress > 35.0) {
+                    type = " progress-info";
+                } else if (progress > 25.0) {
+                    type = " progress-success";
+                } else if (progress > 10.0) {
+                    type = " progress-warning";
+                } else {
+                    progress = 10.0;
+                    type = " progress-danger";
+                }
+                o.put("<div class=\"progress" + type + "\"><div rel=\"tooltip\" title=\"" + rs.getInt("c") + " connections\" class=\"bar\" style=\"width: " + progress + "%;\">" + rs.getInt("c") + "</div></div>");
+                list.put(o);
+            }
+            db.close();
+            alldiseases.put("aaData", list);
+        } catch (Exception ex) {
+            if (Config.isDebug()) {
+                System.out.println("[COEUS][Diseasecard][Finder] Unable to get diseases info");
+                Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return alldiseases.toString();
     }
 }

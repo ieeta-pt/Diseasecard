@@ -14,32 +14,36 @@ var labelType, useGradients, nativeTextSupport, animate, jsontree;
 
 function start() {
     /** tree handling **/
-    $.getJSON(path + '/content/' + key +'.js',function(data){
+    $.getJSON(path + '/services/content/' + key +'.js',function(data){
         jsontree = data;
         $('#disease_info').fadeIn('slow');  
         content = data.children;
         var html = '<ul id="dc4_tree" class="tree">';
-        for(var i in content) {
-            html += '<li class="open library"><span class="open">' + content[i].name + '</span><ul>'
-            for (var j in content[i].children) {
+        $.each(content, function(i) {
+            html += '<li class="open library"><span class="open"><i class="icon-folder-open"></i> ' + content[i].name + '</span><ul>'
+            $.each(content[i].children, function(j) {
+         
                 if(content[i].children[j].children) {
                     if(content[i].children[j].size === 1) {
-                        html += '<li class="closed folder"><span class="open tooltip folder_block" data-tooltip="' + content[i].children[j].size + ' connection">' + content[i].children[j].name + '</span>';
+                        html += '<li class="closed folder"><span class="open folder_block" rel="tooltip" data-animation="true" title="' + content[i].children[j].size + ' connection"><i class="icon-folder-open-alt folder_icon"></i> ' + content[i].children[j].name + '</span>';
                     } else {
-                        html += '<li class="closed folder"><span class="open tooltip folder_block" data-tooltip="' + content[i].children[j].size + ' connections">' + content[i].children[j].name + '</span>';
+                        html += '<li class="closed folder"><span class="open folder_block" rel="tooltip" data-animation="true" title="' + content[i].children[j].size + ' connections"><i class="icon-folder-open-alt folder_icon"></i> ' + content[i].children[j].name + '</span>';
                     }                                        
                     html += '<ul>';
-                    for(var k in content[i].children[j].children) {
-                        html += '<li id="dc4_t_' + content[i].children[j].children[k].id + '" class="point dc4_t tooltip" data-tooltip="Open \'' + content[i].children[j].children[k].id + '\'">' + content[i].children[j].children[k].name + '</li>';
-                    }
+                    $.each(content[i].children[j].children, function(k) {
+                        html += '<li id="dc4_t_' + content[i].children[j].children[k].id + '" class="point dc4_t" rel="tooltip" data-animation="true" title="Open \'' + content[i].children[j].children[k].id + '\'"><i class="icon-file-alt file_icon"></i> ' + content[i].children[j].children[k].name + '</li>';
+                    })
                     html += '</ul>';
                 } else {
-                    html += '<li class="folder_empty"><span class="open">' + content[i].children[j].name + '</span>';
+                    html += '<li class="folder_empty"><span class="open"><i class="icon-folder-close-alt folder_empty_icon"></i> ' + content[i].children[j].name + '</span>';
                 }
+                
                 html += '</li>';
-            }
+             
+            });
             html += '</ul></li>';
-        }
+        });
+        
         html += '</ul>'
         $('#tree').append(html);
         $('#dc4_tree').treeview({
@@ -50,62 +54,52 @@ function start() {
             cookieID: "dc4_tree"
         });
         
-        /** disease meta tooltips **/
-        $('.tooltip').tipsy({
-            title: function() {
-                return $(this).data('tooltip');
-            },
-            fade: true,
-            live: true,
-            gravity: $.fn.tipsy.autoWE
-        });  
+     
         if(window.location.hash) {
             var hash = window.location.hash.substring(1);
-            $.ajax({
-                url: path + '/services/frame/0',
-                success: function(data) {
-                    $('#content').html(data);
+            if(!hash.startsWith('name')) {
+                $.ajax({
+                    url: path + '/services/frame/0',
+                    success: function(data) {
+                        $('#content').html(data);
     
-                    if(hash.startsWith('http')) {
-                        $('#diseasebar').spin(spin_opts);
-                        $('#_content').attr('src',hash);
+                        if(hash.startsWith('http')) {
+                            $('#_content').attr('src',hash);
                          
-                    } else {
-                        $('#diseasebar').spin(spin_opts);
-                        $('#_content').attr('src',path + '/services/linkout/' + hash);
-                        var select = '#dc4_t_' + hash.replace(':','\\:');
-                        var grandparent = $(select).parent().parent().parent();
-                        if (grandparent.parent().hasClass('lastExpandable')) {
-                            grandparent.parent().addClass('lastCollapsable').removeClass('lastExpandable');
                         } else {
-                            grandparent.parent().addClass('collapsable').removeClass('expandable'); 
-                        }                
-                        grandparent.slideDown('medium');
-                        // update parent
-                        var parent = $(select).parent();
-                        if (parent.parent().hasClass('lastExpandable')) {
-                            parent.parent().addClass('lastCollapsable').removeClass('lastExpandable');
-                        } else {
-                            parent.parent().addClass('collapsable').removeClass('expandable'); 
-                        }                
-                        parent.slideDown('medium');
-                        //.slideDown('medium');
-                        $('#tree').find('li').each(function() {
-                            $(this).removeClass('activepoint');
-                        });
-                        $(select).addClass('activepoint');   
-                    }  
-                    setTimeout(function() {
-                        $('#diseasebar').spin(false);
-                    }, 2880);
-                },
-                async: true
-            });        
-        } else {
+                            $('#_content').attr('src',path + '/services/linkout/' + hash);
+                            var select = '#dc4_t_' + hash.replace(':','\\:');
+                            var grandparent = $(select).parent().parent().parent();
+                            if (grandparent.parent().hasClass('lastExpandable')) {
+                                grandparent.parent().addClass('lastCollapsable').removeClass('lastExpandable');
+                            } else {
+                                grandparent.parent().addClass('collapsable').removeClass('expandable'); 
+                            }                
+                            grandparent.slideDown('medium');
+                            // update parent
+                            var parent = $(select).parent();
+                            if (parent.parent().hasClass('lastExpandable')) {
+                                parent.parent().addClass('lastCollapsable').removeClass('lastExpandable');
+                            } else {
+                                parent.parent().addClass('collapsable').removeClass('expandable'); 
+                            }                
+                            parent.slideDown('medium');
+                            //.slideDown('medium');
+                            $('#tree').find('li').each(function() {
+                                $(this).removeClass('activepoint');
+                            });
+                            $(select).addClass('activepoint');   
+                        }  
+                    },
+                    async: true
+                });        
+            } else {
+                init();
+            }
+        }else {
             init();
         }
-        
-        $('#sidebar_menu,#tree').fadeIn('slow'); 
+        $('#sidebar_menu,#tree').fadeIn(); 
     });
 }
 
@@ -180,7 +174,40 @@ function init(){
 }
 
 $(document).ready(function(){
+    // set main content area width
+    $('#content').width($('html').width() - $('#diseasebar').width());
+    
+    // update content width on window resize
+    $(window).resize(function() {
+        if(this.resizeTO) clearTimeout(this.resizeTO);
+        this.resizeTO = setTimeout(function() {
+            $(this).trigger('resizeEnd');
+        }, 50);
+    });
+    
+    $(window).bind('resizeEnd', function() {
+        $('#content').width($('html').width() - $('#diseasebar').width());
+    });
+    
+    // load diseasebar and navigation content
     start();
+    
+    // load bootstrap tooltips and popups
+    $('body').tooltip({
+        selector: "*[rel=tooltip]"
+    })
+    $("a[rel=popover]")
+    .popover({
+        'html' : true, 
+        'animation' : true, 
+        'placement' : 'bottom', 
+        'delay':1000, 
+        'trigger':'hover',
+        'content':synonyms_html
+    })
+    .click(function(e) {
+        e.preventDefault()
+    })
     
     /** event handler for URL # changes **/
     window.onhashchange = function(event) {
@@ -197,76 +224,33 @@ $(document).ready(function(){
     /** Top menu handlers **/
     /** search menu **/
     $('.mag').click(function() {
-        toggleTopButton('mag');
-    });               
-                
-    $('.cancel').click(function(){
-        hideTopButton('mag');                                                   
-    });
+        showSearch($(this));
+        setTimeout(function(){                            
+            $('#text_search').focus();
+        }, 400); 
+    });       
     
     $('#omim').click(function() {
-        $('#wrap').spin(spin_opts);        
         window.location.hash = 'omim:' + $(this).data('id');
-        setTimeout(function() {
-            $('#wrap').spin(false);
-        }, 2880);   
     });
-    
-    /**
-     * ReportView handlers
-     */
-    $('.report_box_concept_title').live ('click', function(){
-        $(('#' + $(this).data('concept')).replace(':','\\:')).slideToggle(200, function(){
-            });
-    });
-
-    $('.hide').live('click',function () {
-        $('.report_box_items').each(function() {
-            $(this).slideUp();
-        });
-    });
-    $('.show').live('click',function () {
-        $('.report_box_items').each(function() {
-            $(this).slideDown();
-        });
-    });
-        
-    
-    $('#dc4_disease_report').live('click',function(){   
-        $('#content').html(generateReport());
-    });
-    
-    $('#dc4_disease_print').click(function(){
-        window.open(path + '/print/' + $(this).data('id'));
-    });
-    
+  
+  
+    // diseasebar buttons actions
+    // show navigation tree
     $('#dc4_disease_hypertree').click(function() {
         $('#content').html('<div id="container"><div id="center-container"><div id="infovis"></div></div></div>');
         init();
         window.location.hash = '';
     });
-    
-    $('#dc4_disease_omim').click(function() {
-        $.ajax({
-            url: path + '/services/frame/omim:' + $(this).data('id'),
-            async: true,
-            success: function(data) {
-                $('#content').html(data);
-            }
-        });        
-    });
-    
+
+    // open content in external window
     $('#dc4_page_external').click(function() {
         if($('#_content').length) {
             window.open($('#_content').attr('src'));
         }        
     });
     
-    /** synonyms handling **/
-    $('#syns').live('click', function(){
-        toggleTopButton('syns');
-    });
-    
+    /** load synonyms info **/
     $('.synonym').each(function() {
         var omim =  $(this).data('omim');
         var li = $(this);
@@ -279,56 +263,18 @@ $(document).ready(function(){
     });
     
     /** Frame links in Tree **/
-    $('#tree .framer').live('click', function(){
-        $('#diseasebar').spin(spin_opts);
+    $('#tree .framer').live('click', function(){        
         var link = $(this);
         window.location.hash = $(this).data('id');
         $('#tree').find('li').each(function() {
             $(this).removeClass('activepoint');
         });
         link.parent().addClass('activepoint');     
-        setTimeout(function() {
-            $('#diseasebar').spin(false);
-        }, 3440); 
         return false;
-    });
-    
-    /** Frame links in ReportView **/
-    $('.report .framer').live('click',function() {
-        $('#diseasebar').spin(spin_opts);
-        var select = ('#dc4_t_' + $(this).data('id')).replace(':','\\:');
-        window.location.hash = $(this).data('id');
-                               
-        // update grandparent
-        var grandparent = $(select).parent().parent().parent();
-        if (grandparent.parent().hasClass('lastExpandable')) {
-            grandparent.parent().addClass('lastCollapsable').removeClass('lastExpandable');
-        } else {
-            grandparent.parent().addClass('collapsable').removeClass('expandable'); 
-        }                
-        grandparent.slideDown('medium');
-        // update parent
-        var parent = $(select).parent();
-        if (parent.parent().hasClass('lastExpandable')) {
-            parent.parent().addClass('lastCollapsable').removeClass('lastExpandable');
-        } else {
-            parent.parent().addClass('collapsable').removeClass('expandable'); 
-        }                
-        parent.slideDown('medium');
-        $('#tree').find('li').each(function() {
-            $(this).removeClass('activepoint');
-        });
-        $(select).addClass('activepoint');   
-        setTimeout(function() {
-            $('#diseasebar').spin(false);
-        }, 2880);
-                
-        return false;        
     });
     
     /** Frame links in HyperTree **/
     $('#infovis .framer').live('click',function() {
-        $('#diseasebar').spin(spin_opts);
         var select = ('#dc4_t_' + $(this).data('id')).replace(':','\\:');
         window.location.hash = $(this).data('id');                               
         // update grandparent
@@ -347,15 +293,67 @@ $(document).ready(function(){
             parent.parent().addClass('collapsable').removeClass('expandable'); 
         }                
         parent.slideDown('medium');
-        //.slideDown('medium');
         $('#tree').find('li').each(function() {
             $(this).removeClass('activepoint');
         });
         $(select).addClass('activepoint');   
-        setTimeout(function() {
-            $('#diseasebar').spin(false);
-        }, 2880);
                 
         return false;       
+    }); 
+    
+    var tour = new Tour({
+        name: "diseasecard_disease_tour",
+        keyboard: true
     });
+    
+    tour.addStep({
+        animation: true,
+        placement: 'bottom',
+        element: "#key",
+        title: "OMIM", 
+        content: "Press the OMIM identifier to quickly view the <strong>associated</strong> rare diseases<br />" 
+    });
+    tour.addStep({
+        animation: true,
+        placement: 'bottom',
+        element: "#omim",
+        title: "Disease name", 
+        content: "<strong>Hover</strong> over the disease name to quickly view alternative names<br />"
+    });    
+    tour.addStep({
+        animation: true,
+        placement: 'bottom',
+        element: "#infovis",
+        title: "Diseasebar", 
+        content: "Explore the <strong>rare disease network</strong> in Diseasecard's hypertree<br/>Links open in the main content area using <strong>LiveView</strong><br />"
+    });
+    tour.addStep({
+        animation: true,
+        placement: 'right',
+        element: "#tree",
+        title: "Diseasebar", 
+        content: "Navigate all connections in the <strong>rare disease network</strong><br/>Links also open in the main content area using <strong>LiveView</strong><br />Try it out!"
+    });
+    tour.addStep({
+        animation: true,
+        placement: 'bottom',
+        element: "#dc4_page_external",
+        title: "External View", 
+        content: "Press the <strong>external view</strong> button to opean the current LiveView page in a new browser window<br />"
+    });
+    tour.addStep({
+        animation: true,
+        placement: 'bottom',
+        element: "#nav_search",
+        title: "Search", 
+        content: "Quickly access Diseasecard's <strong>search</strong><br />"
+    });    
+    tour.addStep({
+        animation: true,
+        placement: 'bottom',
+        element: "#tour_about",
+        title: "Help", 
+        content: "If you need any further assistance, check out Diseasecard's documentation<br />"
+    });
+    tour.start();
 });

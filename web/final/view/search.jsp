@@ -6,47 +6,89 @@
         <script>
             $(document).ready(function(){
                 loadResults('${actionBean.query}');  
+                
+                
             });            
         </script>
     </s:layout-component>
     <s:layout-component name="body">
-
-        <div id="top">
-
-            <div class="info">
-                <div class="logo tooltip" data-tooltip="Go to Diseasecard home"></div>
-                <div class="omim">Search</div>
-                <div class="description">${actionBean.query}</div>
-
-            </div>
-            <div class="right_box">
-                <div class="about tooltip" data-tooltip="Go to About page">
-                    <a href="${path}/about" target="_top">about</a>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container pull-left">
+                    <a class="brand" href="../"><img src="/diseasecard/final/assets/image/logo_bw.png" height="18" /></a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">${actionBean.query}</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
                 </div>
-                <div class="mag tooltip" data-tooltip="Launch search box" data-active="false"></div>
-            </div>
-            <div class="search menu">
-                <form>
-                    <input type="text" id="text_search" placeholder="Search..." type="search" />
-                    <div class="cancel">
-                    </div>
-                </form>
-            </div>         
-        </div>
-        <div id="wrap">
-            <div id="results_search">
-                <div id="results_size"></div>
-                <div class="filter">
-                    <span class="label">Live Filter</span><input class="tooltip" data-tooltip="Type here to filter disease search results" type="text" id="filter" />
-                </div>
-                <div id="results_content">
-                    <div id="warning">
-                        <h1>Diseasecard results are loading...</h1>
-                        <div id="process"></div>
-                    </div>    
-                </div> 
+                <ul class="nav pull-right">
+                     <li><a href="../about"><i class="icon-book"></i></a></li>
+                            <li><a href="../browse"><i class="icon-reorder"></i></a></li>
+                    <li><a href="#" class="mag" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
+                </ul>
             </div>
         </div>
 
-    </s:layout-component>
+    </div>     
+    <!-- Top search bar -->
+    <div id="top">
+        <div class="search menu">
+            <form>
+                <div class="input-append pull-right">
+                    <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
+                    <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
+                </div>
+            </form>
+        </div>  
+    </div> 
+
+
+    <div class="container" id="search">
+        <!-- search errors -->
+        <div class="row-fluid center" id="errors">
+            <div class="alert span6" id="alert_short">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Warning!</strong> You search query must be at least 3 characters long.
+            </div> 
+            <div class="alert alert-error span6" id="alert_noresults">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Warning!</strong> Diseasecard found no results for you search query <span class="label label-important">${actionBean.query}</span>.
+            </div>
+        </div>
+        <div class="navbar" id="loading">
+            <div class="navbar-inner">
+                <div class="pull-left">
+                    <h4><span>Your results are loading... <i class="icon-spinner icon-spin"></i></span></h4>
+                </div>
+            </div>
+        </div>
+        <div class="navbar" id="meta">
+            <div class="navbar-inner">
+                <div class="pull-left">
+                    <h4><span id="results_size"></span> results for <span class="label label-inverse">${actionBean.query}</span></h4>
+                </div>
+                <form class="pull-right navbar-form" id="tour_filter">
+                    <div class="input-prepend">
+                        <span class="add-on"><i class="icon-eye-open"></i></span>
+                        <input class="input-large" type="text" placeholder="Filter" id="filter">
+                    </div> 
+                </form> 
+            </div>
+
+        </div>
+        <div class="row-fluid" id="results">
+            <div class="span3" id="results_search">
+                <ul class="nav nav-list bs-docs-sidenav" id="results_list">
+
+                </ul>
+            </div>
+            <div class="span9" id="results_links">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+</s:layout-component>
 </s:layout-render>

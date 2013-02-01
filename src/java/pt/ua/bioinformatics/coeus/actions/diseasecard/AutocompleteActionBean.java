@@ -8,12 +8,9 @@ import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.action.UrlBinding;
-import org.apache.solr.client.solrj.SolrServer;
-import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.params.ModifiableSolrParams;
 import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
+import pt.ua.bioinformatics.diseasecard.services.Activity;
 import pt.ua.bioinformatics.diseasecard.services.Finder;
 
 /**
@@ -78,6 +75,10 @@ public class AutocompleteActionBean implements ActionBean {
                 System.out.println("[AutocompleteActionBean] Unable to find matches for " + term + "\n\t" + e.toString());
                 Logger.getLogger(AutocompleteActionBean.class.getName()).log(Level.SEVERE, null, e);
             }
+        }
+        try {
+            Activity.log(term, "autocomplete", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+        } catch (Exception e) {
         }
         return new StreamingResolution("application/json", auto);
     }

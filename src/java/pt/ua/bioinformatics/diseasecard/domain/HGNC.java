@@ -130,7 +130,7 @@ public class HGNC {
 
     public HGNC(OMIM omi, String uri) {
         this.omim.add(omi);
-        this.uri = uri;
+        this.uri = uri.replace(" ","");
         this.id = ItemFactory.getTokenFromItem(uri);
         this.disease = omi.getDisease();
     }
@@ -142,7 +142,7 @@ public class HGNC {
             if (uri.startsWith("http://")) {
                 query = "SELECT ?p ?o {<" + this.uri + "> ?p ?o }";
             } else {
-                query = "SELECT ?p ?o {diseasecard:omim_" + this.id + " ?p ?o }";
+                query = "SELECT ?p ?o {diseasecard:hgnc_" + this.id + " ?p ?o }";
             }
             ResultSet results = Boot.getAPI().selectRS(query, false);
             while (results.hasNext()) {

@@ -1,5 +1,6 @@
 package pt.ua.bioinformatics.diseasecard.domain;
 
+import java.util.ArrayList;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
 
 /**
@@ -12,7 +13,16 @@ public class HPO {
     private String uri;
     private OMIM omim;
     private Disease disease;
+    private ArrayList<UMLS> umls = new ArrayList<UMLS>();
 
+    public ArrayList<UMLS> getUmls() {
+        return umls;
+    }
+
+    public void setUmls(ArrayList<UMLS> umls) {
+        this.umls = umls;
+    }
+    
     public Disease getDisease() {
         return disease;
     }

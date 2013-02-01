@@ -30,12 +30,30 @@ public class OMIM {
     private ArrayList<HGNC> hgnc = new ArrayList<HGNC>();
     private ArrayList<HPO> hpo = new ArrayList<HPO>();
     private ArrayList<SwissVar> svar = new ArrayList<SwissVar>();
+    private ArrayList<UMLS> umls = new ArrayList<UMLS>();
     private ArrayList<Orphanet> orphanets = new ArrayList<Orphanet>();
+    private HashMap<String, HPO> hpos = new HashMap<String, HPO>();
     private HashMap<String, Orphanet> orphanet = new HashMap<String, Orphanet>();
     private String location;
     private boolean phenotype;
     private Disease disease;
     private boolean loaded = false;
+
+    public HashMap<String, HPO> getHpos() {
+        return hpos;
+    }
+
+    public void setHpos(HashMap<String, HPO> hpos) {
+        this.hpos = hpos;
+    }
+
+    public ArrayList<UMLS> getUmls() {
+        return umls;
+    }
+
+    public void setUmls(ArrayList<UMLS> umls) {
+        this.umls = umls;
+    }
 
     public ArrayList<Orphanet> getOrphanets() {
         return orphanets;

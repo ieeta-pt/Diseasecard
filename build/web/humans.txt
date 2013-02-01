@@ -12,7 +12,7 @@
   José Luís Oliveira (jlo@ua.pt)
 
 /* SITE */
-  Last update: 2011/12/06
+  Last update: 2013/01/23
   Standards: HTML5, CSS3, RDF, OWL, SPARQL, LinkedData
-  Components: jQuery, Java, Jena, Joseki, pubby, Stripes...
+  Components: COEUS, jQuery, Java, Jena, Joseki, pubby, Stripes...
   

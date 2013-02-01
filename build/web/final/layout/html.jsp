@@ -11,24 +11,6 @@
             </s:layout-component>
         </head>
         <body>
-            <div id="dc4_feedback_content">
-                <div class="feedback_form">
-                    <p class="email">  
-                        <input type="text" name="email" id="dc4_feedback_email" />  
-                        <label for="web">Email</label>  
-                    </p>  
-                    <p class="text">  
-                        <textarea name="message" id="dc4_feedback_message"></textarea>  
-                    </p>  
-                    <p class="submit">  
-                        <input id="dc4_feedback_submit" type="submit" value="Send" />  
-                    </p>  
-                    <p class="small" id="dc4_feedback_warning"></p>
-                </div>
-            </div>
-            <div class="feedback small">
-                <span id="dc4_feedback" class="tooltip" data-tooltip="Send feedback" href="#">FEEDBACK</span>
-            </div>
             <noscript>
             Diseasecard requires that you enable Javascript.<br /><br /><br /><a href="http://support.google.com/bin/answer.py?hl=en&answer=23852" target="_blank">Take a look here if you do not know how.</a>
             </noscript>

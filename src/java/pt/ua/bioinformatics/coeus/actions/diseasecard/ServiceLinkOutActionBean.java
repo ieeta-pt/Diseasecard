@@ -13,6 +13,7 @@ import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.domain.Disease;
 import pt.ua.bioinformatics.diseasecard.domain.Links;
+import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
  *
@@ -85,6 +86,10 @@ public class ServiceLinkOutActionBean implements ActionBean {
                 Logger.getLogger(ServiceLinkOutActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
             url = getContext().getRequest().getContextPath() + "/final/view/empty_frame.jsp";
+        }
+        try {
+            Activity.log(key + ":" + value, "link", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+        } catch (Exception e) {
         }
         if (getContext().getRequest().getRequestURI().endsWith("+")) {
             return new StreamingResolution("txt", url);

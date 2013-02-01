@@ -36,7 +36,7 @@
         <dispatcher>FORWARD</dispatcher>
         <dispatcher>INCLUDE</dispatcher>
     </filter-mapping>
-     <!-- Joseki -->
+    <!-- Joseki -->
     <servlet>
         <servlet-name>SPARQL service processor</servlet-name>
         <servlet-class>org.joseki.http.Servlet</servlet-class>
@@ -125,9 +125,12 @@
         <load-on-startup>1</load-on-startup>
     </servlet>    
     
-    <welcome-file-list>
-        <welcome-file>final/index.jsp</welcome-file>
-    </welcome-file-list>
+    <!--  <welcome-file-list>
+        <welcome-file>/index</welcome-file>
+    </welcome-file-list>-->
+    <error-page>
+        <location>/final/404.jsp</location>
+    </error-page>
     <mime-mapping>
         <extension>ico</extension>
         <mime-type>image/x-icon</mime-type>

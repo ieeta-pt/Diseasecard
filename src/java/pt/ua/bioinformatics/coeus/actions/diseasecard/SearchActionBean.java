@@ -7,6 +7,7 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
+import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
  *
@@ -36,6 +37,10 @@ public class SearchActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution html() {
+        try {
+            Activity.log(query, "search", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+        } catch (Exception e) {
+        }
         return new ForwardResolution("/final/view/search.jsp");
     }
 }
