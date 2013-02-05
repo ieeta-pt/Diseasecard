@@ -17,8 +17,8 @@ import pt.ua.bioinformatics.diseasecard.services.Finder;
  *
  * @author pedrolopes
  */
-@UrlBinding("/autocomplete")
-public class AutocompleteActionBean implements ActionBean {
+@UrlBinding("/services/autocomplete/{$event}")
+public class ServicesAutocompleteActionBean implements ActionBean {
 
     private ActionBeanContext context;
     private String term;
@@ -62,22 +62,43 @@ public class AutocompleteActionBean implements ActionBean {
      * @return
      */
     @DefaultHandler
-    public Resolution get() {
+    public Resolution id() {
         try {
-            auto = (String) getContext().getAutocompleteResults("autocomplete:" + term);
+            auto = (String) getContext().getAutocompleteResults("autocompleteid:" + term);
             if (auto == null) {
                 finder = new Finder(term);
-                auto = finder.get();
-                getContext().setAutocompleteResults("autocomplete:" + term, auto);
+                auto = finder.get("id");
+                getContext().setAutocompleteResults("autocompleteid:" + term, auto);
             }
         } catch (Exception e) {
             if (Config.isDebug()) {
                 System.out.println("[AutocompleteActionBean] Unable to find matches for " + term + "\n\t" + e.toString());
-                Logger.getLogger(AutocompleteActionBean.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(ServicesAutocompleteActionBean.class.getName()).log(Level.SEVERE, null, e);
             }
         }
         try {
-            Activity.log(term, "autocomplete", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+            Activity.log(term, "autocompleteid", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+        } catch (Exception e) {
+        }
+        return new StreamingResolution("application/json", auto);
+    }
+    
+     public Resolution full() {
+        try {
+            auto = (String) getContext().getAutocompleteResults("autocompletefull:" + term);
+            if (auto == null) {
+                finder = new Finder(term);
+                auto = finder.get("full");
+                getContext().setAutocompleteResults("autocompletefull:" + term, auto);
+            }
+        } catch (Exception e) {
+            if (Config.isDebug()) {
+                System.out.println("[AutocompleteActionBean] Unable to find matches for " + term + "\n\t" + e.toString());
+                Logger.getLogger(ServicesAutocompleteActionBean.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+        try {
+            Activity.log(term, "autocompletefull", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
         } catch (Exception e) {
         }
         return new StreamingResolution("application/json", auto);

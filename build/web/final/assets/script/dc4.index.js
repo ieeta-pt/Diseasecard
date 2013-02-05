@@ -1,18 +1,34 @@
 $(document).ready(function(){
     // search button action
     $('#button_search').click(function(){
-        window.location = path + '/search/' + $('#text_search').attr('value');
+        window.location = path + '/search/' + search + '/' + $('#text_search').attr('value');
     });
     
-    // bootstrap tooltip loader
-    $('body').tooltip({
-        selector: "a[rel=tooltip]"
+    
+    // handle multiple search options
+    $('#search_id').change(function(){
+          if($(this).is(":checked")) {
+              $('#search_full').attr('checked',false);
+              search = 'id';
+          } else {              
+              $('#search_full').attr('checked',true);
+              search = 'full';
+          }
+    })
+    
+    $('#search_full').change(function(){
+          if($(this).is(":checked")) {
+              $('#search_id').attr('checked',false);
+              search = 'full';
+          } else {              
+              $('#search_id').attr('checked',true);
+              search = 'id';
+          }
     })
     
     $('.search_help').click(function() {
         $('#text_search').attr('value', $(this).text()); 
     });
-    $('#text_search').focus();
     
     var tour = new Tour({
                     name: "diseasecard_index_tour",
@@ -28,7 +44,13 @@ $(document).ready(function(){
         content: "Diseasecard starts here!<br />Type to <strong>search for anything</strong> related to rare diseases<br/>" 
     });
     tour.addStep({
-        prev: 0, // number
+        animation: true,
+        placement: 'right',
+        element: "#search_button",
+        title: "Advanced search", 
+        content: "Select between <strong>identifier only</strong> or <strong>full text</strong> search<br/>"
+    });
+    tour.addStep({
         animation: true,
         placement: 'bottom',
         element: "#browsing",
@@ -36,9 +58,15 @@ $(document).ready(function(){
         content: "Access the rare diseases Top 10 or <strong><a href='browse'>browse</a></strong> all diseases<br/>"
     });
     tour.start();
+    
+    
+    $('#text_search').focus();
+    
+    // load help text if there are no searches
     setTimeout(function() {
         if($('#text_search').attr('value') == '') {
             $('#helper').fadeIn('medium');
         }
-    }, 2880);
+    }, 4880);
+    
 });

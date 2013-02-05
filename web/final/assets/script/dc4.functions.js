@@ -26,27 +26,20 @@ function getFrame(pair) {
     return '<iframe src="' + path + '/services/linkout/' + pair + '" id="_content" width="100%" height="100%" />'    
 }
 
-function correctDiseaseName(name) {
-    name = name.replace('{','').replace('}','').replace('[','').replace(']','');
-    if(name.endsWith('1') || name.endsWith('2') || name.endsWith('3') || name.endsWith('4') || name.endsWith('5') || name.endsWith('6') || name.endsWith('7') || name.endsWith('8') || name.endsWith('') ) {
-        name = name.substr(0, name.length - 2);
-    }
-    return name;  
-}
-
 function uri2item(uri) {
     var addr = uri.split('/');
     return addr[addr.length - 1];
 }
-
-function debug(what) {
-    $('#debug').remove();
-    var div = '<div id="debug">' + what + '</div>';
-    $('body').append(div);
-}
             
 function loadResults(id) { 
-    var uri = encodeURI(path + '/view/results/search/' + id);
+    var uri = '';
+    if (window.location.toString().indexOf('full') > 0) 
+    {
+        uri = encodeURI(path + '/services/results/full/' + id);  
+    } else {
+        uri = encodeURI(path + '/services/results/id/' + id);   
+    }
+    
     $.getJSON(uri, function(data) {
         if(data.status === 110) {   
             $('#loading').fadeOut().remove();         
@@ -75,13 +68,13 @@ function loadResults(id) {
                     'data-omim' : value.omim,
                     'id' : value.omim
                 });
-                box.append('<a href="../entry/' + value.omim + '"><h3><small><i class="icon-play"></i></small> ' + value.omim + ' <small> ' + value.name + '</small></h3></a>');
+                box.append('<a href="../../entry/' + value.omim + '"><h3><small><i class="icon-play"></i></small> ' + value.omim + ' <small> ' + value.name + '</small></h3></a>');
                 
                 $.each(value.links, function(j, link) {
                     var dlink = $('<ul/>', {
                         'class' : 'results_items', 
                         'data-id' : link
-                    }).append('<li><i class="icon-angle-right"></i><a href="../entry/' + value.omim + '#' + link.substring(7, link.length) + '"> ' + link.substring(7, link.length) + '</a></li>');
+                    }).append('<li><i class="icon-angle-right"></i><a href="../../entry/' + value.omim + '#' + link.substring(7, link.length) + '"> ' + link.substring(7, link.length) + '</a></li>');
                     box.append(dlink);
                 })                
                 $('#results_links').append(box);
@@ -153,6 +146,13 @@ function showSearch(i) {
     if( (i.data('active')).toString() == 'false') {
         i.addClass('mag_enabled').data('active', 'true');
         $('.search').fadeIn(300);
+        setTimeout(function() {
+            if($('#text_search').attr('value') === '') {
+                $('.search').fadeOut('slow');
+                i.data('active', 'false');
+                i.removeClass('mag_enabled');
+            }
+        },10000);
     } else if((i.data('active')).toString() == 'true') {
         $('.search').hide();
         i.data('active', 'false');
@@ -205,6 +205,11 @@ jQuery.extend({
 });
 
 $(document).ready(function(){
+    // bootstrap tooltip loader
+    $('body').tooltip({
+        selector: "*[rel=tooltip]"
+    })
+    
     /** autocomplete handler **/
     $('#text_search').keypress(function(e){
         if ( e.which == 13 ) {
@@ -212,7 +217,7 @@ $(document).ready(function(){
             if($('#text_search').data('omim') != undefined) {
                 window.location = path + '/entry/' + $('#text_search').data('omim');                
             } else {
-                window.location = path + '/search/' + $('#text_search').attr('value');
+                window.location = path + '/search/' + search + '/' + $('#text_search').attr('value');
             }
         }         
     });
@@ -220,7 +225,7 @@ $(document).ready(function(){
     $( "#text_search" ).autocomplete({
         minLength: 3,
         delay: 500,
-        source: path + '/autocomplete',
+        source: path + '/services/autocomplete/' + search,
         focus: function( event, ui ) {            
         $('#text_search').data('omim',ui.item.omim);
         $("#text_search" ).val( ui.item.info );
@@ -228,7 +233,7 @@ $(document).ready(function(){
         },
         open :function(){
         $(this).autocomplete('widget').css('z-index', 1000);
-        return false; },
+        return false;        },
         select: function( event, ui ) {
         event.preventDefault();
         $('#text_search').data('omim',ui.item.omim);
@@ -246,10 +251,4 @@ $(document).ready(function(){
         .append( '<a>' + item.omim + ' <i class="icon-angle-right"></i> '  + item.info + '</a>' )
         .appendTo( ul );
     };     
-    
-    
-    /** logo click action **/
-    $('.logo').click(function(){
-        window.location = path;
-    })
 });

@@ -15,12 +15,12 @@
                 <div class="navbar navbar-inverse navbar-fixed-top">
                     <div class="navbar-inner">
                         <div class="container pull-left">
-                            <a class="brand" href="../"><img src="/diseasecard/final/assets/image/logo_bw.png" height="18" /></a>
+                    <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
                             <div class="nav-collapse collapse">
                                 <ul class="nav">
                                     <li class="active">
                                         <a href="#" id="key" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-chevron-down"></i> <c:if test="${actionBean.disease.omim.phenotype}" >#${actionBean.disease.omim.id}</c:if><c:if test="${actionBean.disease.omim.phenotype == false}" >${actionBean.disease.omim.id}</c:if></a>
-                                        <ul class="dropdown-menu synonyms" role="menu" aria-labelledby="dropdownMenu" >
+                                            <ul class="dropdown-menu synonyms" role="menu" aria-labelledby="dropdownMenu" >
                                             <c:forEach var="entry" items="${actionBean.disease.diseaseMap}">
                                                 <li><a class="small synonym" data-omim="${entry.key}" href="${path}/entry/${entry.key}"></a></li>
                                             </c:forEach>
@@ -36,10 +36,9 @@
                             </div><!--/.nav-collapse -->
                         </div>
                         <ul class="nav pull-right">
-                            <!-- <li id="nav_about"><a href="../about">about</a></li>-->
-                            <li><a href="../about" id="tour_about"><i class="icon-book"></i></a></li>
-                            <li><a href="../browse"><i class="icon-reorder"></i></a></li>
-                            <li><a href="#" class="mag" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
+                            <li><a href="<c:url value="/about" />" id="tour_about" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
+                            <li data-placement="bottom" rel="tooltip" title="Jump to Diseasecard rare diseases browsing"><a href="<c:url value="/browse" />" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
+                            <li><a href="#" class="mag" data-active="false" data-toggle="dropdown" id="nav_search" rel="tooltip" title="Search for rare diseases" data-placement="bottom"><i class="icon-search"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -78,21 +77,21 @@
                         <div id="center-container">
                             <div id="infovis"></div>
                         </div>  
-                     <!--   <div id="details">
-                            <div id="card">
-                                <div class="synopsis" id="info_table">
-
-                                </div>
-                            </div>
-                        </div>
-                     -->    
+                        <!--   <div id="details">
+                               <div id="card">
+                                   <div class="synopsis" id="info_table">
+   
+                                   </div>
+                               </div>
+                           </div>
+                        -->    
 
                     </div>
                 </div>
             </div>
             <script>
                 var synonyms_html = '<ul class="synonym_list"><c:forEach var="entry" items="${actionBean.disease.omim.names}"><li><i class="icon-angle-right"></i>${entry}</li></c:forEach></ul>';
-            </script>
+                </script>
         </c:when>
         <c:otherwise>
             <div class="navbar navbar-inverse navbar-fixed-top">

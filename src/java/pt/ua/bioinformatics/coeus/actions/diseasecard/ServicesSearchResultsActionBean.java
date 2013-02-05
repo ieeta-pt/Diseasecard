@@ -20,8 +20,8 @@ import pt.ua.bioinformatics.diseasecard.services.Finder;
  *
  * @author pedrolopes
  */
-@UrlBinding("/view/results/{$event}/{query}")
-public class ViewResultsActionBean implements ActionBean {
+@UrlBinding("/services/results/{$event}/{query}")
+public class ServicesSearchResultsActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
     private String query;
@@ -64,7 +64,7 @@ public class ViewResultsActionBean implements ActionBean {
     }
 
     @DefaultHandler
-    public Resolution search() {
+    public Resolution id() {
         finder = new Finder(query);
       /*  if (query.length() > 2) {
             try {
@@ -77,7 +77,7 @@ public class ViewResultsActionBean implements ActionBean {
                 process();
             } catch (Exception ex) {
                 if (Config.isDebug()) {
-                    Logger.getLogger(ViewResultsActionBean.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ServicesSearchResultsActionBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
@@ -88,7 +88,34 @@ public class ViewResultsActionBean implements ActionBean {
         }*/
         //return new StreamingResolution("application/js", response.toString());
         
-        return new StreamingResolution("application/js", finder.find());
+        return new StreamingResolution("application/js", finder.find("id"));
+    }
+    
+        public Resolution full() {
+        finder = new Finder(query);
+      /*  if (query.length() > 2) {
+            try {
+                diseases = (ArrayList<Disease>) getContext().getSearchResults("search:" + query);
+                if (diseases == null) {
+                    finder = new Finder(query);
+                 //   diseases = finder.find();
+                    out = finder.find();
+                }
+                process();
+            } catch (Exception ex) {
+                if (Config.isDebug()) {
+                    Logger.getLogger(ServicesSearchResultsActionBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            try {
+                response.put("status", 140);
+            } catch (Exception ex) {
+            }
+        }*/
+        //return new StreamingResolution("application/js", response.toString());
+        
+        return new StreamingResolution("application/js", finder.find("full"));
     }
 
     void process() {
@@ -117,7 +144,7 @@ public class ViewResultsActionBean implements ActionBean {
             }
         } catch (Exception ex) {
             if (Config.isDebug()) {
-                Logger.getLogger(ViewResultsActionBean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ServicesSearchResultsActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

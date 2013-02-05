@@ -19,6 +19,22 @@ h5, h6 {
     margin: 0 auto -40px;
 }
 
+#js {
+    bottom: 4px;
+    left: 4px;
+    position: absolute;
+    background-color: #333333;
+    color: #FFFFFF;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    width: 300px;
+    padding: 6px;
+    z-index: 500;
+}
+#js a {
+    color: #CCCCCC;
+}
 /** 
     NAV
 **/
@@ -52,6 +68,7 @@ h5, h6 {
     font-size: 16px;
     display: none;
     margin-top: 24px;
+    padding-top: 32px;
 }
 
 .home_search {
@@ -81,8 +98,13 @@ h5, h6 {
     list-style: none;
 }
 
-.right {
+.radios {
+    text-align: left;
+    padding-left: 8px;
+}
 
+#search_button {
+    margin-left: -2px; 
 }
 
 /**

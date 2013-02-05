@@ -6,8 +6,6 @@
         <script>
             $(document).ready(function(){
                 loadResults('${actionBean.query}');  
-                
-                
             });            
         </script>
     </s:layout-component>
@@ -15,7 +13,7 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container pull-left">
-                    <a class="brand" href="../"><img src="/diseasecard/final/assets/image/logo_bw.png" height="18" /></a>
+                    <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="active"><a href="#">${actionBean.query}</a></li>
@@ -23,9 +21,9 @@
                     </div><!--/.nav-collapse -->
                 </div>
                 <ul class="nav pull-right">
-                     <li><a href="../about"><i class="icon-book"></i></a></li>
-                            <li><a href="../browse"><i class="icon-reorder"></i></a></li>
-                    <li><a href="#" class="mag" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
+                     <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
+                    <li data-placement="bottom" rel="tooltip" title="Search for rare diseases"><a href="#" class="mag" title="Search for rare diseases" data-active="false" data-toggle="dropdown"><i class="icon-search icon-white"></i></a></li>
+                    <li><a href="#" class="mag" rel="tooltip"  data-placement="bottom" title="Search for rare diseases" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
                 </ul>
             </div>
         </div>

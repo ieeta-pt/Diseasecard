@@ -18,9 +18,9 @@
                     $(this).tab('show');
                 });
                 
-                  if(window.location.hash) {           
-                        $('a[href=' + window.location.hash + ']').tab('show');
-                  }
+                if(window.location.hash) {           
+                    $('a[href=' + window.location.hash + ']').tab('show');
+                }
             });            
         </script>
     </s:layout-component>
@@ -28,16 +28,16 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container pull-left">
-                    <a class="brand" href="./"><img src="/diseasecard/final/assets/image/logo_bw.png" height="18" /></a>
+                    <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="#">About</a></li>
+                            <li class="active"><a href="#">About Diseasecard</a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
                 <ul class="nav pull-right">                    
-                    <li><a href="./browse"><i class="icon-reorder"></i></a></li>
-                    <li><a href="#" class="mag" data-active="false" data-toggle="dropdown"><i class="icon-search icon-white"></i></a></li>
+                    <li data-placement="bottom" rel="tooltip" title="Jump to Diseasecard rare diseases browsing"><a href="<c:url value="/browse" />" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
+                    <li data-placement="bottom" rel="tooltip" title="Search for rare diseases"><a href="#" class="mag" title="Search for rare diseases" data-active="false" data-toggle="dropdown"><i class="icon-search icon-white"></i></a></li>
                 </ul>
             </div>
         </div>
@@ -51,22 +51,21 @@
                     </div>
                 </form>
             </div>  
-        </div> 
-
+        </div>
         <!-- Main page content -->
         <div class="container" id="about">
             <div class="row-fluid">
                 <div class="span12">
                     <ul class="nav nav-pills" id="tabs">
                         <li class="active">
-                            <a href="#overview"  >Overview</a>
+                            <a href="#overview" title="Overview">Overview</a>
                         </li>
-                        <li><a href="#faq"  >FAQ</a></li>
-                        <li><a href="#technology"  >Technology</a></li>
-                        <li><a href="#api"  >API</a></li>
-                        <li><a href="#publications"  >Publications</a></li>
-                        <li><a href="#disclaimer"  >Disclaimer</a></li>
-                        <li><a href="#support"  >Support</a></li>
+                        <li><a href="#faq" title="Frequently Asked Questions">FAQ</a></li>
+                        <li><a href="#technology" title="Techology">Technology</a></li>
+                        <li><a href="#api" title="API">API</a></li>
+                        <li><a href="#publications" title="Publications">Publications</a></li>
+                        <li><a href="#disclaimer" title="Disclaimer">Disclaimer</a></li>
+                        <li><a href="#support" title="Support">Support</a></li>
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane active" id="overview"><h2>Overview</h2>
@@ -74,8 +73,10 @@
                             for accessing and integrating genetic and medical information 
                             for health applications. Resorting to this integrated environment, clinicians are able to access and relate diseases data already available in the Internet, scattered along multiple databases. 
                             Diseasecard was developed by <a href="http://www.ua.pt">University of Aveiro</a> <a href="http://bioinformatics.ua.pt/">Bioinformatics Group</a> in collaboration with the <a href="http://bioserver.ieeta.pt/diseasecard/images/isciii.gif" target="_blank">Institute of Health Carlos III</a> <a href="http://www.isciii.es/htdocs/en/servicios/bioinformatica/bio/bioinformatica_presentacion.jsp" target="_blank">Bio-Computing and Public Health Unit</a>.
+                            <h2>Feedback</h2>
+                            Feel free to evaluate and give us feedback on Diseasecard at <a href="http://goo.gl/U0f2Z" title="Diseasecard evaluation form" target="_blank">http://goo.gl/U0f2Z</a>
                         </div>
-                        <div class="tab-pane" id="faq"><h2>FAQ</h2></div>
+                        <div class="tab-pane" id="faq"><h2>Frequently Asked Questions</h2></div>
                         <div class="tab-pane" id="technology">
                             <h2>Technology</h2>
                             Diseasecard is powered by <a href="http://bioinformatics.ua.pt/coeus/" target="_blank">COEUS</a>, an innovative framework for Semantic Web application development.

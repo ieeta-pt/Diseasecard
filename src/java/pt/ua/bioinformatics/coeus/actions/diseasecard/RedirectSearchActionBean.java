@@ -13,8 +13,8 @@ import pt.ua.bioinformatics.diseasecard.services.Activity;
  *
  * @author pedrolopes
  */
-@UrlBinding("/search/{query}.{$event}")
-public class SearchActionBean implements ActionBean {
+@UrlBinding("/search/{$event}/{query}")
+public class RedirectSearchActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
     private String query;

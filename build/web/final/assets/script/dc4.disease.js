@@ -228,6 +228,7 @@ $(document).ready(function(){
         setTimeout(function(){                            
             $('#text_search').focus();
         }, 400); 
+        
     });       
     
     $('#omim').click(function() {
