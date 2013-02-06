@@ -22,7 +22,7 @@
                 </div>
                 <ul class="nav pull-right">
                      <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
-                    <li data-placement="bottom" rel="tooltip" title="Search for rare diseases"><a href="#" class="mag" title="Search for rare diseases" data-active="false" data-toggle="dropdown"><i class="icon-search icon-white"></i></a></li>
+                    <li data-placement="bottom" rel="tooltip" title="Jump to Diseasecard rare diseases browsing"><a href="<c:url value="/browse" />" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
                     <li><a href="#" class="mag" rel="tooltip"  data-placement="bottom" title="Search for rare diseases" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
                 </ul>
             </div>
