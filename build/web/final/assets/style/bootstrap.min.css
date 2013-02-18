@@ -186,7 +186,7 @@ a.label:hover,a.badge:hover{color:#ffffff;text-decoration:none;cursor:pointer;}
 .label-inverse[href],.badge-inverse[href]{background-color:#1a1a1a;}
 .btn .label,.btn .badge{position:relative;top:-1px;}
 .btn-mini .label,.btn-mini .badge{top:0;}
-table{max-width:100%;background-color:transparent;border-collapse:collapse;border-spacing:0;}
+table{max-width:100%;background-color:transparent;border-collapse:collapse;border-spacing:0; background-color: #FFFFFF;}
 .table{width:100%;margin-bottom:20px;}.table th,.table td{padding:8px;line-height:20px;text-align:left;vertical-align:top;border-top:1px solid #c5d1d7;}
 .table th{font-weight:bold;}
 .table thead th{vertical-align:bottom;}
@@ -227,6 +227,12 @@ table td[class*="span"],table th[class*="span"],.row-fluid table td[class*="span
 .table-hover tbody tr.error:hover td{background-color:#ebcccc;}
 .table-hover tbody tr.warning:hover td{background-color:#faf2cc;}
 .table-hover tbody tr.info:hover td{background-color:#c4e3f3;}
+table .header{cursor:pointer;}
+table .header:after{content:"";float:right;margin-top:7px;border-width:0 4px 4px;border-style:solid;border-color:#000 transparent;visibility:hidden;}
+table .headerSortUp,table .headerSortDown{background-color:rgba(141, 192, 219, 0.25);text-shadow:0 1px 1px rgba(255, 255, 255, 0.75);}
+table .header:hover:after{visibility:visible;}
+table .headerSortDown:after,table .headerSortDown:hover:after{visibility:visible;filter:alpha(opacity=60);-khtml-opacity:0.6;-moz-opacity:0.6;opacity:0.6;}
+table .headerSortUp:after{border-bottom:none;border-left:4px solid transparent;border-right:4px solid transparent;border-top:4px solid #000;visibility:visible;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;filter:alpha(opacity=60);-khtml-opacity:0.6;-moz-opacity:0.6;opacity:0.6;}
 form{margin:0 0 20px;}
 fieldset{padding:0;margin:0;border:0;}
 legend{display:block;width:100%;padding:0;margin-bottom:20px;font-size:24px;line-height:40px;color:#333333;border:0;border-bottom:1px solid #e5e5e5;}legend small{font-size:15px;color:#999999;}
@@ -382,7 +388,7 @@ button.btn.btn-mini,input[type="submit"].btn.btn-mini{*padding-top:1px;*padding-
 .btn-toolbar{font-size:0;margin-top:10px;margin-bottom:10px;}.btn-toolbar>.btn+.btn,.btn-toolbar>.btn-group+.btn,.btn-toolbar>.btn+.btn-group{margin-left:5px;}
 .btn-group>.btn{position:relative;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;}
 .btn-group>.btn+.btn{margin-left:-1px;}
-.btn-group>.btn,.btn-group>.dropdown-menu,.btn-group>.popover{font-size:16px;}
+.btn-group>.btn,.btn-group>.dropdown-menu,.btn-group>.popover{font-size:16px;z-index:10000;}
 .btn-group>.btn-mini{font-size:12px;}
 .btn-group>.btn-small{font-size:13.6px;}
 .btn-group>.btn-large{font-size:20px;}

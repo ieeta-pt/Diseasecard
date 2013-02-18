@@ -21,8 +21,7 @@ function start() {
         var html = '<ul id="dc4_tree" class="tree">';
         $.each(content, function(i) {
             html += '<li class="open library"><span class="open"><i class="icon-folder-open"></i> ' + content[i].name + '</span><ul>'
-            $.each(content[i].children, function(j) {
-         
+            $.each(content[i].children, function(j) {         
                 if(content[i].children[j].children) {
                     if(content[i].children[j].size === 1) {
                         html += '<li class="closed folder"><span class="open folder_block" rel="tooltip" data-animation="true" title="' + content[i].children[j].size + ' connection"><i class="icon-folder-open-alt folder_icon"></i> ' + content[i].children[j].name + '</span>';
@@ -37,9 +36,7 @@ function start() {
                 } else {
                     html += '<li class="folder_empty"><span class="open"><i class="icon-folder-close-alt folder_empty_icon"></i> ' + content[i].children[j].name + '</span>';
                 }
-                
-                html += '</li>';
-             
+                html += '</li>';  
             });
             html += '</ul></li>';
         });
@@ -192,10 +189,7 @@ $(document).ready(function(){
     // load diseasebar and navigation content
     start();
     
-    // load bootstrap tooltips and popups
-    $('body').tooltip({
-        selector: "*[rel=tooltip]"
-    })
+    // load bootstrap popovers
     $("a[rel=popover]")
     .popover({
         'html' : true, 
@@ -249,6 +243,10 @@ $(document).ready(function(){
         if($('#_content').length) {
             window.open($('#_content').attr('src'));
         }        
+    });
+    
+    $('#dc4_page_help').click(function() {
+        window.location = path + '/about#faq';
     });
     
     /** load synonyms info **/
@@ -357,4 +355,5 @@ $(document).ready(function(){
         content: "If you need any further assistance, check out Diseasecard's documentation<br />"
     });
     tour.start();
+    
 });

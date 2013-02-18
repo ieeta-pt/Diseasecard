@@ -446,9 +446,6 @@ public class Finder {
                 JSONArray o = new JSONArray();
                 o.put("<a rel=\"tooltip\" title=\"View " + rs.getString("name") + "\" href=\"./entry/" + rs.getInt("omim") + "\">" + rs.getInt("omim") + "</a>");
                 o.put("<i class=\"icon-angle-right\"></i> <a rel=\"tooltip\" title=\"View " + rs.getString("name") + "\" href=\"./entry/" + rs.getInt("omim") + "\">" + rs.getString("name") + "</a><a href=\"http://omim.org/entry/" + rs.getInt("omim") + "\" class=\"pull-right\" target=\"_blank\"><i class=\"icon-external-link\"></i></a>");
-                //o.put("<span class=\"link\">" + rs.getInt("omim") + "</span>");
-
-                //  o.put(rs.getString("name"));
                 double progress = (rs.getInt("c") / 565.0) * 100;
                 String type;
                 if (progress > 50.0) {

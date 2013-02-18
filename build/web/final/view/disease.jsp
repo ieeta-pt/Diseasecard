@@ -59,13 +59,13 @@
                 <div id="diseasebar">
                     <div id="sidebar_menu">
                         <div class="btn-group" id="dc4_tree_control">
-                            <a href="#" id="dc4_tree_collapse" class="btn"><i class="icon-double-angle-up"></i></a>
-                            <a href="#" id="dc4_tree_expand" class="btn"><i class="icon-double-angle-down"></i></a>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" data-title="Collapse all tree nodes" id="dc4_tree_collapse" class="btn"><i class="icon-double-angle-up"></i></a>
+                            <a data-placement="bottom" data-container="body" rel="tooltip" data-title="Expand all tree nodes" id="dc4_tree_expand" class="btn"><i class="icon-double-angle-down"></i></a>
                         </div>
                         <div class="btn-group" id="dc4_disease_control">
-                            <button class="btn" id="dc4_disease_hypertree"><i class="icon-sitemap"></i></button>
-                            <button class="btn" id="dc4_page_external"><i class="icon-external-link"></i></button>
-                            <button class="btn" id="dc4_page_help"><i class="icon-question-sign"></i></button>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Show hypertree" class="btn" id="dc4_disease_hypertree"><i class="icon-sitemap"></i></a>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Open LiveView in external page" class="btn" id="dc4_page_external"><i class="icon-external-link"></i></a>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Go to help section" class="btn" id="dc4_page_help"><i class="icon-question-sign"></i></a>
                         </div>
                     </div>
                     <div id="tree">

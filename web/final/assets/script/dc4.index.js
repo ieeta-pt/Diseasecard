@@ -4,7 +4,6 @@ $(document).ready(function(){
         window.location = path + '/search/' + search + '/' + $('#text_search').attr('value');
     });
     
-    
     // handle multiple search options
     $('#search_id').change(function(){
           if($(this).is(":checked")) {
@@ -46,9 +45,12 @@ $(document).ready(function(){
     tour.addStep({
         animation: true,
         placement: 'right',
-        element: "#search_button",
+        element: "#home_form",
         title: "Advanced search", 
-        content: "Select between <strong>identifier only</strong> or <strong>full text</strong> search<br/>"
+        content: "Select between <strong>identifier only</strong> or <strong>full text</strong> search<br/>",
+        onShow: function (tour) {
+            $('#button_search_toggle').click();
+        }
     });
     tour.addStep({
         animation: true,
@@ -59,7 +61,6 @@ $(document).ready(function(){
     });
     tour.start();
     
-    
     $('#text_search').focus();
     
     // load help text if there are no searches
@@ -68,5 +69,4 @@ $(document).ready(function(){
             $('#helper').fadeIn('medium');
         }
     }, 4880);
-    
 });

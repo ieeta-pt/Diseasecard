@@ -67,10 +67,9 @@
                     <h4><span id="results_size"></span> results for <span class="label label-inverse">${actionBean.query}</span></h4>
                 </div>
                 <form class="pull-right navbar-form" id="tour_filter">
-                    <div class="input-prepend">
-                        <span class="add-on"><i class="icon-eye-open"></i></span>
+                    <label>
                         <input class="input-large" type="text" placeholder="Filter" id="filter">
-                    </div> 
+                    </label>
                 </form> 
             </div>
 

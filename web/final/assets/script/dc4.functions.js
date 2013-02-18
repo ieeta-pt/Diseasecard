@@ -92,7 +92,6 @@ function loadResults(id) {
             });
     
             tour.addStep({
-                next: 1, 
                 animation: true,
                 placement: 'right',
                 element: "#results_search",
@@ -100,7 +99,6 @@ function loadResults(id) {
                 content: "Browse the results for the OMIM identifiers associated with your <strong>" + id + "</strong> query<br />Identifiers are ordered by <strong>relevance</strong><br/>" 
             });
             tour.addStep({
-                prev: 0, // number
                 animation: true,
                 placement: 'left',
                 element: "#results_links",
@@ -108,7 +106,6 @@ function loadResults(id) {
                 content: "View and access all the pages where <strong>" + id + "</strong> was found<br/>"
             });
             tour.addStep({
-                prev: 0, // number
                 animation: true,
                 placement: 'bottom',
                 element: "#tour_filter",
@@ -206,9 +203,7 @@ jQuery.extend({
 
 $(document).ready(function(){
     // bootstrap tooltip loader
-    $('body').tooltip({
-        selector: "*[rel=tooltip]"
-    })
+    $('[rel=tooltip]').tooltip();
     
     /** autocomplete handler **/
     $('#text_search').keypress(function(e){

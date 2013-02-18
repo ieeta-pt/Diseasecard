@@ -11,7 +11,7 @@
         "built": true,
         "debug": false,
         "environment": "testing",
-        "index": "http://localhost:8983/solr"
+        "index": "http://localhost:8080/solr"
     },
     "prefixes" : {
         "coeus": "http://bioinformatics.ua.pt/coeus/",

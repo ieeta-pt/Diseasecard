@@ -2,8 +2,6 @@
 var results_item_markup = '<li><a data-id="\${omim}" href="#\${omim}" class="opensearch"><i class="icon-chevron-right"></i>\${omim}</a></li>';//<span class="id disease_link" data-tooltip="Go to \${omim}" data-omim="\${omim}">\${omim}</span><br /><span class="name" data-tooltip="Go to \${omim}" data-omim="\${omim}">\${name}</span><a href="http://omim.org/entry/\${id}" class="omim" data-tooltip="Go to \${omim} OMIM page" target="_blank" title="\${name}">OMIM</a><a data-tooltip="Show \${omim} links" class="links" data-id="\${omim}">Links</a><div class="info" id="info-\${omim}"></div></li>';
 
 $(document).ready(function(){
-    
-    
     // event handler to fix components sizes on resize
     $(window).resize(function() {
         if(this.resizeTO) clearTimeout(this.resizeTO);
@@ -39,7 +37,6 @@ $(document).ready(function(){
         setTimeout(function(){                            
             $('#text_search').focus();
         }, 400);                    
-    });    
-    
+    });       
 
 });

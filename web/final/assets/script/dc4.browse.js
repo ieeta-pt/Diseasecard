@@ -1,9 +1,69 @@
+var loaded = new Array();
 /* Default class modification */
 $.extend( $.fn.dataTableExt.oStdClasses, {
     "sSortAsc": "header headerSortDown",
     "sSortDesc": "header headerSortUp",
     "sSortable": "header"
 } );
+
+/* Custom datatables connection sorting */
+jQuery.fn.dataTableExt.aTypes.unshift( function ( sData )
+{
+    sData = typeof sData.replace == 'function' ?
+    sData.replace( /<[\s\S]*?>/g, "" ) : sData;
+    sData = $.trim(sData);
+      
+    var sValidFirstChars = "0123456789-";
+    var sValidChars = "0123456789.";
+    var Char;
+    var bDecimal = false;
+      
+    /* Check for a valid first char (no period and allow negatives) */
+    Char = sData.charAt(0);
+    if (sValidFirstChars.indexOf(Char) == -1)
+    {
+        return null;
+    }
+      
+    /* Check all the other characters are valid */
+    for ( var i=1 ; i<sData.length ; i++ )
+    {
+        Char = sData.charAt(i);
+        if (sValidChars.indexOf(Char) == -1)
+        {
+            return null;
+        }
+          
+        /* Only allowed one decimal place... */
+        if ( Char == "." )
+        {
+            if ( bDecimal )
+            {
+                return null;
+            }
+            bDecimal = true;
+        }
+    }
+      
+    return 'num-html';
+} );
+
+jQuery.extend( jQuery.fn.dataTableExt.oSort, {
+    "num-html-pre": function ( a ) {
+        var x = String(a).replace( /<[\s\S]*?>/g, "" );
+        return parseFloat( x );
+    },
+ 
+    "num-html-asc": function ( a, b ) {
+        return ((a < b) ? -1 : ((a > b) ? 1 : 0));
+    },
+ 
+    "num-html-desc": function ( a, b ) {
+        return ((a < b) ? 1 : ((a > b) ? -1 : 0));
+    }
+} );
+//
+
 
 /* API method to get paging information */
 $.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
@@ -100,17 +160,60 @@ $.extend( $.fn.dataTableExt.oPagination, {
     }
 } );
            
+/** 
+ * Launch datatables on given element
+ **/
+function dtables(id) {
+    $(id).dataTable({
+        "bProcessing": true,
+        "sAjaxSource": './services/browse/' + window.location.hash.charAt(window.location.hash.length - 1) + '.js',                
+        "bSort": true,
+        "aaSorting": [[2, 'desc']],
+        "bPaginate": true,
+        "sPaginationType": "bootstrap",
+        "bStateSave": true,
+        "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
+        "oLanguage": {
+            "sZeroRecords": "No diseases to display",
+            "sInfo": "Listing _START_ to _END_ of _TOTAL_ diseases",
+            "sInfoFiltered": " - filtering from _MAX_ diseases",
+            "sLoadingRecords": "Please wait, loading diseases...",
+            "sSearch": "",
+            "sLengthMenu": '<select>'+
+        '<option value="10">10</option>'+
+        '<option value="20">20</option>'+
+        '<option value="50">50</option>'+
+        '<option value="100">100</option>'+
+        '<option value="200">200</option>'+
+        '<option value="-1">All</option>'+
+        '</select> diseases per page'
+        },
+        "iDisplayLength": 10,
+        "bAutoWidth" : false,
+        "sCookiePrefix": "diseasecard_browse_",
+        "aoColumnDefs": [
+        {
+            "sClass": "connections", 
+            "aTargets": [ 2 ]
+        }
+        ],
+        "fnInitComplete": function() {                            
+            loaded.push(window.location.toString());
+            $(window.location.hash).tooltip({
+                selector: "*[rel=tooltip]"
+            });
+            $('.dataTables_filter input').attr('placeholder','Filter').addClass('input-large').focus();
+        }
+    }); 
+}
 
 $(document).ready(function(){  
-    var loaded = new Array();
-                
     var tour = new Tour({
         name: "diseasecard_browse_tour",
         keyboard: true
     });
     
     tour.addStep({
-        next: 1, 
         animation: true,
         placement: 'bottom',
         element: "#tabs",
@@ -118,7 +221,6 @@ $(document).ready(function(){
         content: "Select the starting letter!<br />Try with <a href='#p' id='tour_p'><strong>P</strong></a><br/>" 
     });
     tour.addStep({
-        prev: 0, // number
         animation: true,
         placement: 'bottom',
         element: "#tour_target",
@@ -137,44 +239,10 @@ $(document).ready(function(){
         $(this).tab('show');
     });
                 
-    if(window.location.hash) {           
+    if(window.location.hash) {      
         if(window.location.hash != '#overview') {
             $('a[href=' + window.location.hash + ']').tab('show');
-            $(window.location.hash + '_list').dataTable({
-                "bProcessing": true,
-                "sAjaxSource": './services/browse/' + window.location.hash.charAt(window.location.hash.length - 1) + '.js',
-                "bPaginate": true,
-                "sPaginationType": "bootstrap",
-                "bSort": true,
-                "bStateSave": true,
-                "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
-                "oLanguage": {
-                    "sZeroRecords": "No diseases to display",
-                    "sSearch": "Filter diseases: ",
-                    "sLengthMenu": 'Display <select>'+
-                '<option value="10">10</option>'+
-                '<option value="20">20</option>'+
-                '<option value="50">50</option>'+
-                '<option value="100">100</option>'+
-                '<option value="200">200</option>'+
-                '<option value="-1">All</option>'+
-                '</select> diseases'
-                },
-                "iDisplayLength": 10,
-                "bAutoWidth" : false,
-                "aoColumnDefs": [
-                {
-                    "sClass": "connections", 
-                    "aTargets": [ 2 ]
-                }
-                ],
-                "fnInitComplete": function() {                            
-                    loaded.push(window.location.toString());
-                    $(window.location.hash).tooltip({
-                        selector: "*[rel=tooltip]"
-                    });
-                }
-            }); 
+            dtables(window.location.hash + '_list');            
         }
     }
                 
@@ -184,47 +252,17 @@ $(document).ready(function(){
             $('#text_search').focus();
         }, 400);                    
     });    
-                
-    $('#tabs a').on('show', function (e) {                    
-        if(!e.target.toString().endsWith('#overview')) {
-            if(!loaded.contains(e.target)) {
-                $('#' + e.target.toString().charAt(e.target.toString().length - 1) + '_list').dataTable({
-                    "bProcessing": true,
-                    "sAjaxSource": './services/browse/' + e.target.toString().charAt(e.target.toString().length - 1) + '.js',
-                    "bPaginate": true,
-                    "sPaginationType": "bootstrap",
-                    "bSort": true,
-                    "bStateSave": true,
-                    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'p>>",
-                    "oLanguage": {
-                        "sZeroRecords": "No diseases to display",
-                        "sSearch": "Filter diseases: ",
-                        "sLengthMenu": 'Display <select>'+
-                    '<option value="10">10</option>'+
-                    '<option value="20">20</option>'+
-                    '<option value="50">50</option>'+
-                    '<option value="100">100</option>'+
-                    '<option value="200">200</option>'+
-                    '<option value="-1">All</option>'+
-                    '</select> diseases'
-                    },
-                    "iDisplayLength": 10,
-                    "bAutoWidth" : false,
-                    "aoColumnDefs": [
-                    {
-                        "sClass": "connections", 
-                        "aTargets": [ 2 ]
-                    }
-                    ],
-                    "fnInitComplete": function() {
-                        loaded.push(e.target.toString());
-                        $('#' + e.target.toString().charAt(e.target.toString().length - 1)).tooltip({
-                            selector: "*[rel=tooltip]"
-                        });
-                    }
-                });  
-            } 
+    
+    $(window).bind( 'hashchange', function(e) { 
+        if(window.location.hash != '#overview') {
+            if(!loaded.contains(window.location.toString())) {
+                $('a[href=' + window.location.hash + ']').tab('show');
+                dtables(window.location.hash + '_list');    
+            }
         }
+    });
+         
+    $('#tabs a').on('show', function (e) {
         window.location.hash = e.target.hash;
     });
 });            

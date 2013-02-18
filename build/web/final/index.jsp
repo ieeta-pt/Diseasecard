@@ -22,11 +22,11 @@
                         <a href="<c:url value="/about" />" title="About Diseasecard" class="tooltipp" data-tooltip="About Diseasecard"><img src="<c:url value="/final/assets/image/logo.png" />" /></a>
                     </div>
                     <form class="form" id="home_search" >
-                        <div class="input-append center">
+                        <div class="input-append center" id="home_form">
                             <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
                             <div class="btn-group" id="search_button">
                                 <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
-                                <button class="btn btn-inverse dropdown-toggle" data-toggle="dropdown" tabindex="-1" rel="tooltip" title="Select search type">
+                                <button class="btn btn-inverse dropdown-toggle" id="button_search_toggle" data-toggle="dropdown" tabindex="-1" rel="tooltip" title="Select search type">
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu radios">
