@@ -52,14 +52,14 @@
                     <div class="top_hits" id="browsing">
                         <h3>Browse rare diseases</h3>
                         <ul>
-                            <li><a href="<c:url value="/entry/125853" />" rel="tooltip" title="Visit Diabetes mellitus, noninsulin-dependent's disease card">Diabetes mellitus</a><i class="icon-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/601665" />" rel="tooltip" title="Visit Obesity, autosomal dominant's disease card">Obesity</a><i class="icon-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/211980" />" rel="tooltip" title="Visit Adenocarcinoma of lung, response to tyrosine kinase inhibitor's disease card">Lung cancer</a><i class="icon-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/176807" />" rel="tooltip" title="Visit Prostate cancer's disease card">Prostate cancer</a><i class="icon-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/137215" />" rel="tooltip" title="Visit Gastric cancer's disease card">Gastric cancer</a><i class="icon-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/601626" />" rel="tooltip" title="Visit Leukemia's disease card">Leukemia</a><i class="icon-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/181500" />" rel="tooltip" title="Visit Schizophrenia's disease card">Schizophrenia</a><i class="icon-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/609423" />" rel="tooltip" title="Visit AIDS's disease card">AIDS</a><i class="icon-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/125853" />" rel="tooltip" title="Visit Diabetes mellitus, noninsulin-dependent's disease card">Diabetes mellitus</a><i class="icon-double-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/601665" />" rel="tooltip" title="Visit Obesity, autosomal dominant's disease card">Obesity</a><i class="icon-double-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/211980" />" rel="tooltip" title="Visit Adenocarcinoma of lung, response to tyrosine kinase inhibitor's disease card">Lung cancer</a><i class="icon-double-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/176807" />" rel="tooltip" title="Visit Prostate cancer's disease card">Prostate cancer</a><i class="icon-double-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/137215" />" rel="tooltip" title="Visit Gastric cancer's disease card">Gastric cancer</a><i class="icon-double-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/601626" />" rel="tooltip" title="Visit Leukemia's disease card">Leukemia</a><i class="icon-double-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/181500" />" rel="tooltip" title="Visit Schizophrenia's disease card">Schizophrenia</a><i class="icon-double-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/609423" />" rel="tooltip" title="Visit AIDS's disease card">AIDS</a><i class="icon-double-angle-left"></i></li>
                             <li><br /></li>
                             <li><a href="<c:url value="/browse" />" rel="tooltip" title="Browse all diseases">Browse all</a></li>
                         </ul>

@@ -2,9 +2,7 @@
 <s:layout-render name="/final/layout/html.jsp">
     <s:layout-component name="title">${actionBean.disease.id} - ${actionBean.disease.omim.description} - Diseasecard</s:layout-component>
     <s:layout-component name="custom_scripts">
-        <script>
-            var key = '${actionBean.key}';
-        </script>
+        <script>var key = '${actionBean.key}';</script>
         <script src="<c:url value="/final/assets/script/jit.js" />"></script>
         <script src="<c:url value="/final/assets/script/treeview.js" />"></script>
         <script src="<c:url value="/final/assets/script/dc4.disease.js" />"></script>
@@ -15,7 +13,7 @@
                 <div class="navbar navbar-inverse navbar-fixed-top">
                     <div class="navbar-inner">
                         <div class="container pull-left">
-                    <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
+                            <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
                             <div class="nav-collapse collapse">
                                 <ul class="nav">
                                     <li class="active">
@@ -77,15 +75,6 @@
                         <div id="center-container">
                             <div id="infovis"></div>
                         </div>  
-                        <!--   <div id="details">
-                               <div id="card">
-                                   <div class="synopsis" id="info_table">
-   
-                                   </div>
-                               </div>
-                           </div>
-                        -->    
-
                     </div>
                 </div>
             </div>
@@ -101,7 +90,6 @@
                         <ul class="nav">
                             <li class="active"><a href="#">No data for entry <em>${key}</em></a></li>
                         </ul>
-
                     </div>
                     <ul class="nav pull-right">
                         <li id="nav_about"><a href="../about">about</a></li>

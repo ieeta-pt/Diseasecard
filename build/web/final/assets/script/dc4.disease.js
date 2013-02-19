@@ -16,7 +16,7 @@ function start() {
     /** tree handling **/
     $.getJSON(path + '/services/content/' + key +'.js',function(data){
         jsontree = data;
-        $('#disease_info').fadeIn('slow');  
+        $('#disease_info').fadeIn(1000);  
         content = data.children;
         var html = '<ul id="dc4_tree" class="tree">';
         $.each(content, function(i) {
@@ -97,7 +97,7 @@ function start() {
         }else {
             init();
         }
-        $('#sidebar_menu,#tree').fadeIn(); 
+        $('#sidebar_menu,#tree').fadeIn(1000); 
     });
 }
 

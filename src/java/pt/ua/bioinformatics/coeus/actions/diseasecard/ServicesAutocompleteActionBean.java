@@ -59,17 +59,14 @@ public class ServicesAutocompleteActionBean implements ActionBean {
 
     /**
      * Main resolution handler.
+     *
      * @return
      */
     @DefaultHandler
     public Resolution id() {
         try {
-            auto = (String) getContext().getAutocompleteResults("autocompleteid:" + term);
-            if (auto == null) {
-                finder = new Finder(term);
-                auto = finder.get("id");
-                getContext().setAutocompleteResults("autocompleteid:" + term, auto);
-            }
+            finder = new Finder(term);
+            auto = finder.get("id");
         } catch (Exception e) {
             if (Config.isDebug()) {
                 System.out.println("[AutocompleteActionBean] Unable to find matches for " + term + "\n\t" + e.toString());
@@ -82,15 +79,11 @@ public class ServicesAutocompleteActionBean implements ActionBean {
         }
         return new StreamingResolution("application/json", auto);
     }
-    
-     public Resolution full() {
+
+    public Resolution full() {
         try {
-            auto = (String) getContext().getAutocompleteResults("autocompletefull:" + term);
-            if (auto == null) {
-                finder = new Finder(term);
-                auto = finder.get("full");
-                getContext().setAutocompleteResults("autocompletefull:" + term, auto);
-            }
+            finder = new Finder(term);
+            auto = finder.get("full");
         } catch (Exception e) {
             if (Config.isDebug()) {
                 System.out.println("[AutocompleteActionBean] Unable to find matches for " + term + "\n\t" + e.toString());

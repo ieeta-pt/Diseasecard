@@ -27,7 +27,6 @@
                 </ul>
             </div>
         </div>
-
     </div>     
     <!-- Top search bar -->
     <div id="top">
@@ -40,14 +39,12 @@
             </form>
         </div>  
     </div> 
-
-
     <div class="container" id="search">
         <!-- search errors -->
         <div class="row-fluid center" id="errors">
             <div class="alert span6" id="alert_short">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <strong>Warning!</strong> You search query must be at least 3 characters long.
+                <strong>Warning!</strong> You search query must be at least 4 characters long.
             </div> 
             <div class="alert alert-error span6" id="alert_noresults">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>

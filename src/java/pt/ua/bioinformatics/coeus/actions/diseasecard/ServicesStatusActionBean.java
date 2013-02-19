@@ -3,18 +3,29 @@ package pt.ua.bioinformatics.coeus.actions.diseasecard;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
+import pt.ua.bioinformatics.diseasecard.services.Finder;
 
 /**
  *
  * @author pedrolopes
  */
-@UrlBinding("/browse")
-public class RedirectBrowseActionBean implements ActionBean {
+@UrlBinding("/services/status/{key}.{$event}")
+public class ServicesStatusActionBean implements ActionBean {
 
+    private String key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+    
     private COEUSActionBeanContext context;
 
     public void setContext(ActionBeanContext context) {
@@ -27,8 +38,7 @@ public class RedirectBrowseActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution get() {
-        return new ForwardResolution("/final/view/browse.jsp");
+        Finder f = new Finder();
+        return new StreamingResolution("application/json", f.status(Integer.parseInt(key)));
     }
-    
-    
 }

@@ -351,6 +351,34 @@ public class Finder {
         return list.toString();
     }
 
+    public String status(int limit) {
+        JSONObject response = new JSONObject();
+        JSONArray list = new JSONArray();
+        PreparedStatement p;
+        try {
+            db.connect();
+            p = db.getConnection().prepareStatement("SELECT ts, action, query, ip FROM Activity ORDER BY ts DESC LIMIT ? ;");
+            p.setInt(1, limit);
+             ResultSet rs = p.executeQuery();
+             while (rs.next()) {
+                JSONArray o = new JSONArray();
+                o.put(rs.getString("ts"));
+                o.put(rs.getString("action"));
+                o.put(rs.getString("query"));
+                o.put(rs.getString("ip"));
+                      list.put(o);
+             }
+             db.close();
+             response.put("aaData", list);
+             } catch (Exception ex) {
+            if (Config.isDebug()) {
+                System.out.println("[COEUS][Diseasecard][Finder] Unable to load status data info");
+                Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return response.toString();
+    }
+    
     public String browse(String key) {
         JSONObject alldiseases = new JSONObject();
         JSONArray list = new JSONArray();

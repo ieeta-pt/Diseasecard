@@ -1,7 +1,7 @@
 $(document).ready(function(){
     // search button action
     $('#button_search').click(function(){
-        window.location = path + '/search/' + search + '/' + $('#text_search').attr('value');
+        window.location = path + '/search/' + search + '/' + $('#text_search').val();
     });
     
     // handle multiple search options
@@ -26,7 +26,7 @@ $(document).ready(function(){
     })
     
     $('.search_help').click(function() {
-        $('#text_search').attr('value', $(this).text()); 
+        $('#text_search').val($(this).text()); 
     });
     
     var tour = new Tour({
@@ -65,8 +65,8 @@ $(document).ready(function(){
     
     // load help text if there are no searches
     setTimeout(function() {
-        if($('#text_search').attr('value') == '') {
-            $('#helper').fadeIn('medium');
+        if($('#text_search').val() == '') {
+            $('#helper').fadeIn(1000);
         }
     }, 4880);
 });

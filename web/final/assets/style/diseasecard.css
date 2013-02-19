@@ -236,6 +236,13 @@ table {
 
 .results_items {
     list-style: none;
+    padding: 0px;
+    font-size: 80%;
+}
+.results_title {
+    font-size:120%;
+    font-weight: 600;
+    color: #454545;
 }
 
 .bs-docs-sidenav {
@@ -408,12 +415,13 @@ table {
 
 #sidebar_menu {
     padding-left: 8px;
+    display: none;
 }
 
 #tree {
     margin:0;
     width: 100%;
-    display: block;
+    display: none;
     overflow: hidden;
     overflow-y: auto;
     bottom: 48px;

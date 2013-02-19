@@ -43,8 +43,8 @@ function loadResults(id) {
     $.getJSON(uri, function(data) {
         if(data.status === 110) {   
             $('#loading').fadeOut().remove();         
-            $('#errors').fadeIn();  
-            $('#alert_noresults').fadeIn();
+            $('#errors').fadeIn(1000);  
+            $('#alert_noresults').fadeIn(1000);
             toggleTopButton('mag');
             setTimeout(function(){                            
                 $('#text_search').focus();
@@ -53,8 +53,8 @@ function loadResults(id) {
             window.location = path + '/entry/' + data.results[0].omim;
         } else if (data.status === 140) { 
             $('#loading').fadeOut().remove();
-            $('#errors').fadeIn();  
-            $('#alert_short').fadeIn();
+            $('#errors').fadeIn(1000);  
+            $('#alert_short').fadeIn(1000);
             toggleTopButton('mag');
             setTimeout(function(){                            
                 $('#text_search').focus();
@@ -64,25 +64,24 @@ function loadResults(id) {
             $.tmpl('results', data.results).appendTo('#results_list');                  
             $.each(data.results, function(i, value) {
                 var box = $('<div/>', {
-                    'class' : 'results_list well', 
+                    'class' : 'results_list well well-small', 
                     'data-omim' : value.omim,
                     'id' : value.omim
                 });
-                box.append('<a href="../../entry/' + value.omim + '"><h3><small><i class="icon-play"></i></small> ' + value.omim + ' <small> ' + value.name + '</small></h3></a>');
-                
+                box.append('<div><span class="span10 results_title"><i class="icon-bookmark-empty"></i> ' + value.name +  '</span><span class="span2 pull-right"><h4><a href="../../entry/' + value.omim + '" rel="tooltip" data-placement="bottom" title="View ' + value.name +' in Diseasecard">' + value.omim + '</a> </h4> <small><a rel="tooltip" title="Open ' + value.omim +  ' in OMIM" data-placement="bottom" href="http://omim.org/entry/' + value.omim + '" target="_blank"><i class="icon-external-link"></i></a><small></span></div>')
                 $.each(value.links, function(j, link) {
                     var dlink = $('<ul/>', {
                         'class' : 'results_items', 
                         'data-id' : link
-                    }).append('<li><i class="icon-angle-right"></i><a href="../../entry/' + value.omim + '#' + link.substring(7, link.length) + '"> ' + link.substring(7, link.length) + '</a></li>');
+                    }).append('<li><i class="icon-angle-right"></i><a rel="tooltip" title="View ' + link.substring(7, link.length) + ' for ' + value.omim + ' in Diseasecard" href="../../entry/' + value.omim + '#' + link.substring(7, link.length) + '"> ' + link.substring(7, link.length) + '</a>  <small><a rel="tooltip" title="Open ' + link.substring(7, link.length) + ' externally" href="../../services/linkout/' + link.substring(7, link.length) + '" target="_blank"><i class="icon-external-link"></i></a></small></li>');
                     box.append(dlink);
                 })                
                 $('#results_links').append(box);
             })  
-            $('#loading').fadeOut().remove();
-            $('#meta').fadeIn(); /*show();*/
-            $('#results_list').fadeIn(); /*show();*/
-            $('#results').fadeIn(); /*show();*/
+            $('#loading').fadeOut(500).remove();
+            $('#meta').fadeIn(800);
+            $('#results_list').fadeIn(800);
+            $('#results').fadeIn(800);
             $('#results_search').height($('html').height() - 110);
             $('#results_links').height($('html').height() - 110);
             $('#results').width($('#meta').width());
@@ -113,6 +112,7 @@ function loadResults(id) {
                 content: "Reduce the result set by adding new <strong>filtering</strong> criteria<br/>"
             });
             tour.start();
+            $('[rel=tooltip]').tooltip();
             $('#filter').focus();
         }        
     });     
@@ -144,7 +144,7 @@ function showSearch(i) {
         i.addClass('mag_enabled').data('active', 'true');
         $('.search').fadeIn(300);
         setTimeout(function() {
-            if($('#text_search').attr('value') === '') {
+            if($('#text_search').val() === '') {
                 $('.search').fadeOut('slow');
                 i.data('active', 'false');
                 i.removeClass('mag_enabled');
@@ -212,7 +212,7 @@ $(document).ready(function(){
             if($('#text_search').data('omim') != undefined) {
                 window.location = path + '/entry/' + $('#text_search').data('omim');                
             } else {
-                window.location = path + '/search/' + search + '/' + $('#text_search').attr('value');
+                window.location = path + '/search/' + search + '/' + $('#text_search').val();
             }
         }         
     });

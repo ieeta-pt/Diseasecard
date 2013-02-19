@@ -12,8 +12,8 @@ import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
  *
  * @author pedrolopes
  */
-@UrlBinding("/browse")
-public class RedirectBrowseActionBean implements ActionBean {
+@UrlBinding("/status")
+public class RedirectStatusActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
 
@@ -27,7 +27,7 @@ public class RedirectBrowseActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution get() {
-        return new ForwardResolution("/final/view/browse.jsp");
+        return new ForwardResolution("/final/view/status.jsp");
     }
     
     
