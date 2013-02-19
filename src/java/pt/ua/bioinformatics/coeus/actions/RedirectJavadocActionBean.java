@@ -11,7 +11,7 @@ import net.sourceforge.stripes.action.UrlBinding;
  *
  * @author pedrolopes
  */
-@UrlBinding("/javadoc/")
+@UrlBinding("/api/javadoc/")
 public class RedirectJavadocActionBean implements ActionBean {
     private ActionBeanContext context;  
 

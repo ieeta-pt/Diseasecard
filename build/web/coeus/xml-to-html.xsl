@@ -112,16 +112,17 @@
         <html lang="en">
             <head>
                 <title>SPARQL results for COEUS | Enabling Knowledge</title>     
-                <link rel="shortcut icon" href="assets/img/favicon.ico" />           
-                <link href="assets/css/bootstrap.min.css" rel="stylesheet" />       
-                <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet" />            
-                <link href="assets/css/docs.css" rel="stylesheet" />
+                <link rel="shortcut icon" href="favicon.ico" />     
+                <link href='http://fonts.googleapis.com/css?family=Titillium+Web:300,600,300italic' rel='stylesheet' type='text/css'>      
+                <link href="./final/assets/style/bootstrap.min.css" rel="stylesheet" />       
+                <link href="./final/assets/style/bootstrap-responsive.min.css" rel="stylesheet" />            
+                <link href="./final/assets/style/docs.css" rel="stylesheet" />
             </head>
             <body>
                 <div class="navbar navbar-inverse navbar-fixed-top">
                     <div class="navbar-inner">
                         <div class="container">
-                            <a class="brand" href="./">COEUS</a> 
+                            <a class="brand" href="../">Diseasecard</a> 
                             <div class="nav-collapse collapse">
                                 <ul class="nav">
                                     <li>

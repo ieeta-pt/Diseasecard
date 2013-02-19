@@ -27,7 +27,7 @@ public class RedirectBrowseActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution js() {
-        return new ForwardResolution("/final/browse.jsp");
+        return new ForwardResolution("/final/view/browse.jsp");
     }
     
     

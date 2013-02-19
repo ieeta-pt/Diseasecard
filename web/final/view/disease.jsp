@@ -63,8 +63,8 @@
                             <a data-placement="bottom" data-container="body" rel="tooltip" data-title="Expand all tree nodes" id="dc4_tree_expand" class="btn"><i class="icon-double-angle-down"></i></a>
                         </div>
                         <div class="btn-group" id="dc4_disease_control">
-                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Show hypertree" class="btn" id="dc4_disease_hypertree"><i class="icon-sitemap"></i></a>
-                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Open LiveView in external page" class="btn" id="dc4_page_external"><i class="icon-external-link"></i></a>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Show hypertree" class="btn disabled" id="dc4_disease_hypertree"><i class="icon-sitemap"></i></a>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Open LiveView in external page" class="btn disabled" id="dc4_page_external"><i class="icon-external-link"></i></a>
                             <a data-placement="bottom" rel="tooltip" data-container="body" title="Go to help section" class="btn" id="dc4_page_help"><i class="icon-question-sign"></i></a>
                         </div>
                     </div>

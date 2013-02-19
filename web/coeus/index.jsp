@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>COEUS</title>
+        <title>COEUS - Diseasecard API</title>
         <meta name="description" content="COEUS Semantic Web Application Framework">
         <meta name="author" content="Pedro Lopes pedrolopes@ua.pt">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,9 +12,10 @@
         <![endif]-->
 
         <!-- Le styles -->
-        <link href="assets/css/bootstrap.min.css" rel="stylesheet">        
-        <link href="assets/css/bootstrap-responsive.min.css" rel="stylesheet">
-        <link href="assets/css/docs.css" rel="stylesheet">
+        <link href='http://fonts.googleapis.com/css?family=Titillium+Web:300,600,300italic' rel='stylesheet' type='text/css'>
+        <link href="../final/assets/style/bootstrap.min.css" rel="stylesheet">        
+        <link href="../final/assets/style/bootstrap-responsive.min.css" rel="stylesheet">
+        <link href="../final/assets/style/docs.css" rel="stylesheet">
 
         <!-- Le fav and touch icons -->
         <link rel="shortcut icon" href="assets/img/favicon.ico">
@@ -24,7 +25,7 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="#">Diseasecard</a>
+                    <a class="brand" href="../">Diseasecard</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li class="active"><a href="#">Home</a></li>
@@ -61,9 +62,9 @@
 
         <div class="jumbotron masthead">
             <div class="container">
-                <h1>COEUS</h1>
-                <p>Streamlined back-end framework for rapid semantic web application development.</p>
-                <p><a href="https://github.com/pdrlps/COEUS/zipball/coeus1.0b" class="btn btn-inverse btn-primary btn-large">Get COEUS</a></p>
+                <h1>Diseasecard</h1>
+                <p>Powered by COEUS</p>
+                <p><a href="http://bioinformatics.ua.pt/coeus" target="_blank" class="btn btn-inverse btn-primary btn-large">Get COEUS</a></p>
                 <ul class="masthead-links">
                     <li><a href="https://github.com/pdrlps/COEUS/tree/coeus1.0b" target="_blank">GitHub project</a></li>
                     <li>Version 1.0b</li>
@@ -72,11 +73,11 @@
         </div>
         <div class="container">
             <div class="marketing">
-                <h1>Hello, Semantic Web!</h1>
-                <p class="marketing-byline"><em>Ipsa scientia potestas est.</em> Knowledge itself is power.</p>
+                <h2><em>Ipsa scientia potestas est.</em> Knowledge is power.</h2>
+                <p class="marketing-byline">Streamlined back-end framework for rapid semantic web application development.</p>
                 <div class="row-fluid">
                     <div class="span4">
-                        <img src="assets/img/integrate.png" width="150" height="150" alt="Integration" />
+                        <img src="../final/assets/image/coeus/integrate.png" width="150" height="150" alt="Integration" />
                         <h2>Integration</h2>
                         <p>
                             Create custom warehouses, integrating distributed and heterogeneous data.<br />
@@ -84,14 +85,14 @@
                         </p>
                     </div>  
                     <div class="span4">
-                        <img src="assets/img/cloud.png" width="150" height="150" alt="Cloud-based" />
+                        <img src="../final/assets/image/coeus/cloud.png" width="150" height="150" alt="Cloud-based" />
                         <h2>Cloud-based</h2>
                         <p>
                             Deploy your knowledgebase in the cloud, using any available host. <br />Your content - available any time, any where. And with full create, read, update, and delete support.
                         </p>
                     </div>   
                     <div class="span4">
-                        <img src="assets/img/semantic.png" width="150" height="150" alt="Semantic Web" />
+                        <img src="../final/assets/image/coeus/semantic.png" width="150" height="150" alt="Semantic Web" />
                         <h2>Semantics</h2>
                         <p>
                             Use Semantic Web &amp; LinkedData technologies in all application layers.<br />
@@ -103,7 +104,7 @@
                 <div class="row-fluid">
 
                     <div class="span4">
-                        <img src="assets/img/rapid.png" width="150" height="150" alt="RAD" />
+                        <img src="../final/assets/image/coeus/rapid.png" width="150" height="150" alt="RAD" />
                         <h2>Rapid Dev Time</h2>
                         <p>
                             Reduce development time. Get new applications up and running much faster using the latest rapid application development strategies.<br />
@@ -111,7 +112,7 @@
                         </p>
                     </div>       
                     <div class="span4">
-                        <img src="assets/img/network.png" width="150" height="150" alt="Interoperability" />
+                        <img src="../final/assets/image/coeus/network.png" width="150" height="150" alt="Interoperability" />
                         <h2>Interoperability</h2>
                         <p>
                             Use COEUS advanced API to connect multiple nodes together and with any other software. <br/>
@@ -119,7 +120,7 @@
                         </p>
                     </div>   
                     <div class="span4">
-                        <img src="assets/img/distribute.png" width="150" height="150" alt="Ecosystem" />
+                        <img src="../final/assets/image/coeus/distribute.png" width="150" height="150" alt="Ecosystem" />
                         <h2>Ecosystem</h2>
                         <p>
                             Launch your custom application ecosystem. Distribute your data to any platform or device.<br />Reach more users and create new semantic cloud-based software platforms.
@@ -140,7 +141,7 @@
                     </div>
                     <div class="span4">
                         <h2>Featured</h2>
-                        <a href="http://bioinformatics.ua.pt/dc4/"><img src="assets/img/dc4.png" width="200" height="29" alt="Diseasecard" /></a>
+                        <a href="http://bioinformatics.ua.pt/dc4/"><img src="../final/assets/image/coeus/dc4.png" width="200" height="29" alt="Diseasecard" /></a>
                         A new semantic rare diseases research portal. COEUS is the foundation of the internal application engine, enabling the delivery of advanced UI features and the exploration of collected knowledge programmatically.<br />
                         <p><a class="btn btn-primary btn-inverse" href="http://bioinformatics.ua.pt/dc4/">Go to Diseasecard &raquo;</a></p>
                     </div>

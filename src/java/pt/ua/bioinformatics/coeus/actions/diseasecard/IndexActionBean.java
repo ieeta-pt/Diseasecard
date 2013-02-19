@@ -60,6 +60,6 @@ public class IndexActionBean implements ActionBean {
             Activity.log("0", "index", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
         } catch (Exception e) {
         }
-        return new ForwardResolution("/final/index.jsp");
+        return new ForwardResolution("/final/view/index.jsp");
     }
 }

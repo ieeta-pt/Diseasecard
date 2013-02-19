@@ -11,7 +11,7 @@ import net.sourceforge.stripes.action.UrlBinding;
  *
  * @author pedrolopes
  */
-@UrlBinding("/science/")
+@UrlBinding("/api/science/")
 public class RedirectScienceActionBean implements ActionBean {
     private ActionBeanContext context;  
 

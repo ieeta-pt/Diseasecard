@@ -18,10 +18,10 @@ $(document).ready(function(){
     
     // page content filter
     $(document).on('keyup','#filter', function(){
-        var value = $(this).attr('value');
+        var value = $('#filter').val();
         if(value.length >= 3) {
             $('.results_list').each(function(){
-                if ($(this).html().toLowerCase().indexOf(value) === -1) {
+                if ($(this).html().toLowerCase().indexOf(value.toLowerCase()) === -1) {
                     $(this).hide();
                 }
             });

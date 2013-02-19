@@ -11,7 +11,7 @@ import net.sourceforge.stripes.action.UrlBinding;
  *
  * @author pedrolopes
  */
-@UrlBinding("/ontology/{$event}")
+@UrlBinding("/api/ontology/{$event}")
 public class RedirectOntologyActionBean implements ActionBean {
     private ActionBeanContext context;  
 

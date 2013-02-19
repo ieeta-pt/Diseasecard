@@ -53,6 +53,7 @@ function start() {
         
      
         if(window.location.hash) {
+            updateButtons(false);
             var hash = window.location.hash.substring(1);
             if(!hash.startsWith('name')) {
                 $.ajax({
@@ -170,6 +171,29 @@ function init(){
     ht.controller.onComplete();   
 }
 
+/**
+ * Toggle hypertree and external view buttons
+ */
+function updateButtons(status) {
+    var ht = $('#dc4_disease_hypertree');
+    var ext = $('#dc4_page_external');
+    if(status) {
+        if(!ht.hasClass('disabled')) {
+            ht.addClass('disabled');
+        }
+        if(!ext.hasClass('disabled')) {
+            ext.addClass('disabled');
+        }    
+    } else {
+        if(ht.hasClass('disabled')) {
+            ht.removeClass('disabled');
+        }
+        if(ext.hasClass('disabled')) {
+            ext.removeClass('disabled');
+        }
+    }
+}
+
 $(document).ready(function(){
     // set main content area width
     $('#content').width($('html').width() - $('#diseasebar').width());
@@ -235,6 +259,7 @@ $(document).ready(function(){
     $('#dc4_disease_hypertree').click(function() {
         $('#content').html('<div id="container"><div id="center-container"><div id="infovis"></div></div></div>');
         init();
+        updateButtons(true);
         window.location.hash = '';
     });
 
@@ -269,11 +294,12 @@ $(document).ready(function(){
             $(this).removeClass('activepoint');
         });
         link.parent().addClass('activepoint');     
+        updateButtons(false);
         return false;
     });
     
     /** Frame links in HyperTree **/
-    $(document).on('click','#infovis .framer',function() {
+    $(document ).on('click','#infovis .framer',function() {
         var select = ('#dc4_t_' + $(this).data('id')).replace(':','\\:');
         window.location.hash = $(this).data('id');                               
         // update grandparent
@@ -296,7 +322,7 @@ $(document).ready(function(){
             $(this).removeClass('activepoint');
         });
         $(select).addClass('activepoint');   
-                
+        updateButtons(false);
         return false;       
     }); 
     
