@@ -262,7 +262,7 @@ $(document).ready(function(){
     });
     
     /** Frame links in Tree **/
-    $('#tree .framer').live('click', function(){        
+    $(document).on('click', '#tree .framer', function(){        
         var link = $(this);
         window.location.hash = $(this).data('id');
         $('#tree').find('li').each(function() {
@@ -273,7 +273,7 @@ $(document).ready(function(){
     });
     
     /** Frame links in HyperTree **/
-    $('#infovis .framer').live('click',function() {
+    $(document).on('click','#infovis .framer',function() {
         var select = ('#dc4_t_' + $(this).data('id')).replace(':','\\:');
         window.location.hash = $(this).data('id');                               
         // update grandparent

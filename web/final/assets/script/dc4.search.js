@@ -17,7 +17,7 @@ $(document).ready(function(){
     });
     
     // page content filter
-    $('#filter').live('keyup', function(){
+    $(document).on('keyup','#filter', function(){
         var value = $(this).attr('value');
         if(value.length >= 3) {
             $('.results_list').each(function(){
