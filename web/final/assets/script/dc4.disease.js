@@ -46,9 +46,9 @@ function start() {
         $('#dc4_tree').treeview({
             animated: "medium",
             persist: "cookie",
-            collapsed: true,
+            collapsed: false,
             control: "#dc4_tree_control",
-            cookieID: "dc4_tree"
+            cookieID: "diseasecard_disease" + key + "_tree"
         });
         
      
@@ -336,7 +336,7 @@ $(document).ready(function(){
         placement: 'bottom',
         element: "#key",
         title: "OMIM", 
-        content: "Press the OMIM identifier to quickly view the <strong>associated</strong> rare diseases<br />" 
+        content: "Press the accession number to quickly view the <strong>associated</strong> OMIM entries<br />" 
     });
     tour.addStep({
         animation: true,

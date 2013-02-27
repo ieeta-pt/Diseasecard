@@ -92,15 +92,15 @@ public class Ontology {
                     }
                 }
             }
-            if (!this.disease.getOmim().getHpo().isEmpty()) {
+            // Disabled UMLS, results are not viable
+           /* if (!this.disease.getOmim().getHpo().isEmpty()) {
                 for (HPO o : this.disease.getOmim().getHpo()) {
-                    System.out.println("\t --> " + o.getId());
                     ResultSet results = Boot.getAPI().selectRS("SELECT ?p ?o {<http://bioinformatics.ua.pt/diseasecard/resource/hpo_" + o.getId() + "> ?p ?o }", false);
                     while (results.hasNext()) {
                         QuerySolution row = results.next();
                         if (PrefixFactory.encode(row.get("p").toString()).equals("coeus:isAssociatedTo")) {
+                           
                             if (row.get("o").toString().contains("umls")) {
-                                System.out.println("\t\t-> " + row.get("o"));
                                 String code = ItemFactory.getTokenFromItem(row.get("o").toString());
                                 if (!this.disease.getOntology().getUmls().containsKey(code)) {
                                     UMLS u = new UMLS(row.get("o").toString(), o);
@@ -112,7 +112,7 @@ public class Ontology {
                         }
                     }
                 }
-            }
+            } */
             success = true;
         } catch (Exception ex) {
             if (Config.isDebug()) {

@@ -386,8 +386,8 @@ public class ServicesContentActionBean implements ActionBean {
             }
             ontologies.put(icd10);
             
-            // UMLS
-            JSONObject umls = new JSONObject();
+            // UMLS disabled, results are not viable (re-enable on Ontology.java)
+            /*JSONObject umls = new JSONObject();
             umls.put("id", "concept:umls");
             umls.put("name", "<h6>UMLS</h6>");
             if (!disease.getOntology().getUmls().isEmpty()) {
@@ -401,7 +401,7 @@ public class ServicesContentActionBean implements ActionBean {
                 }
                 umls.put("children", umls_children);
             }
-            ontologies.put(umls);
+            ontologies.put(umls);*/
 
             ontology.put("children", ontologies);
 

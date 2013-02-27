@@ -56,9 +56,9 @@
             <div id="wrap">
                 <div id="diseasebar">
                     <div id="sidebar_menu">
-                        <div class="btn-group" id="dc4_tree_control">
-                            <a data-placement="bottom" rel="tooltip" data-container="body" data-title="Collapse all tree nodes" id="dc4_tree_collapse" class="btn"><i class="icon-double-angle-up"></i></a>
+                        <div class="btn-group" id="dc4_tree_control">                           
                             <a data-placement="bottom" data-container="body" rel="tooltip" data-title="Expand all tree nodes" id="dc4_tree_expand" class="btn"><i class="icon-double-angle-down"></i></a>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" data-title="Collapse all tree nodes" id="dc4_tree_collapse" class="btn"><i class="icon-double-angle-up"></i></a>
                         </div>
                         <div class="btn-group" id="dc4_disease_control">
                             <a data-placement="bottom" rel="tooltip" data-container="body" title="Show hypertree" class="btn disabled" id="dc4_disease_hypertree"><i class="icon-sitemap"></i></a>
