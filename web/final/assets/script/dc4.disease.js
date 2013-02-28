@@ -97,6 +97,7 @@ function start() {
         }else {
             init();
         }
+        $('*[rel=tooltip]').tooltip();
         $('#sidebar_menu,#tree').fadeIn(1000); 
     });
 }

@@ -54,14 +54,14 @@
         <div class="navbar" id="loading">
             <div class="navbar-inner">
                 <div class="pull-left">
-                    <h4><span>Your results are loading... <i class="icon-spinner icon-spin"></i></span></h4>
+                    <h4><span>Your results are loading... <i class="icon-angle-right icon-spin"></i></span></h4>
                 </div>
             </div>
         </div>
         <div class="navbar" id="meta">
             <div class="navbar-inner">
                 <div class="pull-left">
-                    <h4><span id="results_size"></span> results for <span class="label label-inverse">${actionBean.query}</span></h4>
+                    <h4><span id="results_size"></span> total results for <span class="label label-inverse">${actionBean.query}</span></h4>
                 </div>
                 <form class="pull-right navbar-form" id="tour_filter">
                     <label>

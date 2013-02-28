@@ -66,7 +66,7 @@
                 <li><a href="#y" >Y</a></li>
                 <li><a href="#z" >Z</a></li>
             </ul>
-            <div class="tab-content">
+            <div class="tab-content" style="overflow: hidden;">
                 <div class="tab-pane active" id="overview">
                     <h2>Overview</h2>
                     Here you can browse all diseases available in Diseasecard's knowledge base in alphabetical order.

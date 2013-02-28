@@ -18,10 +18,15 @@
             </noscript>
             <s:layout-component name="body">
             </s:layout-component>
+                <div class="alert alert-info" id="coeus">
+  <a href="http://bioinformatics.ua.pt/coeus" target="_blank" title="Powered by COEUS">Powered by <strong>COEUS</strong></a>
+</div>
         </body>
         <script type="text/javascript">
             var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-12230872-8']);
+            var pluginUrl = '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+            _gaq.push(['_require', 'inpage_linkid', pluginUrl]);
+            _gaq.push(['_setAccount', 'UA-12230872-2']);
             _gaq.push(['_trackPageview']);
 
             (function() {

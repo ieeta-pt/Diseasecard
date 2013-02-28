@@ -194,8 +194,6 @@ public class Finder {
                 }
             }
         }
-
-        //return (ArrayList<Disease>) new ArrayList(map.values());
         return result.toString();
     }
 
@@ -203,7 +201,7 @@ public class Finder {
         if (query.length() > 3) {
             ModifiableSolrParams params = new ModifiableSolrParams();
             if (type.equals("id")) {
-                params.set("q", "id:*" + query.toUpperCase() + "* OR id:*" + query.toLowerCase() + "* OR id:*" + WordUtils.capitalize(query.toLowerCase()) + "*");
+                params.set("q", "id:*" + query.toUpperCase() + "* OR id:*" + query.toLowerCase() + "* OR id:*" + WordUtils.capitalize(query.toLowerCase()) + "*" + "* OR id:*" + query + "*");
                 params.set("rows", 100);
             } else if (type.equals("full")) {
                 params.set("q", query + "*");
@@ -248,8 +246,8 @@ public class Finder {
                         o.put("omim", s.getOmim());
                         JSONArray alias = new JSONArray();
                         for (String link : s.getAlias()) {
-
                             alias.put(link);
+                            size++;
                         }
                         JSONArray links = new JSONArray();
                         for (String link : s.getNetwork()) {

@@ -203,7 +203,7 @@ jQuery.extend({
 
 $(document).ready(function(){
     // bootstrap tooltip loader
-    $('[rel=tooltip]').tooltip();
+    $('*[rel=tooltip]').tooltip();
     
     /** autocomplete handler **/
     $('#text_search').keypress(function(e){

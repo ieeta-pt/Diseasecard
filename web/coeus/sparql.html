@@ -3,7 +3,6 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-
         <title>SPARQL endpoint for COEUS</title>
         <meta name="description" content="COEUS semantic web linkeddata linked data services rest integration heterogeneous distributed knowledge federation">
         <meta name="author" content="Pedro Lopes pedrolopes@ua.pt">
@@ -115,9 +114,9 @@
 
 
                                 <ul class="inputs-list unstyled">
-                                    <li><label><input type="radio" name="output" value="xml" checked> <span>HTML</span></label></li>
+                                    <!--<li><label><input type="radio" name="output" value="xml" checked> <span>HTML</span></label></li>-->
 
-                                    <li><label><input type="radio" name="output" value="json"> <span>JSON</span></label></li>
+                                    <li><label><input type="radio" name="output" value="json" checked> <span>JSON</span></label></li>
 
                                     <li><label><input type="radio" name="output" value="tsv"> <span>TSV</span></label></li>
 
@@ -134,7 +133,7 @@
                             <div class="input">
                                 <input type="submit" class="btn primary btn-inverse" value="Get Data">
                             </div>
-                        </div><input hidden="" style="display: none; visibility: hidden;" name="stylesheet" size="25" value="./api/translate">
+                        </div><input hidden="" style="display: none; visibility: hidden;" name="stylesheet" size="25" value="http://bioinformatics.ua.pt/diseasecard/api/translate">
                     </form>
                 </div>
             </div>
@@ -170,11 +169,11 @@
                     });
                 
                     $('#all_concept').click(function () {
-                        $('#query').attr('value','PREFIX coeus <http://bioinformatics.ua.pt/coeus/>\nPREFIX diseasecard: <http://bioinformatics.ua.pt/diseasecard/resource/>\nSELECT ?item {?item coeus:hasConcept diseasecard:concept_OMIM }');
+                        $('#query').attr('value','PREFIX coeus: <http://bioinformatics.ua.pt/coeus/>\nPREFIX diseasecard: <http://bioinformatics.ua.pt/diseasecard/resource/>\nSELECT ?item {?item coeus:hasConcept diseasecard:concept_OMIM }');
                     });
                 
                     $('#count_items').click(function () {
-                        $('#query').attr('value','PREFIX coeus <http://bioinformatics.ua.pt/coeus/>\nPREFIX diseasecard: <http://bioinformatics.ua.pt/diseasecard/resource/>\nSELECT COUNT(DISTINCT ?tag) {?tag coeus:hasConcept diseasecard:concept_OMIM}');
+                        $('#query').attr('value','PREFIX coeus: <http://bioinformatics.ua.pt/coeus/>\nPREFIX diseasecard: <http://bioinformatics.ua.pt/diseasecard/resource/>\nSELECT COUNT(DISTINCT ?tag) {?tag coeus:hasConcept diseasecard:concept_OMIM}');
                     });
                 });
         </script><!-- Prompt IE 6 users to install Chrome Frame. Remove this if you want to support IE 6.
