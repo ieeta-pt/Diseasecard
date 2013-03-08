@@ -195,7 +195,7 @@
                         	<p>
                         		José Luís Oliveira, Gaspar Dias, Ilídio Oliveira, Patrícia Rocha, Isabel Hermosilla, Javier Vicente, Inmaculada Spiteri, Fernando Martin-Sánchez, António Sousa Pereira<br />
                         		Lecture Notes in Computer Science Volume 3337, 2004, pp 409-417<br />
-                        		<strong><a href="10.1007/978-3-540-30547-7_41" title="Open DiseaseCard: A Web-Based Tool for the Collaborative Integration of Genetic and Medical Information" rel="tooltip" target="_blank">DOI: 10.1007/978-3-540-30547-7_41</a></strong>
+                        		<strong><a href="http://dx.doi.org/10.1007/978-3-540-30547-7_41" title="Open DiseaseCard: A Web-Based Tool for the Collaborative Integration of Genetic and Medical Information" rel="tooltip" target="_blank">DOI: 10.1007/978-3-540-30547-7_41</a></strong>
                         	</p>
                         </div>
                         <div class="tab-pane" id="api">
@@ -214,7 +214,7 @@
                                     <br />
                                     <a href="http://bioinformatics.ua.pt/diseasecard/sparql" class="btn disabled btn-inverse">http://bioinformatics.ua.pt/diseasecard/sparql</a>
                                     <ul>
-                                    	<li><a href="<c:url value="/api/sparqler" />" rel="tooltip" title="Launch COEUS' query tester" target="_blank">Query tester</a></li>
+                                    	<li><a href="<c:url value="/api/sparqler/" />" rel="tooltip" title="Launch COEUS' query tester" target="_blank">Query tester</a></li>
                                     </ul>
                                 </div>
                             </div>

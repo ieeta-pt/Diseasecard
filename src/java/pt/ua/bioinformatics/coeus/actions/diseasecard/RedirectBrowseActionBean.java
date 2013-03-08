@@ -7,6 +7,7 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
+import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
  *
@@ -27,7 +28,7 @@ public class RedirectBrowseActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution get() {
-        return new ForwardResolution("/final/view/browse.jsp");
+         return new ForwardResolution("/final/view/browse.jsp");
     }
     
     

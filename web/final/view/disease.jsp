@@ -70,6 +70,11 @@
 
                     </div> 
                 </div>
+                <div id="frame_loading">
+                	<div class="progress progress-striped active">
+	                	<div class="bar" style="width: 100%;">Loading...</div>
+	                </div>
+                </div>
                 <div id="content">
                     <div id="container">
                         <div id="center-container">

@@ -22,7 +22,7 @@ public class Links {
 
     static private void load() {
         // Disease
-        links.put("omim", "http://bioinformatics.ua.pt/omim/#replace#");
+        links.put("omim", "http://bioinformatics.ua.pt/romim/entry/#replace#");
         links.put("orphanet", "http://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=#replace#");
         links.put("nord", "http://www.rarediseases.org/rare-disease-information/rare-diseases/viewSearchResults?term=#replace#");
         // Protein

@@ -556,6 +556,19 @@ table {
 .open:hover {
 }
 
+#frame_loading {
+	position: fixed;
+	top: 50px;
+	right: 8px;
+	z-index: 1000;
+	margin: 0px;
+	font-size: 64%;
+	padding: 2px;
+	opacity: 0.8;
+	width: 64px;
+	display: none;
+}
+
 /**
     MISC
 **/

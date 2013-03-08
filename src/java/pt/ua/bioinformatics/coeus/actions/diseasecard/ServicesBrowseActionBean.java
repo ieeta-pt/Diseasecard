@@ -7,6 +7,7 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
+import pt.ua.bioinformatics.diseasecard.services.Activity;
 import pt.ua.bioinformatics.diseasecard.services.Finder;
 
 /**
@@ -39,6 +40,10 @@ public class ServicesBrowseActionBean implements ActionBean {
     @DefaultHandler
     public Resolution js() {
         Finder f = new Finder();
+        try {
+            Activity.log(key, "browse", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+        } catch (Exception e) {
+        }
         return new StreamingResolution("application/json", f.browse(key));
     }
 }

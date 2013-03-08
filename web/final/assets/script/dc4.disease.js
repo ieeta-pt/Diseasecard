@@ -56,7 +56,8 @@ function start() {
             updateButtons(false);
             var hash = window.location.hash.substring(1);
             if(!hash.startsWith('name')) {
-                $.ajax({
+            	$('#frame_loading').fadeIn('slow');
+            	$.ajax({
                     url: path + '/services/frame/0',
                     success: function(data) {
                         $('#content').html(data);
@@ -88,6 +89,9 @@ function start() {
                             });
                             $(select).addClass('activepoint');   
                         }  
+                        $('#_content').load(function(){
+	                        $('#frame_loading').fadeOut('slow');
+	                    })
                     },
                     async: true
                 });        
@@ -230,9 +234,13 @@ $(document).ready(function(){
     
     /** event handler for URL # changes **/
     window.onhashchange = function(event) {
-        if(window.location.hash.substring(1).indexOf(':') > 0) 
+        if(window.location.hash.substring(1).indexOf(':') > 0)         
         {
+            $('#frame_loading').fadeIn('slow');
             $('#content').html(getFrame(window.location.hash.substring(1)));
+            $('#_content').load(function(){
+	            $('#frame_loading').fadeOut('slow');
+            })
         } 
         if(window.location.hash == '') {
             $('#content').html('<div id="container"><div id="center-container"><div id="infovis"></div></div></div>');
