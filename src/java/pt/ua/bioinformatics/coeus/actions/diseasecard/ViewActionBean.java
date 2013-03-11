@@ -3,31 +3,21 @@ package pt.ua.bioinformatics.coeus.actions.diseasecard;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
-import pt.ua.bioinformatics.diseasecard.services.Finder;
 
 /**
  *
  * @author pedrolopes
  */
-@UrlBinding("/services/browse/{key}.{$event}")
-public class ServicesBrowseActionBean implements ActionBean {
+@UrlBinding("/view/{key}")
+public class ViewActionBean implements ActionBean {
 
-    private String key;
-
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-    
     private COEUSActionBeanContext context;
+    private String key;
 
     public void setContext(ActionBeanContext context) {
         this.context = (COEUSActionBeanContext) context;
@@ -37,13 +27,20 @@ public class ServicesBrowseActionBean implements ActionBean {
         return context;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     @DefaultHandler
-    public Resolution js() {
-        Finder f = new Finder();
+    public Resolution html() {
         try {
-            Activity.log(key, "browse", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));                   
+            Activity.log(key, "view", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
         } catch (Exception e) {
         }
-        return new StreamingResolution("application/json", f.browse(key));
+        return new ForwardResolution("/final/view/view.jsp");
     }
 }

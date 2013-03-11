@@ -1,8 +1,12 @@
 package pt.ua.bioinformatics.coeus.common;
 
+import com.hp.hpl.jena.update.UpdateAction;
+import com.hp.hpl.jena.update.UpdateFactory;
+import com.hp.hpl.jena.update.UpdateRequest;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.plugins.SingleImport;
+import pt.ua.bioinformatics.coeus.data.Storage;
 
 /**
  *
@@ -38,6 +42,10 @@ public class Run {
             // LEVEL 0
 
             Boot.start();
+            String query = "PREFIX coeus: <http://bioinformatics.ua.pt/coeus/>\nPREFIX diseasecard: <http://bioinformatics.ua.pt/diseasecard/resource/>\nDELETE WHERE \n{ ?hpo coeus:hasConcept diseasecard:concept_PubMed; ?p ?v }";
+            //Boot.getAPI().select(query, "json", false);
+            UpdateRequest ur = UpdateFactory.create(query);  
+UpdateAction.execute(ur.getOperations().get(0),Storage.getModel());
             
             //SingleImport single_clinical = new SingleImport("resource_clinicaltrials");
             //Thread clinical = new Thread(single_clinical);
@@ -114,10 +122,10 @@ public class Run {
             gwas.start();
             */
             
-           SingleImport single_swiss = new SingleImport("resource_swissvar");
+       /*    SingleImport single_swiss = new SingleImport("resource_swissvar");
            Thread swissvar = new Thread(single_swiss);
             swissvar.start();
-            
+            */
 
             // FULL&
             // Boot.start();

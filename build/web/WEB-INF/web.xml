@@ -124,13 +124,6 @@
         <servlet-class>de.fuberlin.wiwiss.pubby.servlets.RootServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>    
-    
-    <!--  <welcome-file-list>
-        <welcome-file>/index</welcome-file>
-    </welcome-file-list>-->
-    <error-page>
-        <location>/final/404.jsp</location>
-    </error-page>
     <mime-mapping>
         <extension>ico</extension>
         <mime-type>image/x-icon</mime-type>

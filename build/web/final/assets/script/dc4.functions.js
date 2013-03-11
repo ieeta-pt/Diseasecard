@@ -1,5 +1,25 @@
 var jsontree = {};
 
+// translator
+    var list = new Object();
+    list['omim'] = 'OMIM';
+    list['orphanet'] = 'OrphaNet';
+    list['pharmgkb'] = 'PharmGKB';
+    list['kegg'] = 'KEGG';    
+    list['enzyme'] = 'Enzyme';
+    list['ensembl'] = 'Ensembl';
+    list['entrez'] = 'Entrez';    
+    list['hgnc'] = 'HGNC';
+    list['genecards'] = 'Gene Cards';
+    list['clinicaltrials'] = 'Clinical Trials';
+    list['mesh'] = 'MeSH';
+    list['icd10'] = 'ICD 10';
+    list['interpro'] = 'InterPro';
+    list['prosite'] = 'PROSITE';
+    list['uniprot'] = 'UniProt';
+    list['pdb'] = 'PDB';
+    list['wave'] = 'WAVe'; 
+
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
@@ -30,7 +50,22 @@ function uri2item(uri) {
     var addr = uri.split('/');
     return addr[addr.length - 1];
 }
-            
+
+
+function translate(token) {
+   
+    return list[token];
+}
+
+/**
+ * Search results loading.
+ * 
+ * // To Do
+ *  - take this out of here!
+ * 
+ * @param {type} id
+ * @returns {undefined}
+ */            
 function loadResults(id) { 
     var uri = '';
     if (window.location.toString().indexOf('full') > 0) 

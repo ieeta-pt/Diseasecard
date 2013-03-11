@@ -21,7 +21,7 @@
                                             <ul class="dropdown-menu synonyms" role="menu" aria-labelledby="dropdownMenu" >
                                             <c:forEach var="entry" items="${actionBean.disease.diseaseMap}">
                                                 <li><a class="small synonym" data-omim="${entry.key}" href="${path}/entry/${entry.key}"></a></li>
-                                            </c:forEach>
+                                                </c:forEach>
                                         </ul>
                                     </li>
                                 </ul>
@@ -71,9 +71,9 @@
                     </div> 
                 </div>
                 <div id="frame_loading">
-                	<div class="progress progress-striped active">
-	                	<div class="bar" style="width: 100%;">Loading...</div>
-	                </div>
+                    <div class="progress progress-striped active">
+                        <div class="bar" style="width: 100%;">Loading...</div>
+                    </div>
                 </div>
                 <div id="content">
                     <div id="container">
@@ -84,7 +84,7 @@
                 </div>
             </div>
             <script>
-                var synonyms_html = '<ul class="synonym_list"><c:forEach var="entry" items="${actionBean.disease.omim.names}"><li><i class="icon-angle-right"></i>${entry}</li></c:forEach></ul>';
+            var synonyms_html = '<ul class="synonym_list"><c:forEach var="entry" items="${actionBean.disease.omim.names}"><li><i class="icon-angle-right"></i>${entry}</li></c:forEach></ul>';
                 </script>
         </c:when>
         <c:otherwise>
@@ -138,6 +138,5 @@
         </div>
     </c:otherwise>
 </c:choose>
-
 </s:layout-component>
 </s:layout-render>

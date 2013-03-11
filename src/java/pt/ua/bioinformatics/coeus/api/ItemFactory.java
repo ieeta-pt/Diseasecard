@@ -36,4 +36,19 @@ public class ItemFactory {
         }
         return token;
     }
+    
+    /**
+     * Gets the toke string in the <key>_<value> format from the given URI.
+     * 
+     * @param uri
+     * @return 
+     */
+    public static String getTokenFromURI(String uri) {
+        String token = "";
+        if(uri.contains("/")) {
+            String[] full = uri.split("/");
+            token = full[full.length - 1];        
+        }
+        return token;
+    }
 }

@@ -3,7 +3,7 @@
         "name": "Diseasecard",
         "description": "Diseasecard v4",
         "keyprefix":"diseasecard",
-        "version": "4.1",
+        "version": "4.1.1",
         "ontology": "/Users/pedrolopes/Dropbox/Development/Software/COEUS/ontology/coeus_1.0.owl",
         "setup": "dc4_setup.rdf",
         "sdb":"dc4_sdb.ttl",
@@ -11,7 +11,7 @@
         "built": true,
         "debug": false,
         "environment": "testing",
-        "index": "http://localhost:8080/solr"
+        "index": "http://biodatacenter.ieeta.pt:8082/solr"
     },
     "prefixes" : {
         "coeus": "http://bioinformatics.ua.pt/coeus/",

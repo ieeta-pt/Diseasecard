@@ -357,18 +357,18 @@ public class Finder {
             db.connect();
             p = db.getConnection().prepareStatement("SELECT ts, action, query, ip FROM Activity ORDER BY ts DESC LIMIT ? ;");
             p.setInt(1, limit);
-             ResultSet rs = p.executeQuery();
-             while (rs.next()) {
+            ResultSet rs = p.executeQuery();
+            while (rs.next()) {
                 JSONArray o = new JSONArray();
                 o.put(rs.getString("ts"));
                 o.put(rs.getString("action"));
                 o.put(rs.getString("query"));
                 o.put(rs.getString("ip"));
-                      list.put(o);
-             }
-             db.close();
-             response.put("aaData", list);
-             } catch (Exception ex) {
+                list.put(o);
+            }
+            db.close();
+            response.put("aaData", list);
+        } catch (Exception ex) {
             if (Config.isDebug()) {
                 System.out.println("[COEUS][Diseasecard][Finder] Unable to load status data info");
                 Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
@@ -376,7 +376,7 @@ public class Finder {
         }
         return response.toString();
     }
-    
+
     public String browse(String key) {
         JSONObject alldiseases = new JSONObject();
         JSONArray list = new JSONArray();
@@ -420,5 +420,25 @@ public class Finder {
             }
         }
         return alldiseases.toString();
+    }
+
+    public String query() {
+        String response = null;
+        try {
+            SolrServer server = new HttpSolrServer(Config.getIndex());
+            ModifiableSolrParams params = new ModifiableSolrParams();
+            params.set("q", query);
+            params.set("rows", 1000);
+            params.set("defType", "edismax");
+            params.set("qf", "content^0.2 title^0.9 id^1");
+            params.set("wt","json");
+            response = server.query(params).toString() ;
+        } catch (Exception ex) {
+            if (Config.isDebug()) {
+                System.out.println("[COEUS][Diseasecard][Finder] Unable to get disease");
+                Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return response.toString();
     }
 }

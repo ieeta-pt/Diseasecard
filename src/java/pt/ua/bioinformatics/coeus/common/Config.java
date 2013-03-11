@@ -34,7 +34,16 @@ public class Config {
     private static boolean built = false;
     private static String path = "";
     private static String environment = "development";
+    private static String version = "";
 
+    public static String getVersion() {
+        return version;
+    }
+
+    public static void setVersion(String version) {
+        Config.version = version;
+    }
+    
     public static String getIndex() {
         return index;
     }
@@ -185,7 +194,8 @@ public class Config {
                 setup = (String) config.get("setup");                                           
                 debug = (Boolean) config.get("debug");                                          
                 built = (Boolean) config.get("built");                                          
-                predicates = (String) config.get("predicates");                                 
+                predicates = (String) config.get("predicates");       
+                version = (String) config.get("version");
                 environment = (String) config.get("environment");                               
                 index = (String) config.get("index");                               
                 sdb = ((String) config.get("sdb")).replace(".ttl", "_" + environment + ".ttl");
