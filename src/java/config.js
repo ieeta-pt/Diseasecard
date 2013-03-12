@@ -10,8 +10,8 @@
         "predicates":"dc4_predicates.csv",
         "built": true,
         "debug": false,
-        "environment": "testing",
-        "index": "http://biodatacenter.ieeta.pt:8082/solr"
+        "environment": "production",
+        "index": "http://localhost:8080/solr"
     },
     "prefixes" : {
         "coeus": "http://bioinformatics.ua.pt/coeus/",

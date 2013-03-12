@@ -38,7 +38,7 @@ public class ViewActionBean implements ActionBean {
     @DefaultHandler
     public Resolution html() {
         try {
-            Activity.log(key, "view", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+            Activity.log(key, "view", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
         } catch (Exception e) {
         }
         return new ForwardResolution("/final/view/view.jsp");

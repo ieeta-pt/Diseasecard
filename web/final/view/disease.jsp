@@ -97,7 +97,9 @@
                         </ul>
                     </div>
                     <ul class="nav pull-right">
-                        <li id="nav_about"><a href="../about">about</a></li>
+                        <li><a href="<c:url value="/about" />" id="tour_about" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
+                        <li data-placement="bottom" rel="tooltip" title="Jump to Diseasecard rare diseases browsing"><a href="<c:url value="/browse" />" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
+                        <li><a href="#" class="mag" data-active="false" data-toggle="dropdown" id="nav_search" rel="tooltip" title="Search for rare diseases" data-placement="bottom"><i class="icon-search"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -122,14 +124,16 @@
                         <div class="top_hits">
                             <h3>Browse rare diseases</h3>
                             <ul>
-                                <li><a href="./125853" rel="tooltip" title="Visit Diabetes mellitus, noninsulin-dependent's disease card">Diabetes mellitus</a><i class="icon-angle-left"></i></li>
-                                <li><a href="./601665" rel="tooltip" title="Visit Obesity, autosomal dominant's disease card">Obesity</a><i class="icon-angle-left"></i></li>
-                                <li><a href="./211980" rel="tooltip" title="Visit Adenocarcinoma of lung, response to tyrosine kinase inhibitor's disease card">Lung cancer</a><i class="icon-angle-left"></i></li>
-                                <li><a href="./176807" rel="tooltip" title="Visit Prostate cancer's disease card">Prostate cancer</a><i class="icon-angle-left"></i></li>
-                                <li><a href="./137215" rel="tooltip" title="Visit Gastric cancer's disease card">Gastric cancer</a><i class="icon-angle-left"></i></li>
-                                <li><a href="./601626" rel="tooltip" title="Visit Leukemia's disease card">Leukemia</a><i class="icon-angle-left"></i></li>
-                                <li><a href="./181500" rel="tooltip" title="Visit Schizophrenia's disease card">Schizophrenia</a><i class="icon-angle-left"></i></li>
-                                <li><a href="./609423" rel="tooltip" title="Visit AIDS's disease card">AIDS</a><i class="icon-angle-left"></i></li>
+                                <li><a href="<c:url value="/entry/125853" />" rel="tooltip" title="Visit Diabetes mellitus, noninsulin-dependent's disease card">Diabetes mellitus</a> <i class="icon-double-angle-left"></i></li>
+                                <li><a href="<c:url value="/entry/259730" />" rel="tooltip" title="Visit Osteopetrosis, autosomal recessive 3, with renal tubular acidosis' disease card">Osteopetrosis</a> <i class="icon-double-angle-left"></i></li>
+                                <li><a href="<c:url value="/entry/188050" />" rel="tooltip" title="Visit Thrombophilia due to thrombin defect's disease card">Thrombophilia</a> <i class="icon-double-angle-left"></i></li>
+                                <li><a href="<c:url value="/entry/115150" />" rel="tooltip" title="Visit Cardiofaciocutaneous syndrome's disease card">Cardiofaciocutaneous syndrome</a> <i class="icon-double-angle-left"></i></li>
+                                <li><a href="<c:url value="/entry/180849" />" rel="tooltip" title="Visit Rubinstein-Taybi syndrome's disease card">Rubinstein-Taybi syndrome</a> <i class="icon-double-angle-left"></i></li>
+                                <li><a href="<c:url value="/entry/104300" />" rel="tooltip" title="Visit Alzheimer disease's disease card">Alzheimer disease</a> <i class="icon-double-angle-left"></i></li>
+                                <li><a href="<c:url value="/entry/312870" />" rel="tooltip" title="Visit Simpson-Golabi-Behmel syndrome's disease card">Simpson-Golabi-Behmel syndrome</a> <i class="icon-double-angle-left"></i></li>
+                                <li><a href="<c:url value="/entry/143100" />" rel="tooltip" title="Visit Huntington disease's disease card">Huntington disease</a> <i class="icon-double-angle-left"></i></li>
+                                <li><br /></li>
+                                <li><a href="<c:url value="/browse" />" rel="tooltip" title="Browse all diseases">Browse all</a> <i class="icon-reorder"></i></li>
                             </ul>
                         </div>
                     </div>

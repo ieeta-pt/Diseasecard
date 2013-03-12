@@ -15,102 +15,204 @@ var map = {};
     animate = !(iStuff || !nativeCanvasSupport);
 })();
 
-function start() {
+/**
+ * Load query results from Solr index into internal javascript network.
+ * 
+ * @returns {undefined}
+ */
+function query() {
+    $.getJSON('../services/query/' + key, function(data) {
+        //$('#content').html('');
+        // start entities
+        var disease = {id: 'entity:disease', name: '<h5>Disease</h5>', children: []}
+        var drug = {id: 'entity:drug', name: '<h5>Drug</h5>', children: []};
+        var pathway = {id: 'entity:pathway', name: '<h5>Pathway</h5>', children: []};
+        var locus = {id: 'entity:locus', name: '<h5>Locus</h5>', children: []};
+        var study = {id: 'entity:study', name: '<h5>Study</h5>', children: []};
+        var ontology = {id: 'entity:ontology', name: '<h5>Ontology</h5>', children: []};
+        var protein = {id: 'entity:protein', name: '<h5>Protein</h5>', children: []};
+        var variome = {id: 'entity:variome', name: '<h5>Variome</h5>', children: []};
 
-    jsontree = network;
-    $('#disease_info').fadeIn(1000);
-    content = network.children;
-    var html = '<ul id="dc4_tree" class="tree">';
-    $.each(content, function(i) {
-        html += '<li class="open library"><span class="open"><i class="icon-folder-open"></i> ' + content[i].name + '</span><ul>';
-        $.each(content[i].children, function(j) {
-            if (content[i].children[j].children.length > 0) {
-                if (content[i].children[j].children.length === 1) {
-                    html += '<li class="closed folder"><span class="open folder_block" rel="tooltip" data-animation="true" title="' + content[i].children[j].children.length + ' connection"><i class="icon-folder-open-alt folder_icon"></i> ' + content[i].children[j].name + '</span>';
-                } else {
-                    html += '<li class="closed folder"><span class="open folder_block" rel="tooltip" data-animation="true" title="' + content[i].children[j].children.length + ' connections"><i class="icon-folder-open-alt folder_icon"></i> ' + content[i].children[j].name + '</span>';
-                }
-                html += '<ul>';
-                $.each(content[i].children[j].children, function(k) {
-                    html += '<li id="dc4_t_' + content[i].children[j].children[k].id + '" class="point dc4_t" rel="tooltip" data-animation="true" title="Open \'' + content[i].children[j].children[k].id + '\'"><i class="icon-file-alt file_icon"></i> ' + content[i].children[j].children[k].name + '</li>';
-                });
-                html += '</ul>';
-            } else {
-                html += '<li class="folder_empty"><span class="open"><i class="icon-folder-close-alt folder_empty_icon"></i> ' + content[i].children[j].name + '</span>';
+        // start concepts
+        var omim = {id: 'concept:omim', name: '<h6>OMIM</h6>', children: []};
+        var orphanet = {id: 'concept:orphanet', name: '<h6>OrphaNet</h6>', children: []};
+        var pharmgkb = {id: 'concept:pharmgkb', name: '<h6>PharmGKB</h6>', children: []};
+        var kegg = {id: 'concept:kegg', name: '<h6>KEGG</h6>', children: []};
+        var enzyme = {id: 'concept:enzyme', name: '<h6>Enzyme</h6>', children: []};
+        var ensembl = {id: 'concept:ensembl', name: '<h6>Ensembl</h6>', children: []};
+        var entrez = {id: 'concept:entrez', name: '<h6>Entrez</h6>', children: []};
+        var genecards = {id: 'concept:genecards', name: '<h6>GeneCards</h6>', children: []};
+        var hgnc = {id: 'concept:hgnc', name: '<h6>HGNC</h6>', children: []};
+        var clinicaltrials = {id: 'concept:clinicaltrials', name: '<h6>Clinical Trials</h6>', children: []};
+        var mesh = {id: 'concept:mesh', name: '<h6>MeSH</h6>', children: []};
+        var icd10 = {id: 'concept:icd10', name: '<h6>ICD10</h6>', children: []};
+        var interpro = {id: 'concept:interpro', name: '<h6>InterPro</h6>', children: []};
+        var prosite = {id: 'concept:prosite', name: '<h6>PROSITE</h6>', children: []};
+        var pdb = {id: 'concept:pdb', name: '<h6>PDB</h6>', children: []};
+        var uniprot = {id: 'concept:uniprot', name: '<h6>UniProt</h6>', children: []};
+        var wave = {id: 'concept:wave', name: '<h6>WAVe</h6>', children: []};
+        var name = {id: 'concept:name', name: '<h6>name</h6>', children: []};
+
+        // build
+        var i = 0;
+        $.each(data.response.docs, function(i, k) {
+
+
+            var item = data.response.docs[i].id.split(':');
+            if (map[item[1] + ':' + item[2]] === undefined) {
+                eval(item[1]).children[eval(item[1]).children.length] = {'id': item[1] + ':' + item[2], 'name': '<a data-id="' + item[1] + ':' + item[2] + '" target="_content" class="framer dc4_ht">' + item[2] + '</a>'};
+                map[item[1] + ':' + item[2]] = true;
             }
-            html += '</li>';
-        });
-        html += '</ul></li>';
+
+            if (map[item[0]] === undefined && i < 100) {
+                omim.children[omim.children.length] = {'id': 'omim:' + item[0], 'name': '<a data-id="omim:' + item[0] + '" target="_content" class="framer dc4_ht">' + item[0] + '</a>'};
+                map[item[0]] = true;
+                i++;
+            }
+        })
+
+        // connect graph
+        disease.children[disease.children.length] = omim;
+        disease.children[disease.children.length] = orphanet;
+
+        drug.children[drug.children.length] = pharmgkb;
+
+        pathway.children[pathway.children.length] = kegg;
+        pathway.children[pathway.children.length] = enzyme;
+
+        locus.children[locus.children.length] = ensembl;
+        locus.children[locus.children.length] = entrez;
+        locus.children[locus.children.length] = genecards;
+        locus.children[locus.children.length] = hgnc;
+
+        study.children[study.children.length] = clinicaltrials;
+
+        ontology.children[ontology.children.length] = mesh;
+        ontology.children[ontology.children.length] = icd10;
+
+        protein.children[protein.children.length] = interpro;
+        protein.children[protein.children.length] = prosite;
+        protein.children[protein.children.length] = pdb;
+        protein.children[protein.children.length] = uniprot;
+
+        variome.children[variome.children.length] = wave;
+
+        network.children[network.children.length] = disease;
+        network.children[network.children.length] = drug;
+        network.children[network.children.length] = pathway;
+        network.children[network.children.length] = locus;
+        network.children[network.children.length] = study;
+        network.children[network.children.length] = protein;
+        network.children[network.children.length] = variome;
+
+        start();
     });
+}
 
-    html += '</ul>'
-    $('#tree').append(html);
-    $('#dc4_tree').treeview({
-        animated: "medium",
-        persist: "cookie",
-        collapsed: false,
-        control: "#dc4_tree_control",
-        cookieID: "diseasecard_view" + key + "_tree"
-    });
-
-
-    if (window.location.hash) {
-        updateButtons(false);
-        var hash = window.location.hash.substring(1);
-        if (!hash.startsWith('name')) {
-            $('#frame_loading').fadeIn('slow');
-            $.ajax({
-                url: path + '/services/frame/0',
-                success: function(data) {
-                    $('#content').html(data);
-
-                    if (hash.startsWith('http')) {
-                        $('#_content').attr('src', hash);
-
+/**
+ * Initialize page loading (query index, build tree, build hypertree);
+ * 
+ * @returns {undefined}
+ */
+function start() {
+    jsontree = network;
+    content = network.children;
+    if (content[0].children[0].children.length === 0) {
+        $('#key').html('No data for ' + key);
+        $('#content').html('<div class="row-fluid"><div class="offset2">&nbsp;</div><div class="alert alert-warning span6 center"><strong>Sorry!</strong> Diseasecard could not find any matches for <span class="label label-inverse">' + key + '</span>. <br /> Try searching for something else instead.</div></div>');
+        $('.mag').click();
+    } else {
+        var html = '<ul id="dc4_tree" class="tree">';
+        $.each(content, function(i) {
+            html += '<li class="open library"><span class="open"><i class="icon-folder-open"></i> ' + content[i].name + '</span><ul>';
+            $.each(content[i].children, function(j) {
+                if (content[i].children[j].children.length > 0) {
+                    if (content[i].children[j].children.length === 1) {
+                        html += '<li class="closed folder"><span class="open folder_block" rel="tooltip" data-animation="true" title="' + content[i].children[j].children.length + ' connection"><i class="icon-folder-open-alt folder_icon"></i> ' + content[i].children[j].name + '</span>';
                     } else {
-                        $('#_content').attr('src', path + '/services/linkout/' + hash);
-                        var select = '#dc4_t_' + hash.replace(':', '\\:');
-                        var grandparent = $(select).parent().parent().parent();
-                        if (grandparent.parent().hasClass('lastExpandable')) {
-                            grandparent.parent().addClass('lastCollapsable').removeClass('lastExpandable');
-                        } else {
-                            grandparent.parent().addClass('collapsable').removeClass('expandable');
-                        }
-                        grandparent.slideDown('medium');
-                        // update parent
-                        var parent = $(select).parent();
-                        if (parent.parent().hasClass('lastExpandable')) {
-                            parent.parent().addClass('lastCollapsable').removeClass('lastExpandable');
-                        } else {
-                            parent.parent().addClass('collapsable').removeClass('expandable');
-                        }
-                        parent.slideDown('medium');
-                        //.slideDown('medium');
-                        $('#tree').find('li').each(function() {
-                            $(this).removeClass('activepoint');
-                        });
-                        $(select).addClass('activepoint');
+                        html += '<li class="closed folder"><span class="open folder_block" rel="tooltip" data-animation="true" title="' + content[i].children[j].children.length + ' connections"><i class="icon-folder-open-alt folder_icon"></i> ' + content[i].children[j].name + '</span>';
                     }
-                    $('#_content').load(function() {
-                        $('#frame_loading').fadeOut('slow');
-                    })
-                },
-                async: true
+                    html += '<ul>';
+                    $.each(content[i].children[j].children, function(k) {
+                        html += '<li id="dc4_t_' + content[i].children[j].children[k].id + '" class="point dc4_t" rel="tooltip" data-animation="true" title="Open \'' + content[i].children[j].children[k].id + '\'"><i class="icon-file-alt file_icon"></i> ' + content[i].children[j].children[k].name + '</li>';
+                    });
+                    html += '</ul>';
+                } else {
+                    html += '<li class="folder_empty"><span class="open"><i class="icon-folder-close-alt folder_empty_icon"></i> ' + content[i].children[j].name + '</span>';
+                }
+                html += '</li>';
             });
+            html += '</ul></li>';
+        });
+
+        html += '</ul>'
+        $('#tree').append(html);
+        $('#dc4_tree').treeview({
+            animated: "medium",
+            persist: "cookie",
+            collapsed: false,
+            control: "#dc4_tree_control",
+            cookieID: "diseasecard_view" + key + "_tree"
+        });
+
+
+        if (window.location.hash) {
+            updateButtons(false);
+            var hash = window.location.hash.substring(1);
+            if (!hash.startsWith('name')) {
+                $('#frame_loading').fadeIn('slow');
+                $.ajax({
+                    url: path + '/services/frame/0',
+                    success: function(data) {
+                        $('#content').html(data);
+
+                        if (hash.startsWith('http')) {
+                            $('#_content').attr('src', hash);
+
+                        } else {
+                            $('#_content').attr('src', path + '/services/linkout/' + hash);
+                            var select = '#dc4_t_' + hash.replace(':', '\\:');
+                            var grandparent = $(select).parent().parent().parent();
+                            if (grandparent.parent().hasClass('lastExpandable')) {
+                                grandparent.parent().addClass('lastCollapsable').removeClass('lastExpandable');
+                            } else {
+                                grandparent.parent().addClass('collapsable').removeClass('expandable');
+                            }
+                            grandparent.slideDown('medium');
+                            // update parent
+                            var parent = $(select).parent();
+                            if (parent.parent().hasClass('lastExpandable')) {
+                                parent.parent().addClass('lastCollapsable').removeClass('lastExpandable');
+                            } else {
+                                parent.parent().addClass('collapsable').removeClass('expandable');
+                            }
+                            parent.slideDown('medium');
+                            //.slideDown('medium');
+                            $('#tree').find('li').each(function() {
+                                $(this).removeClass('activepoint');
+                            });
+                            $(select).addClass('activepoint');
+                        }
+                        $('#_content').load(function() {
+                            $('#frame_loading').fadeOut('slow');
+                        })
+                    },
+                    async: true
+                });
+            } else {
+                init();
+            }
         } else {
             init();
         }
-    } else {
-        init();
+        $('*[rel=tooltip]').tooltip();
+        $('#sidebar_menu,#tree').fadeIn(1000);
     }
-    $('*[rel=tooltip]').tooltip();
-    $('#sidebar_menu,#tree').fadeIn(1000);
-
 }
-
+/**
+ * Start custom HyperTree visualization.
+ */
 function init() {
-    //init data
-
     var infovis = document.getElementById('infovis');
     var w = infovis.offsetWidth - 50, h = infovis.offsetHeight - 50;
 
@@ -151,6 +253,13 @@ function init() {
         //or moved.
         onPlaceLabel: function(domElement, node) {
             var style = domElement.style;
+            var count = 0;
+            node.eachSubnode(function(n) {
+                count++;
+            });            
+            if (count === 0) {
+                style.opacity = '0.4';
+            }
             style.display = '';
             style.cursor = 'pointer';
             if (node._depth <= 1) {
@@ -217,110 +326,22 @@ $(document).ready(function() {
         $('#content').width($('html').width() - $('#diseasebar').width());
     });
 
-    // load diseasebar and navigation content
-    //start();
-    $.getJSON('../services/query/' + key, function(data) {
-        //$('#content').html('');
-        // start entities
-        var disease = {id: 'entity:disease', name: '<h5>Disease</h5>', children: []}
-        var drug = {id: 'entity:drug', name: '<h5>Drug</h5>', children: []};
-        var pathway = {id: 'entity:pathway', name: '<h5>Pathway</h5>', children: []};
-        var locus = {id: 'entity:locus', name: '<h5>Locus</h5>', children: []};
-        var study = {id: 'entity:study', name: '<h5>Study</h5>', children: []};
-        var ontology = {id: 'entity:ontology', name: '<h5>Ontology</h5>', children: []};
-        var protein = {id: 'entity:protein', name: '<h5>Protein</h5>', children: []};
-        var variome = {id: 'entity:variome', name: '<h5>Variome</h5>', children: []};
-
-        // start concepts
-        var omim = {id: 'concept:omim', name: '<h6>OMIM</h6>', children: []};
-        var orphanet = {id: 'concept:orphanet', name: '<h6>OrphaNet</h6>', children: []};
-        var pharmgkb = {id: 'concept:pharmgkb', name: '<h6>PharmGKB</h6>', children: []};
-        var kegg = {id: 'concept:kegg', name: '<h6>KEGG</h6>', children: []};
-        var enzyme = {id: 'concept:enzyme', name: '<h6>Enzyme</h6>', children: []};
-        var ensembl = {id: 'concept:ensembl', name: '<h6>Ensembl</h6>', children: []};
-        var entrez = {id: 'concept:entrez', name: '<h6>Entrez</h6>', children: []};
-        var genecards = {id: 'concept:genecards', name: '<h6>GeneCards</h6>', children: []};
-        var hgnc = {id: 'concept:hgnc', name: '<h6>HGNC</h6>', children: []};
-        var clinicaltrials = {id: 'concept:clinicaltrials', name: '<h6>Clinical Trials</h6>', children: []};
-        var mesh = {id: 'concept:mesh', name: '<h6>MeSH</h6>', children: []};
-        var icd10 = {id: 'concept:icd10', name: '<h6>ICD10</h6>', children: []};
-        var interpro = {id: 'concept:interpro', name: '<h6>InterPro</h6>', children: []};
-        var prosite = {id: 'concept:prosite', name: '<h6>PROSITE</h6>', children: []};
-        var pdb = {id: 'concept:pdb', name: '<h6>PDB</h6>', children: []};
-        var uniprot = {id: 'concept:uniprot', name: '<h6>UniProt</h6>', children: []};
-        var wave = {id: 'concept:wave', name: '<h6>WAVe</h6>', children: []};
-        var name = {id: 'concept:name', name: '<h6>name</h6>', children: []};
-
-        // build
-        var i = 0;
-        $.each(data.response.docs, function(i, k) {
-            var item = data.response.docs[i].id.split(':');
-            if(map[item[1] + ':' + item[2]] === undefined) {
-                eval(item[1]).children[eval(item[1]).children.length] = {'id': item[1] + ':' + item[2], 'name': '<a data-id="' + item[1] + ':' + item[2] + '" target="_content" class="framer dc4_ht">' + item[2] + '</a>'};
-                map[item[1] + ':' + item[2]] = true;
-               
-            }
-            
-            if(map[item[0]] === undefined && i < 100) {
-                omim.children[omim.children.length] = {'id':  'omim:' + item[0], 'name': '<a data-id="omim:' + item[0] + '" target="_content" class="framer dc4_ht">' + item[0] + '</a>'};
-                map[item[0]] = true;
-                i++;
-            }
-            
-        })
-
-        // connect graph
-        disease.children[disease.children.length] = omim;
-        disease.children[disease.children.length] = orphanet;
-        
-        drug.children[drug.children.length] = pharmgkb;
-        
-        pathway.children[pathway.children.length] = kegg;
-        pathway.children[pathway.children.length] = enzyme;
-        
-        locus.children[locus.children.length] = ensembl;
-        locus.children[locus.children.length] = entrez;
-        locus.children[locus.children.length] = genecards;
-        locus.children[locus.children.length] = hgnc;
-        
-        study.children[study.children.length] = clinicaltrials;
-        
-        ontology.children[ontology.children.length] = mesh;
-        ontology.children[ontology.children.length] = icd10;
-        
-        protein.children[protein.children.length] = interpro;
-        protein.children[protein.children.length] = prosite;
-        protein.children[protein.children.length] = pdb;
-        protein.children[protein.children.length] = uniprot;
-        
-        variome.children[variome.children.length] = wave;
-
-        network.children[network.children.length] = disease;
-        network.children[network.children.length] = drug;
-        network.children[network.children.length] = pathway;
-        network.children[network.children.length] = locus;
-        network.children[network.children.length] = study;
-        network.children[network.children.length] = protein;
-        network.children[network.children.length] = variome;
-
-        //alert(network.children[4].id);
-        start();
-    })
-
+    // load query results, diseasebar and navigation content (watch out for async events!)
+    query();
 
     /** event handler for URL # changes **/
     window.onhashchange = function(event) {
         if (window.location.hash.substring(1).indexOf(':') > 0)
         {
-            if(window.location.hash.toString().indexOf('omim') > 0) {
-                var token = window.location.hash.toString().replace('#omim:','entry/');
+            if (window.location.hash.toString().indexOf('omim') > 0) {
+                var token = window.location.hash.toString().replace('#omim:', 'entry/');
                 window.location = 'http://bioinformatics.ua.pt/diseasecard/' + token;
             } else {
-            $('#frame_loading').fadeIn('slow');
-            $('#content').html(getFrame(window.location.hash.substring(1)));
-            $('#_content').load(function() {
-                $('#frame_loading').fadeOut('slow');
-            });
+                $('#frame_loading').fadeIn('slow');
+                $('#content').html(getFrame(window.location.hash.substring(1)));
+                $('#_content').load(function() {
+                    $('#frame_loading').fadeOut('slow');
+                });
             }
         }
         if (window.location.hash === '') {
@@ -455,6 +476,4 @@ $(document).ready(function() {
         content: "If you need any further assistance, check out Diseasecard's documentation<br />"
     });
     tour.start();
-
-
 });

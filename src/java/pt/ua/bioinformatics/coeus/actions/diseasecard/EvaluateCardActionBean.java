@@ -36,8 +36,7 @@ public class EvaluateCardActionBean implements ActionBean {
     }
 
     @DefaultHandler
-    public Resolution html() {
- 
+    public Resolution html() { 
         return new RedirectResolution("/entry/" + diseaseid);
     }
 }

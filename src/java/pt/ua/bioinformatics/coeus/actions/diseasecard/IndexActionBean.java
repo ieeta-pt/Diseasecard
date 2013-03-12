@@ -57,7 +57,7 @@ public class IndexActionBean implements ActionBean {
     @DefaultHandler
     public Resolution html() {
          try {
-            Activity.log("0", "index", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+            Activity.log("0", "index", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
         } catch (Exception e) {
         }
         return new ForwardResolution("/final/view/index.jsp");

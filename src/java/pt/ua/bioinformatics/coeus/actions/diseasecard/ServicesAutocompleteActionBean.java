@@ -74,7 +74,7 @@ public class ServicesAutocompleteActionBean implements ActionBean {
             }
         }
         try {
-            Activity.log(term, "autocompleteid", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+            Activity.log(term, "autocompleteid", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
         } catch (Exception e) {
         }
         return new StreamingResolution("application/json", auto);
@@ -91,7 +91,7 @@ public class ServicesAutocompleteActionBean implements ActionBean {
             }
         }
         try {
-            Activity.log(term, "autocompletefull", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getRemoteAddr());
+            Activity.log(term, "autocompletefull", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
         } catch (Exception e) {
         }
         return new StreamingResolution("application/json", auto);

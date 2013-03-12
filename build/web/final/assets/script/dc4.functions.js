@@ -1,61 +1,78 @@
 var jsontree = {};
 
-// translator
-    var list = new Object();
-    list['omim'] = 'OMIM';
-    list['orphanet'] = 'OrphaNet';
-    list['pharmgkb'] = 'PharmGKB';
-    list['kegg'] = 'KEGG';    
-    list['enzyme'] = 'Enzyme';
-    list['ensembl'] = 'Ensembl';
-    list['entrez'] = 'Entrez';    
-    list['hgnc'] = 'HGNC';
-    list['genecards'] = 'Gene Cards';
-    list['clinicaltrials'] = 'Clinical Trials';
-    list['mesh'] = 'MeSH';
-    list['icd10'] = 'ICD 10';
-    list['interpro'] = 'InterPro';
-    list['prosite'] = 'PROSITE';
-    list['uniprot'] = 'UniProt';
-    list['pdb'] = 'PDB';
-    list['wave'] = 'WAVe'; 
-
+/** 
+ * Capitalizes given string.
+ * 
+ * @returns {@exp;@call;@call;toUpperCase}
+ */
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
-}
+};
+
+/**
+ * Check if given string ends with pattern.
+ * 
+ * @param {String} pattern
+ * @returns {Boolean} for match.
+ */
 String.prototype.endsWith = function(pattern) {
     var d = this.length - pattern.length;
     return d >= 0 && this.lastIndexOf(pattern) === d;
 };
+
+/**
+ * Check if given string starts with pattern.
+ * 
+ * @param {type} str
+ * @returns {Boolean} match
+ */
 String.prototype.startsWith = function(str) 
 {
-    return (this.match("^"+str)==str)
-}
+    return (this.match("^"+str) === str);
+};
+
+/**
+ * Check if element is present in Array.
+ * 
+ * @param {type} needle
+ * @returns {Boolean} contains
+ */
 Array.prototype.contains = function ( needle ) {
     for (i in this) {
-        if (this[i] == needle) return true;
+        if (this[i] === needle) return true;
     }
     return false;
-}
+};
 
+/**
+ * Get an empty _content frame.
+ * 
+ * @returns {String}
+ */
 function getFrame() {
     return '<iframe src="" id="_content" width="100%" height="100%" />';
-}
+};
 
+/**
+ * Gets content frame with LiveView link.
+ * 
+ * @param {type} pair
+ * @returns {String}
+ */
 function getFrame(pair) {
-    return '<iframe src="' + path + '/services/linkout/' + pair + '" id="_content" width="100%" height="100%" />'    
-}
+    return '<iframe src="' + path + '/services/linkout/' + pair + '" id="_content" width="100%" height="100%" />';
+};
 
+/**
+ * Returns item in <key>_<value> format for given URI.
+ * 
+ * @param {type} uri
+ * @returns {unresolved}
+ */
 function uri2item(uri) {
     var addr = uri.split('/');
     return addr[addr.length - 1];
-}
-
-
-function translate(token) {
-   
-    return list[token];
-}
+};
 
 /**
  * Search results loading.
@@ -156,12 +173,12 @@ function loadResults(id) {
 function toggleTopButton(id) {
     switch(id) {
         case 'mag':
-            if( ($('.mag').data('active')).toString() == 'false') {
+            if( ($('.mag').data('active')).toString() === 'false') {
                 hideTopButton('syns');
                 $('.search').fadeIn(300);
                 $('.mag').addClass('mag_enabled');
                 $('.mag').data('active', 'true');
-            } else if(($('.mag').data('active')).toString() == 'true') {
+            } else if(($('.mag').data('active')).toString() === 'true') {
                 $('.search').hide();
                 $('.mag').data('active', 'false');
                 $('.mag').removeClass('mag_enabled');
@@ -175,7 +192,7 @@ function toggleTopButton(id) {
 }
 
 function showSearch(i) {
-    if( (i.data('active')).toString() == 'false') {
+    if( (i.data('active')).toString() === 'false') {
         i.addClass('mag_enabled').data('active', 'true');
         $('.search').fadeIn(300);
         setTimeout(function() {
@@ -185,7 +202,7 @@ function showSearch(i) {
                 i.removeClass('mag_enabled');
             }
         },10000);
-    } else if((i.data('active')).toString() == 'true') {
+    } else if((i.data('active')).toString() === 'true') {
         $('.search').hide();
         i.data('active', 'false');
         i.removeClass('mag_enabled');
@@ -227,14 +244,6 @@ function showTopButton(id) {
             break;
     }
 }
-jQuery.extend({
-    random: function(X) {
-        return Math.floor(X * (Math.random() % 1));
-    },
-    randomBetween: function(MinV, MaxV) {
-        return MinV + jQuery.random(MaxV - MinV + 1);
-    }
-});
 
 $(document).ready(function(){
     // bootstrap tooltip loader

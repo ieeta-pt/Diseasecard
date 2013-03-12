@@ -15,7 +15,7 @@
                             <div class="nav-collapse collapse">
                                 <ul class="nav">
                                     <li class="active">
-                                        <a href="#">${actionBean.key}</a>
+                                        <a href="#" id="key">${actionBean.key}</a>
                                     </li>
                                 </ul>
                                </div><!--/.nav-collapse -->

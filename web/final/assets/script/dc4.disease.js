@@ -15,8 +15,7 @@ var labelType, useGradients, nativeTextSupport, animate, jsontree;
 function start() {
     /** tree handling **/
     $.getJSON(path + '/services/content/' + key +'.js',function(data){
-        jsontree = data;
-        $('#disease_info').fadeIn(1000);  
+        jsontree = data; 
         content = data.children;
         var html = '<ul id="dc4_tree" class="tree">';
         $.each(content, function(i) {
@@ -149,6 +148,13 @@ function init(){
         //or moved.
         onPlaceLabel: function(domElement, node){
             var style = domElement.style;
+            var count = 0;
+            node.eachSubnode(function(n) {
+                count++;
+            });            
+            if (count === 0) {
+                style.opacity = '0.4';
+            }
             style.display = '';
             style.cursor = 'pointer';
             if (node._depth <= 1) {

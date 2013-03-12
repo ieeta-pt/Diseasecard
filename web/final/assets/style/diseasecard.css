@@ -525,7 +525,7 @@ table {
 
 .tree .folder_empty {
     cursor: pointer;
-    opacity: 0.3;
+    opacity: 0.4;
 }
 .tree .closed:hover {
     cursor: pointer;
