@@ -229,11 +229,11 @@ table {
 #results_search {
     position: absolute;
     float: left;
-    overflow: scroll;
+    overflow: auto;
 }
 
 #results_links {
-    overflow: scroll;
+    overflow: auto;
     padding-right: 20px;
     float: right;
 }
@@ -257,9 +257,13 @@ table {
     font-size: 80%;
 }
 .results_title {
-    font-size:120%;
     font-weight: 600;
-    color: #454545;
+    width: 100%;
+}
+
+.external a:hover {
+	text-decoration: none;
+	color: #e15620;
 }
 
 .bs-docs-sidenav {

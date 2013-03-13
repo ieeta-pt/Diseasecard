@@ -48,7 +48,7 @@
                         <p>
                             Welcome to the new <strong>Diseasecard</strong>! <br /> Check the <a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section">about <i class="icon-book"></i></a> section to learn what's new and feel free to <a href="http://goo.gl/U0f2Z" rel="tooltip" title="View Diseasecard's form" target="_blank">give us any feedback</a>!
                         </p>
-                        Need help? You can search Diseasecard for disease names, OMIM disease codes or any of the connected identifiers.<br /><br />Try <a href="#" class="search_help" title="Search for OMIM code" rel="tooltip" data-animation="true">143100</a>, <a href="#" class="search_help" title="Add disease name to search box" rel="tooltip" data-animation="true">huntington</a> or <a href="#" class="search_help" rel="tooltip" data-animation="true" title="Add gene HGNC symbol to search box">HTT</a>
+                        Need help? You can search Diseasecard for disease names, OMIM disease codes or any of the connected identifiers.<br /><br />Try <a href="#" class="search_help" title="Search for OMIM code" rel="tooltip" data-animation="true">104300</a>, <a href="#" class="search_help" title="Add disease name to search box" rel="tooltip" data-animation="true">huntington</a> or <a href="#" class="search_help" rel="tooltip" data-animation="true" title="Add gene HGNC symbol to search box">CREBBP</a>
                     </div>
                 </div>
                 <div class="right span4">

@@ -88,7 +88,7 @@ public class PageURLServlet extends BaseURLServlet {
             context.put("metadata", Boolean.FALSE);
         }
         try {
-            Activity.log(ItemFactory.getTokenFromURI(request.getRequestURI()), "linkeddata", request.getRequestURI(), request.getHeader("User-Agent"), request.getRemoteAddr());
+            Activity.log(ItemFactory.getTokenFromURI(request.getRequestURI()), "linkeddata", request.getRequestURI(), request.getHeader("User-Agent"), request.getHeader("X-Forwarded-For"));
         } catch (Exception e) {
         }
 

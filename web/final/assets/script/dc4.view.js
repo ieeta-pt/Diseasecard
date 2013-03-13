@@ -74,34 +74,27 @@ function query() {
         // connect graph
         disease.children[disease.children.length] = omim;
         disease.children[disease.children.length] = orphanet;
-
         drug.children[drug.children.length] = pharmgkb;
-
         pathway.children[pathway.children.length] = kegg;
         pathway.children[pathway.children.length] = enzyme;
-
         locus.children[locus.children.length] = ensembl;
         locus.children[locus.children.length] = entrez;
         locus.children[locus.children.length] = genecards;
         locus.children[locus.children.length] = hgnc;
-
         study.children[study.children.length] = clinicaltrials;
-
         ontology.children[ontology.children.length] = mesh;
         ontology.children[ontology.children.length] = icd10;
-
         protein.children[protein.children.length] = interpro;
         protein.children[protein.children.length] = prosite;
         protein.children[protein.children.length] = pdb;
         protein.children[protein.children.length] = uniprot;
-
         variome.children[variome.children.length] = wave;
-
         network.children[network.children.length] = disease;
         network.children[network.children.length] = drug;
         network.children[network.children.length] = pathway;
         network.children[network.children.length] = locus;
         network.children[network.children.length] = study;
+        network.children[network.children.length] = ontology;
         network.children[network.children.length] = protein;
         network.children[network.children.length] = variome;
 
@@ -253,13 +246,13 @@ function init() {
         //or moved.
         onPlaceLabel: function(domElement, node) {
             var style = domElement.style;
-            var count = 0;
+          /*  var count = 0;
             node.eachSubnode(function(n) {
                 count++;
             });            
             if (count === 0) {
                 style.opacity = '0.4';
-            }
+            }*/
             style.display = '';
             style.cursor = 'pointer';
             if (node._depth <= 1) {

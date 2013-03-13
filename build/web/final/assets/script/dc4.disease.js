@@ -54,7 +54,7 @@ function start() {
         if(window.location.hash) {
             updateButtons(false);
             var hash = window.location.hash.substring(1);
-            if(!hash.startsWith('name')) {
+            if(hash.toString().indexOf('name') === -1) {
             	$('#frame_loading').fadeIn('slow');
             	$.ajax({
                     url: path + '/services/frame/0',
@@ -148,13 +148,13 @@ function init(){
         //or moved.
         onPlaceLabel: function(domElement, node){
             var style = domElement.style;
-            var count = 0;
+           /* var count = 0;
             node.eachSubnode(function(n) {
                 count++;
             });            
             if (count === 0) {
                 style.opacity = '0.4';
-            }
+            }*/
             style.display = '';
             style.cursor = 'pointer';
             if (node._depth <= 1) {
