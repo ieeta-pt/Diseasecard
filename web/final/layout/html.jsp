@@ -21,6 +21,23 @@
                 <div class="alert alert-info" id="coeus">
   <a href="http://bioinformatics.ua.pt/coeus" target="_blank" title="Powered by COEUS">Powered by <strong>COEUS</strong></a>
 </div>
+<script type="text/javascript">
+  var GoSquared = {};
+  GoSquared.acct = "GSN-447581-N";
+  (function(w){
+    function gs(){
+      w._gstc_lt = +new Date;
+      var d = document, g = d.createElement("script");
+      g.type = "text/javascript";
+      g.src = "//d1l6p2sc9645hc.cloudfront.net/tracker.js";
+      var s = d.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(g, s);
+    }
+    w.addEventListener ?
+      w.addEventListener("load", gs, false) :
+      w.attachEvent("onload", gs);
+  })(window);
+</script>
         </body>
         <script type="text/javascript">
             var _gaq = _gaq || [];
