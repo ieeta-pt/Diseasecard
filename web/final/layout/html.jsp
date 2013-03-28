@@ -18,26 +18,25 @@
             </noscript>
             <s:layout-component name="body">
             </s:layout-component>
-                <div class="alert alert-info" id="coeus">
-  <a href="http://bioinformatics.ua.pt/coeus" target="_blank" title="Powered by COEUS">Powered by <strong>COEUS</strong></a>
-</div>
-<script type="text/javascript">
-  var GoSquared = {};
-  GoSquared.acct = "GSN-447581-N";
-  (function(w){
-    function gs(){
-      w._gstc_lt = +new Date;
-      var d = document, g = d.createElement("script");
-      g.type = "text/javascript";
-      g.src = "//d1l6p2sc9645hc.cloudfront.net/tracker.js";
-      var s = d.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(g, s);
-    }
-    w.addEventListener ?
-      w.addEventListener("load", gs, false) :
-      w.attachEvent("onload", gs);
-  })(window);
-</script>
+
+
+            <script type="text/javascript">
+                var GoSquared = {};
+                GoSquared.acct = "GSN-447581-N";
+                (function(w) {
+                    function gs() {
+                        w._gstc_lt = +new Date;
+                        var d = document, g = d.createElement("script");
+                        g.type = "text/javascript";
+                        g.src = "//d1l6p2sc9645hc.cloudfront.net/tracker.js";
+                        var s = d.getElementsByTagName("script")[0];
+                        s.parentNode.insertBefore(g, s);
+                    }
+                    w.addEventListener ?
+                            w.addEventListener("load", gs, false) :
+                            w.attachEvent("onload", gs);
+                })(window);
+            </script>
         </body>
         <script type="text/javascript">
             var _gaq = _gaq || [];
@@ -47,21 +46,28 @@
             _gaq.push(['_trackPageview']);
 
             (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
                 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
             })();
         </script>
-        <script type="text/javascript"> 
-            var $buoop = {vs:{i:8,f:4,o:11,s:5,n:9}} 
-            $buoop.ol = window.onload; 
-            window.onload=function(){ 
-                try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
-                var e = document.createElement("script"); 
-                e.setAttribute("type", "text/javascript"); 
-                e.setAttribute("src", "http://browser-update.org/update.js"); 
-                document.body.appendChild(e); 
-            } 
+        <script type="text/javascript">
+            var $buoop = {vs: {i: 8, f: 4, o: 11, s: 5, n: 9}}
+            $buoop.ol = window.onload;
+            window.onload = function() {
+                try {
+                    if ($buoop.ol)
+                        $buoop.ol();
+                } catch (e) {
+                }
+                var e = document.createElement("script");
+                e.setAttribute("type", "text/javascript");
+                e.setAttribute("src", "http://browser-update.org/update.js");
+                document.body.appendChild(e);
+            }
         </script> 
         <s:layout-component name="scripts">
             <jsp:include page="/final/layout/script.jsp" />

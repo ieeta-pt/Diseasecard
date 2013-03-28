@@ -4,7 +4,7 @@
         "description": "Diseasecard v4",
         "keyprefix":"diseasecard",
         "version": "4.1.1",
-        "ontology": "/Users/pedrolopes/Dropbox/Development/Software/COEUS/ontology/coeus_1.0.owl",
+        "ontology": "http://bioinformatics.ua.pt/coeus/ontology/",
         "setup": "dc4_setup.rdf",
         "sdb":"dc4_sdb.ttl",
         "predicates":"dc4_predicates.csv",

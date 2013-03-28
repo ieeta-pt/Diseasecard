@@ -56,7 +56,7 @@ public abstract class BaseServlet extends HttpServlet {
 		try {
 			return new Configuration(
 					FileManager.get().loadModel(
-							configFile.getAbsoluteFile().toURL().toExternalForm()));
+							configFile.getAbsoluteFile().toURI().toURL().toExternalForm()));
 		} catch (MalformedURLException ex) {
 			throw new RuntimeException(ex);
 		}

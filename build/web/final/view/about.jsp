@@ -63,7 +63,7 @@
                         <li><a href="#api" title="API">API</a></li>
                         <li><a href="#publications" title="Publications">Publications</a></li>
                         <li><a href="#disclaimer" title="Disclaimer">Disclaimer</a></li>
-                        <li><a href="#support" title="Support">Support</a></li>
+                        <li><a href="#contacts" title="Contacts">Contacts</a></li>
                     </ul>
                     <div class="tab-content" style="overflow: hidden;">
                         <div class="tab-pane active" id="overview">
@@ -243,31 +243,25 @@
                                 <li><strong>Diseasecard</strong> developers cannot be held responsible for the erroneous use of any information retrieved and displayed by the tool. Whilst all reasonable efforts have been made to ensure that <strong>Diseasecard</strong> and its data are of consistent high quality, we make no warranty, express or implied, as to their completeness, accuracy or utility for any particular purpose. <strong>Diseasecard</strong> software and data may be used by others on the clear understanding that no liability for any damage or negative outcome whatsoever, either direct or indirect, shall rest upon the <strong>Diseasecard</strong> team or its sponsors, or any of their employees or agents. </li>
                             </ol>
                         </div>
-                        <div class="tab-pane" id="support">
-                            <h2>Support</h2>
-                            <h3>Contact</h3>
-                            <h4>Team</h4>
+                        <div class="tab-pane" id="contacts">
+                            <h2>Contacts</h2>
                             <dl>
                                 <dt>Pedro Lopes</dt>
                                 <dd><a href="mailto:pedrolopes@ua.pt">pedrolopes@ua.pt</a></dd>
                                 <dt>José Luís Oliveira</dt>
                                 <dd><a href="mailto:jlo@ua.pt">jlo@ua.pt</a></dd>
                             </dl>
-                            <br />
-                            <strong>Previous members</strong><br />
-                            Gaspar Dias, Hugo Pais, Carlos Davide, Luís Santos, David Campos, Javier Vicente, Fernando Martin-Sanchez
+                            <dl>
+	                            <em>Main contributors</em>
+                                <dt>From ISCIII, Spain</dt>
+                                <dd>Fernando Martín-Sánchez, Francisco-Javier Vicente</dd>
+                                <dt>From University of Aveiro</dt>
+                                <dd>Gaspar Dias, Hugo Pais</dd>
+                            </dl>
                             <h3>Endorsement</h3>
-                            The development of Diseasecard and <a href="http://bioinformatics.ua.pt/coeus" rel="tooltip" title="COEUS Semantic Web Application Framework" target="_blank">COEUS</a> is supported by the following institutions and projects.
+                            The development of Diseasecard and <a href="http://bioinformatics.ua.pt/coeus" rel="tooltip" title="COEUS Semantic Web Application Framework" target="_blank">COEUS</a> is being supported by the following institutions and projects.
                             <br />
                             <ul class="thumbnails">
-                            	<li class="span3">
-                            		<div class="thumbnail">
-                            			<a href="http://www.ieeta.pt/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_ieeta.png" /></a>
-                            			<div class="caption">
-                            				<strong>IEETA</strong>
-                            			</div>
-                            		</div>
-                            	</li>
                             	<li class="span3">
                             		<div class="thumbnail">
                             			<a href="http://www.ua.pt/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_ua.png" /></a>
@@ -275,15 +269,33 @@
                             				<strong>University of Aveiro</strong>
                             			</div>
                             		</div>
-                            	</li>
+                            	</li>      
                             	<li class="span3">
                             		<div class="thumbnail">
-                            			<a href="http://www.rd-connect.eu/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_rdconnect.png" /></a>
+                            			<a href="http://www.isciii.es/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_isciii.png" /></a>
                             			<div class="caption">
-                            				<strong>GEN2PHEN</strong>
+                            				<strong>ISCIII</strong>
                             			</div>
                             		</div>
                             	</li>
+                            </ul>
+                            <ul class="thumbnails">
+                            	<li class="span3">
+                            		<div class="thumbnail">
+                            			<a href="http://infogenmed.ieeta.pt/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_infogenmed.png" /></a>
+                            			<div class="caption">
+                            				<strong>InfoGenMed</strong>
+                            			</div>
+                            		</div>
+                            	</li>    
+                            	<li class="span3">
+                            		<div class="thumbnail">
+                            			<a href="http://www.infobiomed.org/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_infobiomed.png" /></a>
+                            			<div class="caption">
+                            				<strong>InfoBioMed</strong>
+                            			</div>
+                            		</div>
+                            	</li> 
                             	<li class="span3">
                             		<div class="thumbnail">
                             			<a href="http://www.gen2phen.org/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_gen2phen.png" /></a>
@@ -294,25 +306,9 @@
                             	</li>
                             	<li class="span3">
                             		<div class="thumbnail">
-                            			<a href="http://www.isciii.es/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_isciii.png" /></a>
+                            			<a href="http://www.rd-connect.eu/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_rdconnect.png" /></a>
                             			<div class="caption">
-                            				<strong>ISCIII</strong>
-                            			</div>
-                            		</div>
-                            	</li>
-                            	<li class="span3">
-                            		<div class="thumbnail">
-                            			<a href="http://www.infobiomed.org/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_infobiomed.png" /></a>
-                            			<div class="caption">
-                            				<strong>InfoBioMed</strong>
-                            			</div>
-                            		</div>
-                            	</li>
-                            	<li class="span3">
-                            		<div class="thumbnail">
-                            			<a href="http://infogenmed.ieeta.pt/" target="_blank"><img src="/diseasecard/final/assets/image/logo/logo_infogenmed.png" /></a>
-                            			<div class="caption">
-                            				<strong>InfoGenMed</strong>
+                            				<strong>RD-Connect</strong>
                             			</div>
                             		</div>
                             	</li>
