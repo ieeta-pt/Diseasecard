@@ -6,24 +6,14 @@ import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
-import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 
 /**
  *
  * @author pedrolopes
  */
-@UrlBinding("/info")
-public class RedirectInfoActionBean implements ActionBean {
-    private String version;
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
+@UrlBinding("/activity")
+public class RedirectActivityActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
 
@@ -37,8 +27,7 @@ public class RedirectInfoActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution get() {
-        version = Config.getVersion();
-        return new ForwardResolution("/final/view/info.jsp");
+        return new ForwardResolution("/final/view/activity.jsp");
     }
     
     
