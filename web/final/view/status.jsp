@@ -72,7 +72,14 @@
     <s:layout-component name="custom_scripts">
        
         <script>   
-           
+             $(document).ready(function(){                
+                $('.mag').click(function() {
+                    toggleTopButton('mag');
+                    setTimeout(function(){                            
+                        $('#text_search').focus();
+                    }, 400);                    
+                });                   
+            });    
         </script>
     </s:layout-component>
 </s:layout-render>

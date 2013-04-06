@@ -38,7 +38,7 @@ String.prototype.startsWith = function(str)
  * @returns {Boolean} contains
  */
 Array.prototype.contains = function ( needle ) {
-    for (i in this) {
+    for (var i in this) {
         if (this[i] === needle) return true;
     }
     return false;

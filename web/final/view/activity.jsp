@@ -336,6 +336,15 @@
                     "bAutoWidth" : false,
                     "sCookiePrefix": "diseasecard_status_"
                 }); 
+                
+                             $(document).ready(function(){                
+                $('.mag').click(function() {
+                    toggleTopButton('mag');
+                    setTimeout(function(){                            
+                        $('#text_search').focus();
+                    }, 400);                    
+                });                   
+            });  
             });
         </script>
     </s:layout-component>
