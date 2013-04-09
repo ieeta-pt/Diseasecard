@@ -49,6 +49,9 @@
             <div class="alert alert-error span6" id="alert_noresults">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>Warning!</strong> Diseasecard found no results for you search query <span class="label label-important">${actionBean.query}</span>.
+                <br />
+                <br />
+                <a href="<c:url value="/search/full/${actionBean.query}" />" target="_top" rel="tooltip" title="Diseasecard full text search on ">Do you want to try full text search instead?</a>
             </div>
         </div>
         <div class="navbar" id="loading">
