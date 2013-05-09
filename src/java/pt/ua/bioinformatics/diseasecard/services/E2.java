@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package pt.ua.bioinformatics.coeus.common;
+package pt.ua.bioinformatics.diseasecard.services;
 
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
@@ -10,6 +10,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.diseasecard.engine.ICD10Processor;
 
 /**

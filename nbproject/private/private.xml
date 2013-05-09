@@ -11,26 +11,4 @@
             </bookmark>
         </file>
     </editor-bookmarks>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/ServicesBrowseActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/ServicesAutocompleteActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/ServiceLinkOutActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/ServiceFrameActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/RedirectActivityActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/IndexActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/EvaluateCardActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/EntryActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/DiseaseActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/web/final/assets/script/dc4.view.js</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/de/fuberlin/wiwiss/pubby/servlets/PageURLServlet.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/ServicesSearchResultsActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/RedirectSearchActionBean.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/config.js</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/web/final/view/search.jsp</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/web/final/layout/html.jsp</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/web/final/layout/script.jsp</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/web/WEB-INF/web.xml</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/web/final/view/status.jsp</file>
-        <file>file:/Users/pedrolopes/Dropbox/Development/Software/DC4/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/RedirectStatusActionBean.java</file>
-    </open-files>
 </project-private>

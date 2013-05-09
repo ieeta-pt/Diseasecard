@@ -239,6 +239,7 @@ public class API {
     public boolean addStatement(Resource subject, Property predicate, Resource object) {
         boolean success = false;
         try {
+            
             this.model.add(subject, predicate, object);
             success = true;
         } catch (Exception ex) {

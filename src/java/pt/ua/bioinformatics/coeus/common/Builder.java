@@ -103,7 +103,6 @@ public class Builder {
             if (Config.isDebug()) {
                 System.out.println("[COEUS][Builder] Reading resource for " + Config.getName());
             }
-            System.out.println(whatResource);
             JSONParser parser = new JSONParser();
             JSONObject response = (JSONObject) parser.parse(Boot.getAPI().select("SELECT ?res ?method ?comment ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built ?query ?delimiter WHERE { ?res a coeus:Resource . ?res rdfs:comment ?comment . ?res rdfs:label ?label . ?res dc:title ?title . ?res dc:publisher ?publisher . ?res coeus:extends ?extends . ?res coeus:method ?method . ?res coeus:endpoint ?endpoint . ?res coeus:order ?order . OPTIONAL { ?res coeus:built ?buil} . OPTIONAL {?res coeus:extension ?extension} . OPTIONAL {?res dc:format ?delimiter} . OPTIONAL {?res coeus:query ?query} . FILTER regex(str(?label), '" + whatResource + "')} ORDER BY ?order LIMIT 1", "js", false));
             JSONObject results = (JSONObject) response.get("results");
@@ -152,9 +151,10 @@ public class Builder {
         ResourceFactory factory;
         try {
             if (!r.isBuilt()) {
-                if (r.getPublisher().equals("plugin")) {
-                    factory = new PluginFactory(r);
-                } else if (r.getPublisher().equals("csv")) {
+                /*if (r.getPublisher().equals("plugin")) {
+                   factory = new PluginFactory(r);
+                
+                } else */if (r.getPublisher().equals("csv")) {
                     factory = new CSVFactory(r);
                 } else if (r.getPublisher().equals("xml")) {
                     factory = new XMLFactory(r);
@@ -162,11 +162,11 @@ public class Builder {
                     factory = new SQLFactory(r);
                 } else if (r.getPublisher().equals("sparql")) {
                     factory = new SPARQLFactory(r);
-                } else {
+                }  else {
                     factory = null;
-                }
+                } 
                 factory.read();
-                factory.save();
+                factory.save(); 
             }
             if (Config.isDebug()) {
                 System.out.println("[COEUS][Builder] Data for " + r.getTitle() + " read");

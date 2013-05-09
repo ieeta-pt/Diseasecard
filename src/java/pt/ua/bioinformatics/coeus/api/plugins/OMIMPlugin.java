@@ -5,7 +5,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,7 +23,7 @@ import pt.ua.bioinformatics.diseasecard.domain.Disease;
  * DiseaseCard plugin for OMIM data handling.
  * <p>Generates initial gene and disease dataset based on OMIM's morbid map.
  * </p>
- * 
+ *
  * @author pedrolopes
  */
 public class OMIMPlugin {
@@ -33,6 +32,7 @@ public class OMIMPlugin {
     private API api;
     private HashMap<String, Disease> diseases;
     private HashMap<String, Disease> genotypes;
+    private ArrayList<String> hgnc = new ArrayList<String>();
 
     public HashMap<String, Disease> getGenotypes() {
         return genotypes;
@@ -68,16 +68,19 @@ public class OMIMPlugin {
     /**
      * OMIMPlugin controller.
      * <p><b>Workflow:</b><ul>
-     *  <li>Load genotype information from OMIM genemap</li>
-     *  <li>Load phenotype information from OMIM morbidmap</li>
-     *  <li>Import loaded dataset into COEUS SDB</li>
+     * <li>Load genotype information from OMIM genemap</li>
+     * <li>Load phenotype information from OMIM morbidmap</li>
+     * <li>Import loaded dataset into COEUS SDB</li>
      * </ul></p>
      *
      */
     public void itemize() {
-        if (loadGenotype() && loadPhenotype()) {
-            triplify();
-        }
+        loadHGNC();
+        loadGenotype();
+        loadPhenotype();
+        //if (loadGenotype() && loadPhenotype()) {
+        triplify();
+        //}
     }
 
     /**
@@ -89,7 +92,7 @@ public class OMIMPlugin {
         boolean success = true;
         try {
             //URL u = new URL("ftp://ftp.ncbi.nih.gov/repository/OMIM/ARCHIVE/genemap");
-            URL u = new URL("http://localhost/~pedrolopes/omim/genemap_small");
+            URL u = new URL("http://omim.dev/genemap");
             BufferedReader in = new BufferedReader(new InputStreamReader(u.openStream()));
             CSVReader reader = new CSVReader(in, '|');
             List<String[]> genemap = reader.readAll();
@@ -97,8 +100,11 @@ public class OMIMPlugin {
                 Disease d = new Disease(genes[7], genes[9]);
                 d.setLocation(genes[4]);
                 genotypes.put(d.getOmimId(), d);
-                String[] genelist = genes[5].split(", ");
-                d.getGenes().addAll(Arrays.asList(genelist));
+                for (String valid_gene : genes[5].split(", ")) {
+                    if (hgnc.contains(valid_gene)) {
+                        d.getGenes().add(valid_gene);
+                    }
+                }
             }
             success = true;
         } catch (Exception ex) {
@@ -117,10 +123,10 @@ public class OMIMPlugin {
      * @return success of the operation.
      */
     private boolean loadPhenotype() {
-        boolean success = false;
+        boolean success = true;
         try {
             //URL u = new URL("ftp://ftp.ncbi.nih.gov/repository/OMIM/ARCHIVE/morbidmap");            
-            URL u = new URL("http://localhost/~pedrolopes/omim/morbidmap_small");
+            URL u = new URL("http://omim.dev/morbidmap");
             BufferedReader in = new BufferedReader(new InputStreamReader(u.openStream()));
             CSVReader reader = new CSVReader(in, '|');
             List<String[]> morbidmap = reader.readAll();
@@ -148,8 +154,11 @@ public class OMIMPlugin {
                             if (!genotype.getPhenotypes().contains(d)) {
                                 genotype.getPhenotypes().add(d);
                             }
-                            String[] genelist = disease[1].split(", ");
-                            d.getGenes().addAll(Arrays.asList(genelist));
+                            for (String valid_gene : disease[1].split(", ")) {
+                                if (hgnc.contains(valid_gene)) {
+                                    d.getGenes().add(valid_gene);
+                                }
+                            }
                         } else {
                             d = new Disease(dis_name, pheno_omim);
                             d.setLocation(disease[3]);
@@ -163,7 +172,11 @@ public class OMIMPlugin {
                                 genotype.getPhenotypes().add(d);
                             }
                             String[] genelist = disease[1].split(", ");
-                            d.getGenes().addAll(Arrays.asList(genelist));
+                            for (String valid_gene : disease[1].split(", ")) {
+                                if (hgnc.contains(valid_gene)) {
+                                    d.getGenes().add(valid_gene);
+                                }
+                            }
                         }
                         // not a phenotype, add to only genotypes list
                     } else {
@@ -199,10 +212,10 @@ public class OMIMPlugin {
     /**
      * Loads the in-memory data into COEUS SDB.
      * <p><b>Workflow</b><br /><ul>
-     *  <li>Loads genotypes</li>
-     *  <li>Loads genes for each genotype</li>     
-     *  <li>Loads genotypes for each genotype</li>
-     *  <li>Loads genes for each phenotype</li>
+     * <li>Loads genotypes</li>
+     * <li>Loads genes for each genotype</li>
+     * <li>Loads genotypes for each genotype</li>
+     * <li>Loads genes for each phenotype</li>
      * </ul></p>
      *
      */
@@ -280,7 +293,8 @@ public class OMIMPlugin {
      * Handles gene writing into COEUS SDB.
      *
      * @param genes the list of genes to insert.
-     * @param item the item where the genes will be associated (coeus:isAssociatedTo).
+     * @param item the item where the genes will be associated
+     * (coeus:isAssociatedTo).
      */
     private void triplifyGenes(ArrayList<String> genes, com.hp.hpl.jena.rdf.model.Resource item) {
         for (String gene : genes) {
@@ -309,5 +323,24 @@ public class OMIMPlugin {
                 }
             }
         }
+    }
+
+    private void loadHGNC() {
+        try {
+            URL u = new URL("http://omim.dev/hgnc");
+            BufferedReader in = new BufferedReader(new InputStreamReader(u.openStream()));
+            CSVReader reader = new CSVReader(in, '\t');
+            List<String[]> hgncs = reader.readAll();
+            for (String[] s : hgncs) {
+                hgnc.add(s[1]);
+            }
+
+        } catch (Exception ex) {
+            if (Config.isDebug()) {
+                System.out.println("[COEUS][OMIM] Unable to triplify gene information");
+                Logger.getLogger(OMIMPlugin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 }

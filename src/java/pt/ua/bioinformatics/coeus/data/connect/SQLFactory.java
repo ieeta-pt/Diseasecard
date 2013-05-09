@@ -46,12 +46,13 @@ public class SQLFactory implements ResourceFactory {
     /**
      * Reads SQL data according to Resource information.
      * <p>Workflow</b><ol>
-     *  <li>Check if resource is starter/extends</li>
-     *  <li>Load SQL resource from database to ResultSets</li>
-     *  <li>Start Triplify with factory Resource</li>
-     *  <li>Get data for Item key into Triplify</li>
-     *  <li>Load data for each InheritedResource property into Triplify hashmap based on SQL columns</li>
-     *  <li>Itemize single item</li>
+     * <li>Check if resource is starter/extends</li>
+     * <li>Load SQL resource from database to ResultSets</li>
+     * <li>Start Triplify with factory Resource</li>
+     * <li>Get data for Item key into Triplify</li>
+     * <li>Load data for each InheritedResource property into Triplify hashmap
+     * based on SQL columns</li>
+     * <li>Itemize single item</li>
      * </ol></p>
      */
     public void read() {
@@ -177,7 +178,12 @@ public class SQLFactory implements ResourceFactory {
                                         rdfizer.add(inside, rs.getString(r.getQuery()));
                                     }
                                 }
-                                rdfizer.itemize(rs.getString(key.getQuery()));
+                                // hack for multiline outputs
+                                String [] mlines = rs.getString(key.getQuery()).split(";");
+                                for(String line : mlines) {
+                                    rdfizer.itemize(line.replace(" ",""));
+                                }
+                                
                             }
                         } catch (Exception ex) {
                             if (Config.isDebug()) {
@@ -197,7 +203,8 @@ public class SQLFactory implements ResourceFactory {
     }
 
     /**
-     * Updates the resource coeus:built property once the resource finished building.
+     * Updates the resource coeus:built property once the resource finished
+     * building.
      *
      * @return success of the operation
      */

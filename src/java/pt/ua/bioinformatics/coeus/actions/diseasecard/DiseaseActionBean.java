@@ -1,18 +1,15 @@
 package pt.ua.bioinformatics.coeus.actions.diseasecard;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.action.UrlBinding;
-import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
-import pt.ua.bioinformatics.diseasecard.domain.Disease;
-import pt.ua.bioinformatics.diseasecard.services.Activity;
+import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
+import redis.clients.jedis.Jedis;
 
 /**
  *
@@ -42,6 +39,16 @@ public class DiseaseActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution html() {
-        return new RedirectResolution("/entry/" + key);
+        return new ForwardResolution("/final/view/disease.jsp");
+    }
+
+    public Resolution js() {
+        try {
+            Jedis jedis = new Jedis("localhost");
+            return new StreamingResolution("application/json", jedis.get(key));
+        } catch (Exception ex) {
+            DiseaseAPI d = new DiseaseAPI(key);
+            return new StreamingResolution("application/json", d.load().toString());
+        }
     }
 }

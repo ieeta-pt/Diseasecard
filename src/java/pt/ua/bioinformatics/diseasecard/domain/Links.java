@@ -24,12 +24,12 @@ public class Links {
         // Disease
         links.put("omim", "http://bioinformatics.ua.pt/romim/entry/#replace#");
         links.put("orphanet", "http://www.orpha.net/consor/cgi-bin/Disease_Search.php?lng=EN&data_id=#replace#");
-        links.put("nord", "http://www.rarediseases.org/rare-disease-information/rare-diseases/viewSearchResults?term=#replace#");
         // Protein
         links.put("uniprot", "http://www.uniprot.org/uniprot/#replace#");
         links.put("pdb", "http://www.pdb.org/pdb/explore/explore.do?structureId=#replace#");
         links.put("prosite", "http://prosite.expasy.org/cgi-bin/prosite/prosite-search-ac?#replace#");
         links.put("interpro", "http://wwwdev.ebi.ac.uk/interpro/ISearch?query=#replace#");
+        links.put("string", "http://string-db.org/newstring_cgi/show_network_section.pl?identifier=#replace#");
         //Literature
         links.put("pubmedsearch", "http://www.ncbi.nlm.nih.gov/pubmed?term=#replace#");
         links.put("pubmed", "http://www.ncbi.nlm.nih.gov/pubmed/#replace#");
@@ -53,10 +53,10 @@ public class Links {
         links.put("mesh", "http://www.nlm.nih.gov/cgi/mesh/2011/MB_cgi?term=#replace#&field=uid&exact=Find%20Exact%20Term");
         links.put("hp", "http://www.berkeleybop.org/obo/#replace#.pro");
         links.put("icd10","http://apps.who.int/classifications/icd10/browse/2010/en#/#replace#");
-        links.put("umls", "http://ncim.nci.nih.gov/ncimbrowser/ConceptReport.jsp?code=#replace#");
+        links.put("go","http://amigo.geneontology.org/cgi-bin/amigo/term_details?term=#replace#");
         // Variome
         links.put("wave", "http://bioinformatics.ua.pt/WAVe/gene/#replace#");
-        links.put("swissvar","http://web.expasy.org/cgi-bin/variant_pages/get-sprot-variant.pl?#replace#");
+        links.put("lsdb", "http://localhost:8084/diseasecard/services/lsdb/#replace#");
         loaded = true;
     }
 

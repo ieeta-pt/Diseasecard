@@ -323,9 +323,8 @@ public class Resource {
         boolean success = false;
         try {
             JSONParser parser = new JSONParser();
-            JSONObject response = (JSONObject) parser.parse(Boot.getAPI().select("SELECT ?c ?title ?desc ?prop ?label ?query ?regex WHERE { " + PrefixFactory.encode(uri) + " coeus:hasKey ?c ."
+            JSONObject response = (JSONObject) parser.parse(Boot.getAPI().select("SELECT ?c ?title ?prop ?label ?query ?regex WHERE { " + PrefixFactory.encode(uri) + " coeus:hasKey ?c ."
                     + " ?c dc:title ?title ."
-                    + " ?c dc:description ?desc ."
                     + " ?c coeus:property ?prop ."
                     + " ?c rdfs:label ?label ."
                     + " ?c coeus:query ?query ."
@@ -334,14 +333,13 @@ public class Resource {
             JSONArray bindings = (JSONArray) results.get("bindings");
             for (Object obj : bindings) {
                 JSONObject binding = (JSONObject) obj;
-                JSONObject desc = (JSONObject) binding.get("desc");
                 JSONObject c_label = (JSONObject) binding.get("label");
                 JSONObject c_title = (JSONObject) binding.get("title");
                 JSONObject c = (JSONObject) binding.get("c");
                 JSONObject c_query = (JSONObject) binding.get("query");
                 JSONObject prop = (JSONObject) binding.get("prop");
                 JSONObject c_regex = (JSONObject) binding.get("regex");
-                hasKey = new InheritedResource(desc.get("value").toString(), c_label.get("value").toString(), c_title.get("value").toString(), c.get("value").toString(), prop.get("value").toString(), c_query.get("value").toString());
+                hasKey = new InheritedResource("", c_label.get("value").toString(), c_title.get("value").toString(), c.get("value").toString(), prop.get("value").toString(), c_query.get("value").toString());
                 hasKey.setRegex(!(c_regex == null) ? c_regex.get("value").toString() : null);
             }
             success = true;

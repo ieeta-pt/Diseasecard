@@ -43,7 +43,7 @@ public class PluginFactory implements ResourceFactory{
      */
     public void read() {
         String[] divide = res.getEndpoint().split("://");
-        String type = divide[0];
+        String type = "omim"; //divide[0];
         try {
             if (type.equals("omim")) {
                 OMIMPlugin omim = new OMIMPlugin(res);

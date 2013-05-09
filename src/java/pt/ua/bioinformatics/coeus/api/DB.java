@@ -266,19 +266,17 @@ public class DB {
      * @return Result Set containing the output of the executed <code>SELECT</code> statement
      */
     public ResultSet getData(String query) {
-        query = query.replace("#build#", build);
-
         ResultSet rs = null;
 
         try {
             if (!connection.isClosed() && !statement.isClosed()) {
-                rs = statement.executeQuery(query);
-            }
+                statement.setQueryTimeout(360);
+               rs = statement.executeQuery(query);
+            }           
         } catch (SQLException e) {
             System.out.println("[DB] Unable to retrieve data\n\t" + e.toString());
-            return rs;
         } finally {
-            //  System.out.println("[DB] Retrieved data");
+            
             return rs;
         }
 
