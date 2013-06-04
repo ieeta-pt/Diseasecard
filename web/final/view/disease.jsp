@@ -11,11 +11,11 @@
                 <div class="navbar navbar-inverse navbar-fixed-top">
                     <div class="navbar-inner">
                         <div class="container pull-left">
-                            <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
+                            <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="22" width="190" /></a>
                             <div class="nav-collapse collapse">
                                 <ul class="nav">
                                     <li class="active">
-                                        <a href="#" id="key" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-chevron-down"></i> ${actionBean.key}</a>
+                                        <a href="#" id="key" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-chevron-down"></i></a>
                                             <ul id="related" class="dropdown-menu synonyms" role="menu" aria-labelledby="dropdownMenu" >
                                             
                                         </ul>

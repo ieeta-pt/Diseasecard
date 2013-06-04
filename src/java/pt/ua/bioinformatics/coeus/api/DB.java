@@ -89,10 +89,11 @@ public class DB {
      *
      * @return Success of the operation (true if connects, false if fails to connect)
      */
-    public boolean connect(String connectionString) {
+    public boolean connect(String connectionString) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         boolean success = false;
         try {
-            connection = DriverManager.getConnection(connectionString);
+                    // System.out.println("\t\t\t" + connectionString);
+            connection = DriverManager.getConnection("jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e;loginTimeout=6000");
             statement = connection.createStatement();
             success = true;
         } catch (SQLException ex) {

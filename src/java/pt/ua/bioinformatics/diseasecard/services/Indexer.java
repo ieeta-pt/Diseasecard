@@ -11,9 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONArray;
 import pt.ua.bioinformatics.coeus.api.DB;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
 import pt.ua.bioinformatics.coeus.common.Boot;
@@ -28,15 +34,73 @@ import pt.ua.bioinformatics.diseasecard.domain.Orphanet;
 public class Indexer {
 
     static private HashMap<String, Disease> diseases = new HashMap<String, Disease>();
+    static private HashMap<String, JSONObject> omims = new HashMap<String, JSONObject>();
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) throws SolrServerException, IOException {
+        loadOMIMs();
+        indexer();
         //process();
         //solrImport();
         //loadNames();
-        addNames();
+        //addNames();
+    }
+
+    /**
+     * Load OMIM objects from Redis server into local HashMap
+     */
+    static void loadOMIMs() {
+        Boot.start();
+        // select OMIM identifiers
+        ResultSet rs = Boot.getAPI().selectRS("SELECT ?t WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM . ?u diseasecard:omim ?t  }", false);
+        while (rs.hasNext()) {
+            QuerySolution row = rs.next();
+            try {
+                // add to HashMap
+                omims.put(row.get("t").toString(), new JSONObject(Boot.getJedis().get(row.get("t").toString())));
+            } catch (Exception e) {
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);
+            }
+        }
+    }
+
+    /**
+     * Process each OMIM object (from HashMap) into full-content indexing engine
+     */
+    static void indexer() {
+        HttpSolrServer server = new HttpSolrServer("http://localhost:8983/solr");
+        server.setDefaultMaxConnectionsPerHost(256);
+        server.setMaxTotalConnections(256);
+        ExecutorService pool = Executors.newFixedThreadPool(8);
+
+        for (String omim : omims.keySet()) {
+            JSONObject obj = omims.get(omim);
+            try {
+                JSONArray names = obj.getJSONArray("synonyms");
+                for (int i = 0; i < names.length(); i++) {
+                    SolrLoad load = new SolrLoad(omim, "name", server);
+                    load.setValue(names.getString(i));
+                    pool.execute(load);
+                }
+                System.out.println("[Diseasecard][Indexer] launched indexing for " + omim);
+            } catch (JSONException ex) {
+                Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                JSONArray network = obj.getJSONArray("network");
+                for (int i = 0; i < network.length(); i++) {
+                    SolrLoad load = new SolrLoad(omim, "link", server);
+                    load.setUri(network.getString(i));
+                    pool.execute(load);
+                }
+                System.out.println("[Diseasecard][Indexer] launched indexing for " + omim);
+            } catch (JSONException ex) {
+                Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 
     /**
@@ -363,84 +427,84 @@ public class Indexer {
             }
         }
     }
+//
+//    static void solrImport() {
+//        // instance threadables
+//        SolrLoad solr_omim = new SolrLoad("omim", getConcept("omim"));
+//        SolrLoad solr_entrez = new SolrLoad("entrez", getConcept("entrez"));
+//        //SolrLoad solr_pubmed = new SolrLoad("pubmed", getConcept("pubmed"));
+//        SolrLoad solr_uniprot = new SolrLoad("uniprot", getConcept("uniprot"));
+//        SolrLoad solr_ct = new SolrLoad("clinicaltrials", getConcept("clinicaltrials"));
+//        SolrLoad solr_hgnc = new SolrLoad("hgnc", getConcept("hgnc"));
+//        SolrLoad solr_orphanet = new SolrLoad("orphanet", getConcept("orphanet"));
+//        SolrLoad solr_pharmgkb = new SolrLoad("pharmgkb", getConcept("pharmgkb"));
+//        SolrLoad solr_icd = new SolrLoad("icd10", getConcept("icd10"));
+//        SolrLoad solr_swissvar = new SolrLoad("swissvar", getConcept("swissvar"));
+//        SolrLoad solr_umls = new SolrLoad("umls", getConcept("hpo"));
+//        SolrLoad solr_hpo = new SolrLoad("hpo", getConcept("hpo"));
+//        SolrLoad solr_enzyme = new SolrLoad("enzyme", getConcept("enzyme"));
+//        SolrLoad solr_ensembl = new SolrLoad("ensembl", getConcept("ensembl"));
+//        SolrLoad solr_drugbank = new SolrLoad("drugbank", getConcept("drugbank"));
+//        SolrLoad solr_kegg = new SolrLoad("kegg", getConcept("kegg"));
+//        SolrLoad solr_genecards = new SolrLoad("genecards", getConcept("genecards"));
+//        SolrLoad solr_gwas = new SolrLoad("gwascentral", getConcept("gwascentral"));
+//        SolrLoad solr_mesh = new SolrLoad("mesh", getConcept("mesh"));
+//        SolrLoad solr_interpro = new SolrLoad("interpro", getConcept("interpro"));
+//        SolrLoad solr_pdb = new SolrLoad("pdb", getConcept("pdb"));
+//        SolrLoad solr_prosite = new SolrLoad("prosite", getConcept("prosite"));
+//
+//        // create threads
+//        Thread omim = new Thread(solr_omim);
+//        Thread entrez = new Thread(solr_entrez);
+//        //Thread pubmed = new Thread(solr_pubmed);
+//        Thread uniprot = new Thread(solr_uniprot);
+//        Thread ct = new Thread(solr_ct);
+//        Thread pharmgkb = new Thread(solr_pharmgkb);
+//        Thread icd = new Thread(solr_icd);
+//        Thread swissvar = new Thread(solr_swissvar);
+//        Thread umls = new Thread(solr_umls);
+//        Thread hpo = new Thread(solr_hpo);
+//        Thread enzyme = new Thread(solr_enzyme);
+//        Thread ensembl = new Thread(solr_ensembl);
+//        Thread drugbank = new Thread(solr_drugbank);
+//        Thread kegg = new Thread(solr_kegg);
+//        Thread gwas = new Thread(solr_gwas);
+//        Thread mesh = new Thread(solr_mesh);
+//        Thread genecards = new Thread(solr_genecards);
+//        Thread interpro = new Thread(solr_interpro);
+//        Thread pdb = new Thread(solr_pdb);
+//        Thread prosite = new Thread(solr_prosite);
+//        Thread hgnc = new Thread(solr_hgnc);
+//        Thread orphanet = new Thread(solr_orphanet);
+//
+//        // start threads
+//        omim.start();
+//        entrez.start();
+//        // pubmed.start();
+//        ct.start();
+//        pharmgkb.start();
+//        icd.start();
+//        swissvar.start();
+//        hpo.start();
+//        enzyme.start();
+//        ensembl.start();
+//        drugbank.start();
+//        kegg.start();
+//        gwas.start();
+//        mesh.start();
+//        genecards.start();
+//        interpro.start();
+//        pdb.start();
+//        prosite.start();
+//        uniprot.start();
+//        hgnc.start();
+//        orphanet.start();
+//        SolrLoad solr_name = new SolrLoad("name", getConcept("name"));
+//        Thread name = new Thread(solr_name);
+//        name.start();
+//    }
 
-    static void solrImport() {
-        // instance threadables
-        SolrLoad solr_omim = new SolrLoad("omim", getConcept("omim"));
-        SolrLoad solr_entrez = new SolrLoad("entrez", getConcept("entrez"));
-        //SolrLoad solr_pubmed = new SolrLoad("pubmed", getConcept("pubmed"));
-        SolrLoad solr_uniprot = new SolrLoad("uniprot", getConcept("uniprot"));
-        SolrLoad solr_ct = new SolrLoad("clinicaltrials", getConcept("clinicaltrials"));
-        SolrLoad solr_hgnc = new SolrLoad("hgnc", getConcept("hgnc"));
-        SolrLoad solr_orphanet = new SolrLoad("orphanet", getConcept("orphanet"));
-        SolrLoad solr_pharmgkb = new SolrLoad("pharmgkb", getConcept("pharmgkb"));
-        SolrLoad solr_icd = new SolrLoad("icd10", getConcept("icd10"));
-        SolrLoad solr_swissvar = new SolrLoad("swissvar", getConcept("swissvar"));
-        SolrLoad solr_umls = new SolrLoad("umls", getConcept("hpo"));
-        SolrLoad solr_hpo = new SolrLoad("hpo", getConcept("hpo"));
-        SolrLoad solr_enzyme = new SolrLoad("enzyme", getConcept("enzyme"));
-        SolrLoad solr_ensembl = new SolrLoad("ensembl", getConcept("ensembl"));
-        SolrLoad solr_drugbank = new SolrLoad("drugbank", getConcept("drugbank"));
-        SolrLoad solr_kegg = new SolrLoad("kegg", getConcept("kegg"));
-        SolrLoad solr_genecards = new SolrLoad("genecards", getConcept("genecards"));
-        SolrLoad solr_gwas = new SolrLoad("gwascentral", getConcept("gwascentral"));
-        SolrLoad solr_mesh = new SolrLoad("mesh", getConcept("mesh"));
-        SolrLoad solr_interpro = new SolrLoad("interpro", getConcept("interpro"));
-        SolrLoad solr_pdb = new SolrLoad("pdb", getConcept("pdb"));
-        SolrLoad solr_prosite = new SolrLoad("prosite", getConcept("prosite"));
-
-        // create threads
-        Thread omim = new Thread(solr_omim);
-        Thread entrez = new Thread(solr_entrez);
-        //Thread pubmed = new Thread(solr_pubmed);
-        Thread uniprot = new Thread(solr_uniprot);
-        Thread ct = new Thread(solr_ct);
-        Thread pharmgkb = new Thread(solr_pharmgkb);
-        Thread icd = new Thread(solr_icd);
-        Thread swissvar = new Thread(solr_swissvar);
-        Thread umls = new Thread(solr_umls);
-        Thread hpo = new Thread(solr_hpo);
-        Thread enzyme = new Thread(solr_enzyme);
-        Thread ensembl = new Thread(solr_ensembl);
-        Thread drugbank = new Thread(solr_drugbank);
-        Thread kegg = new Thread(solr_kegg);
-        Thread gwas = new Thread(solr_gwas);
-        Thread mesh = new Thread(solr_mesh);
-        Thread genecards = new Thread(solr_genecards);
-        Thread interpro = new Thread(solr_interpro);
-        Thread pdb = new Thread(solr_pdb);
-        Thread prosite = new Thread(solr_prosite);
-        Thread hgnc = new Thread(solr_hgnc);
-        Thread orphanet = new Thread(solr_orphanet);
-
-        // start threads
-        omim.start();
-        entrez.start();
-        // pubmed.start();
-        ct.start();
-        pharmgkb.start();
-        icd.start();
-        swissvar.start();
-        hpo.start();
-        enzyme.start();
-        ensembl.start();
-        drugbank.start();
-        kegg.start();
-        gwas.start();
-        mesh.start();
-        genecards.start();
-        interpro.start();
-        pdb.start();
-        prosite.start();
-        uniprot.start();
-        hgnc.start();
-        orphanet.start();
-        SolrLoad solr_name = new SolrLoad("name", getConcept("name"));
-        Thread name = new Thread(solr_name);
-        name.start();
-    }
-
-    static ArrayList<SolrObject> getConcept(String c) {
+   /* static ArrayList<SolrObject> getConcept(String c) {
         ArrayList<SolrObject> list = new ArrayList<SolrObject>();
         try {
             String q = "SELECT DISTINCT * FROM DiseaseIndex WHERE type LIKE '" + c + "';";
@@ -456,8 +520,8 @@ public class Indexer {
         }
 
         return list;
-    }
-    
+    }*/
+
     static void addNames() {
         try {
             String q = "SELECT DISTINCT(omim) FROM Diseases;";
@@ -468,7 +532,7 @@ public class Indexer {
             while (results.next()) {
                 dbx.connect();
                 dbx.insert(results.getString("omim"), "UPDATE Diseases AS D\n"
-                        + "SET D.name = (SELECT DI.info AS name FROM DiseaseIndex AS DI WHERE DI.type LIKE 'name' AND DI.omim = "  + results.getString("omim") + " ORDER BY DI.info ASC LIMIT 1)\n"
+                        + "SET D.name = (SELECT DI.info AS name FROM DiseaseIndex AS DI WHERE DI.type LIKE 'name' AND DI.omim = " + results.getString("omim") + " ORDER BY DI.info ASC LIMIT 1)\n"
                         + "WHERE D.omim = " + results.getString("omim") + ";");
                 dbx.close();
             }

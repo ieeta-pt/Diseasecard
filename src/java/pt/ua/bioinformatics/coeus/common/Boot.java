@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.API;
 import pt.ua.bioinformatics.coeus.data.Storage;
+import redis.clients.jedis.Jedis;
 
 /**
  * Seed launcher.
@@ -14,6 +15,15 @@ public class Boot {
 
     private static boolean started = false;
     private static API api = null;
+    private static Jedis jedis = new Jedis("localhost");
+
+    public static Jedis getJedis() {
+        return jedis;
+    }
+
+    public static void setJedis(Jedis jedis) {
+        Boot.jedis = jedis;
+    }
 
     public static boolean isStarted() {
         return started;

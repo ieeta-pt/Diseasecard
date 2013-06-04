@@ -85,7 +85,7 @@
             </div>
             <script>
             var synonyms_html = '<ul class="synonym_list"><c:forEach var="entry" items="${actionBean.disease.omim.names}"><li><i class="icon-angle-right"></i>${entry}</li></c:forEach></ul>';
-                </script>
+            </script>
         </c:when>
         <c:otherwise>
             <div class="navbar navbar-inverse navbar-fixed-top">

@@ -43,14 +43,23 @@ public class DiseaseAPI {
 
     public JSONObject load() {
         try {
-            ResultSet rs = api.selectRS("SELECT * WHERE { diseasecard:omim_" + omim + " dc:description ?d . diseasecard:omim_" + omim + " coeus:isAssociatedTo ?a1 . ?a1 coeus:isAssociatedTo ?a2 . { OPTIONAL {diseasecard:omim_" + omim + " diseasecard:hasGenotype ?g} . OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasPhenotype ?p }. OPTIONAL { diseasecard:omim_" + omim + " diseasecard:name ?n }}}", false);
+            ResultSet rs = api.selectRS("SELECT * WHERE { diseasecard:omim_" + omim + " diseasecard:chromosomalLocation ?chromo . diseasecard:omim_" + omim + " dc:description ?d . diseasecard:omim_" + omim + " coeus:isAssociatedTo ?a1 . ?a1 coeus:isAssociatedTo ?a2 . { OPTIONAL {diseasecard:omim_" + omim + " diseasecard:hasGenotype ?g} . OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasPhenotype ?p }. OPTIONAL { diseasecard:omim_" + omim + " diseasecard:name ?n } . OPTIONAL {diseasecard:omim_" + omim + " diseasecard:phenotype ?pheno} . OPTIONAL {diseasecard:omim_" + omim + " diseasecard:genotype ?geno .}}}", false);
             JSONArray synonyms = new JSONArray();            
             JSONArray results = new JSONArray();
+            String description ="";
             while (rs.hasNext()) {
                 QuerySolution row = rs.next();
                 String a1 = ItemFactory.getTokenFromURI(row.get("a1").toString()).replace("_",":");
                 String a2 = ItemFactory.getTokenFromURI(row.get("a2").toString()).replace("_",":");
-                map.put("description", row.get("d").toString());
+                description = row.get("d").toString().replace("{", "").replace("}", "").replace("[", "").replace("]", "");
+                map.put("description", description);
+                if (row.contains("pheno")) {
+                    map.put("phenotype", row.get("pheno").toString());
+                }
+                if (row.contains("geno")) {
+                    map.put("genotype", row.get("geno").toString());
+                }
+                map.put("location", row.get("chromo").toString());
                 if (!list.contains(a1)) {
                     list.add(a1);
                     if(a1.contains("hgnc")) {
@@ -78,13 +87,13 @@ public class DiseaseAPI {
                     }
                 }
                 if (row.contains("n")) {
-                    String n = "pubmed:" + row.get("n").toString();
-                    if (!list.contains(n)) {
-                        list.add(n);
+                    if (!synonyms.contains(row.get("n").toString())) {                        
                        synonyms.add(row.get("n").toString());
                     }
                 }
-            }
+                
+            }  
+            list.add("pubmed:" + description);
             results.addAll(list);
             map.put("synonyms", synonyms);
             map.put("network", results);

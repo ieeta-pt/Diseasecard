@@ -244,7 +244,7 @@ public class API {
             success = true;
         } catch (Exception ex) {
             if (Config.isDebug()) {
-                System.out.println("[COEUS][API] Unable to add triple to database");
+                System.out.println("[COEUS][API] Unable to add triple to database: " + subject.toString() + "-" + predicate.toString() + "-" + object.toString());
                 Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

@@ -213,16 +213,7 @@ $(document).ready(function() {
 	// load diseasebar and navigation content
 	start();
 	// load bootstrap popovers
-	$("a[rel=popover]").popover({
-		'html': true,
-		'animation': true,
-		'placement': 'bottom',
-		'delay': 1000,
-		'trigger': 'hover',
-		'content': synonyms_html
-	}).click(function(e) {
-		e.preventDefault()
-	}) /** event handler for URL # changes **/
+	 /** event handler for URL # changes **/
 	window.onhashchange = function(event) {
 		if (window.location.hash.substring(1).indexOf(':') > 0) {
 			$('#frame_loading').fadeIn('slow');

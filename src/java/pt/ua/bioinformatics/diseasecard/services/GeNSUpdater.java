@@ -12,7 +12,6 @@ import pt.ua.bioinformatics.coeus.api.DB;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
 import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
-import pt.ua.bioinformatics.coeus.data.connect.SQLFactory;
 
 /**
  *

@@ -151,10 +151,13 @@ public class Builder {
         ResourceFactory factory;
         try {
             if (!r.isBuilt()) {
-                /*if (r.getPublisher().equals("plugin")) {
-                   factory = new PluginFactory(r);
+                /*
+                 if (r.getPublisher().equals("plugin")) {
+                 factory = new PluginFactory(r);
                 
-                } else */if (r.getPublisher().equals("csv")) {
+                 } else 
+                 //*/
+                if (r.getPublisher().equals("csv")) {
                     factory = new CSVFactory(r);
                 } else if (r.getPublisher().equals("xml")) {
                     factory = new XMLFactory(r);
@@ -162,11 +165,11 @@ public class Builder {
                     factory = new SQLFactory(r);
                 } else if (r.getPublisher().equals("sparql")) {
                     factory = new SPARQLFactory(r);
-                }  else {
+                } else {
                     factory = null;
-                } 
+                }
                 factory.read();
-                factory.save(); 
+                factory.save();
             }
             if (Config.isDebug()) {
                 System.out.println("[COEUS][Builder] Data for " + r.getTitle() + " read");

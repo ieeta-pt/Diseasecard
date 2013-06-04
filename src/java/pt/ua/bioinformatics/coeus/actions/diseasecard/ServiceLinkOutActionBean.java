@@ -88,7 +88,7 @@ public class ServiceLinkOutActionBean implements ActionBean {
             url = getContext().getRequest().getContextPath() + "/final/view/empty_frame.jsp";
         }
         try {
-            Activity.log(key + ":" + value, "link", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
+          //  Activity.log(key + ":" + value, "link", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
         } catch (Exception e) {
         }
         if (getContext().getRequest().getRequestURI().endsWith("+")) {

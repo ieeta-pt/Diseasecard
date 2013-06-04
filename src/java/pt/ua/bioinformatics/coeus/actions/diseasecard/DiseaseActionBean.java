@@ -7,9 +7,9 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.action.UrlBinding;
+import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
-import redis.clients.jedis.Jedis;
 
 /**
  *
@@ -44,8 +44,7 @@ public class DiseaseActionBean implements ActionBean {
 
     public Resolution js() {
         try {
-            Jedis jedis = new Jedis("localhost");
-            return new StreamingResolution("application/json", jedis.get(key));
+            return new StreamingResolution("application/json", Boot.getJedis().get(key));
         } catch (Exception ex) {
             DiseaseAPI d = new DiseaseAPI(key);
             return new StreamingResolution("application/json", d.load().toString());

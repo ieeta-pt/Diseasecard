@@ -1,6 +1,7 @@
 var labelType, useGradients, nativeTextSupport, animate, jsontree;
 var network = {id: '<h6>' + key + '</h6>', name: key, children: []};
 var map = {};
+var synonyms_html = '';
 
 (function() {
     var ua = navigator.userAgent,
@@ -23,6 +24,11 @@ var map = {};
 function query() {
     $.getJSON('../disease/' + key + '.js', function(data) {
         //$('#content').html('');
+        if (data.phenotype) {
+            $('#key').append(' #' + key);
+        } else {
+            $('#key').append(' ' + key);
+        }
         $('#description').html(data.description);
         // start entities
         var disease = {id: 'entity:disease', name: '<h5>Disease</h5>', children: []}
@@ -59,7 +65,7 @@ function query() {
         var wave = {id: 'concept:wave', name: '<h6>WAVe</h6>', children: []};
         var lsdb = {id: 'concept:lsdb', name: '<h6>LSDB</h6>', children: []};
 
-        // build
+        // build tree
         var i = 0;
         $.each(data.network, function(i, k) {
             var item = data.network[i].split(':');
@@ -71,11 +77,11 @@ function query() {
                     eval(item[0]).children[eval(item[0]).children.length] = {'id': item[0] + ':' + item[1], 'name': '<a data-id="' + item[0] + ':' + item[1] + '" target="_content" class="framer dc4_ht">' + item[1] + '</a>'};
                     map[item[0] + ':' + item[1]] = true;
                 }
-                if(item[0] === 'omim') {
-                    $('#related').append('<li><a class="small synonym" data-omim="' + item[1] +'" href="../disease/' + item[1] +'"></a></li>')
+                if (item[0] === 'omim') {
+                    $('#related').append('<li><a class="small synonym" data-omim="' + item[1] + '" href="../disease/' + item[1] + '"></a></li>')
                 }
             } catch (err) {
-               // alert(item[0] + ':' + item[1]);
+                // alert(item[0] + ':' + item[1]);
             }
 
 
@@ -119,16 +125,36 @@ function query() {
         network.children[network.children.length] = variome;
 
         start();
+
+        // load related omims
         $('.synonym').each(function() {
-		var omim = $(this).data('omim');
-		var li = $(this);
-		$.ajax({
-			url: path + '/api/triple/diseasecard:omim_' + omim + '/dc:description/obj/js',
-			success: function(data) {
-				li.html(omim + ' | ' + data.results.bindings[0].obj.value);
-			}
-		});
-	});
+            var omim = $(this).data('omim');
+            var li = $(this);
+            $.ajax({
+                url: path + '/api/triple/diseasecard:omim_' + omim + '/dc:description/obj/js',
+                success: function(data) {
+                    li.html(omim + ' | ' + data.results.bindings[0].obj.value);
+                }
+            });
+        });
+
+        // load alternative names
+        synonyms_html = '<ul class="synonym_list">';
+        $.each(data.synonyms, function(i, k) {
+            synonyms_html += '<li><i class="icon-angle-right"></i>' + data.synonyms[i] + '</li>';
+        });
+        synonyms_html += '</ul>';
+        // set alternative names popover
+        $("a[rel=popover]").popover({
+            'html': true,
+            'animation': true,
+            'placement': 'bottom',
+            'delay': 1000,
+            'trigger': 'hover',
+            'content': synonyms_html
+        }).click(function(e) {
+            e.preventDefault()
+        })
     });
 }
 
@@ -356,13 +382,13 @@ $(document).ready(function() {
     window.onhashchange = function(event) {
         if (window.location.hash.substring(1).indexOf(':') > 0)
         {
-            
-                $('#frame_loading').fadeIn('slow');
-                $('#content').html(getFrame(window.location.hash.substring(1)));
-                $('#_content').load(function() {
-                    $('#frame_loading').fadeOut('slow');
-                });
-            
+
+            $('#frame_loading').fadeIn('slow');
+            $('#content').html(getFrame(window.location.hash.substring(1)));
+            $('#_content').load(function() {
+                $('#frame_loading').fadeOut('slow');
+            });
+
         }
         if (window.location.hash === '') {
             $('#content').html('<div id="container"><div id="center-container"><div id="infovis"></div></div></div>');

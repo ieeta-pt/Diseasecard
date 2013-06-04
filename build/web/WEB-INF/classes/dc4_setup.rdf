@@ -860,6 +860,7 @@
     <owl:NamedIndividual rdf:about="&diseasecard;resource_ENZYME">
         <rdf:type rdf:resource="&coeus;Resource"/>
         <rdfs:label rdf:datatype="&xsd;string">resource_enzyme</rdfs:label>
+        <coeus:endpoint rdf:datatype="&xsd;string"></coeus:endpoint>
         <dc:date rdf:datatype="&xsd;dateTime">2013-05-03</dc:date>
         <owl:versionInfo rdf:datatype="&xsd;string">4.2</owl:versionInfo>
         <coeus:order rdf:datatype="&xsd;integer">80</coeus:order>
@@ -868,7 +869,6 @@
         <rdfs:comment rdf:datatype="&xsd;string">Resource connecting ENZYME information.</rdfs:comment>
         <dc:description rdf:datatype="&xsd;string">Resource connecting ENZYME information.</dc:description>
         <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
-        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://biodatacenter.ieeta.pt:8098;database=GeNS2;user=root;password=telematica</coeus:endpoint>
         <coeus:query rdf:datatype="&xsd;string">select distinct BE.BioEntityName as entry
 from Protein P inner join ProteinBioEntity PBO on PBO.ProteinId = P.ProteinId
 inner join BioEntity BE on BE.BioEntityId = PBO.BioEntityId
@@ -913,14 +913,14 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
     <owl:NamedIndividual rdf:about="&diseasecard;resource_EntrezGene">
         <rdf:type rdf:resource="&coeus;Resource"/>
         <rdfs:label rdf:datatype="&xsd;string">resource_entrez</rdfs:label>
-        <dc:date rdf:datatype="&xsd;dateTime">2013-05-08</dc:date>
         <coeus:order rdf:datatype="&xsd;integer">0</coeus:order>
+        <dc:date rdf:datatype="&xsd;dateTime">2013-05-08</dc:date>
         <owl:versionInfo rdf:datatype="&xsd;string">4.2</owl:versionInfo>
         <dc:title rdf:datatype="&xsd;string">EntrezGene</dc:title>
         <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
         <rdfs:comment rdf:datatype="&xsd;string">Resource connecting Entrez Gene information.</rdfs:comment>
         <dc:description rdf:datatype="&xsd;string">Resource connecting Entrez Gene information.</dc:description>
-        <coeus:query rdf:datatype="&xsd;string">SELECT entrez AS entry FROM entrez WHERE omim LIKE &apos;#replace#&apos;;</coeus:query>
+        <coeus:query rdf:datatype="&xsd;string">SELECT entrez AS entry FROM entrez WHERE omim LIKE &apos;#replace#&apos; AND entrez NOT LIKE &apos;-&apos;;</coeus:query>
         <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
         <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=hummer&amp;password=hummer</coeus:endpoint>
         <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
@@ -930,28 +930,30 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <coeus:loadsFrom rdf:resource="&diseasecard;sql_EntrezGene_id"/>
     </owl:NamedIndividual>
     
-    
+
+
     <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_EntrezGene2 -->
 
     <owl:NamedIndividual rdf:about="&diseasecard;resource_EntrezGene2">
         <rdf:type rdf:resource="&coeus;Resource"/>
         <rdfs:label rdf:datatype="&xsd;string">resource_entrez</rdfs:label>
-        <dc:date rdf:datatype="&xsd;dateTime">2013-05-08</dc:date>
         <coeus:order rdf:datatype="&xsd;integer">0</coeus:order>
+        <dc:date rdf:datatype="&xsd;dateTime">2013-05-08</dc:date>
         <owl:versionInfo rdf:datatype="&xsd;string">4.2</owl:versionInfo>
         <dc:title rdf:datatype="&xsd;string">EntrezGene</dc:title>
         <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
-        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting Entrez Gene information.</rdfs:comment>
         <dc:description rdf:datatype="&xsd;string">Resource connecting Entrez Gene information.</dc:description>
-        <coeus:query rdf:datatype="&xsd;string">SELECT entrez AS entry FROM entrez WHERE hgnc LIKE &apos;#replace#&apos;;</coeus:query>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource connecting Entrez Gene information.</rdfs:comment>
+        <coeus:query rdf:datatype="&xsd;string">SELECT entrez AS entry FROM entrez WHERE hgnc LIKE &apos;#replace#&apos; AND entrez NOT LIKE &apos;-&apos;;</coeus:query>
         <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
         <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=hummer&amp;password=hummer</coeus:endpoint>
         <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
         <coeus:isResourceOf rdf:resource="&diseasecard;concept_EntrezGene"/>
         <coeus:extends rdf:resource="&diseasecard;concept_HGNC"/>
-        <coeus:hasKey rdf:resource="&diseasecard;sql_EntrezGene_id"/>
         <coeus:loadsFrom rdf:resource="&diseasecard;sql_EntrezGene_id"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_EntrezGene_id"/>
     </owl:NamedIndividual>
+    
 
 
     <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_GO -->
@@ -967,7 +969,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <rdfs:comment rdf:datatype="&xsd;string">GeneOntology resource.</rdfs:comment>
         <dc:creator rdf:datatype="&xsd;string">GeneOntology resource.</dc:creator>
         <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
-        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://biodatacenter.ieeta.pt:8098;database=GeNS2;user=root;password=telematica</coeus:endpoint>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e</coeus:endpoint>
         <coeus:query rdf:datatype="&xsd;string">select distinct BE.BioEntityName as entry
 from Protein P inner join ProteinBioEntity PBO on PBO.ProteinId = P.ProteinId
 inner join BioEntity BE on BE.BioEntityId = PBO.BioEntityId
@@ -996,7 +998,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <rdfs:comment rdf:datatype="&xsd;string">Resource for GeneCards mapping data.</rdfs:comment>
         <dc:description rdf:datatype="&xsd;string">Resource for GeneCards mapping data.</dc:description>
         <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
-        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://biodatacenter.ieeta.pt:8098;database=GeNS2;user=root;password=telematica</coeus:endpoint>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e</coeus:endpoint>
         <coeus:query rdf:datatype="&xsd;string">select distinct BE.BioEntityName as entry
 from Protein P inner join ProteinBioEntity PBO on PBO.ProteinId = P.ProteinId
 inner join BioEntity BE on BE.BioEntityId = PBO.BioEntityId
@@ -1025,7 +1027,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <rdfs:comment rdf:datatype="&xsd;string">Resource connecting InterPro information.</rdfs:comment>
         <dc:description rdf:datatype="&xsd;string">Resource connecting InterPro information.</dc:description>
         <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
-        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://biodatacenter.ieeta.pt:8098;database=GeNS2;user=root;password=telematica</coeus:endpoint>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e</coeus:endpoint>
         <coeus:query rdf:datatype="&xsd;string">select distinct BE.BioEntityName as entry
 from Protein P inner join ProteinBioEntity PBO on PBO.ProteinId = P.ProteinId
 inner join BioEntity BE on BE.BioEntityId = PBO.BioEntityId
@@ -1054,7 +1056,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <dc:description rdf:datatype="&xsd;string">Resource connecting Metabolistm KEGG information.</dc:description>
         <rdfs:comment rdf:datatype="&xsd;string">Resource connecting Metabolistm KEGG information.</rdfs:comment>
         <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
-        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://biodatacenter.ieeta.pt:8098;database=GeNS2;user=root;password=telematica</coeus:endpoint>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e</coeus:endpoint>
         <coeus:query rdf:datatype="&xsd;string">select distinct BE.BioEntityName as entry
 from Protein P inner join ProteinBioEntity PBO on PBO.ProteinId = P.ProteinId
 inner join BioEntity BE on BE.BioEntityId = PBO.BioEntityId
@@ -1153,7 +1155,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <rdfs:comment rdf:datatype="&xsd;string">Resource connecting PDB information.</rdfs:comment>
         <dc:description rdf:datatype="&xsd;string">Resource connecting PDB information.</dc:description>
         <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
-        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://biodatacenter.ieeta.pt:8098;database=GeNS2;user=root;password=telematica</coeus:endpoint>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e</coeus:endpoint>
         <coeus:query rdf:datatype="&xsd;string">select distinct BE.BioEntityName as entry
 from Protein P inner join ProteinBioEntity PBO on PBO.ProteinId = P.ProteinId
 inner join BioEntity BE on BE.BioEntityId = PBO.BioEntityId
@@ -1182,7 +1184,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <rdfs:comment rdf:datatype="&xsd;string">Resource connecting PROSITE information.</rdfs:comment>
         <dc:description rdf:datatype="&xsd;string">Resource connecting PROSITE information.</dc:description>
         <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
-        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://biodatacenter.ieeta.pt:8098;database=GeNS2;user=root;password=telematica</coeus:endpoint>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e</coeus:endpoint>
         <coeus:query rdf:datatype="&xsd;string">select distinct BE.BioEntityName as entry
 from Protein P inner join ProteinBioEntity PBO on PBO.ProteinId = P.ProteinId
 inner join BioEntity BE on BE.BioEntityId = PBO.BioEntityId
@@ -1211,7 +1213,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <dc:description rdf:datatype="&xsd;string">Resource connecting PharmGKB information.</dc:description>
         <rdfs:comment rdf:datatype="&xsd;string">Resource connecting PharmGKB information.</rdfs:comment>
         <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
-        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://biodatacenter.ieeta.pt:8098;database=GeNS2;user=root;password=telematica</coeus:endpoint>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e</coeus:endpoint>
         <coeus:query rdf:datatype="&xsd;string">select distinct BE.BioEntityName as entry
 from Protein P inner join ProteinBioEntity PBO on PBO.ProteinId = P.ProteinId
 inner join BioEntity BE on BE.BioEntityId = PBO.BioEntityId
@@ -1357,7 +1359,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <coeus:regex rdf:datatype="&xsd;string">[0-9|-]+[.][0-9|-]+[.][0-9|-]+[.][0-9|-]+</coeus:regex>
         <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:title</coeus:property>
         <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
-        <dc:date rdf:datatype="&xsd;dateTime">jdbc:sqlserver://biodatacenter.ieeta.pt:8098;database=GeNS2;user=root;password=telematica</dc:date>
+        <dc:date rdf:datatype="&xsd;string">jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e</dc:date>
         <coeus:isKeyOf rdf:resource="&diseasecard;resource_ENZYME"/>
         <coeus:loadsFor rdf:resource="&diseasecard;resource_ENZYME"/>
     </owl:NamedIndividual>
@@ -1537,12 +1539,12 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
     <owl:NamedIndividual rdf:about="&diseasecard;sql_genecards_id">
         <rdf:type rdf:resource="&coeus;SQL"/>
         <rdfs:label rdf:datatype="&xsd;string">sql_genecards_id</rdfs:label>
+        <dc:title rdf:datatype="&xsd;string">GeneCards id</dc:title>
         <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
         <rdfs:comment rdf:datatype="&xsd;string">SQL identifier for GeneCards mappings.</rdfs:comment>
         <dc:description rdf:datatype="&xsd;string">SQL identifier for GeneCards mappings.</dc:description>
         <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:title</coeus:property>
         <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
-        <dc:title rdf:datatype="&xsd;string">GeneCards id</dc:title>
         <coeus:loadsFor rdf:resource="&diseasecard;resource_GeneCards"/>
         <coeus:isKeyOf rdf:resource="&diseasecard;resource_GeneCards"/>
     </owl:NamedIndividual>

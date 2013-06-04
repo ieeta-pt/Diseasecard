@@ -3,13 +3,11 @@ package pt.ua.bioinformatics.coeus.actions.diseasecard;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
-import redis.clients.jedis.Jedis;
 
 /**
  *
@@ -38,10 +36,6 @@ public class ServicesDiseaseActionBean implements ActionBean {
     }
 
     @DefaultHandler
-    public Resolution html() {
-        return new ForwardResolution("/final/view/disease.jsp");
-    }
-
     public Resolution js() {
         DiseaseAPI d = new DiseaseAPI(key);
         return new StreamingResolution("application/json", d.load().toString());

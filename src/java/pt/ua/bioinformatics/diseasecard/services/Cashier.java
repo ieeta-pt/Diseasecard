@@ -6,16 +6,13 @@ package pt.ua.bioinformatics.diseasecard.services;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
 import pt.ua.bioinformatics.coeus.common.Boot;
-import redis.clients.jedis.Jedis;
+import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
 
 /**
  *
@@ -29,32 +26,18 @@ public class Cashier {
     public static void main(String[] args) {
         // TODO code application logic here
         Boot.start();
-        Jedis jedis = new Jedis("localhost");
-        ResultSet rs = Boot.getAPI().selectRS("SELECT ?u WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM }", false);
+        ResultSet rs = Boot.getAPI().selectRS("SELECT ?u WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM } ORDER BY ?u", false);
         while (rs.hasNext()) {
             QuerySolution row = rs.next();
             String omim = ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString()));
             try {
-                URL dcard = new URL("http://localhost:8084/diseasecard/services/disease/" + omim + ".js");
-                BufferedReader in = new BufferedReader(new InputStreamReader(dcard.openStream()));
-                String inputLine = "";
-                String response = "";
-                while ((inputLine = in.readLine()) != null) {
-                    response += inputLine;
-                }
-                in.close();
-                jedis.set(omim, response);
-
-                System.out.println("[Diseasecard][Cashier] cached " + omim);
-            } catch (MalformedURLException e) {
-                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);
-            } catch (IOException e) {
-                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);
+                DiseaseAPI disease = new DiseaseAPI(omim);
+                Boot.getJedis().set(omim, disease.load().toJSONString());
+                System.out.println("[Diseasecard][JedisLoad] cached " + omim);
             } catch (Exception e) {
                 Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);
             }
         }
-        jedis.save();
-
+        Boot.getJedis().save();
     }
 }
