@@ -15,7 +15,7 @@ import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
  *
  * @author pedrolopes
  */
-@UrlBinding("/disease/{key}.{$event}")
+@UrlBinding("/entry/{key}.{$event}")
 public class DiseaseActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
@@ -44,7 +44,7 @@ public class DiseaseActionBean implements ActionBean {
 
     public Resolution js() {
         try {
-            return new StreamingResolution("application/json", Boot.getJedis().get(key));
+            return new StreamingResolution("application/json", Boot.getJedis().get("omim:" + key));
         } catch (Exception ex) {
             DiseaseAPI d = new DiseaseAPI(key);
             return new StreamingResolution("application/json", d.load().toString());

@@ -18,7 +18,7 @@ import pt.ua.bioinformatics.diseasecard.domain.Links;
  * @author pedrolopes
  */
 @UrlBinding("/services/frame/{key}:{value}")
-public class ServiceFrameActionBean implements ActionBean {
+public class ServicesFrameActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
     private String key;
@@ -85,7 +85,7 @@ public class ServiceFrameActionBean implements ActionBean {
             }
         } catch (Exception ex) {
             if (Config.isDebug()) {
-                Logger.getLogger(ServiceFrameActionBean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ServicesFrameActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
             url = getContext().getRequest().getContextPath() + "/final/view/empty_frame.jsp";
         }

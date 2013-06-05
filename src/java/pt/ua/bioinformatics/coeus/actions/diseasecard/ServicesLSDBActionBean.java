@@ -14,7 +14,7 @@ import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
  * @author pedrolopes
  */
 @UrlBinding("/services/lsdb/{key}")
-public class ServiceLSDBActionBean implements ActionBean {
+public class ServicesLSDBActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
     private String key;

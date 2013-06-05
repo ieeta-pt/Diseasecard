@@ -33,7 +33,6 @@ import pt.ua.bioinformatics.diseasecard.domain.PDB;
 import pt.ua.bioinformatics.diseasecard.domain.PROSITE;
 import pt.ua.bioinformatics.diseasecard.domain.PharmGKB;
 import pt.ua.bioinformatics.diseasecard.domain.SwissVar;
-import pt.ua.bioinformatics.diseasecard.domain.UMLS;
 import pt.ua.bioinformatics.diseasecard.domain.UniProt;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
 

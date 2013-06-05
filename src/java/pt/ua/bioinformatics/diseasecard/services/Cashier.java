@@ -6,8 +6,6 @@ package pt.ua.bioinformatics.diseasecard.services;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
@@ -32,7 +30,7 @@ public class Cashier {
             String omim = ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString()));
             try {
                 DiseaseAPI disease = new DiseaseAPI(omim);
-                Boot.getJedis().set(omim, disease.load().toJSONString());
+                Boot.getJedis().set("omim:" + omim, disease.load().toJSONString());
                 System.out.println("[Diseasecard][JedisLoad] cached " + omim);
             } catch (Exception e) {
                 Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);

@@ -95,6 +95,7 @@ public class DiseaseAPI {
             }  
             list.add("pubmed:" + description);
             results.addAll(list);
+            map.put("size", list.size());
             map.put("synonyms", synonyms);
             map.put("network", results);
     }

@@ -20,7 +20,7 @@ import pt.ua.bioinformatics.diseasecard.services.Activity;
  * @author pedrolopes
  */
 @UrlBinding("/services/linkout/{key}:{value}/")
-public class ServiceLinkOutActionBean implements ActionBean {
+public class ServicesLinkOutActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
     private String key;
@@ -83,7 +83,7 @@ public class ServiceLinkOutActionBean implements ActionBean {
             url = Links.get(key.toLowerCase()).replace("#replace#", value);
         } catch (Exception ex) {
             if (Config.isDebug()) {
-                Logger.getLogger(ServiceLinkOutActionBean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ServicesLinkOutActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
             url = getContext().getRequest().getContextPath() + "/final/view/empty_frame.jsp";
         }

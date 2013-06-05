@@ -1,10 +1,10 @@
-<%@include file="/final/layout/taglib.jsp" %>
+s<%@include file="/final/layout/taglib.jsp" %>
 <s:layout-render name="/final/layout/html.jsp">
     <s:layout-component name="title">Diseasecard</s:layout-component>
     <s:layout-component name="custom_scripts">
         <script src="<c:url value="/final/assets/script/dc4.index.js" />"></script>
     </s:layout-component>
-    <s:layout-component name="body"> 
+    <s:layout-component name="body">
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <ul class="nav pull-right">
@@ -13,7 +13,7 @@
                 </ul>
             </div>
         </div>
-    </div>    
+    </div>
     <div id="wrap">
         <div class="container" id="index">
             <div class="row-fluid">
@@ -68,8 +68,8 @@
                         </ul>
                     </div>
                 </div>
-            </div>              
-        </div>            
+            </div>
+        </div>
     </div>
 </s:layout-component>
 </s:layout-render>
