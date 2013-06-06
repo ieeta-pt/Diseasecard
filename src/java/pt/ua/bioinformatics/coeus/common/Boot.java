@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.API;
 import pt.ua.bioinformatics.coeus.data.Storage;
+import pt.ua.bioinformatics.diseasecard.services.DC4;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -58,6 +59,7 @@ public class Boot {
             try {
                 try {
                     Config.load();
+                    DC4.load();
                 } catch (Exception ex) {
                     if (Config.isDebug()) {
                         System.out.println("[COEUS][Boot] Unable to load configuration");

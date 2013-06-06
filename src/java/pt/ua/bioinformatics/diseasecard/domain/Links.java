@@ -31,8 +31,7 @@ public class Links {
         links.put("interpro", "http://wwwdev.ebi.ac.uk/interpro/ISearch?query=#replace#");
         links.put("string", "http://string-db.org/newstring_cgi/show_network_section.pl?identifier=#replace#");
         //Literature
-        links.put("pubmedsearch", "http://www.ncbi.nlm.nih.gov/pubmed?term=#replace#");
-        links.put("pubmed", "http://www.ncbi.nlm.nih.gov/pubmed/#replace#");
+        links.put("pubmed", "http://www.ncbi.nlm.nih.gov/pubmed?term=#replace#");
         // Locus
         links.put("hgnc", "http://www.genenames.org/data/hgnc_data.php?match=#replace#");
         links.put("genecards", "http://www.genecards.org/cgi-bin/carddisp.pl?gene=#replace#");

@@ -22,7 +22,6 @@ public class Cashier {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
         Boot.start();
         ResultSet rs = Boot.getAPI().selectRS("SELECT ?u WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM } ORDER BY ?u", false);
         while (rs.hasNext()) {

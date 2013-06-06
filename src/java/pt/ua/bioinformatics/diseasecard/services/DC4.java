@@ -22,6 +22,9 @@ public class DC4 {
     private static JSONObject file = null;
 
     public static String getIndexString() {
+        if(!loaded) {
+            load();
+        }
         return indexString;
     }
 

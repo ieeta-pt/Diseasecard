@@ -68,28 +68,25 @@ function query() {
         // build tree
         var i = 0;
         $.each(data.network, function(i, k) {
+
             var item = data.network[i].split(':');
             if (item.length > 2) {
                 item[1] = item[1] + ':' + item[2];
             }
             try {
                 if (map[item[0] + ':' + item[1]] === undefined) {
-                    eval(item[0]).children[eval(item[0]).children.length] = {'id': item[0] + ':' + item[1], 'name': '<a data-id="' + item[0] + ':' + item[1] + '" target="_content" class="framer dc4_ht">' + item[1] + '</a>'};
-                    map[item[0] + ':' + item[1]] = true;
+                    if (eval(item[0]).children.length < 48) {
+                        eval(item[0]).children[eval(item[0]).children.length] = {'id': item[0] + ':' + item[1], 'name': '<a data-id="' + item[0] + ':' + item[1] + '" target="_content" class="framer dc4_ht">' + item[1] + '</a>'};
+                        map[item[0] + ':' + item[1]] = true;
+                    }
                 }
                 if (item[0] === 'omim') {
-                    $('#related').append('<li><a class="small synonym" data-omim="' + item[1] + '" href="../disease/' + item[1] + '"></a></li>')
+                    $('#related').append('<li><a class="small synonym" data-omim="' + item[1] + '" href="../disease/' + item[1] + '"></a></li>');
                 }
             } catch (err) {
-                // alert(item[0] + ':' + item[1]);
+                console.log('[Diseasecard]' + item[0] + ':' + item[1]);
             }
 
-
-            /* if (map[item[0]] === undefined && i < 100) {
-             omim.children[omim.children.length] = {'id': 'omim:' + item[0], 'name': '<a data-id="omim:' + item[0] + '" target="_content" class="framer dc4_ht">' + item[0] + '</a>'};
-             map[item[0]] = true;
-             i++;
-             }*/
         })
 
         // connect graph
@@ -116,6 +113,7 @@ function query() {
         variome.children[variome.children.length] = wave;
         variome.children[variome.children.length] = lsdb;
         network.children[network.children.length] = disease;
+        network.children[network.children.length] = literature;
         network.children[network.children.length] = drug;
         network.children[network.children.length] = pathway;
         network.children[network.children.length] = locus;
@@ -123,7 +121,7 @@ function query() {
         network.children[network.children.length] = ontology;
         network.children[network.children.length] = protein;
         network.children[network.children.length] = variome;
-
+        
         start();
 
         // load related omims
@@ -166,7 +164,7 @@ function query() {
 function start() {
     jsontree = network;
     content = network.children;
-    if (content[0].children[0].children.length === 0) {
+    if (content[1].children[0].children.length === 0) {
         $('#key').html('No data for ' + key);
         $('#content').html('<div class="row-fluid"><div class="offset2">&nbsp;</div><div class="alert alert-warning span6 center"><strong>Sorry!</strong> Diseasecard could not find any matches for <span class="label label-inverse">' + key + '</span>. <br /> Try searching for something else instead.</div></div>');
         $('.mag').click();

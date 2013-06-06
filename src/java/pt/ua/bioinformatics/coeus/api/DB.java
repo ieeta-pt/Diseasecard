@@ -11,7 +11,8 @@ import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
  * SQL database connection layer.
- * <p>Required for SQL-based data imports.<br />Based on JDBC4, supports any kind of database (as long as respective connector is on /lib).</p>
+ * <p>Required for SQL-based data imports.<br />Based on JDBC4, supports any
+ * kind of database (as long as respective connector is on /lib).</p>
  *
  * @author pedrolopes
  */
@@ -67,9 +68,10 @@ public class DB {
     public DB() {
     }
 
-     public DB(String database) {
+    public DB(String database) {
         this.database = database;
     }
+
     /**
      * Constructor with custom database information.
      *
@@ -87,13 +89,19 @@ public class DB {
      * Performs the required operations to establish a new database connection
      * </p>
      *
-     * @return Success of the operation (true if connects, false if fails to connect)
+     * @return Success of the operation (true if connects, false if fails to
+     * connect)
      */
     public boolean connect(String connectionString) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         boolean success = false;
         try {
-                    // System.out.println("\t\t\t" + connectionString);
-            connection = DriverManager.getConnection("jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e;loginTimeout=6000");
+            if (connectionString.contains("mysql")) {
+                Class.forName("com.mysql.jdbc.Driver");
+            } else if (connectionString.contains("sqlserver")) {
+
+                Class.forName("com.microsoft.sqlserver.jdbc.Driver");
+            }
+            connection = DriverManager.getConnection(connectionString); //"jdbc:sqlserver://sql2k8-ua.servers.ua.pt;database=ieeta-gens2;user=gensdbo;password=xgsJ38Doa1qi.F4e;loginTimeout=6000");
             statement = connection.createStatement();
             success = true;
         } catch (SQLException ex) {
@@ -109,10 +117,12 @@ public class DB {
     /**
      * Establishes a new connection to the database.
      * <p><b>Feature:</b><br />
-     * Performs the required operations to establish a new database connection to non-default database
+     * Performs the required operations to establish a new database connection
+     * to non-default database
      * </p>
      *
-     * @return Success of the operation (true if connects, false if fails to connect)
+     * @return Success of the operation (true if connects, false if fails to
+     * connect)
      */
     public boolean connectX() {
         boolean success = false;
@@ -128,14 +138,16 @@ public class DB {
             return success;
         }
     }
-    
-        /**
+
+    /**
      * Establishes a new connection to the database.
      * <p><b>Feature:</b><br />
-     * Performs the required operations to establish a new database connection to non-default database
+     * Performs the required operations to establish a new database connection
+     * to non-default database
      * </p>
      *
-     * @return Success of the operation (true if connects, false if fails to connect)
+     * @return Success of the operation (true if connects, false if fails to
+     * connect)
      */
     public boolean connect() {
         boolean success = false;
@@ -158,7 +170,8 @@ public class DB {
      * Performs the required operations to close an open database connection
      * </p>
      *
-     * @return Success of the operation (true if it closes the connection, false if it fails to close the connection)
+     * @return Success of the operation (true if it closes the connection, false
+     * if it fails to close the connection)
      */
     public boolean close() {
         try {
@@ -182,12 +195,14 @@ public class DB {
     /**
      * Inserts data in the instanced database based on the passed query.
      * <p><b>Feature:</b><br/>
-     * Executes required tests and operations to insert novel data in the database
+     * Executes required tests and operations to insert novel data in the
+     * database
      * </p>
      *
      * @param what String to describe what is being inserted in the database
      * @param query The insertion query
-     * @return Success of the operation (true if inserts correctly, false if fails to insert)
+     * @return Success of the operation (true if inserts correctly, false if
+     * fails to insert)
      */
     public boolean insert(String what, String query) {
         query = query.replace("#build#", build);
@@ -209,12 +224,14 @@ public class DB {
     /**
      * Updates data in the instanced database based on the passed query.
      * <p><b>Feature:</b><br/>
-     * Executes required tests and operations to update existing data in the database
+     * Executes required tests and operations to update existing data in the
+     * database
      * </p>
      *
      * @param what String to describe what is being updated in the database
      * @param query The update query
-     * @return Success of the operation (true if updates correctly, false if fails to update)
+     * @return Success of the operation (true if updates correctly, false if
+     * fails to update)
      */
     public boolean update(String what, String query) {
         query = query.replace("#build#", build);
@@ -235,12 +252,14 @@ public class DB {
     /**
      * Updates data in the instanced database based on the passed query.
      * <p><b>Feature:</b><br/>
-     * Executes required tests and operations to update existing data in the database
+     * Executes required tests and operations to update existing data in the
+     * database
      * </p>
      *
      * @param what String to describe what is being updated in the database
      * @param query The update query
-     * @return Success of the operation (true if updates correctly, false if fails to update)
+     * @return Success of the operation (true if updates correctly, false if
+     * fails to update)
      */
     public boolean delete(String what, String query) {
         query = query.replace("#build#", build);
@@ -261,10 +280,12 @@ public class DB {
     /**
      * Retrieves data from the instance database.
      * <p><b>Feature:</b><br/>
-     * Retrieves a Result Set table containing the results from the provided <code>SELECT</code> statement
+     * Retrieves a Result Set table containing the results from the provided
+     * <code>SELECT</code> statement
      *
      * @param query <code>SELECT</code> query to get the desired data
-     * @return Result Set containing the output of the executed <code>SELECT</code> statement
+     * @return Result Set containing the output of the
+     * executed <code>SELECT</code> statement
      */
     public ResultSet getData(String query) {
         ResultSet rs = null;
@@ -272,12 +293,12 @@ public class DB {
         try {
             if (!connection.isClosed() && !statement.isClosed()) {
                 statement.setQueryTimeout(360);
-               rs = statement.executeQuery(query);
-            }           
+                rs = statement.executeQuery(query);
+            }
         } catch (SQLException e) {
             System.out.println("[DB] Unable to retrieve data\n\t" + e.toString());
         } finally {
-            
+
             return rs;
         }
 

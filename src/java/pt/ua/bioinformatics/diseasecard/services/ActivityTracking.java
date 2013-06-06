@@ -10,7 +10,7 @@ import pt.ua.bioinformatics.coeus.api.DB;
  */
 public class ActivityTracking implements Runnable {
 
-    private static DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+    private static DB db = new DB("DC4");
     private String query;
     private String action;
     private String url;
@@ -78,7 +78,7 @@ public class ActivityTracking implements Runnable {
      */
     public void run() {
         try {
-            db.connect();
+            db.connect(DC4.getIndexString());
             String q = "INSERT INTO Activity(query, action, url, useragent,ip) VALUES(?, ? ,?, ?, ?);";
             PreparedStatement p = db.getConnection().prepareStatement(q);
             p.setString(1, query);

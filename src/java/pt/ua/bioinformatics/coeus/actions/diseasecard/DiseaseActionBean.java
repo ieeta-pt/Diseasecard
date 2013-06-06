@@ -10,12 +10,13 @@ import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
+import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
  *
  * @author pedrolopes
  */
-@UrlBinding("/entry/{key}.{$event}")
+@UrlBinding("/disease/{key}.{$event}")
 public class DiseaseActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
@@ -39,6 +40,10 @@ public class DiseaseActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution html() {
+        try {
+            Activity.log(key, "entry", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
+        } catch (Exception e) {
+        }
         return new ForwardResolution("/final/view/disease.jsp");
     }
 

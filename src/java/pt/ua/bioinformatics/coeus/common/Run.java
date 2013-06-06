@@ -2,11 +2,6 @@ package pt.ua.bioinformatics.coeus.common;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import com.hp.hpl.jena.update.UpdateRequest;
-import com.hp.hpl.jena.update.UpdateFactory;
-import com.hp.hpl.jena.update.UpdateAction;
-import pt.ua.bioinformatics.coeus.data.Storage;
-import pt.ua.bioinformatics.coeus.api.plugins.SingleImport;
 
 /**
  *
@@ -65,7 +60,7 @@ public class Run {
             // PDB
             // Enzyme
             // KEGG
-            //*
+            /*
             SingleImport single_icd10 = new SingleImport("resource_icd10");
             SingleImport single_mesh = new SingleImport("resource_mesh");
             SingleImport single_interpro = new SingleImport("resource_interpro");
@@ -82,10 +77,11 @@ public class Run {
             Thread kegg = new Thread(single_kegg);
             Thread genecards = new Thread(single_genecards);
             
-           // icd10.start();
-           //interpro.start();
-//            mesh.start();
-            //pdb.start();
+           
+             icd10.start();
+           interpro.start();
+            mesh.start();
+            pdb.start();
           enzyme.start();
             kegg.start();
             genecards.start();
@@ -99,7 +95,7 @@ public class Run {
             // PharmGKB
             // GO
             // PROSITE
-            /*/
+            /*
              SingleImport single_gwas = new SingleImport("resource_gwascentral");
              SingleImport single_ct = new SingleImport("resource_clinicaltrials");
              SingleImport single_lsdb = new SingleImport("resource_lsdb");
@@ -115,12 +111,12 @@ public class Run {
              Thread prosite = new Thread(single_prosite);
 
 
-             gwas.start();
-             clinical.start();
+             //gwas.start();
+             //clinical.start();
              lsdb.start();
-             pharmgkb.start();
-             go.start();
-             prosite.start();
+             //pharmgkb.start();
+             //go.start();
+             //prosite.start();
              //*/
             
             // LEVEL 4

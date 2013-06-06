@@ -936,7 +936,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
 
     <owl:NamedIndividual rdf:about="&diseasecard;resource_EntrezGene2">
         <rdf:type rdf:resource="&coeus;Resource"/>
-        <rdfs:label rdf:datatype="&xsd;string">resource_entrez</rdfs:label>
+        <rdfs:label rdf:datatype="&xsd;string">resource_entrez2</rdfs:label>
         <coeus:order rdf:datatype="&xsd;integer">0</coeus:order>
         <dc:date rdf:datatype="&xsd;dateTime">2013-05-08</dc:date>
         <owl:versionInfo rdf:datatype="&xsd;string">4.2</owl:versionInfo>
@@ -1472,6 +1472,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
         <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:title</coeus:property>
         <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:regex rdf:datatype="&xsd;string">[D][0-9]{6}</coeus:regex>
         <coeus:loadsFor rdf:resource="&diseasecard;resource_MeSH"/>
         <coeus:isKeyOf rdf:resource="&diseasecard;resource_MeSH"/>
     </owl:NamedIndividual>

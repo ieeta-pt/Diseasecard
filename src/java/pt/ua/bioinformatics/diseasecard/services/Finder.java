@@ -34,7 +34,7 @@ public class Finder {
     private ArrayList<Disease> diseases;
     private Matcher match_omim_id;
     private Pattern omimid = Pattern.compile("[0-9]{6}");
-    private DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+    private DB db = new DB("DC4");
     private JSONObject result = new JSONObject();
     private HashMap<Integer, Disease> map = new HashMap<Integer, Disease>();
     private HashMap<String, ArrayList<String>> results = new HashMap<String, ArrayList<String>>();
@@ -354,7 +354,7 @@ public class Finder {
         JSONArray list = new JSONArray();
         PreparedStatement p;
         try {
-            db.connect();
+            db.connect(DC4.getIndexString());
             p = db.getConnection().prepareStatement("SELECT ts, action, query, ip FROM Activity ORDER BY ts DESC LIMIT ? ;");
             p.setInt(1, limit);
             ResultSet rs = p.executeQuery();
@@ -382,7 +382,7 @@ public class Finder {
         JSONArray list = new JSONArray();
         PreparedStatement p;
         try {
-            db.connect();
+            db.connect(DC4.getIndexString());
             p = db.getConnection().prepareStatement("SELECT * FROM Diseases WHERE name REGEXP ? ORDER BY name ASC;");
             if (key.equals("0")) {
                 p.setString(1, "^[0-9\\[\\{].*");
