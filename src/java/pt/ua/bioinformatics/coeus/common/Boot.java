@@ -16,7 +16,7 @@ public class Boot {
 
     private static boolean started = false;
     private static API api = null;
-    private static Jedis jedis = new Jedis("localhost");
+    private static Jedis jedis = null; 
 
     public static Jedis getJedis() {
         return jedis;
@@ -78,6 +78,7 @@ public class Boot {
                 } else {
                     Storage.connect();
                     api = new API();
+                    jedis = new Jedis(DC4.getRedis_host().get("host").toString(), Integer.parseInt(DC4.getRedis_host().get("port").toString()));
                     Storage.loadPredicates();
                     System.out.println("\n\t[COEUS] " + Config.getName() + " Online\n");
                 }

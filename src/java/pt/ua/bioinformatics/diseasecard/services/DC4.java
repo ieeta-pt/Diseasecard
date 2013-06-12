@@ -20,6 +20,7 @@ public class DC4 {
     private static String indexString = "";
     private static String path = "";
     private static JSONObject file = null;
+    private static JSONObject redis_host = null;
 
     public static String getIndexString() {
         if(!loaded) {
@@ -47,6 +48,30 @@ public class DC4 {
     public static void setSolrHost(String solrHost) {
         DC4.solrHost = solrHost;
     }
+
+    public static String getPath() {
+        return path;
+    }
+
+    public static void setPath(String path) {
+        DC4.path = path;
+    }
+
+    public static JSONObject getFile() {
+        return file;
+    }
+
+    public static void setFile(JSONObject file) {
+        DC4.file = file;
+    }
+
+    public static JSONObject getRedis_host() {
+        return redis_host;
+    }
+
+    public static void setRedis_host(JSONObject redis_host) {
+        DC4.redis_host = redis_host;
+    }
     
     public static boolean load() {
         if (!loaded) {
@@ -56,7 +81,8 @@ public class DC4 {
                 file = (JSONObject) parser.parse(readFile());
                 JSONObject config = (JSONObject) file.get("config");
                 solrHost = (String) config.get("solr");  
-                indexString = (String) config.get("index");   
+                indexString = (String) config.get("index");  
+                redis_host = (JSONObject) config.get("redis");
                 loaded = true;
             } catch (Exception ex) {
                 if (Config.isDebug()) {

@@ -34,7 +34,7 @@ public class Links {
         links.put("pubmed", "http://www.ncbi.nlm.nih.gov/pubmed?term=#replace#");
         // Locus
         links.put("hgnc", "http://www.genenames.org/data/hgnc_data.php?match=#replace#");
-        links.put("genecards", "http://www.genecards.org/cgi-bin/carddisp.pl?gene=#replace#");
+        links.put("genecards", "http://www.genecards.org/cgi-bin/carddisp.pl?gc_id=#replace#");
         links.put("ensembl", "http://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g=#replace#");
         links.put("entrez", "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&term=#replace#");
         // Studies

@@ -46,6 +46,6 @@ public class ServicesLSDBActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution html() {        
-        return new RedirectResolution(Boot.getAPI().getTriple("diseasecard:lsdb_" + key, "dc:description", "o", "csv").split("\n")[1], false);
+        return new RedirectResolution(Boot.getJedis().get("lsdb:" + key), false);
     }
 }
