@@ -9,11 +9,11 @@ import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.action.UrlBinding;
+import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.domain.Disease;
 import pt.ua.bioinformatics.diseasecard.domain.Links;
-import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
  *
@@ -79,6 +79,7 @@ public class ServicesLinkOutActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution html() {
+        Boot.start();
         try {
             url = Links.get(key.toLowerCase()).replace("#replace#", value);
         } catch (Exception ex) {

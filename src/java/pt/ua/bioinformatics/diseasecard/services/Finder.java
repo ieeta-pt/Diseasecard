@@ -205,9 +205,9 @@ public class Finder {
                 params.set("rows", 100);
             } else if (type.equals("full")) {
                 params.set("q", query + "*");
-                params.set("rows", 1000);
-                params.set("defType", "edismax");
-                params.set("qf", "content^0.1 title^0.9 id^1");
+                params.set("rows", 1024);
+               // params.set("defType", "edismax");
+                //params.set("qf", "content^0.1 title^0.9 id^1");
             }
             try {
                 SolrServer server = new HttpSolrServer(Config.getIndex());

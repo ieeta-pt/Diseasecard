@@ -31,7 +31,7 @@ import pt.ua.bioinformatics.diseasecard.domain.Orphanet;
  *
  * @author pedrolopes
  */
-public class Indexer {
+public class Indexer implements Runnable {
 
     static private HashMap<String, Disease> diseases = new HashMap<String, Disease>();
     static private HashMap<String, JSONObject> omims = new HashMap<String, JSONObject>();
@@ -39,7 +39,7 @@ public class Indexer {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SolrServerException, IOException {
+    public void run() {
         loadOMIMs();
         indexer();
         //process();
@@ -51,15 +51,16 @@ public class Indexer {
     /**
      * Load OMIM objects from Redis server into local HashMap
      */
-    static void loadOMIMs() {
+     void loadOMIMs() {
         Boot.start();
         // select OMIM identifiers
+        System.out.println("[DC4] Indexer started, loading OMIMs");
         ResultSet rs = Boot.getAPI().selectRS("SELECT ?t WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM . ?u diseasecard:omim ?t  }", false);
         while (rs.hasNext()) {
             QuerySolution row = rs.next();
             try {
                 // add to HashMap
-                omims.put(row.get("t").toString(), new JSONObject(Boot.getJedis().get(row.get("t").toString())));
+                omims.put(row.get("t").toString(), new JSONObject(Boot.getJedis().get("omim:" + row.get("t").toString())));
             } catch (Exception e) {
                 Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -69,11 +70,12 @@ public class Indexer {
     /**
      * Process each OMIM object (from HashMap) into full-content indexing engine
      */
-    static void indexer() {
+     void indexer() {
+         System.out.println("[DC4] OMIMs loaded, starting Solr import");
         HttpSolrServer server = new HttpSolrServer("http://localhost:8983/solr");
         server.setDefaultMaxConnectionsPerHost(256);
         server.setMaxTotalConnections(256);
-        ExecutorService pool = Executors.newFixedThreadPool(8);
+        ExecutorService pool = Executors.newFixedThreadPool(64);
 
         for (String omim : omims.keySet()) {
             JSONObject obj = omims.get(omim);
@@ -82,11 +84,14 @@ public class Indexer {
                 for (int i = 0; i < names.length(); i++) {
                     SolrLoad load = new SolrLoad(omim, "name", server);
                     load.setValue(names.getString(i));
+                    
                     pool.execute(load);
+                    
                 }
                 System.out.println("[Diseasecard][Indexer] launched indexing for " + omim);
-            } catch (JSONException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
+               
             }
             try {
                 JSONArray network = obj.getJSONArray("network");
@@ -96,15 +101,16 @@ public class Indexer {
                     pool.execute(load);
                 }
                 System.out.println("[Diseasecard][Indexer] launched indexing for " + omim);
-            } catch (JSONException ex) {
+            } catch (Exception ex) {
                 Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
             }
+            Activity.log(omim, "indexed", omim , "Indexer",  "127.0.0.1");
         }
 
     }
 
     /**
-     * Deprecated
+     * @deprecated
      */
     static void loadNames() {
         Boot.start();
@@ -150,7 +156,7 @@ public class Indexer {
     }
 
     /**
-     * Deprecated
+     * @deprecated
      */
     static void load() {
         Boot.start();
@@ -233,7 +239,7 @@ public class Indexer {
     }
 
     /**
-     * Deprecated
+     * @deprecated
      */
     static void loadGenes() {
         String query = "SELECT DISTINCT ?omim{?d coeus:hasConcept diseasecard:concept_OMIM . ?d diseasecard:omim ?omim}";

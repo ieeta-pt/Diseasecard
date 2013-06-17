@@ -58,12 +58,12 @@ public class ServicesSearchResultsActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution id() {
-        finder = new Finder(query);
+        finder = new Finder(query.replace("%20", " "));
         return new StreamingResolution("application/js", finder.find("id"));
     }
 
     public Resolution full() {
-        finder = new Finder(query);
+        finder = new Finder(query.replace("%20", " "));
         return new StreamingResolution("application/js", finder.find("full"));
     }
 }

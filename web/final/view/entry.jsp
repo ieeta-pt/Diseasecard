@@ -5,13 +5,13 @@
         <script>var key = '${actionBean.key}';</script>
         <script src="<c:url value="/final/assets/script/jit.js" />"></script>
         <script src="<c:url value="/final/assets/script/treeview.js" />"></script>
-        <script src="<c:url value="/final/assets/script/dc4.new.disease.js" />"></script>
+        <script src="<c:url value="/final/assets/script/dc4.entry.js" />"></script>
     </s:layout-component>
     <s:layout-component name="body">
                 <div class="navbar navbar-inverse navbar-fixed-top">
                     <div class="navbar-inner">
                         <div class="container pull-left">
-                            <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="22" width="190" /></a>
+                            <a class="brand" id="dc4_logo" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="22" width="190" /></a>
                             <div class="nav-collapse collapse">
                                 <ul class="nav">
                                     <li class="active">

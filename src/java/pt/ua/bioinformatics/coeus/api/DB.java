@@ -105,10 +105,10 @@ public class DB {
             statement = connection.createStatement();
             success = true;
         } catch (SQLException ex) {
-            if (Config.isDebug()) {
+           /* if (Config.isDebug()) {
                 System.out.println("[COEUS][DB] Unable to connect to specific database");
             }
-            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DB.class.getName()).log(Level.SEVERE, null, ex);*/
 
         }
         return success;
@@ -156,8 +156,8 @@ public class DB {
             statement = connection.createStatement();
             success = true;
         } catch (SQLException e) {
-            System.out.println("[DB] Unable to connect to " + database + "\n\t" + e.toString());
-            success = false;
+          //  System.out.println("[DB] Unable to connect to " + database + "\n\t" + e.toString());
+           // success = false;
         } finally {
             // System.out.println("[DB] Connected to " + database);
             return success;

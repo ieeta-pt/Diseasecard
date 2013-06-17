@@ -1,7 +1,12 @@
 var labelType, useGradients, nativeTextSupport, animate, jsontree;
-var network = {id: '<h6>' + key + '</h6>', name: key, children: []};
+var network = {};
 var map = {};
 var synonyms_html = '';
+var loader = null;
+
+function logoPulse() {
+    $('#dc4_logo').fadeOut(1000).fadeIn(1000);    
+}
 
 (function() {
     var ua = navigator.userAgent,
@@ -23,6 +28,9 @@ var synonyms_html = '';
  */
 function query() {
     $.getJSON('../disease/' + key + '.js', function(data) {
+        network.id = '<h6>' + key + ' ' + data.description + '</h6>';
+        network.name = '<h6>' + data.description + '</h6>';
+        network.children = [];
         //$('#content').html('');
         if (data.phenotype) {
             $('#key').append(' #' + key);
@@ -30,6 +38,7 @@ function query() {
             $('#key').append(' ' + key);
         }
         $('#description').html(data.description);
+        document.title = data.omim + ' ' + data.description + ' - Diseasecard';
         // start entities
         var disease = {id: 'entity:disease', name: '<h5>Disease</h5>', children: []}
         var literature = {id: 'entity:literature', name: '<h5>Literature</h5>', children: []}
@@ -254,6 +263,8 @@ function start() {
         }
         $('*[rel=tooltip]').tooltip();
         $('#sidebar_menu,#tree').fadeIn(1000);
+        clearInterval(loader);
+        $('#dc4_logo').fadeIn();
     }
 }
 /**
@@ -359,6 +370,7 @@ function updateButtons(status) {
 $(document).ready(function() {
     // set main content area width
     $('#content').width($('html').width() - $('#diseasebar').width());
+    loader = setInterval(logoPulse, 2000);
 
     // update content width on window resize
     $(window).resize(function() {

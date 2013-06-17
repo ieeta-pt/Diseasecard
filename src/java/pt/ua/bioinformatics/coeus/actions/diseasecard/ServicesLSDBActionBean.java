@@ -45,7 +45,8 @@ public class ServicesLSDBActionBean implements ActionBean {
     }
 
     @DefaultHandler
-    public Resolution html() {        
+    public Resolution html() {  
+        Boot.start();
         return new RedirectResolution(Boot.getJedis().get("lsdb:" + key), false);
     }
 }

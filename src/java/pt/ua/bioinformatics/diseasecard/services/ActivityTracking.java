@@ -89,7 +89,7 @@ public class ActivityTracking implements Runnable {
             p.execute();
             db.close();
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            //System.out.println(e.getMessage());
         }
     }
 }

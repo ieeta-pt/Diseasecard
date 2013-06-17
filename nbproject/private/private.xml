@@ -12,11 +12,14 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/src/java/pt/ua/bioinformatics/coeus/common/Run.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/src/java/config.js</file>
-        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/src/java/pt/ua/bioinformatics/coeus/common/Builder.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/src/java/pt/ua/bioinformatics/coeus/api/plugins/OMIMPlugin.java</file>
+        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/DiseaseActionBean.java</file>
+        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/src/java/pt/ua/bioinformatics/coeus/actions/diseasecard/EntryActionBean.java</file>
+        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/web/final/view/index.jsp</file>
+        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/web/final/assets/style/diseasecard.css</file>
+        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/web/final/view/entry.jsp</file>
+        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/web/final/assets/script/dc4.entry.js</file>
+        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/services/ActivityTracking.java</file>
+        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/services/Activity.java</file>
         <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/src/java/pt/ua/bioinformatics/coeus/api/DB.java</file>
-        <file>file:/Users/pedrolopes/Dropbox/Software/Diseasecard/Diseasecard/src/java/pt/ua/bioinformatics/coeus/api/API.java</file>
     </open-files>
 </project-private>

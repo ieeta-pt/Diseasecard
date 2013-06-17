@@ -98,6 +98,7 @@ public class SolrLoad implements Runnable {
                 server.commit();
             } catch (Exception ex) {
                 Logger.getLogger(SolrLoad.class.getName()).log(Level.SEVERE, null, ex);
+                 Activity.log(omim, "error", value , "SolrLoad",  "127.0.0.1");
             }
         } else
         if (type.equals("name")) {
@@ -113,11 +114,13 @@ public class SolrLoad implements Runnable {
                 server.commit();
             } catch (Exception ex) {
                 Logger.getLogger(SolrLoad.class.getName()).log(Level.SEVERE, null, ex);
+                Activity.log(omim, "error", value , "SolrLoad",  "127.0.0.1");
             }
         } else if (type.equals("link")) {
+            URL item = null;
             try {
                 Collection<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
-                URL item = new URL("http://localhost:8084/diseasecard/services/linkout/" + uri);
+                item = new URL("http://localhost:8084/diseasecard/services/linkout/" + uri.replace(" ", "%20"));
                 SolrInputDocument d = new SolrInputDocument();
                 if(uri.contains(":")) {
                 String[] uris = uri.split(":");
@@ -133,16 +136,18 @@ public class SolrLoad implements Runnable {
                 d.addField("id", omim + ":" + uri);
                 d.addField("title", uri);
                 d.addField("omim", omim);
-                d.addField("content", IOUtils.toString(item), 1);
+                if(!uri.contains("go:") && !uri.contains("interpro:"))
+                    d.addField("content", IOUtils.toString(item), 1);
                 d.addField("url", item.toURI());
                 docs.add(d);
                 server.add(docs);
                 server.commit();
             } catch (Exception ex) {
-                Logger.getLogger(SolrLoad.class.getName()).log(Level.SEVERE, null, ex);
+              //  Logger.getLogger(SolrLoad.class.getName()).log(Level.SEVERE, null, ex);
+                Activity.log(omim, "error", item.toString() , "SolrLoad", "127.0.0.1");
             }
         }
-    }
+       }
 
     /**
      * Launch single Resource import process.

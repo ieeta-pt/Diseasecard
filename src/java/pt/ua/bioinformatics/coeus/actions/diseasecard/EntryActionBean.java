@@ -44,7 +44,7 @@ public class EntryActionBean implements ActionBean {
             Activity.log(key, "entry", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
         } catch (Exception e) {
         }
-        return new ForwardResolution("/final/view/disease.jsp");
+        return new ForwardResolution("/final/view/entry.jsp");
     }
 
     public Resolution js() {
