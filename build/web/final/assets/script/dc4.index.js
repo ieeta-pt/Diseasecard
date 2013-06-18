@@ -25,10 +25,6 @@ $(document).ready(function(){
           }
     })
     
-    $('.search_help').click(function() {
-        $('#text_search').val($(this).text()); 
-    });
-    
     var tour = new Tour({
                     name: "diseasecard_index_tour",
                     keyboard: true

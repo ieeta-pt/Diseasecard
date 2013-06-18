@@ -440,3 +440,9 @@ Options -Indexes
 <IfModule mod_rewrite.c>
   RewriteRule "(^|/)\." - [F]
 </IfModule>
+
+#Gzip
+	<ifmodule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/text text/html text/plain text/xml text/css application/x-javascript application/javascript text/javascript
+	</ifmodule>
+	#End Gzip

@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -36,18 +37,18 @@ public class Finder {
     private Pattern omimid = Pattern.compile("[0-9]{6}");
     private DB db = new DB("DC4");
     private JSONObject result = new JSONObject();
-    private HashMap<Integer, Disease> map = new HashMap<Integer, Disease>();
-    private HashMap<String, ArrayList<String>> results = new HashMap<String, ArrayList<String>>();
+    private TreeMap<Integer, Disease> map = new TreeMap<Integer, Disease>();
+    private TreeMap<String, ArrayList<String>> results = new TreeMap<String, ArrayList<String>>();
     private LinkedHashMap<String, SearchResult> network = new LinkedHashMap<String, SearchResult>();
 
     public Finder() {
     }
 
-    public HashMap<String, ArrayList<String>> getResults() {
+    public TreeMap<String, ArrayList<String>> getResults() {
         return results;
     }
 
-    public void setResults(HashMap<String, ArrayList<String>> results) {
+    public void setResults(TreeMap<String, ArrayList<String>> results) {
         this.results = results;
     }
 
@@ -59,11 +60,11 @@ public class Finder {
         this.db = db;
     }
 
-    public HashMap<Integer, Disease> getMap() {
+    public TreeMap<Integer, Disease> getMap() {
         return map;
     }
 
-    public void setMap(HashMap<Integer, Disease> map) {
+    public void setMap(TreeMap<Integer, Disease> map) {
         this.map = map;
     }
 
@@ -203,10 +204,11 @@ public class Finder {
             if (type.equals("id")) {
                 params.set("q", "id:*" + query.toUpperCase() + "* OR id:*" + query.toLowerCase() + "* OR id:*" + WordUtils.capitalize(query.toLowerCase()) + "*" + "* OR id:*" + query + "*");
                 params.set("rows", 100);
+             //   params.set("sort", "id asc");
             } else if (type.equals("full")) {
                 params.set("q", query + "*");
                 params.set("rows", 1024);
-               // params.set("defType", "edismax");
+           //     params.set("defType", "edismax");
                 //params.set("qf", "content^0.1 title^0.9 id^1");
             }
             try {

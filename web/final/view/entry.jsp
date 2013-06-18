@@ -1,6 +1,6 @@
 <%@include file="/final/layout/taglib.jsp" %>
 <s:layout-render name="/final/layout/html.jsp">
-    <s:layout-component name="title">${actionBean.key} - Diseasecard</s:layout-component>
+    <s:layout-component name="title">Diseasecard</s:layout-component>
     <s:layout-component name="custom_scripts">
         <script>var key = '${actionBean.key}';</script>
         <script src="<c:url value="/final/assets/script/jit.js" />"></script>
@@ -51,14 +51,14 @@
             <div id="wrap">
                 <div id="diseasebar">
                     <div id="sidebar_menu">
-                        <div class="btn-group" id="dc4_tree_control">                           
-                            <a data-placement="bottom" data-container="body" rel="tooltip" data-title="Expand all tree nodes" id="dc4_tree_expand" class="btn"><i class="icon-double-angle-down"></i></a>
-                            <a data-placement="bottom" rel="tooltip" data-container="body" data-title="Collapse all tree nodes" id="dc4_tree_collapse" class="btn"><i class="icon-double-angle-up"></i></a>
+                        <div class="toolbox_left" id="dc4_tree_control">                           
+                            <a data-placement="bottom" data-container="body" rel="tooltip" data-title="Expand all tree nodes" id="dc4_tree_expand" class="toolbox_btn"><i class="icon-double-angle-down"></i></a>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" data-title="Collapse all tree nodes" id="dc4_tree_collapse" class="toolbox_btn"><i class="icon-double-angle-up"></i></a>
                         </div>
-                        <div class="btn-group" id="dc4_disease_control">
-                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Show hypertree" class="btn disabled" id="dc4_disease_hypertree"><i class="icon-sitemap"></i></a>
-                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Open LiveView in external page" class="btn disabled" id="dc4_page_external"><i class="icon-external-link"></i></a>
-                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Go to help section" class="btn" id="dc4_page_help"><i class="icon-question-sign"></i></a>
+                        <div class="toolbox_right" id="dc4_disease_control">
+                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Show hypertree" class="toolbox_btn toolbox_btn_disabled btn_space" id="dc4_disease_hypertree"><i class="icon-sitemap"></i></a>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Open LiveView in external page" class="toolbox_btn toolbox_btn_disabled btn_space" id="dc4_page_external"><i class="icon-external-link"></i></a>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" title="Go to help section" class="toolbox_btn btn_space" id="dc4_page_help"><i class="icon-question-sign"></i></a>
                         </div>
                     </div>
                     <div id="tree">

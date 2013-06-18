@@ -27,7 +27,7 @@ function logoPulse() {
  * @returns {undefined}
  */
 function query() {
-    $.getJSON('../disease/' + key + '.js', function(data) {
+    $.getJSON('../entry/' + key + '.js', function(data) {
         network.id = '<h6>' + key + ' ' + data.description + '</h6>';
         network.name = '<h6>' + data.description + '</h6>';
         network.children = [];
@@ -90,7 +90,7 @@ function query() {
                     }
                 }
                 if (item[0] === 'omim') {
-                    $('#related').append('<li><a class="small synonym" data-omim="' + item[1] + '" href="../disease/' + item[1] + '"></a></li>');
+                    $('#related').append('<li><a class="small synonym" data-omim="' + item[1] + '" href="../entry/' + item[1] + '"></a></li>');
                 }
             } catch (err) {
                 console.log('[Diseasecard]' + item[0] + ':' + item[1]);
@@ -264,7 +264,8 @@ function start() {
         $('*[rel=tooltip]').tooltip();
         $('#sidebar_menu,#tree').fadeIn(1000);
         clearInterval(loader);
-        $('#dc4_logo').fadeIn();
+        $('#dc4_logo').fadeIn();        
+    $('#dc4_disease_hypertree,#dc4_page_external').tooltip('destroy');
     }
 }
 /**
@@ -351,18 +352,22 @@ function updateButtons(status) {
     var ht = $('#dc4_disease_hypertree');
     var ext = $('#dc4_page_external');
     if (status) {
-        if (!ht.hasClass('disabled')) {
-            ht.addClass('disabled');
+        if (!ht.hasClass('toolbox_btn_disabled')) {
+            ht.addClass('toolbox_btn_disabled');
+            ht.tooltip('destroy');
         }
-        if (!ext.hasClass('disabled')) {
-            ext.addClass('disabled');
+        if (!ext.hasClass('toolbox_btn_disabled')) {
+            ext.addClass('toolbox_btn_disabled');
+            ext.tooltip('destroy');
         }
     } else {
-        if (ht.hasClass('disabled')) {
-            ht.removeClass('disabled');
+        if (ht.hasClass('toolbox_btn_disabled')) {
+            ht.removeClass('toolbox_btn_disabled');
+            ht.tooltip();
         }
-        if (ext.hasClass('disabled')) {
-            ext.removeClass('disabled');
+        if (ext.hasClass('toolbox_btn_disabled')) {
+            ext.removeClass('toolbox_btn_disabled');
+            ext.tooltip();
         }
     }
 }
@@ -401,8 +406,11 @@ $(document).ready(function() {
 
         }
         if (window.location.hash === '') {
-            $('#content').html('<div id="container"><div id="center-container"><div id="infovis"></div></div></div>');
-            init();
+        	$('#content').html('<div id="container"><div id="center-container"><div id="infovis"></div></div></div>');
+        	init();	        
+        updateButtons(true);
+        $('#frame_loading').fadeOut('slow');
+        $('.point').removeClass('activepoint');            
         }
     };
 
@@ -419,9 +427,9 @@ $(document).ready(function() {
     // diseasebar buttons actions
     // show navigation tree
     $('#dc4_disease_hypertree').click(function() {
-        $('#content').html('<div id="container"><div id="center-container"><div id="infovis"></div></div></div>');
-        init();
-        updateButtons(true);
+
+        $('#frame_loading').fadeOut('slow');
+        $('.point').removeClass('activepoint');
         window.location.hash = '';
     });
 
@@ -532,4 +540,5 @@ $(document).ready(function() {
         content: "If you need any further assistance, check out Diseasecard's documentation<br />"
     });
     tour.start();
+    
 });

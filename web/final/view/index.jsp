@@ -24,12 +24,10 @@
                     <form class="form" id="home_search" >
                         <div class="input-append center" id="home_form">
                             <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
-                            <div class="btn-group" id="search_button">
-                                <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
-                                <button class="btn btn-inverse dropdown-toggle" id="button_search_toggle" data-toggle="dropdown" tabindex="-1" rel="tooltip" title="Select search type" >
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu radios">
+                            <div class="" id="search_button">
+                            <a href="#" id="search_glass" class="home_search_btn"><i class="icon-search"></i></a>
+                            <a href="#" id="search_caret" data-toggle="dropdown" tabindex="-1" rel="tooltip" title="Select search type" class="home_search_btn dropdown-toggle"><span class="caret"></span></a>
+                            <ul class="dropdown-menu radios">
                                     <li>
                                         <label rel="tooltip" data-placement="right" title="Search for identifiers and disease name only" class="radio">
                                             <input type="radio" name="search_id" id="search_id" value="search_id" checked>Identifiers only
@@ -40,15 +38,23 @@
                                             <input type="radio" name="search_full" id="search_full" value="search_full">Full text search
                                         </label>
                                     </li>
-                                </ul>
+                            </ul>
                             </div>
+
+                          <!--  <div class="btn-group" id="search_button">
+                                <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
+                                <button class="btn btn-inverse dropdown-toggle" id="button_search_toggle" data-toggle="dropdown" tabindex="-1" rel="tooltip" title="Select search type" >
+                                    <span class="caret"></span>
+                                </button>
+                                                                </ul>
+                            </div>-->
                         </div>
                     </form>
                     <div id="helper">
                         <p>
                             Welcome to the new <strong>Diseasecard</strong>! <br /> Check the <a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section">about <i class="icon-book"></i></a> section to learn what's new and feel free to <a href="http://goo.gl/U0f2Z" rel="tooltip" title="View Diseasecard's form" target="_blank">give us any feedback</a>!
                         </p>
-                        Need help? You can search Diseasecard for disease names, OMIM disease codes or any of the connected identifiers.<br /><br />Try <a href="#" class="search_help" title="Search for OMIM code" rel="tooltip" data-animation="true">104300</a>, <a href="#" class="search_help" title="Add disease name to search box" rel="tooltip" data-animation="true">huntington</a> or <a href="#" class="search_help" rel="tooltip" data-animation="true" title="Add gene HGNC symbol to search box">CREBBP</a>
+                        Need help? You can search Diseasecard for disease names, OMIM disease codes or any of the connected identifiers.<br /><br />Try <a href="search/id/104300" class="search_help" title="Search for OMIM code" rel="tooltip" data-animation="true">104300</a>, <a href="search/full/huntington" class="search_help" title="Add disease name to search box" rel="tooltip" data-animation="true">huntington</a> or <a href="search/id/CREBBP" class="search_help" rel="tooltip" data-animation="true" title="Add gene HGNC symbol to search box">CREBBP</a>
                     </div>
                 </div>
                 <div class="right span4">

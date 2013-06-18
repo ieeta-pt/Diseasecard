@@ -2,30 +2,13 @@
 html,
 body {
     height: 100%;
-    background-image: url(../image/grey.png) ;
-    /* The html and body elements cannot have any padding or margin. */
+   /* background-image: url(../image/grey.png) ; */
 }
 
 h5, h6 {
     margin: 0;
 }
 
-/* Powered by COEUS */
-#coeus {
-	position: fixed;
-	bottom: 8px;
-	right: 8px;
-	z-index: 1000;
-	margin: 0px;
-	font-size: 64%;
-	padding: 2px;
-	opacity: 0.4;
-	
-}
-
-#coeus:hover {
-	opacity: 0.9;
-}
 
 /* Wrapper for page content to push down footer */
 #wrap {
@@ -57,7 +40,7 @@ h5, h6 {
 **/
 #nav_search {
     text-shadow: none;
-    color: white;
+   /* color: white;*/
 }
 
 #nav_about a {
@@ -102,13 +85,13 @@ h5, h6 {
     padding: 8px;
     text-align: right;
     /* Fallback for web browsers that doesn't support RGBa */
-    background: rgb(255, 255, 255);
+    background: rgb(47, 157, 255);
     /* RGBa with 0.6 opacity */
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(47, 157, 255, 0.08);
     /* For IE 5.5 - 7*/
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFF, endColorstr=#FFFFFF);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#2f9dff, endColorstr=#FFFFFF);
     /* For IE 8*/
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#FFFFFF, endColorstr=#FFFFFF)";
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#2f9dff, endColorstr=#FFFFFF)";
 }
 
 .top_hits ul {
@@ -121,7 +104,14 @@ h5, h6 {
 }
 
 #search_button {
-    margin-left: -2px; 
+
+}
+
+.home_search_btn {
+	display: block;
+	padding: 0 2px;
+	width: 16px;
+	color: #333333;
 }
 
 /**
@@ -316,7 +306,7 @@ table {
 }
 
 /**
-    DISEASE
+    ENTRY
 **/
 #no_link {
     margin-left: 24px;
@@ -431,12 +421,46 @@ table {
     z-index: 500;
     -moz-box-shadow: -3px 3px 3px rgba(0,0,0,.3);
     -webkit-box-shadow: -3px 3px 3px rgba(0,0,0,.3);
-    border-right: solid 1px #c5d1d7;
 }
 
 #sidebar_menu {
     padding-left: 8px;
     display: none;
+}
+
+#sidebar_menu a:hover {
+	text-decoration: none;	
+}
+
+.toolbox_left {
+	float: left;
+	width: 40px;
+}
+
+.toolbox_right {
+	float: left;
+	padding-left: 8px;
+}
+
+.toolbox_btn {
+	width: 16px;
+	padding: 0px 2px;
+	cursor: pointer;
+	display: block;
+	float: left;
+}
+
+.btn_space {
+	padding: 0 4px;
+}
+
+.toolbox_btn_disabled {
+	color: #AAAAAA;
+}
+
+a.toolbox_btn_disabled:hover {
+	color: #AAAAAA;
+	text-decoration: none;
 }
 
 #tree {
@@ -448,7 +472,7 @@ table {
     bottom: 48px;
     clear: both;
     position: absolute;
-    top: 80px;
+    top: 68px;
 }
 
 #tree .small_size {
