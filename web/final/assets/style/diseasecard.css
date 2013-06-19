@@ -102,18 +102,6 @@ h5, h6 {
     text-align: left;
     padding-left: 8px;
 }
-
-#search_button {
-
-}
-
-.home_search_btn {
-	display: block;
-	padding: 0 2px;
-	width: 16px;
-	color: #333333;
-}
-
 /**
     BROWSER
 **/
@@ -227,8 +215,10 @@ table {
     padding-right: 20px;
     float: right;
 }
-
-
+.loading_results {
+	margin-top: 8px;
+	width: 200px;
+}
 #empty_results {
 
 }

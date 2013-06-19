@@ -57,7 +57,12 @@
         <div class="navbar" id="loading">
             <div class="navbar-inner">
                 <div class="pull-left">
-                    <h4><span>Your results are loading... <i class="icon-angle-right icon-spin"></i></span></h4>
+                    <h4><span>Your results for <span class="label label-inverse">${actionBean.query}</span> are being processed.</h4>
+                </div>
+                <div class="pull-right">
+                <div class="progress progress-striped active loading_results">
+                        <div class="bar" style="width: 100%;"> Loading... </div>
+                    </div>
                 </div>
             </div>
         </div>

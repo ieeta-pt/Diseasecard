@@ -65,7 +65,7 @@ public class ServicesAutocompleteActionBean implements ActionBean {
     @DefaultHandler
     public Resolution id() {
         try {
-            finder = new Finder(term);
+            finder = new Finder(term.replace("%20", " "));
             auto = finder.get("id");
         } catch (Exception e) {
             if (Config.isDebug()) {
@@ -75,23 +75,6 @@ public class ServicesAutocompleteActionBean implements ActionBean {
         }
         try {
             Activity.log(term, "autocompleteid", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
-        } catch (Exception e) {
-        }
-        return new StreamingResolution("application/json", auto);
-    }
-
-    public Resolution full() {
-        try {
-            finder = new Finder(term);
-            auto = finder.get("full");
-        } catch (Exception e) {
-            if (Config.isDebug()) {
-                System.out.println("[AutocompleteActionBean] Unable to find matches for " + term + "\n\t" + e.toString());
-                Logger.getLogger(ServicesAutocompleteActionBean.class.getName()).log(Level.SEVERE, null, e);
-            }
-        }
-        try {
-            Activity.log(term, "autocompletefull", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
         } catch (Exception e) {
         }
         return new StreamingResolution("application/json", auto);

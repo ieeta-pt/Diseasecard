@@ -169,7 +169,18 @@ $(document).ready(function(){
     $( "#text_search" ).autocomplete({
         minLength: 3,
         delay: 500,
-        source: path + '/services/autocomplete/' + search,
+        //source: path + '/services/autocomplete/' + search,
+        source: function(request, response) {
+	    	$.ajax({
+		    	url: path + '/services/autocomplete/' + search + '/?term=' + $('#text_search').val(),
+		    	dataType: "json",
+		    	success: function( data ) {
+			    	response(data.sort(function(a,b) {
+				return (a.omim == b.omim) ? 0 : (a.omim > b.omim) ? 1 : -1;
+			}));
+			    	}
+			});
+        },
         focus: function( event, ui ) {            
         $('#text_search').data('omim',ui.item.omim);
         $("#text_search" ).val( ui.item.info );

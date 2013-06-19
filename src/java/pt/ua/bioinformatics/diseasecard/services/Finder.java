@@ -3,7 +3,7 @@ package pt.ua.bioinformatics.diseasecard.services;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -37,8 +37,8 @@ public class Finder {
     private Pattern omimid = Pattern.compile("[0-9]{6}");
     private DB db = new DB("DC4");
     private JSONObject result = new JSONObject();
-    private TreeMap<Integer, Disease> map = new TreeMap<Integer, Disease>();
-    private TreeMap<String, ArrayList<String>> results = new TreeMap<String, ArrayList<String>>();
+    private TreeMap<Integer, Disease> map = new TreeMap<Integer, Disease>(Collections.reverseOrder());
+    private TreeMap<String, ArrayList<String>> results = new TreeMap<String, ArrayList<String>>(Collections.reverseOrder());
     private LinkedHashMap<String, SearchResult> network = new LinkedHashMap<String, SearchResult>();
 
     public Finder() {
@@ -115,11 +115,11 @@ public class Finder {
     }
 
     /**
+     * @deprecated 
      * Finds disease matches in COEUS S3DB. <p> Used in search. </p>
      *
      * @return
      */
-    // public ArrayList<Disease> find() {
     public String find() {
         if (query.length() > 3) {
             try {
@@ -164,7 +164,6 @@ public class Finder {
                         o.put("omim", s.getOmim());
                         JSONArray alias = new JSONArray();
                         for (String link : s.getAlias()) {
-
                             alias.put(link);
                         }
                         JSONArray links = new JSONArray();
@@ -202,15 +201,16 @@ public class Finder {
         if (query.length() > 3) {
             ModifiableSolrParams params = new ModifiableSolrParams();
             if (type.equals("id")) {
-                params.set("q", "id:*" + query.toUpperCase() + "* OR id:*" + query.toLowerCase() + "* OR id:*" + WordUtils.capitalize(query.toLowerCase()) + "*" + "* OR id:*" + query + "*");
+                params.set("q", "id:*\"" + query.toUpperCase() + "\"* OR id:*\"" + query.toLowerCase() + "\"* OR id:*\"" + WordUtils.capitalize(query.toLowerCase()) + "\"*");
                 params.set("rows", 100);
-             //   params.set("sort", "id asc");
+               params.set("defType", "edismax");
+                params.set("qf", "content^0.1 title^0.9 id^1");
             } else if (type.equals("full")) {
                 params.set("q", query + "*");
                 params.set("rows", 1024);
-           //     params.set("defType", "edismax");
-                //params.set("qf", "content^0.1 title^0.9 id^1");
+                
             }
+            System.out.println("\t\t\t" + params.get("q"));
             try {
                 SolrServer server = new HttpSolrServer(Config.getIndex());
                 QueryResponse response = server.query(params);
@@ -239,13 +239,13 @@ public class Finder {
                         network.get(sol.get("omim").toString()).getNetwork().add(sol.get("id").toString());
                     }
                 }
-
+                
                 int size = 0;
                 for (SearchResult s : network.values()) {
                     JSONObject o = new JSONObject();
                     if (!s.getName().equals("")) {
                         o.put("name", s.getName());
-                        o.put("omim", s.getOmim());
+                        o.put("omim", Integer.parseInt(s.getOmim()));
                         JSONArray alias = new JSONArray();
                         for (String link : s.getAlias()) {
                             alias.put(link);
@@ -287,6 +287,7 @@ public class Finder {
     }
 
     /**
+     * @deprecated 
      * Finds disease matches in DC4 index. <p> Used in Autocomplete. </p>
      *
      * @return
@@ -322,8 +323,9 @@ public class Finder {
         JSONArray list = new JSONArray();
         ModifiableSolrParams params = new ModifiableSolrParams();
         if (type.equals("id")) {
-            params.set("q", "id:*" + query.toUpperCase() + "* OR id:*" + query.toLowerCase() + "* OR id:*" + WordUtils.capitalize(query.toLowerCase()) + "*");
+            params.set("q", "id:*\"" + query.toUpperCase() + "\"* OR id:*\"" + query.toLowerCase() + "\"* OR id:*\"" + WordUtils.capitalize(query.toLowerCase()) + "\"*");
             params.set("rows", 100);
+            params.set("order", "omim asc");
 
         } else if (type.equals("full")) {
             params.set("q", query + "*");
@@ -338,7 +340,7 @@ public class Finder {
             for (SolrDocument sol : docs) {
                 JSONObject obj = new JSONObject();
                 obj.put("info", sol.get("title").toString());
-                obj.put("omim", sol.get("omim"));
+                obj.put("omim", Integer.parseInt(sol.get("omim").toString()));
                 list.put(obj);
             }
             result.put("results", list);

@@ -38,6 +38,9 @@ function loadResults(id) {
 			}, 400);
 		} else {
 			$('#results_size').html(data.size);
+			data.results.sort(function(a,b) {
+				return (a.omim == b.omim) ? 0 : (a.omim > b.omim) ? 1 : -1;
+			});
 			$.tmpl('results', data.results).appendTo('#results_list');
 			$.each(data.results, function(i, value) {
 				var box = $('<div/>', {
@@ -62,7 +65,7 @@ function loadResults(id) {
 				$('#meta').fadeIn(800);
 				$('#results').fadeIn(800);
 				$('#results_links').height($('html').height() - 110).css('padding','0');
-				$('.results_list').width($('#meta').width() - 20);
+				$('.results_list').width($('#meta').width() - 48);
 				$('#results').width($('#meta').width());
 			} else {
 				$('#meta').fadeIn(800);
