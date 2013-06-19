@@ -28,7 +28,7 @@
                                 </ul>
                                </div><!--/.nav-collapse -->
                         </div>
-                        <ul class="nav pull-right">
+                        <ul class="nav pull-right top_menu">
                             <li><a href="<c:url value="/about" />" id="tour_about" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
                             <li data-placement="bottom" rel="tooltip" title="Jump to Diseasecard rare diseases browsing"><a href="<c:url value="/browse" />" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
                             <li><a href="#" class="mag" data-active="false" data-toggle="dropdown" id="nav_search" rel="tooltip" title="Search for rare diseases" data-placement="bottom"><i class="icon-search"></i></a></li>
@@ -43,7 +43,7 @@
                     <form>
                         <div class="input-append pull-right">
                             <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
-                            <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
+                            <button class="btn btn-inverse" type="button"  id="button_search"><i class="icon-search"></i></button>
                         </div>
                     </form>
                 </div>  
@@ -52,8 +52,8 @@
                 <div id="diseasebar">
                     <div id="sidebar_menu">
                         <div class="toolbox_left" id="dc4_tree_control">                           
-                            <a data-placement="bottom" data-container="body" rel="tooltip" data-title="Expand all tree nodes" id="dc4_tree_expand" class="toolbox_btn"><i class="icon-double-angle-down"></i></a>
-                            <a data-placement="bottom" rel="tooltip" data-container="body" data-title="Collapse all tree nodes" id="dc4_tree_collapse" class="toolbox_btn"><i class="icon-double-angle-up"></i></a>
+                            <a data-placement="bottom" data-container="body" rel="tooltip" data-title="Expand all tree nodes" id="dc4_tree_expand" class="toolbox_btn"><i class="icon-collapse"></i></a>
+                            <a data-placement="bottom" rel="tooltip" data-container="body" data-title="Collapse all tree nodes" id="dc4_tree_collapse" class="toolbox_btn"><i class="icon-collapse-top"></i></a>
                         </div>
                         <div class="toolbox_right" id="dc4_disease_control">
                             <a data-placement="bottom" rel="tooltip" data-container="body" title="Show hypertree" class="toolbox_btn toolbox_btn_disabled btn_space" id="dc4_disease_hypertree"><i class="icon-sitemap"></i></a>

@@ -35,6 +35,14 @@ h5, h6 {
 #js a {
     color: #CCCCCC;
 }
+
+.top_menu {
+	font-size: 14px;
+}
+
+dl {
+	font-size: 14px;
+}
 /** 
     NAV
 **/
@@ -44,7 +52,7 @@ h5, h6 {
 }
 
 #nav_about a {
-    color: #2F9DFF;
+    color: #08c;
 }
 
 .navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{width:840px;}
@@ -85,13 +93,13 @@ h5, h6 {
     padding: 8px;
     text-align: right;
     /* Fallback for web browsers that doesn't support RGBa */
-    background: rgb(47, 157, 255);
+    background: rgb(0, 136, 204);
     /* RGBa with 0.6 opacity */
-    background: rgba(47, 157, 255, 0.08);
+    background: rgba(0, 136, 204, 0.1);
     /* For IE 5.5 - 7*/
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#2f9dff, endColorstr=#FFFFFF);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#08c, endColorstr=#FFFFFF);
     /* For IE 8*/
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#2f9dff, endColorstr=#FFFFFF)";
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#08c, endColorstr=#FFFFFF)";
 }
 
 .top_hits ul {
@@ -101,6 +109,15 @@ h5, h6 {
 .radios {
     text-align: left;
     padding-left: 8px;
+}
+
+
+#button_search {
+	font-size: 14px;
+}
+
+#search_button {
+	margin-left: -2px;
 }
 /**
     BROWSER
@@ -291,7 +308,7 @@ table {
     opacity: .25;
 }
 .bs-docs-sidenav > li > a:hover {
-    background-color: #2f9dff;
+    background-color: #08c;
     color: white;
 }
 
@@ -416,6 +433,7 @@ table {
 #sidebar_menu {
     padding-left: 8px;
     display: none;
+    font-size: 14px;
 }
 
 #sidebar_menu a:hover {
@@ -569,6 +587,10 @@ a.toolbox_btn_disabled:hover {
 
 .tree .framer:active {
     background-position: 0 0px;
+}
+
+.open {
+	font-size: 14px;
 }
 
 .open:hover {

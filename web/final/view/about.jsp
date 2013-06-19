@@ -35,7 +35,7 @@
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
-                <ul class="nav pull-right">                    
+                <ul class="nav pull-right top_menu">                    
                     <li data-placement="bottom" rel="tooltip" title="Jump to Diseasecard rare diseases browsing"><a href="<c:url value="/browse" />" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
                     <li data-placement="bottom" rel="tooltip" title="Search for rare diseases"><a href="#" class="mag" title="Search for rare diseases" data-active="false" data-toggle="dropdown"><i class="icon-search icon-white"></i></a></li>
                 </ul>
@@ -47,7 +47,7 @@
                 <form>
                     <div class="input-append pull-right">
                         <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
-                        <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
+                        <button class="btn btn-inverse" type="button"  id="button_search"><i class="icon-search"></i></button>
                     </div>
                 </form>
             </div>  
@@ -185,13 +185,13 @@
                         </div>
                         <div class="tab-pane" id="publications">
                         	<h2>Publications</h2>
-                        	<h4>Integration of Genetic and Medical Information Through a Web Crawler System</h4>
+                        	<i class="icon-quote-left"></i> <h4>Integration of Genetic and Medical Information Through a Web Crawler System</h4>
                         	<p>
                         		Gaspar Dias, José Luís Oliveira, Francisco-Javier Vicente, Fernando Martín-Sánchez<br />
                         		Lecture Notes in Computer Science Volume 3745, 2005, pp 78-88<br />
                         		<strong><a href="http://dx.doi.org/10.1007/11573067_9" title="Open Integration of Genetic and Medical Information Through a Web Crawler System" rel="tooltip" target="_blank">DOI: 10.1007/11573067_9</a></strong>
                         	</p>
-                        	<h4>DiseaseCard: A Web-Based Tool for the Collaborative Integration of Genetic and Medical Information</h4>
+                        	<i class="icon-quote-left"></i> <h4>DiseaseCard: A Web-Based Tool for the Collaborative Integration of Genetic and Medical Information</h4>
                         	<p>
                         		José Luís Oliveira, Gaspar Dias, Ilídio Oliveira, Patrícia Rocha, Isabel Hermosilla, Javier Vicente, Inmaculada Spiteri, Fernando Martin-Sánchez, António Sousa Pereira<br />
                         		Lecture Notes in Computer Science Volume 3337, 2004, pp 409-417<br />
@@ -202,6 +202,7 @@
                             <h2>API</h2>
                             Diseasecard's provides a comprehensive API to access all rare diseases data collected in its knowledge base. The API is powered by COEUS' services and includes LinkedData interfaces, a SPARQL endpoint and a set of REST services. 
                             <p>
+                            <br />
                             	<a href="<c:url value="/api/" />" title="Check the API documentation" target="_blank" rel="tooltip" class="btn btn-info">Access API</a>
                             </p> 
                             <h3>SPARQL</h3>
@@ -247,9 +248,9 @@
                             <h2>Contacts</h2>
                             <dl>
                                 <dt>Pedro Lopes</dt>
-                                <dd><a href="mailto:pedrolopes@ua.pt">pedrolopes@ua.pt</a></dd>
+                                <dd><i class="icon-envelope-alt"></i> <a href="mailto:pedrolopes@ua.pt">pedrolopes@ua.pt</a></dd>
                                 <dt>José Luís Oliveira</dt>
-                                <dd><a href="mailto:jlo@ua.pt">jlo@ua.pt</a></dd>
+                                <dd><i class="icon-envelope-alt"></i> <a href="mailto:jlo@ua.pt">jlo@ua.pt</a></dd>
                             </dl>
                             <dl>
 	                            <em>Main contributors</em>

@@ -17,7 +17,7 @@
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
-                <ul class="nav pull-right">
+                <ul class="nav pull-right top_menu">
                     <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
                     <li><a href="#" class="mag" rel="tooltip"  data-placement="bottom" title="Search for rare diseases" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
                 </ul>
@@ -29,7 +29,7 @@
                 <form>
                     <div class="input-append pull-right">
                         <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
-                        <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
+                        <button class="btn btn-inverse" type="button"  id="button_search"><i class="icon-search"></i></button>
                     </div>
                 </form>
             </div>
@@ -74,14 +74,14 @@
                     <br />
                     <h4>Top 10 Diseases</h4>
                     <ul>
-                        <li><i class="icon-angle-right"></i><a href="./entry/125853" rel="tooltip" title="Visit Diabetes mellitus, noninsulin-dependent's disease card">Diabetes mellitus</a></li>
-                        <li><i class="icon-angle-right"></i><a href="./entry/601665" rel="tooltip" title="Visit Obesity, autosomal dominant's disease card">Obesity</a></li>
-                        <li><i class="icon-angle-right"></i><a href="./entry/211980" rel="tooltip" title="Visit Adenocarcinoma of lung, response to tyrosine kinase inhibitor's disease card">Lung cancer</a></li>
-                        <li><i class="icon-angle-right"></i><a href="./entry/176807" rel="tooltip" title="Visit Prostate cancer's disease card">Prostate cancer</a></li>
-                        <li><i class="icon-angle-right"></i><a href="./entry/137215" rel="tooltip" title="Visit Gastric cancer's disease card">Gastric cancer</a></li>
-                        <li><i class="icon-angle-right"></i><a href="./entry/601626" rel="tooltip" title="Visit Leukemia's disease card">Leukemia</a>/li>
-                        <li><i class="icon-angle-right"></i><a href="./entry/181500" rel="tooltip" title="Visit Schizophrenia's disease card">Schizophrenia</a></li>
-                        <li><i class="icon-angle-right"></i><a href="./entry/609423" rel="tooltip" title="Visit AIDS's disease card">AIDS</a></li>
+                        <li><i class="icon-angle-right"></i> <a href="./entry/125853" rel="tooltip" title="Visit Diabetes mellitus, noninsulin-dependent's disease card"> Diabetes mellitus</a></li>
+                        <li><i class="icon-angle-right"></i> <a href="./entry/601665" rel="tooltip" title="Visit Obesity, autosomal dominant's disease card"> Obesity</a></li>
+                        <li><i class="icon-angle-right"></i> <a href="./entry/211980" rel="tooltip" title="Visit Adenocarcinoma of lung, response to tyrosine kinase inhibitor's disease card"> Lung cancer</a></li>
+                        <li><i class="icon-angle-right"></i> <a href="./entry/176807" rel="tooltip" title="Visit Prostate cancer's disease card"> Prostate cancer</a></li>
+                        <li><i class="icon-angle-right"></i> <a href="./entry/137215" rel="tooltip" title="Visit Gastric cancer's disease card"> Gastric cancer</a></li>
+                        <li><i class="icon-angle-right"></i> <a href="./entry/601626" rel="tooltip" title="Visit Leukemia's disease card"> Leukemia</a></li>
+                        <li><i class="icon-angle-right"></i> <a href="./entry/181500" rel="tooltip" title="Visit Schizophrenia's disease card"> Schizophrenia</a></li>
+                        <li><i class="icon-angle-right"></i> <a href="./entry/609423" rel="tooltip" title="Visit AIDS's disease card"> AIDS</a></li>
                     </ul>
                 </div>
                 <div class="tab-pane" id="0"><h2>#</h2>

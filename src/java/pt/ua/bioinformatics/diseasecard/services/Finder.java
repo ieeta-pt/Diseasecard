@@ -210,7 +210,6 @@ public class Finder {
                 params.set("rows", 1024);
                 
             }
-            System.out.println("\t\t\t" + params.get("q"));
             try {
                 SolrServer server = new HttpSolrServer(Config.getIndex());
                 QueryResponse response = server.query(params);

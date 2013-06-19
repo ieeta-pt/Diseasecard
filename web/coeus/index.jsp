@@ -64,11 +64,13 @@
             <div class="container">
                 <h1>Diseasecard</h1>
                 <p>Powered by COEUS</p>
-                <p><a href="http://bioinformatics.ua.pt/coeus" target="_blank" class="btn btn-inverse btn-primary btn-large">Get COEUS</a></p>
+               <p>
+                    <a href="https://github.com/bioinformatics-ua/COEUS/archive/master.zip" class="btn btn-inverse btn-large">Get COEUS</a>
+                </p>
                 <ul class="masthead-links">
-                    <li><a href="https://github.com/pdrlps/COEUS/tree/coeus1.0b" target="_blank">GitHub project</a></li>
-                    <li>Version 1.0b</li>
-                </ul>
+                    <li><a href="https://github.com/bioinformatics-ua/COEUS" target="_blank">GitHub project</a></li>
+                    <li>Version 1.3</li>
+                </ul>                
             </div>
         </div>
         <div class="container">

@@ -7,7 +7,7 @@
     <s:layout-component name="body">
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
-                <ul class="nav pull-right">
+                <ul class="nav pull-right top_menu">
                     <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
                     <li><a href="<c:url value="/browse" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
                 </ul>
@@ -19,11 +19,11 @@
             <div class="row-fluid">
                 <div class="left span8">
                     <div id="logo">
-                        <a href="<c:url value="/about" />" title="About Diseasecard" class="tooltipp" data-tooltip="About Diseasecard"><img src="<c:url value="/final/assets/image/logo.png" />" /></a>
+                        <a href="<c:url value="/about" />" title="About Diseasecard" class="tooltipp" data-tooltip="About Diseasecard"><img width="454" height="52" src="<c:url value="/final/assets/image/logo.png" />" /></a>
                     </div>
                      <form class="form" id="home_search" >
                         <div class="input-append center" id="home_form">
-                            <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search"  type="text">
+                            <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
                             <div class="btn-group" id="search_button">
                                 <button class="btn btn-inverse" type="button"  id="button_search"><i class="icon-search"></i></button>
                                 <button class="btn btn-inverse dropdown-toggle" id="button_search_toggle" data-toggle="dropdown" tabindex="-1" rel="tooltip" title="Select search type">
@@ -55,14 +55,14 @@
                     <div class="top_hits" id="browsing">
                         <h3>Browse rare diseases</h3>
                         <ul>
-                            <li><a href="<c:url value="/entry/125853" />" rel="tooltip" title="Visit Diabetes mellitus, noninsulin-dependent's disease card">Diabetes mellitus</a> <i class="icon-double-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/259730" />" rel="tooltip" title="Visit Osteopetrosis, autosomal recessive 3, with renal tubular acidosis' disease card">Osteopetrosis</a> <i class="icon-double-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/188050" />" rel="tooltip" title="Visit Thrombophilia due to thrombin defect's disease card">Thrombophilia</a> <i class="icon-double-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/115150" />" rel="tooltip" title="Visit Cardiofaciocutaneous syndrome's disease card">Cardiofaciocutaneous syndrome</a> <i class="icon-double-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/180849" />" rel="tooltip" title="Visit Rubinstein-Taybi syndrome's disease card">Rubinstein-Taybi syndrome</a> <i class="icon-double-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/104300" />" rel="tooltip" title="Visit Alzheimer disease's disease card">Alzheimer disease</a> <i class="icon-double-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/312870" />" rel="tooltip" title="Visit Simpson-Golabi-Behmel syndrome's disease card">Simpson-Golabi-Behmel syndrome</a> <i class="icon-double-angle-left"></i></li>
-                            <li><a href="<c:url value="/entry/143100" />" rel="tooltip" title="Visit Huntington disease's disease card">Huntington disease</a> <i class="icon-double-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/125853" />" rel="tooltip" title="Visit Diabetes mellitus, noninsulin-dependent's disease card">Diabetes mellitus</a> <i class="icon-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/259730" />" rel="tooltip" title="Visit Osteopetrosis, autosomal recessive 3, with renal tubular acidosis' disease card">Osteopetrosis</a> <i class="icon-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/188050" />" rel="tooltip" title="Visit Thrombophilia due to thrombin defect's disease card">Thrombophilia</a> <i class="icon-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/115150" />" rel="tooltip" title="Visit Cardiofaciocutaneous syndrome's disease card">Cardiofaciocutaneous syndrome</a> <i class="icon-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/180849" />" rel="tooltip" title="Visit Rubinstein-Taybi syndrome's disease card">Rubinstein-Taybi syndrome</a> <i class="icon-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/104300" />" rel="tooltip" title="Visit Alzheimer disease's disease card">Alzheimer disease</a> <i class="icon-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/312870" />" rel="tooltip" title="Visit Simpson-Golabi-Behmel syndrome's disease card">Simpson-Golabi-Behmel syndrome</a> <i class="icon-angle-left"></i></li>
+                            <li><a href="<c:url value="/entry/143100" />" rel="tooltip" title="Visit Huntington disease's disease card">Huntington disease</a> <i class="icon-angle-left"></i></li>
                             <li><br /></li>
                             <li><a href="<c:url value="/browse" />" rel="tooltip" title="Browse all diseases">Browse all</a> <i class="icon-reorder"></i></li>
                         </ul>
