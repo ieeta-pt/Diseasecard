@@ -1,5 +1,7 @@
 package pt.ua.bioinformatics.coeus.actions.diseasecard;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -8,6 +10,7 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.common.Boot;
+import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
@@ -48,9 +51,13 @@ public class DiseaseActionBean implements ActionBean {
     }
 
     public Resolution js() {
-        try {
+       try {
             return new StreamingResolution("application/json", Boot.getJedis().get("omim:" + key));
         } catch (Exception ex) {
+            if (Config.isDebug()) {
+                System.err.println("[COEUS][Entry] Unable to load data for " + key);
+                Logger.getLogger(EntryActionBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
             DiseaseAPI d = new DiseaseAPI(key);
             return new StreamingResolution("application/json", d.load().toString());
         }

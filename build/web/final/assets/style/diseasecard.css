@@ -93,13 +93,13 @@ dl {
     padding: 8px;
     text-align: right;
     /* Fallback for web browsers that doesn't support RGBa */
-    background: rgb(0, 136, 204);
+    /*background: rgb(0, 136, 204);
     /* RGBa with 0.6 opacity */
     background: rgba(0, 136, 204, 0.1);
     /* For IE 5.5 - 7*/
-    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#08c, endColorstr=#FFFFFF);
+    /*filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#08c, endColorstr=#FFFFFF);
     /* For IE 8*/
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#08c, endColorstr=#FFFFFF)";
+   /* -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#08c, endColorstr=#FFFFFF)";*/
 }
 
 .top_hits ul {

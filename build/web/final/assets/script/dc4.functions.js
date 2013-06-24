@@ -74,6 +74,16 @@ function uri2item(uri) {
     return addr[addr.length - 1];
 };
 
+function shortName(full) {
+	var result = '';
+	if(full.length > 28) {
+		result = full.substring(0, 28);
+	} else {
+		result = full;
+	}
+	return result;
+}
+
 
 function toggleTopButton(id) {
     switch(id) {

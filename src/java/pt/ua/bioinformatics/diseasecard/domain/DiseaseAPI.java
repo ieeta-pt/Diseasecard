@@ -49,9 +49,16 @@ public class DiseaseAPI {
             JSONArray results = new JSONArray();
             String description = "";
             while (rs.hasNext()) {
+                String a1 = "";
                 String a2 = "";
                 QuerySolution row = rs.next();
-                String a1 = ItemFactory.getTokenFromURI(row.get("a1").toString()).replace("_", ":");
+                if (row.get("a1").toString().contains("malacards")) {
+                    a1 = row.get("a1").toString().replace("http://bioinformatics.ua.pt/diseasecard/resource/malacards_", "malacards:");
+                } else {
+                    a1 = ItemFactory.getTokenFromURI(row.get("a1").toString()).replace("_", ":");
+                }
+
+
                 if (row.get("a2").toString().contains("mesh")) {
                     a2 = ItemFactory.getTokenFromURI(row.get("a2").toString()).replace("_", ":");
                     if (!a2.contains("mesh")) {

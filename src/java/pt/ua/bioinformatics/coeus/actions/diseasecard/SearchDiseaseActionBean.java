@@ -12,7 +12,6 @@ import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
  *
  * @author pedrolopes
  */
-//@UrlBinding("/entry/{diseaseid}.{$event}")
 @UrlBinding("/searchDisease.do")
 public class SearchDiseaseActionBean implements ActionBean {
 
@@ -26,7 +25,7 @@ public class SearchDiseaseActionBean implements ActionBean {
     public void setKey(String key) {
         this.key = key;
     }
-    
+
     public void setContext(ActionBeanContext context) {
         this.context = (COEUSActionBeanContext) context;
     }
@@ -36,7 +35,7 @@ public class SearchDiseaseActionBean implements ActionBean {
     }
 
     @DefaultHandler
-    public Resolution html() { 
+    public Resolution html() {
         return new RedirectResolution("/browse#" + key);
     }
 }

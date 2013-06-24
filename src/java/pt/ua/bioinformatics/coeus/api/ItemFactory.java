@@ -22,7 +22,10 @@ public class ItemFactory {
             if (full.length == 2) {
                 check = full[1];
             } else if (full.length > 2) {
-                check = full[1] + full[2];
+                check = full[1];
+                for(int i =2; i <= full.length; i++ ) {
+                    check += "_" + full[i];
+                }
             }
         } else {
             check = item;

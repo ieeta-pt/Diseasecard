@@ -28,6 +28,9 @@ public class Browsier {
      */
     public static void main(String[] args) {
         //*
+        //count();
+        //*/
+        /*
          toDB();
          //*/
 
@@ -35,7 +38,11 @@ public class Browsier {
         toCache();
         //*/
     }
+    
 
+    /**
+     * Load entry list summary into database
+     */
     public static void toDB() {
         Boot.start();
         ResultSet rs = Boot.getAPI().selectRS("SELECT ?u WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM } ORDER BY ?u", false);
@@ -64,6 +71,9 @@ public class Browsier {
         }
     }
 
+    /*
+     * Cache disease list for each starting character in Redis
+     */
     public static void toCache() {
         String[] list = {"#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         Boot.start();

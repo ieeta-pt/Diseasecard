@@ -397,13 +397,13 @@ public class Finder {
                 JSONArray o = new JSONArray();
                 o.put("<a rel=\"tooltip\" title=\"View " + rs.getString("name") + "\" href=\"./entry/" + rs.getInt("omim") + "\">" + rs.getInt("omim") + "</a>");
                 o.put("<i class=\"icon-angle-right\"></i> <a rel=\"tooltip\" title=\"View " + rs.getString("name") + "\" href=\"./entry/" + rs.getInt("omim") + "\">" + rs.getString("name") + "</a><a href=\"http://omim.org/entry/" + rs.getInt("omim") + "\" class=\"pull-right\" target=\"_blank\"><i class=\"icon-external-link\"></i></a>");
-                double progress = (rs.getInt("c") / 1080.0) * 100;
+                double progress = (rs.getInt("c") / 1127.0) * 100;
                 String type;
-                if (progress > 50.0) {
+                if (progress > 30.0) {
                     type = "";
-                } else if (progress > 35.0) {
+                } else if (progress > 20.0) {
                     type = " progress-info";
-                } else if (progress > 25.0) {
+                } else if (progress > 15.0) {
                     type = " progress-success";
                 } else if (progress > 10.0) {
                     type = " progress-warning";

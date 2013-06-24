@@ -48,6 +48,12 @@
     
 
 
+    <!-- http://bioinformatics.ua.pt/coeus/built -->
+
+    <owl:AnnotationProperty rdf:about="&coeus;built"/>
+    
+
+
     <!-- http://bioinformatics.ua.pt/coeus/endpoint -->
 
     <owl:AnnotationProperty rdf:about="&coeus;endpoint"/>
@@ -531,7 +537,20 @@
         <coeus:hasResource rdf:resource="&diseasecard;resource_MeSH"/>
     </owl:NamedIndividual>
     
+<!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_MalaCards -->
 
+    <owl:NamedIndividual rdf:about="&diseasecard;concept_MalaCards">
+        <rdf:type rdf:resource="&coeus;Concept"/>
+        <rdfs:label rdf:datatype="&xsd;string">concept_malacards</rdfs:label>
+        <dc:date rdf:datatype="&xsd;date">2013-05-03</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.2</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Concept relating MalaCards card data.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Concept relating MalaCards card data.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">MalaCards</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:hasEntity rdf:resource="&diseasecard;entity_Disease"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_MalaCards"/>
+    </owl:NamedIndividual>
 
     <!-- http://bioinformatics.ua.pt/diseasecard/resource/concept_OMIM -->
 
@@ -624,6 +643,8 @@
         <coeus:isExtendedBy rdf:resource="&diseasecard;resource_PROSITE"/>
         <coeus:isExtendedBy rdf:resource="&diseasecard;resource_PharmGKB"/>
         <coeus:hasResource rdf:resource="&diseasecard;resource_UniProt"/>
+        <coeus:isExtendedBy rdf:resource="&diseasecard;resource_uniprot_ld"/>
+        <coeus:hasResource rdf:resource="&diseasecard;resource_uniprot_ld"/>
     </owl:NamedIndividual>
     
 
@@ -828,6 +849,20 @@
         <coeus:isEntityOf rdf:resource="&diseasecard;concept_LSDB"/>
         <coeus:isIncludedIn rdf:resource="&diseasecard;seed_Diseasecard4"/>
     </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/ld_uniprot_id -->
+
+    <owl:Thing rdf:about="&diseasecard;ld_uniprot_id">
+        <rdf:type rdf:resource="&owl;NamedIndividual"/>
+        <rdfs:label rdf:datatype="&xsd;string">ld_uniprot_id</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string"></coeus:query>
+        <dc:title rdf:datatype="&xsd;string">UniProt LinkedData</dc:title>
+        <coeus:property rdf:datatype="&xsd;string">rdfs:seeAlso</coeus:property>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_uniprot_ld"/>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_uniprot_ld"/>
+    </owl:Thing>
     
 
 
@@ -1119,7 +1154,27 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <coeus:loadsFrom rdf:resource="&diseasecard;sql_MeSH_id"/>
     </owl:NamedIndividual>
     
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_MalaCards -->
 
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_MalaCards">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_malacards</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2013-06-24</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.2</owl:versionInfo>
+        <coeus:order rdf:datatype="&xsd;integer">5</coeus:order>
+        <dc:title rdf:datatype="&xsd;string">MalaCards</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <rdfs:comment rdf:datatype="&xsd;string">Resource configuration for MalaCards mapping loading.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Resource configuration for MalaCards mapping loading.</dc:description>
+        <coeus:query rdf:datatype="&xsd;string">SELECT URL AS entry FROM malacards WHERE OMIM LIKE &apos;#replace#&apos;;</coeus:query>
+        <coeus:method rdf:datatype="&xsd;string">cache</coeus:method>
+        <coeus:endpoint rdf:datatype="&xsd;string">jdbc:mysql://localhost:3306/hummer?user=hummer&amp;password=hummer</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">sql</dc:publisher>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_MalaCards"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_OMIM"/>
+        <coeus:hasKey rdf:resource="&diseasecard;sql_MalaCards_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;sql_MalaCards_id"/>
+    </owl:NamedIndividual>
 
     <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_OMIM -->
 
@@ -1245,6 +1300,7 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <dc:publisher rdf:datatype="&xsd;string">csv</dc:publisher>
         <coeus:endpoint rdf:datatype="&xsd;string">http://www.uniprot.org/uniprot/?query=#replace#+AND+taxonomy%3a%22Homo+sapiens+%5b9606%5d%22+AND+reviewed%3ayes+AND+active%3ayes&amp;format=tab&amp;columns=id,entry%20name,reviewed,protein%20names,genes,organism,length</coeus:endpoint>
         <coeus:extends rdf:resource="&diseasecard;concept_OMIM"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_UniProt"/>
         <coeus:isResourceOf rdf:resource="&diseasecard;concept_UniProt"/>
         <coeus:loadsFrom rdf:resource="&diseasecard;csv_UniProt_id"/>
         <coeus:hasKey rdf:resource="&diseasecard;csv_UniProt_id"/>
@@ -1318,6 +1374,31 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <coeus:isResourceOf rdf:resource="&diseasecard;concept_orphanet"/>
         <coeus:loadsFrom rdf:resource="&diseasecard;sql_orphanet_id"/>
         <coeus:hasKey rdf:resource="&diseasecard;sql_orphanet_id"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/resource_uniprot_ld -->
+
+    <owl:NamedIndividual rdf:about="&diseasecard;resource_uniprot_ld">
+        <rdf:type rdf:resource="&coeus;Resource"/>
+        <rdfs:label rdf:datatype="&xsd;string">resource_uniprot_ld</rdfs:label>
+        <coeus:query rdf:datatype="&xsd;string"></coeus:query>
+        <coeus:order rdf:datatype="&xsd;integer">0</coeus:order>
+        <dc:date rdf:datatype="&xsd;date">2013-06-17</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.2</owl:versionInfo>
+        <dc:description rdf:datatype="&xsd;string">LinkedData connection for UniProt.</dc:description>
+        <rdfs:comment rdf:datatype="&xsd;string">LinkedData connection for UniProt.</rdfs:comment>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <dc:title rdf:datatype="&xsd;string">UniProt LinkedData</dc:title>
+        <coeus:built rdf:datatype="&xsd;boolean">false</coeus:built>
+        <coeus:endpoint rdf:datatype="&xsd;string">http://purl.uniprot.org/uniprot/#replace#</coeus:endpoint>
+        <dc:publisher rdf:datatype="&xsd;string">ld</dc:publisher>
+        <coeus:method rdf:datatype="&xsd;string">map</coeus:method>
+        <coeus:isResourceOf rdf:resource="&diseasecard;concept_UniProt"/>
+        <coeus:extends rdf:resource="&diseasecard;concept_UniProt"/>
+        <coeus:hasKey rdf:resource="&diseasecard;ld_uniprot_id"/>
+        <coeus:loadsFrom rdf:resource="&diseasecard;ld_uniprot_id"/>
     </owl:NamedIndividual>
     
 
@@ -1457,7 +1538,22 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <coeus:loadsFor rdf:resource="&diseasecard;resource_KEGG"/>
     </owl:NamedIndividual>
     
+    <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_MalaCards_id -->
 
+    <owl:NamedIndividual rdf:about="&diseasecard;sql_MalaCards_id">
+        <rdf:type rdf:resource="&coeus;SQL"/>
+        <rdfs:label rdf:datatype="&xsd;string">sql_malacards_id</rdfs:label>
+        <dc:date rdf:datatype="&xsd;dateTime">2013-06-24</dc:date>
+        <owl:versionInfo rdf:datatype="&xsd;string">4.2</owl:versionInfo>
+        <rdfs:comment rdf:datatype="&xsd;string">Information for MalaCards SQL resource loading: loads MalaCards URL token.</rdfs:comment>
+        <dc:description rdf:datatype="&xsd;string">Information for MalaCards SQL resource loading: loads MalaCards URL token.</dc:description>
+        <dc:title rdf:datatype="&xsd;string">MalaCards_id</dc:title>
+        <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:title</coeus:property>
+        <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
+        <coeus:loadsFor rdf:resource="&diseasecard;resource_MalaCards"/>
+        <coeus:isKeyOf rdf:resource="&diseasecard;resource_MalaCards"/>
+    </owl:NamedIndividual>
 
     <!-- http://bioinformatics.ua.pt/diseasecard/resource/sql_MeSH_id -->
 
@@ -1470,9 +1566,9 @@ where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like &apos;#replace#
         <dc:description rdf:datatype="&xsd;string">Information for MeSH SQL resource loading: loads MeSH id.</dc:description>
         <dc:title rdf:datatype="&xsd;string">MeSH_id</dc:title>
         <dc:creator rdf:datatype="&xsd;string">Pedro Lopes pedrolopes@ua.pt</dc:creator>
+        <coeus:regex rdf:datatype="&xsd;string">[D][0-9]{6}</coeus:regex>
         <coeus:property rdf:datatype="&xsd;string">dc:identifier|dc:title</coeus:property>
         <coeus:query rdf:datatype="&xsd;string">entry</coeus:query>
-        <coeus:regex rdf:datatype="&xsd;string">[D][0-9]{6}</coeus:regex>
         <coeus:loadsFor rdf:resource="&diseasecard;resource_MeSH"/>
         <coeus:isKeyOf rdf:resource="&diseasecard;resource_MeSH"/>
     </owl:NamedIndividual>

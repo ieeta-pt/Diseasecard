@@ -2,6 +2,7 @@ package pt.ua.bioinformatics.coeus.common;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pt.ua.bioinformatics.coeus.api.PrefixFactory;
 
 /**
  *
@@ -34,8 +35,10 @@ public class Run {
      */
     public static void main(String[] args) {
         try {
-            // LEVEL 0
             Boot.start();
+            System.out.println(PrefixFactory.encode("http://bioinformatics.ua.pt/diseasecard/resource/malacards_vohwinkel_syndrome_lol"));
+            // LEVEL 0
+           //Boot.start();
             /*   SingleImport single = new SingleImport("resource_lsdb");
              Thread t = new Thread(single);
              t.start();*/

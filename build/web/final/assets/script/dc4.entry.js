@@ -1,5 +1,6 @@
 var labelType, useGradients, nativeTextSupport, animate, jsontree;
 var network = {};
+var content = [];
 var map = {};
 var synonyms_html = '';
 var loader = null;
@@ -31,6 +32,7 @@ function query() {
         network.id = '<h6>' + key + ' ' + data.description + '</h6>';
         network.name = '<h6>' + data.description + '</h6>';
         network.children = [];
+        network.size = data.size;
         //$('#content').html('');
         if (data.phenotype) {
             $('#key').append(' #' + key);
@@ -52,7 +54,8 @@ function query() {
 
         // start concepts
         var omim = {id: 'concept:omim', name: '<h6>OMIM</h6>', children: []};
-        var orphanet = {id: 'concept:orphanet', name: '<h6>OrphaNet</h6>', children: []};
+        var orphanet = {id: 'concept:orphanet', name: '<h6>OrphaNet</h6>', children: []};        
+        var malacards = {id: 'concept:malacards', name: '<h6>MalaCards</h6>', children: []};
         var pubmed = {id: 'concept:pubmed', name: '<h6>PubMed</h6>', children: []};
         var pharmgkb = {id: 'concept:pharmgkb', name: '<h6>PharmGKB</h6>', children: []};
         var kegg = {id: 'concept:kegg', name: '<h6>KEGG</h6>', children: []};
@@ -85,7 +88,7 @@ function query() {
             try {
                 if (map[item[0] + ':' + item[1]] === undefined) {
                     if (eval(item[0]).children.length < 48) {
-                        eval(item[0]).children[eval(item[0]).children.length] = {'id': item[0] + ':' + item[1], 'name': '<a data-id="' + item[0] + ':' + item[1] + '" target="_content" class="framer dc4_ht">' + item[1] + '</a>'};
+                        eval(item[0]).children[eval(item[0]).children.length] = {'id': item[0] + ':' + item[1], 'name': '<a data-id="' + item[0] + ':' + item[1] + '" target="_content" class="framer dc4_ht">' + shortName(item[1]) + '</a>'};
                         map[item[0] + ':' + item[1]] = true;
                     }
                 }
@@ -93,42 +96,44 @@ function query() {
                     $('#related').append('<li><a class="small synonym" data-omim="' + item[1] + '" href="../entry/' + item[1] + '"></a></li>');
                 }
             } catch (err) {
-                console.log('[Diseasecard]' + item[0] + ':' + item[1]);
+                //console.log('[Diseasecard]' + item[0] + ':' + item[1]);
             }
 
         })
 
         // connect graph
+        disease.children[disease.children.length] = malacards;
         disease.children[disease.children.length] = omim;
         disease.children[disease.children.length] = orphanet;
         literature.children[literature.children.length] = pubmed;
         drug.children[drug.children.length] = pharmgkb;
-        pathway.children[pathway.children.length] = kegg;
         pathway.children[pathway.children.length] = enzyme;
+        pathway.children[pathway.children.length] = kegg;
         locus.children[locus.children.length] = ensembl;
         locus.children[locus.children.length] = entrez;
         locus.children[locus.children.length] = genecards;
         locus.children[locus.children.length] = hgnc;
         study.children[study.children.length] = clinicaltrials;
         study.children[study.children.length] = gwascentral;
-        ontology.children[ontology.children.length] = mesh;
-        ontology.children[ontology.children.length] = icd10;
         ontology.children[ontology.children.length] = go;
+        ontology.children[ontology.children.length] = icd10;
+        ontology.children[ontology.children.length] = mesh;
         protein.children[protein.children.length] = interpro;
         protein.children[protein.children.length] = prosite;
         protein.children[protein.children.length] = pdb;
         protein.children[protein.children.length] = string;
         protein.children[protein.children.length] = uniprot;
-        variome.children[variome.children.length] = wave;
         variome.children[variome.children.length] = lsdb;
+        variome.children[variome.children.length] = wave;
+        
         network.children[network.children.length] = disease;
-        network.children[network.children.length] = literature;
         network.children[network.children.length] = drug;
-        network.children[network.children.length] = pathway;
+        network.children[network.children.length] = literature;
         network.children[network.children.length] = locus;
-        network.children[network.children.length] = study;
         network.children[network.children.length] = ontology;
+        network.children[network.children.length] = pathway;
         network.children[network.children.length] = protein;
+        network.children[network.children.length] = study;
         network.children[network.children.length] = variome;
         
         start();
@@ -171,9 +176,11 @@ function query() {
  * @returns {undefined}
  */
 function start() {
+
     jsontree = network;
     content = network.children;
-    if (content[1].children[0].children.length === 0) {
+  //  if (content[0].children[0].children.length === 0) {
+  if (network.size === 0) {
         $('#key').html('No data for ' + key);
         $('#content').html('<div class="row-fluid"><div class="offset2">&nbsp;</div><div class="alert alert-warning span6 center"><strong>Sorry!</strong> Diseasecard could not find any matches for <span class="label label-inverse">' + key + '</span>. <br /> Try searching for something else instead.</div></div>');
         $('.mag').click();
@@ -256,16 +263,24 @@ function start() {
                     async: true
                 });
             } else {
-                init();
+                try {
+	            init();
+            } catch(e) {
+	            
+            }
             }
         } else {
-            init();
+        	try {
+	            init();
+            } catch(e) {
+	            
+            }
         }
         $('*[rel=tooltip]').tooltip();
         $('#sidebar_menu,#tree').fadeIn(1000);
         clearInterval(loader);
         $('#dc4_logo').fadeIn();        
-    $('#dc4_disease_hypertree,#dc4_page_external').tooltip('destroy');
+        $('#dc4_disease_hypertree,#dc4_page_external').tooltip('destroy');
     }
 }
 /**
