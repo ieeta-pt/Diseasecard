@@ -40,6 +40,7 @@ function query() {
             $('#key').append(' ' + key);
         }
         $('#description').html(data.description);
+        $('#description').data('id', key);
         document.title = data.omim + ' ' + data.description + ' - Diseasecard';
         // start entities
         var disease = {id: 'entity:disease', name: '<h5>Disease</h5>', children: []}
@@ -498,6 +499,10 @@ $(document).ready(function() {
         $(select).addClass('activepoint');
         updateButtons(false);
         return false;
+    });
+    
+    $(document).on('click', '#description', function(e) {
+	    window.location.hash = 'omim:' + $(this).data('id');
     });
 
     var tour = new Tour({

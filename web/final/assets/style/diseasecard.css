@@ -589,7 +589,11 @@ a.toolbox_btn_disabled:hover {
     background-position: 0 0px;
 }
 
-.open {
+#tree .open {
+	font-size: 14px;
+}
+
+.tree.open {
 	font-size: 14px;
 }
 

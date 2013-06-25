@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.TreeMap;
 import java.util.logging.Level;
@@ -37,18 +38,18 @@ public class Finder {
     private Pattern omimid = Pattern.compile("[0-9]{6}");
     private DB db = new DB("DC4");
     private JSONObject result = new JSONObject();
-    private TreeMap<Integer, Disease> map = new TreeMap<Integer, Disease>(Collections.reverseOrder());
-    private TreeMap<String, ArrayList<String>> results = new TreeMap<String, ArrayList<String>>(Collections.reverseOrder());
+    private HashMap<Integer, Disease> map = new HashMap<Integer, Disease>();
+    private HashMap<String, ArrayList<String>> results = new HashMap<String, ArrayList<String>>();
     private LinkedHashMap<String, SearchResult> network = new LinkedHashMap<String, SearchResult>();
 
     public Finder() {
     }
 
-    public TreeMap<String, ArrayList<String>> getResults() {
+    public HashMap<String, ArrayList<String>> getResults() {
         return results;
     }
 
-    public void setResults(TreeMap<String, ArrayList<String>> results) {
+    public void setResults(HashMap<String, ArrayList<String>> results) {
         this.results = results;
     }
 
@@ -60,11 +61,11 @@ public class Finder {
         this.db = db;
     }
 
-    public TreeMap<Integer, Disease> getMap() {
+    public HashMap<Integer, Disease> getMap() {
         return map;
     }
 
-    public void setMap(TreeMap<Integer, Disease> map) {
+    public void setMap(HashMap<Integer, Disease> map) {
         this.map = map;
     }
 
@@ -115,100 +116,20 @@ public class Finder {
     }
 
     /**
-     * @deprecated 
      * Finds disease matches in COEUS S3DB. <p> Used in search. </p>
      *
      * @return
      */
-    public String find() {
-        if (query.length() > 3) {
-            try {
-                SolrServer server = new HttpSolrServer(Config.getIndex());
-                ModifiableSolrParams params = new ModifiableSolrParams();
-                params.set("q", query + "*");
-                params.set("rows", 1000);
-                params.set("defType", "edismax");
-                params.set("qf", "content^0.1 title^0.9 id^1");
-                QueryResponse response = server.query(params);
-                SolrDocumentList docs = response.getResults();
-                if (docs.isEmpty()) {
-                    result.put("status", 110);
-                } else if (docs.size() == 1) {
-                    result.put("status", 121);
-                } else {
-                    result.put("status", 122);
-                }
-                result.put("size", docs.size());
-                JSONArray mtp = new JSONArray();
-
-                for (SolrDocument sol : docs) {
-                    if (!network.containsKey(sol.get("omim").toString())) {
-                        SearchResult sr = new SearchResult(sol.get("omim").toString());
-                        sr.setName(Boot.getAPI().getOmimName(sol.get("omim").toString()));
-                        if (sol.get("id").toString().contains("name")) {
-                            sr.getAlias().add(sol.get("id").toString());
-                        } else {
-                            sr.getNetwork().add(sol.get("id").toString());
-                        }
-                        network.put(sol.get("omim").toString(), sr);
-
-                    } else {
-                        network.get(sol.get("omim").toString()).getNetwork().add(sol.get("id").toString());
-                    }
-                }
-
-                for (SearchResult s : network.values()) {
-                    JSONObject o = new JSONObject();
-                    if (!s.getName().equals("")) {
-                        o.put("name", s.getName());
-                        o.put("omim", s.getOmim());
-                        JSONArray alias = new JSONArray();
-                        for (String link : s.getAlias()) {
-                            alias.put(link);
-                        }
-                        JSONArray links = new JSONArray();
-                        for (String link : s.getNetwork()) {
-                            if (!link.contains("hpo")) {
-                                links.put(link);
-                            }
-                        }
-                        o.put("alias", alias);
-                        o.put("links", links);
-                        mtp.put(o);
-                    }
-                }
-                result.put("results", mtp);
-            } catch (Exception ex) {
-                if (Config.isDebug()) {
-                    System.out.println("[COEUS][Diseasecard][Finder] Unable to find disease");
-                    Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        } else {
-            try {
-                result.put("status", 140);
-            } catch (Exception ex) {
-                if (Config.isDebug()) {
-                    System.out.println("[COEUS][Diseasecard][Finder] Unable to find disease");
-                    Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        return result.toString();
-    }
-
     public String find(String type) {
         if (query.length() > 3) {
             ModifiableSolrParams params = new ModifiableSolrParams();
             if (type.equals("id")) {
-                params.set("q", "id:*\"" + query.toUpperCase() + "\"* OR id:*\"" + query.toLowerCase() + "\"* OR id:*\"" + WordUtils.capitalize(query.toLowerCase()) + "\"*");
-                params.set("rows", 100);
-               params.set("defType", "edismax");
-                params.set("qf", "content^0.1 title^0.9 id^1");
+                //params.set("q", "id:*\"" + query.toLowerCase() + "\"* OR id:*\"" + WordUtils.capitalize(query.toLowerCase()) + "\"*");
+                params.set("q", "title:*" + query + "*");
+                params.set("rows", 512);
             } else if (type.equals("full")) {
                 params.set("q", query + "*");
                 params.set("rows", 1024);
-                
             }
             try {
                 SolrServer server = new HttpSolrServer(Config.getIndex());
@@ -238,7 +159,7 @@ public class Finder {
                         network.get(sol.get("omim").toString()).getNetwork().add(sol.get("id").toString());
                     }
                 }
-                
+
                 int size = 0;
                 for (SearchResult s : network.values()) {
                     JSONObject o = new JSONObject();
@@ -286,52 +207,19 @@ public class Finder {
     }
 
     /**
-     * @deprecated 
      * Finds disease matches in DC4 index. <p> Used in Autocomplete. </p>
      *
      * @return
      */
-    public String get() {
-        JSONArray list = new JSONArray();
-        try {
-            SolrServer server = new HttpSolrServer(Config.getIndex());
-            ModifiableSolrParams params = new ModifiableSolrParams();
-            params.set("q", query + "*");
-            params.set("rows", 100);
-            params.set("defType", "edismax");
-            params.set("qf", "content^0.1 title^0.9 id^1");
-            QueryResponse response = server.query(params);
-            SolrDocumentList docs = response.getResults();
-            for (SolrDocument sol : docs) {
-                JSONObject obj = new JSONObject();
-                obj.put("info", sol.get("title").toString());
-                obj.put("omim", sol.get("omim"));
-                list.put(obj);
-            }
-            result.put("results", list);
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][Diseasecard][Finder] Unable to get disease");
-                Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return list.toString();
-    }
-
     public String get(String type) {
         JSONArray list = new JSONArray();
         ModifiableSolrParams params = new ModifiableSolrParams();
-        if (type.equals("id")) {
-            params.set("q", "id:*\"" + query.toUpperCase() + "\"* OR id:*\"" + query.toLowerCase() + "\"* OR id:*\"" + WordUtils.capitalize(query.toLowerCase()) + "\"*");
-            params.set("rows", 100);
-            params.set("order", "omim asc");
+        
+        //arams.set("q", "id:*\"" + query.toLowerCase() + "\"* OR id:*\"" + WordUtils.capitalize(query.toLowerCase()) + "\"*");
+        
+        params.set("q", "title:*" + query + "*");
+        params.set("rows", 254);
 
-        } else if (type.equals("full")) {
-            params.set("q", query + "*");
-            params.set("rows", 100);
-            params.set("defType", "edismax");
-            params.set("qf", "content^0.1 title^0.9 id^1");
-        }
         try {
             SolrServer server = new HttpSolrServer(Config.getIndex());
             QueryResponse response = server.query(params);
@@ -434,8 +322,8 @@ public class Finder {
             params.set("rows", 1000);
             params.set("defType", "edismax");
             params.set("qf", "content^0.2 title^0.9 id^1");
-            params.set("wt","json");
-            response = server.query(params).toString() ;
+            params.set("wt", "json");
+            response = server.query(params).toString();
         } catch (Exception ex) {
             if (Config.isDebug()) {
                 System.out.println("[COEUS][Diseasecard][Finder] Unable to get disease");
