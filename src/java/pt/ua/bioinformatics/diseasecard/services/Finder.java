@@ -290,16 +290,16 @@ public class Finder {
                 if (progress > 30.0) {
                     type = "";
                 } else if (progress > 20.0) {
-                    type = " progress-info";
+                    type = " progress-bar-info";
                 } else if (progress > 15.0) {
-                    type = " progress-success";
+                    type = " progress-bar-success";
                 } else if (progress > 10.0) {
-                    type = " progress-warning";
+                    type = " progress-bar-warning";
                 } else {
                     progress = 10.0;
-                    type = " progress-danger";
+                    type = " progress-bar-danger";
                 }
-                o.put("<div class=\"progress" + type + "\"><div rel=\"tooltip\" title=\"" + rs.getInt("c") + " connections\" class=\"bar\" style=\"width: " + progress + "%;\">" + rs.getInt("c") + "</div></div>");
+                o.put("<div class=\"progress\"><div rel=\"tooltip\" title=\"" + rs.getInt("c") + " connections\" class=\"progress-bar " + type + "\" role=\"progressbar\" style=\"width: " + progress + "%;\">" + rs.getInt("c") + "</div></div>");
                 list.put(o);
             }
             db.close();

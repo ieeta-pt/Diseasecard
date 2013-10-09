@@ -44,7 +44,7 @@ function loadResults(id) {
 			$.tmpl('results', data.results).appendTo('#results_list');
 			$.each(data.results, function(i, value) {
 				var box = $('<div/>', {
-					'class': 'results_list well well-small',
+					'class': 'results_list well well-sm',
 					'data-omim': value.omim,
 					'id': value.omim
 				});

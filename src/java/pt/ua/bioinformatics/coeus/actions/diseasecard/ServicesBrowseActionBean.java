@@ -11,7 +11,6 @@ import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
-import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
 import pt.ua.bioinformatics.diseasecard.services.Finder;
 
@@ -47,16 +46,16 @@ public class ServicesBrowseActionBean implements ActionBean {
             Activity.log(key, "browse", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
         } catch (Exception e) {
         }
-        try {
+       /* try {
             return new StreamingResolution("application/json", Boot.getJedis().get("browse:" + key));
 
         } catch (Exception ex) {
             if (Config.isDebug()) {
                 System.err.println("[COEUS][Browse] Unable to load data for " + key);
                 Logger.getLogger(ServicesBrowseActionBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            }*/
             Finder f = new Finder();
             return new StreamingResolution("application/json", f.browse(key));
-        }
+        //}
     }
 }

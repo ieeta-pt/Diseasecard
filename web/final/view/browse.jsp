@@ -8,9 +8,8 @@
     </s:layout-component>
     <s:layout-component name="body">
         <div class="navbar navbar-inverse navbar-fixed-top">
-
             <div class="navbar-header">
-                <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
+                 <a class="navbar-link" href="<c:url value="/" />"><img class="bw_logo img-responsive" src="<c:url value="/final/assets/image/logo_bw.png" />" /></a>
             </div>
             <div class="collapse navbar-collapse navbar-left">
                 <ul class="nav navbar-nav">
@@ -21,7 +20,6 @@
                 <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
                 <li><a href="#" class="mag" rel="tooltip"  data-placement="bottom" title="Search for rare diseases" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
             </ul>
-
         </div>
         <!-- Top search bar -->
         <div id="top" class="col-md-4 pull-right search">
@@ -93,7 +91,7 @@
                     </table>
                 </div>
                 <div class="tab-pane" id="a"><h2>A</h2>
-                    <table id="a_list" class="table table-striped">
+                    <table id="a_list" class="table table-striped table-condensed">
                         <thead>
                             <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>

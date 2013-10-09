@@ -11,7 +11,7 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container pull-left">
-                    <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
+                       <a class="navbar-link" href="<c:url value="/" />"><img class="bw_logo img-responsive" src="<c:url value="/final/assets/image/logo_bw.png" />" /></a>
                     <div class="navbar-collapse collapse">
                         <ul class="nav">
                             <li class="active">

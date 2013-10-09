@@ -92,7 +92,7 @@ $.extend( $.fn.dataTableExt.oPagination, {
             };
 
             $(nPaging).addClass('pagination').append(
-                '<ul>'+
+                '<ul class="pagination">'+
                 '<li class="prev disabled"><a href="#">&larr; '+oLang.sPrevious+'</a></li>'+
                 '<li class="next disabled"><a href="#">'+oLang.sNext+' &rarr; </a></li>'+
                 '</ul>'
@@ -225,7 +225,7 @@ function dtables(id) {
         "bPaginate": true,
         "sPaginationType": "bootstrap",
         "bStateSave": true,
-        "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'pP>>",
+        "sDom": "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'pP>>",
         "oLanguage": {
             "sZeroRecords": "No diseases to display",
             "sInfo": "Listing _START_ to _END_ of _TOTAL_ diseases",
@@ -255,7 +255,7 @@ function dtables(id) {
             $(window.location.hash).tooltip({
                 selector: "*[rel=tooltip]"
             });
-            $('.dataTables_filter input').attr('placeholder','Filter').addClass('input-lg').focus();
+            $('.dataTables_filter input').attr('placeholder','Filter').addClass('form-control').addClass('col-md-3').focus();
         }
     }); 
 }

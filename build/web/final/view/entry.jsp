@@ -11,7 +11,7 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
 
             <div class="navbar-header">
-                <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
+                  <a class="navbar-link" href="<c:url value="/" />"><img class="bw_logo img-responsive" src="<c:url value="/final/assets/image/logo_bw.png" />" /></a>
             </div>
             <div class="collapse navbar-collapse navbar-left">
                 <ul class="nav navbar-nav">
@@ -66,7 +66,7 @@
         </div>
         <div id="frame_loading">
             <div class="progress progress-striped active">
-                <div class="bar" style="width: 100%;">Loading...</div>
+                <div class="progress-bar progress-bar-info" style="width: 100%;">Loading...</div>
             </div>
         </div>
         <div id="content">

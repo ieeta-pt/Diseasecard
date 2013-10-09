@@ -13,9 +13,9 @@
 
         <!-- Le styles -->
         <link href='http://fonts.googleapis.com/css?family=Titillium+Web:300,600,300italic' rel='stylesheet' type='text/css'>
-        <link href="../final/assets/style/bootstrap.min.css" rel="stylesheet">        
-        <link href="../final/assets/style/bootstrap-responsive.min.css" rel="stylesheet">
-        <link href="../final/assets/style/docs.css" rel="stylesheet">
+        <link href="../final/assets/style/bootstrap.min.css" rel="stylesheet">      
+        <link href="../final/assets/style/diseasecard.css" rel="stylesheet" type="text/css">
+         <link href="../final/assets/style/docs.css" rel="stylesheet">
 
         <!-- Le fav and touch icons -->
         <link rel="shortcut icon" href="assets/img/favicon.ico">
@@ -23,11 +23,12 @@
 
     <body>        
         <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container">
+            
+            <div class="navbar-header">
                     <a class="navbar-brand" href="../">Diseasecard</a>
+                    </div>
                     <div class="navbar-collapse collapse">
-                        <ul class="nav">
+                        <ul class="nav navbar-nav">
                             <li class="active"><a href="#">Home</a></li>
                             <li><a href="documentation/">Documentation</a></li>
                             <li><a href="science/">Science</a></li>
@@ -35,8 +36,8 @@
                             <li><a data-toggle="modal" data-target="#contact" href="#contact">Contact</a></li>
                         </ul>
                     </div>
-                </div>
-            </div>
+              
+            
         </div>        
 
         <!-- contact modal box -->
@@ -65,7 +66,7 @@
                 <h1>Diseasecard</h1>
                 <p>Powered by COEUS</p>
                <p>
-                    <a href="https://github.com/bioinformatics-ua/COEUS/archive/master.zip" class="btn btn-inverse btn-lg">Get COEUS</a>
+                    <a href="https://github.com/bioinformatics-ua/COEUS/archive/master.zip" class="btn btn-info btn-lg">Get COEUS</a>
                 </p>
                 <ul class="masthead-links">
                     <li><a href="https://github.com/bioinformatics-ua/COEUS" target="_blank">GitHub project</a></li>

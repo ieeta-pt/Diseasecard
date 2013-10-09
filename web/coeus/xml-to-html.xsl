@@ -26,7 +26,7 @@
     <xsl:template name="boolean-result">
         <div>
             <!--      
-             	<h2>Boolean Result</h2>
+                <h2>Boolean Result</h2>
             -->      
             <p>ASK => 
                 <xsl:value-of select="res:boolean"/>
@@ -114,32 +114,31 @@
                 <title>SPARQL results for COEUS | Enabling Knowledge</title>     
                 <link href="http://fonts.googleapis.com/css?family=Titillium+Web:300,600,300italic" rel="stylesheet" type="text/css" />   
                 <link href="final/assets/style/bootstrap.min.css" rel="stylesheet" />       
-                <link href="final/assets/style/bootstrap-responsive.min.css" rel="stylesheet" />            
+                <link href="final/assets/style/diseasecard.css" rel="stylesheet" />            
                 <link href="final/assets/style/docs.css" rel="stylesheet" />
             </head>
             <body>
                 <div class="navbar navbar-inverse navbar-fixed-top">
-                    <div class="navbar-inner">
-                        <div class="container">
-                            <a class="navbar-brand" href="http://bioinformatics.ua.pt/diseasecard">Diseasecard</a> 
-                            <div class="navbar-collapse collapse">
-                                <ul class="nav">
-                                    <li>
-                                        <a href="./api/">Home</a>
-                                    </li>
-                                    <li>
-                                        <a href="api/documentation/">Documentation</a>
-                                    </li>
-                                    <li>
-                                        <a href="api/science/">Science</a>
-                                    </li>
-                                    <li class="active">
-                                        <a href="sparqler/">SPARQL</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="../">Diseasecard</a>
                     </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a href="./api/">Home</a>
+                            </li>
+                            <li>
+                                <a href="api/documentation/">Documentation</a>
+                            </li>
+                            <li>
+                                <a href="api/science/">Science</a>
+                            </li>
+                            <li class="active">
+                                <a href="sparqler/">SPARQL</a>
+                            </li>
+                        </ul>
+                    </div>
+                      
                 </div>
                 
                 <br/>
@@ -167,7 +166,9 @@
                         </p>
 
                         <p>University of Aveiro 2012</p>
-                        <p><small>Under Development by <a href="http://pedrolopes.net" target="_blank">@pedrolopes</a>, supported by <a href="http://bmd-software.com" target="_blank">BMD Software, LDA</a></small></p>
+                        <p>
+                            <small>Under Development by <a href="http://pedrolopes.net" target="_blank">@pedrolopes</a>, supported by <a href="http://bmd-software.com" target="_blank">BMD Software, LDA</a></small>
+                        </p>
                         <p> 
                             <a href="http://twitter.github.com/bootstrap/" target="_blank">
                                 <small>Layout with Twitter Bootstrap</small>

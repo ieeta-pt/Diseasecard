@@ -3,7 +3,7 @@
         "name": "Diseasecard",
         "description": "Diseasecard: rare genetic diseases research portal",
         "keyprefix":"diseasecard",
-        "version": "4.2",
+        "version": "4.3",
         "ontology": "http://bioinformatics.ua.pt/diseasecard/diseasecard.owl",
         "setup": "dc4_setup.rdf",
         "sdb":"dc4_sdb.ttl",

@@ -12,7 +12,7 @@
     <s:layout-component name="body">
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-header">
-                <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
+                   <a class="navbar-link" href="<c:url value="/" />"><img class="bw_logo img-responsive" src="<c:url value="/final/assets/image/logo_bw.png" />" /></a>
             </div>
             <div class="collapse navbar-collapse navbar-left">
                 <ul class="nav navbar-nav">
@@ -40,7 +40,7 @@
 <div class="container" id="search">
     <!-- search errors -->
     <div class="row center" id="errors">
-        <div class="alert col-md-6" id="alert_short">
+        <div class="alert alert-warning col-md-6" id="alert_short">
             <button type="button" class="close" data-dismiss="alert">&times;</button>
             <strong>Warning!</strong> Your search query must be at least 4 characters long.
         </div> 
@@ -52,26 +52,25 @@
             <a href="<c:url value="/search/full/${actionBean.query}" />" target="_top" rel="tooltip" title="Diseasecard full text search on ">Do you want to try full text search instead?</a>
         </div>
     </div>
-    <div class="navbar" id="loading">
-
+    <div class="navbar navbar-default" id="loading">
         <div class="pull-left">
-            <h4><span>Your results for <span class="label label-inverse">${actionBean.query}</span> are being processed.</h4>
+            <h4>Your results for <span class="label label-primary">${actionBean.query}</span> are being processed.</h4>
         </div>
         <div class="pull-right">
             <div class="progress progress-striped active loading_results">
-                <div class="bar" style="width: 100%;"> Loading... </div>
+                <div class="progress-bar" style="width: 100%;"> Loading... </div>
             </div>
         </div>
 
     </div>
-    <div class="navbar" id="meta">
+    <div class="navbar navbar-default" id="meta">
 
         <div class="pull-left">
-            <h4><span id="results_size"></span> total results for <span class="label label-inverse">${actionBean.query}</span></h4>
+            <h4><span id="results_size"></span> total results for <span class="label label-primary">${actionBean.query}</span></h4>
         </div>
         <form class="pull-right navbar-form" id="tour_filter">
             <label>
-                <input class="input-lg" type="text" placeholder="Filter" id="filter">
+                <input class="form-control col-md-3" type="text" placeholder="Filter" id="filter">
             </label>
         </form> 
 
