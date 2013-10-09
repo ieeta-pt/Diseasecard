@@ -25,8 +25,8 @@
         <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
-                    <a class="brand" href="../">Diseasecard</a>
-                    <div class="nav-collapse collapse">
+                    <a class="navbar-brand" href="../">Diseasecard</a>
+                    <div class="navbar-collapse collapse">
                         <ul class="nav">
                             <li class="active"><a href="#">Home</a></li>
                             <li><a href="documentation/">Documentation</a></li>
@@ -65,7 +65,7 @@
                 <h1>Diseasecard</h1>
                 <p>Powered by COEUS</p>
                <p>
-                    <a href="https://github.com/bioinformatics-ua/COEUS/archive/master.zip" class="btn btn-inverse btn-large">Get COEUS</a>
+                    <a href="https://github.com/bioinformatics-ua/COEUS/archive/master.zip" class="btn btn-inverse btn-lg">Get COEUS</a>
                 </p>
                 <ul class="masthead-links">
                     <li><a href="https://github.com/bioinformatics-ua/COEUS" target="_blank">GitHub project</a></li>
@@ -77,8 +77,8 @@
             <div class="marketing">
                 <h2><em>Ipsa scientia potestas est.</em> Knowledge is power.</h2>
                 <p class="marketing-byline">Streamlined back-end framework for rapid semantic web application development.</p>
-                <div class="row-fluid">
-                    <div class="span4">
+                <div class="row">
+                    <div class="col-md-4">
                         <img src="../final/assets/image/coeus/integrate.png" width="150" height="150" alt="Integration" />
                         <h2>Integration</h2>
                         <p>
@@ -86,14 +86,14 @@
                             Integrate CSV, SQL, XML or SPARQL resources with advanced Extract-Transform-Load warehousing features.
                         </p>
                     </div>  
-                    <div class="span4">
+                    <div class="col-md-4">
                         <img src="../final/assets/image/coeus/cloud.png" width="150" height="150" alt="Cloud-based" />
                         <h2>Cloud-based</h2>
                         <p>
                             Deploy your knowledgebase in the cloud, using any available host. <br />Your content - available any time, any where. And with full create, read, update, and delete support.
                         </p>
                     </div>   
-                    <div class="span4">
+                    <div class="col-md-4">
                         <img src="../final/assets/image/coeus/semantic.png" width="150" height="150" alt="Semantic Web" />
                         <h2>Semantics</h2>
                         <p>
@@ -103,9 +103,9 @@
                         </p>
                     </div>    
                 </div>
-                <div class="row-fluid">
+                <div class="row">
 
-                    <div class="span4">
+                    <div class="col-md-4">
                         <img src="../final/assets/image/coeus/rapid.png" width="150" height="150" alt="RAD" />
                         <h2>Rapid Dev Time</h2>
                         <p>
@@ -113,7 +113,7 @@
                             COEUS is the back-end framework, the client-side is language-agnostic: PHP, Ruby, JavaScript, C#... COEUS' API works everywhere.
                         </p>
                     </div>       
-                    <div class="span4">
+                    <div class="col-md-4">
                         <img src="../final/assets/image/coeus/network.png" width="150" height="150" alt="Interoperability" />
                         <h2>Interoperability</h2>
                         <p>
@@ -121,7 +121,7 @@
                             Create your own knowledge network using SPARQL Federation enabling data-sharing amongst a scalable number of peers
                         </p>
                     </div>   
-                    <div class="span4">
+                    <div class="col-md-4">
                         <img src="../final/assets/image/coeus/distribute.png" width="150" height="150" alt="Ecosystem" />
                         <h2>Ecosystem</h2>
                         <p>
@@ -132,16 +132,16 @@
                 <hr class="soften">
                 <h1>Build the future with COEUS</h1>
                 <p class="marketing-byline">Semantic Web + Rapid Application Development = Next-Generation Applications.</p>
-                <div class="row-fluid">
-                    <div class="span4">
+                <div class="row">
+                    <div class="col-md-4">
                         <h2>What?</h2>
                         <p>COEUS is a next-generation semantic web-powered knowledge management framework. It is targeted at rapid application deployment of new applications in any research field, supported by a comprehensive integration engine and an advanced data distribution API.</p>
                     </div>
-                    <div class="span4">
+                    <div class="col-md-4">
                         <h2>How?</h2>
                         <p>With COEUS you can deploy new semantic warehouses with custom applications - seeds. Each seed provides an API for internal and external usage, enabling the connection of multiple seeds. With multiple seeds connected, their content can be distributed, resulting in a truly semantic knowledge federation network.</p>
                     </div>
-                    <div class="span4">
+                    <div class="col-md-4">
                         <h2>Featured</h2>
                         <a href="http://bioinformatics.ua.pt/dc4/"><img src="../final/assets/image/coeus/dc4.png" width="200" height="29" alt="Diseasecard" /></a>
                         A new semantic rare diseases research portal. COEUS is the foundation of the internal application engine, enabling the delivery of advanced UI features and the exploration of collected knowledge programmatically.<br />

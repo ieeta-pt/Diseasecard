@@ -56,7 +56,7 @@ public class Links {
         links.put("go","http://amigo.geneontology.org/cgi-bin/amigo/term_details?term=#replace#");
         // Variome
         links.put("wave", "http://bioinformatics.ua.pt/WAVe/gene/#replace#");
-        links.put("lsdb", "http://localhost:8084/diseasecard/services/lsdb/#replace#");
+        links.put("lsdb", "http://bioinformatics.ua.pt/diseasecard/services/lsdb/#replace#");
         loaded = true;
     }
 

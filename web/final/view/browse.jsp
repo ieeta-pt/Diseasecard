@@ -8,30 +8,28 @@
     </s:layout-component>
     <s:layout-component name="body">
         <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container pull-left ">
-                    <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="#">Browse all diseases</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-                <ul class="nav pull-right top_menu">
-                    <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
-                    <li><a href="#" class="mag" rel="tooltip"  data-placement="bottom" title="Search for rare diseases" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
+            </div>
+            <div class="collapse navbar-collapse navbar-left">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Browse all diseases</a></li>
                 </ul>
             </div>
+            <ul class="nav navbar-nav navbar-right top_menu collapse navbar-collapse">  
+                <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
+                <li><a href="#" class="mag" rel="tooltip"  data-placement="bottom" title="Search for rare diseases" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
+            </ul>
+
         </div>
         <!-- Top search bar -->
-        <div id="top">
-            <div class="search menu">
-                <form>
-                    <div class="input-append pull-right">
-                        <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
-                        <button class="btn btn-inverse" type="button"  id="button_search"><i class="icon-search"></i></button>
-                    </div>
-                </form>
+        <div id="top" class="col-md-4 pull-right search">
+            <div class="input-group">
+                <input type="text" class="form-control" id="text_search" class="home_search" placeholder="Search here...">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button" id="button_search"><i class="icon-search"></i></button>
+                </span>
             </div>
         </div>
 
@@ -87,7 +85,7 @@
                 <div class="tab-pane" id="0"><h2>#</h2>
                     <table cellpadding="0" cellspacing="0" id="0_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -97,7 +95,7 @@
                 <div class="tab-pane" id="a"><h2>A</h2>
                     <table id="a_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -107,7 +105,7 @@
                 <div class="tab-pane" id="b"><h2>B</h2>
                     <table id="b_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -117,7 +115,7 @@
                 <div class="tab-pane" id="c"><h2>C</h2>
                     <table id="c_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -127,7 +125,7 @@
                 <div class="tab-pane" id="d"><h2>D</h2>
                     <table id="d_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -137,7 +135,7 @@
                 <div class="tab-pane" id="e"><h2>E</h2>
                     <table id="e_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -147,7 +145,7 @@
                 <div class="tab-pane" id="f"><h2>F</h2>
                     <table id="f_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -157,7 +155,7 @@
                 <div class="tab-pane" id="g"><h2>G</h2>
                     <table id="g_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -167,7 +165,7 @@
                 <div class="tab-pane" id="h"><h2>H</h2>
                     <table id="h_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -177,7 +175,7 @@
                 <div class="tab-pane" id="i"><h2>I</h2>
                     <table id="i_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -187,7 +185,7 @@
                 <div class="tab-pane" id="j"><h2>J</h2>
                     <table id="j_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -197,7 +195,7 @@
                 <div class="tab-pane" id="k"><h2>K</h2>
                     <table id="k_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -207,7 +205,7 @@
                 <div class="tab-pane" id="l"><h2>L</h2>
                     <table id="l_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -217,7 +215,7 @@
                 <div class="tab-pane" id="m"><h2>M</h2>
                     <table id="m_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -227,7 +225,7 @@
                 <div class="tab-pane" id="n"><h2>N</h2>
                     <table id="n_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -237,7 +235,7 @@
                 <div class="tab-pane" id="o"><h2>O</h2>
                     <table id="o_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -247,7 +245,7 @@
                 <div class="tab-pane" id="p"><h2>P</h2>
                     <table id="p_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -257,7 +255,7 @@
                 <div class="tab-pane" id="q"><h2>Q</h2>
                     <table id="q_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -267,7 +265,7 @@
                 <div class="tab-pane" id="r"><h2>R</h2>
                     <table id="r_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -277,7 +275,7 @@
                 <div class="tab-pane" id="s"><h2>S</h2>
                     <table id="s_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -287,7 +285,7 @@
                 <div class="tab-pane" id="t"><h2>T</h2>
                     <table id="t_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -297,7 +295,7 @@
                 <div class="tab-pane" id="u"><h2>U</h2>
                     <table id="u_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -307,7 +305,7 @@
                 <div class="tab-pane" id="v"><h2>V</h2>
                     <table id="v_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -317,7 +315,7 @@
                 <div class="tab-pane" id="w"><h2>W</h2>
                     <table id="w_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -327,7 +325,7 @@
                 <div class="tab-pane" id="x"><h2>X</h2>
                     <table id="x_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -337,7 +335,7 @@
                 <div class="tab-pane" id="y"><h2>Y</h2>
                     <table id="y_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 
@@ -347,7 +345,7 @@
                 <div class="tab-pane" id="z"><h2>Z</h2>
                     <table id="z_list" class="table table-striped">
                         <thead>
-                            <tr><th class="span2">OMIM</th><th>Name</th><th class="span3">Connections</th></tr>
+                            <tr><th class="col-md-2">OMIM</th><th>Name</th><th class="col-md-3">Connections</th></tr>
                         </thead>
                         <tbody>
 

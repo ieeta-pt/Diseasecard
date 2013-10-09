@@ -3,7 +3,25 @@ html,
 body {
     height: 100%;
    /* background-image: url(../image/grey.png) ; */
+   font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+   font-weight: 300;
 }
+
+h1,h2,h3,h4,h5,h6 {
+    font-family: 'Titillium Web', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 600;
+}
+
+b, strong {
+    font-weight: 600;
+}
+
+em, italic {
+    font-weight: 300;
+    font-style: italic;
+}
+
+body { padding-top: 80px; }
 
 h5, h6 {
     margin: 0;
@@ -55,7 +73,7 @@ dl {
     color: #08c;
 }
 
-.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{width:840px;}
+/*.navbar-static-top .container,.navbar-fixed-top .container,.navbar-fixed-bottom .container{width:840px;}*/
 
 /**
     index
@@ -186,6 +204,11 @@ table {
 }
 
 .search {
+    display:none;
+    z-index: 1000;
+}
+
+/*.search {
     display: none;
     float: right;
     margin: 2px;
@@ -196,6 +219,7 @@ table {
     right: 0;
     height: 38px;
 }
+*/
 
 .ui-helper-hidden-accessible {
     display: none;
@@ -417,7 +441,7 @@ table {
 #diseasebar {
     float: left;
     left: 0;
-    top: 0;
+    top: 10px;
     height: 100%;
     width: 20%;
     min-width: 234px;

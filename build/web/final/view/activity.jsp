@@ -4,39 +4,36 @@
     <s:layout-component name="title">Status - Diseasecard</s:layout-component>
     <s:layout-component name="body">
         <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="navbar-inner">
-                <div class="container pull-left ">
-                    <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
-                    <div class="nav-collapse collapse">
-                        <ul class="nav">
-                            <li class="active"><a href="#">Activity</a></li>
-                        </ul>
-                    </div><!--/.nav-collapse -->
-                </div>
-                <ul class="nav pull-right top_menu">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
+            </div>
+            <div class="collapse navbar-collapse navbar-left">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">About Diseasecard</a></li>
+                </ul>
+            </div>
+            <ul class="nav navbar-nav navbar-right top_menu collapse navbar-collapse">  
                     <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
                     <li data-placement="bottom" rel="tooltip" title="Jump to Diseasecard rare diseases browsing"><a href="<c:url value="/browse" />" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
                     <li><a href="#" class="mag" rel="tooltip"  data-placement="bottom" title="Search for rare diseases" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
                 </ul>
-            </div>
+            
         </div>
         <!-- Top search bar -->
-        <div id="top">
-            <div class="search menu">
-                <form>
-                    <div class="input-append pull-right">
-                        <input class="input-xlarge" id="text_search" class="home_search" placeholder="Search here..."  type="text">
-                        <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
-                    </div>
-                </form>
-            </div>  
-        </div> 
+        <div id="top" class="col-md-4 pull-right search">
+        <div class="input-group">
+            <input type="text" class="form-control" id="text_search" class="home_search" placeholder="Search here...">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" type="button" id="button_search"><i class="icon-search"></i></button>
+            </span>
+        </div>
+    </div>
         <div class="container" style="padding-top: 64px;">
         <h3>Activity Tracking</h3>
             <table id="status_list" class="table table-condensed table-striped">
                 <thead>
                     <tr>
-                        <th class="span3">Timestamp</th><th class="span2">Action</th><th class="span4">Query</th><th class="span2">IP</th>
+                        <th class="col-md-3">Timestamp</th><th class="col-md-2">Action</th><th class="col-md-4">Query</th><th class="col-md-2">IP</th>
                     </tr>
                 </thead>
             </table>
@@ -272,7 +269,7 @@
                     "bPaginate": true,
                     "sPaginationType": "bootstrap",
                     "bStateSave": true,
-                    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'pP>>",
+                    "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'pP>>",
                     "oLanguage": {
                         "sZeroRecords": "No diseases to display",
                         "sInfo": "Listing _START_ to _END_ of _TOTAL_ diseases",
@@ -302,7 +299,7 @@
                         $(window.location.hash).tooltip({
                             selector: "*[rel=tooltip]"
                         });
-                        $('.dataTables_filter input').attr('placeholder','Filter').addClass('input-large').focus();
+                        $('.dataTables_filter input').attr('placeholder','Filter').addClass('input-lg').focus();
                     }
                 }); 
             }
@@ -316,7 +313,7 @@
                     "bPaginate": true,
                     "sPaginationType": "bootstrap",
                     "bStateSave": true,
-                    "sDom": "<'row-fluid'<'span6'l><'span6'f>r>t<'row-fluid'<'span6'i><'span6'pP>>",
+                    "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'pP>>",
                     "oLanguage": {
                         "sZeroRecords": "No activity to display",
                         "sInfo": "Listing _START_ to _END_ of _TOTAL_ entries",

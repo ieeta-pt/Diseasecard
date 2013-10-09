@@ -13,8 +13,8 @@
                 <div class="navbar navbar-inverse navbar-fixed-top">
                     <div class="navbar-inner">
                         <div class="container pull-left">
-                            <a class="brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
-                            <div class="nav-collapse collapse">
+                            <a class="navbar-brand" href="<c:url value="/" />"><img src="<c:url value="/final/assets/image/logo_bw.png" />" height="18" /></a>
+                            <div class="navbar-collapse collapse">
                                 <ul class="nav">
                                     <li class="active">
                                         <a href="#" id="key" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-chevron-down"></i> <c:if test="${actionBean.disease.omim.phenotype}" >#${actionBean.disease.omim.id}</c:if><c:if test="${actionBean.disease.omim.phenotype == false}" >${actionBean.disease.omim.id}</c:if></a>
@@ -31,7 +31,7 @@
                                     </li>
                                 </ul>
 
-                            </div><!--/.nav-collapse -->
+                            </div><!--/.navbar-collapse -->
                         </div>
                         <ul class="nav pull-right">
                             <li><a href="<c:url value="/about" />" id="tour_about" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
@@ -91,7 +91,7 @@
             <div class="navbar navbar-inverse navbar-fixed-top">
                 <div class="navbar-inner">
                     <div class="container pull-left">
-                        <a class="brand" href="../"><img src="/diseasecard/final/assets/image/logo_bw.png" height="18" /></a>
+                        <a class="navbar-brand" href="../"><img src="/diseasecard/final/assets/image/logo_bw.png" height="18" /></a>
                         <ul class="nav">
                             <li class="active"><a href="#">No data for entry <em>${key}</em></a></li>
                         </ul>
@@ -106,8 +106,8 @@
         </div>    
         <div id="wrap">
             <div class="container" id="index">
-                <div class="row-fluid">
-                    <div class="left span8">
+                <div class="row">
+                    <div class="left col-md-8">
                         <div id="no_entry">
                         </div>
                         <form class="form" id="home_search" >
@@ -120,7 +120,7 @@
                             Need help? You can search Diseasecard for disease names, OMIM disease codes or any of the connected identifiers.<br /><br />Try <a href="#" class="search_help" title="Search for OMIM code" rel="tooltip" data-animation="true">114480</a>, <a class="search_help" title="Add disease name to search box" rel="tooltip" data-animation="true">breast cancer</a> or <a href="#" class="search_help" rel="tooltip" data-animation="true" title="Add gene HGNC symbol to search box">BRCA2</a>
                         </div>
                     </div>
-                    <div class="right span4">
+                    <div class="right col-md-4">
                         <div class="top_hits">
                             <h3>Browse rare diseases</h3>
                             <ul>

@@ -112,7 +112,7 @@ function start() {
     content = network.children;
     if (content[0].children[0].children.length === 0) {
         $('#key').html('No data for ' + key);
-        $('#content').html('<div class="row-fluid"><div class="offset2">&nbsp;</div><div class="alert alert-warning span6 center"><strong>Sorry!</strong> Diseasecard could not find any matches for <span class="label label-inverse">' + key + '</span>. <br /> Try searching for something else instead.</div></div>');
+        $('#content').html('<div class="row"><div class="col-md-offset-2">&nbsp;</div><div class="alert alert-warning span6 center"><strong>Sorry!</strong> Diseasecard could not find any matches for <span class="label label-inverse">' + key + '</span>. <br /> Try searching for something else instead.</div></div>');
         $('.mag').click();
     } else {
         var html = '<ul id="dc4_tree" class="tree">';

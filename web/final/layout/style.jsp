@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="<c:url value="/final/assets/style/jquery-ui.css" />" />
 <link rel="stylesheet" href="<c:url value="/final/assets/style/bootstrap.min.css" />"/>
 <link rel="stylesheet" href="<c:url value="/final/assets/style/diseasecard.css" />" />
-<link rel="stylesheet" href="<c:url value="/final/assets/style/fontawesome.css" />" />
+<link rel="stylesheet" href="<c:url value="/final/assets/style/font-awesome.min.css" />" />
 <!--[if IE 7]>
 <link rel="stylesheet" href="assets/css/fontawesome-ie7.css">
 <![endif]-->

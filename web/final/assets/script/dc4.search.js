@@ -48,7 +48,7 @@ function loadResults(id) {
 					'data-omim': value.omim,
 					'id': value.omim
 				});
-				box.append('<div class="span12 results_title clear"><i class="icon-bookmark-empty"></i> <a href="' + path + '/entry/' + value.omim + '" rel="tooltip" data-placement="bottom" title="View ' + value.name + ' in Diseasecard">' + value.omim + ' - ' + value.name + '</a><span class="pull-right external"><a rel="tooltip" title="Open ' + value.omim + ' in OMIM" data-placement="bottom" href="http://omim.org/entry/' + value.omim + '" target="_blank"><i class="icon-external-link"></i></a></span></div>')
+				box.append('<div class="col-md-12 results_title clear"><i class="icon-bookmark-empty"></i> <a href="' + path + '/entry/' + value.omim + '" rel="tooltip" data-placement="bottom" title="View ' + value.name + ' in Diseasecard">' + value.omim + ' - ' + value.name + '</a><span class="pull-right external"><a rel="tooltip" title="Open ' + value.omim + ' in OMIM" data-placement="bottom" href="http://omim.org/entry/' + value.omim + '" target="_blank"><i class="icon-external-link"></i></a></span></div>')
 				$.each(value.links, function(j, link) {
 					var dlink = $('<ul/>', {
 						'class': 'results_items',
@@ -61,7 +61,7 @@ function loadResults(id) {
 			$('#loading').fadeOut(500).remove();
 			if (uri.indexOf('id') > 0) {
 				$('#results_search').remove();
-				$('#results_links').removeClass('span9').addClass('span12');
+				$('#results_links').removeClass('col-md-9').addClass('col-md-12');
 				$('#meta').fadeIn(800);
 				$('#results').fadeIn(800);
 				$('#results_links').height($('html').height() - 110).css('padding','0');

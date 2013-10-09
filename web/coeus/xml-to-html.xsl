@@ -121,8 +121,8 @@
                 <div class="navbar navbar-inverse navbar-fixed-top">
                     <div class="navbar-inner">
                         <div class="container">
-                            <a class="brand" href="http://bioinformatics.ua.pt/diseasecard">Diseasecard</a> 
-                            <div class="nav-collapse collapse">
+                            <a class="navbar-brand" href="http://bioinformatics.ua.pt/diseasecard">Diseasecard</a> 
+                            <div class="navbar-collapse collapse">
                                 <ul class="nav">
                                     <li>
                                         <a href="./api/">Home</a>
