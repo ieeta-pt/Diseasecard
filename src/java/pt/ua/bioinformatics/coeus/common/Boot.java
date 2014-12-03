@@ -9,16 +9,19 @@ import redis.clients.jedis.Jedis;
 
 /**
  * Seed launcher.
- * 
+ *
  * @author pedrolopes
  */
 public class Boot {
 
     private static boolean started = false;
     private static API api = null;
-    private static Jedis jedis = null; 
+    private static Jedis jedis = null;
 
     public static Jedis getJedis() {
+        if (jedis == null) {
+            jedis = new Jedis(DC4.getRedis_host().get("host").toString(), Integer.parseInt(DC4.getRedis_host().get("port").toString()));
+        }
         return jedis;
     }
 
@@ -44,14 +47,16 @@ public class Boot {
 
     /**
      * Starts the configured COEUS instance.
-     * <p><b>Built workflow</b><ol>
-     *  <li>Connect to COEUS Data SDB</li>
-     *  <li>Load Predicate information for further usage</li>
+     * <p>
+     * <b>Built workflow</b><ol>
+     * <li>Connect to COEUS Data SDB</li>
+     * <li>Load Predicate information for further usage</li>
      * </ol></p>
-     * <p><b>Unbuilt workflow</b><ol>
-     *  <li>Load Storage information (connect, ontology, setup, predicates)</li>
-     *  <li>Build instance</li>
-     *  <li>Save and restart</li>
+     * <p>
+     * <b>Unbuilt workflow</b><ol>
+     * <li>Load Storage information (connect, ontology, setup, predicates)</li>
+     * <li>Build instance</li>
+     * <li>Save and restart</li>
      * </ol></p>
      */
     public static void start() {
@@ -94,10 +99,10 @@ public class Boot {
         }
     }
 
-    /** 
+    /**
      * Starts Seed for importing data from a single Resource.
-     * 
-     * @param resource 
+     *
+     * @param resource
      */
     public static void singleImport(String resource) {
         try {

@@ -35,15 +35,20 @@ public class DiseaseAPI {
         this.omim = omim;
     }
 
+    public DiseaseAPI() {
+        Boot.start();
+        this.api = Boot.getAPI();
+    }
+    
     public DiseaseAPI(String omim) {
         Boot.start();
         this.omim = omim;
         this.api = Boot.getAPI();
-        map.put("omim", omim);
     }
 
     public JSONObject load() {
         try {
+            map.put("omim", omim);
             ResultSet rs = api.selectRS("SELECT * WHERE { diseasecard:omim_" + omim + " diseasecard:chromosomalLocation ?chromo . diseasecard:omim_" + omim + " dc:description ?d . diseasecard:omim_" + omim + " coeus:isAssociatedTo ?a1 . ?a1 coeus:isAssociatedTo ?a2 . { OPTIONAL {diseasecard:omim_" + omim + " diseasecard:hasGenotype ?g} . OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasPhenotype ?p }. OPTIONAL { diseasecard:omim_" + omim + " diseasecard:name ?n } . OPTIONAL {diseasecard:omim_" + omim + " diseasecard:phenotype ?pheno} . OPTIONAL {diseasecard:omim_" + omim + " diseasecard:genotype ?geno .}}}", false);
             JSONArray synonyms = new JSONArray();
             JSONArray results = new JSONArray();
@@ -57,7 +62,6 @@ public class DiseaseAPI {
                 } else {
                     a1 = ItemFactory.getTokenFromURI(row.get("a1").toString()).replace("_", ":");
                 }
-
 
                 if (row.get("a2").toString().contains("mesh")) {
                     a2 = ItemFactory.getTokenFromURI(row.get("a2").toString()).replace("_", ":");
@@ -114,6 +118,90 @@ public class DiseaseAPI {
             results.addAll(list);
             map.put("size", list.size());
             map.put("synonyms", synonyms);
+            map.put("network", results);
+        } catch (Exception ex) {
+            if (Config.isDebug()) {
+                System.err.println("[COEUS][API] Unable to load data for " + omim);
+                Logger.getLogger(DiseaseAPI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return map;
+    }
+
+    public JSONObject loadHGNC(String hgnc) {
+        map.put("hgnc", hgnc);
+
+        try {
+            ResultSet rs = api.selectRS("SELECT DISTINCT ?a1 ?a2 ?a3 WHERE { diseasecard:hgnc_" + hgnc + " coeus:isAssociatedTo ?a1 .\n"
+                    + "    ?a1 coeus:isAssociatedTo ?a2 . ?a2 coeus:isAssociatedTo ?a3}", false);
+
+            JSONArray results = new JSONArray();
+
+            while (rs.hasNext()) {
+                String a1 = "";
+                String a2 = "";
+                String a3 = "";
+                QuerySolution row = rs.next();
+
+                // Process column 1
+                
+                    a1 = ItemFactory.getTokenFromURI(row.get("a1").toString()).replace("_", ":");
+                
+
+                if (!list.contains(a1)) {
+                    list.add(a1);
+                }
+
+                // Process column 2
+                if (row.get("a2").toString().contains("malacards")) {
+                    a2 = row.get("a2").toString().replace("http://bioinformatics.ua.pt/diseasecard/resource/malacards_", "malacards:");
+                } else {
+                    a2 = ItemFactory.getTokenFromURI(row.get("a2").toString()).replace("_", ":");
+                }
+
+                if (!a2.contains("malacards") && !a2.contains("omim")) {
+                    if (!list.contains(a2)) {
+                        list.add(a2);
+                    }
+                }
+
+                // Process column 3
+                if (row.get("a2").toString().contains("uniprot")) {
+                    if (row.get("a3").toString().contains("mesh")) {
+                        a3 = ItemFactory.getTokenFromURI(row.get("a3").toString()).replace("_", ":");
+                        if (!a3.contains("mesh")) {
+                            a3 = "mesh:" + a3;
+                        }
+                    } else {
+                        a3 = ItemFactory.getTokenFromURI(row.get("a3").toString()).replace("_", ":");
+                    }
+
+                    if (a3.contains("genecards") || a3.contains("mesh") ) {
+                        if (!list.contains(a3)) {
+                            list.add(a3);
+                        }
+                    }
+                }
+
+                /*if (row.contains("p")) {
+                 String p = ItemFactory.getTokenFromURI(row.get("p").toString()).replace("_", ":");
+                 if (!list.contains(p)) {
+                 list.add(p);
+                 }
+                 }*/
+                /*
+                 if (row.contains("g")) {
+                 String g = ItemFactory.getTokenFromURI(row.get("g").toString()).replace("_", ":");
+                 if (!list.contains(g)) {
+                 list.add(g);
+                 }
+                 }*/
+            }
+
+            list.add("wave:" + hgnc);
+            results.addAll(list);
+            map.put("size", list.size());
+
             map.put("network", results);
         } catch (Exception ex) {
             if (Config.isDebug()) {

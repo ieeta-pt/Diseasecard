@@ -5,11 +5,11 @@
 <script src="<c:url value="/final/assets/script/dc4.index.js" />"></script>
 </s:layout-component>
 <s:layout-component name="body">
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">            
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <ul class="nav navbar-nav navbar-right top_menu collapse navbar-collapse">
     <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
     <li><a href="<c:url value="/browse" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
-  </ul>            
+  </ul>
 </div>
 
 <div id="wrap">
@@ -20,26 +20,26 @@
           <a href="<c:url value="/about" />" title="About Diseasecard" class="tooltipp" data-tooltip="About Diseasecard"><img class="logo img-responsive" width="434" height="59" src="<c:url value="/final/assets/image/logo.png" />" /></a>
         </div>
         <div class="row col-md-8 col-md-offset-2">
-          <form class="form" id="home_search" >            
+          <form class="form" id="home_search" >
             <div class="input-group" id="home_form">
               <input type="text" class="form-control" id="text_search" class="home_search" placeholder="Search here..."  type="text">
               <div class="input-group-btn">
-                <button type="button" class="btn btn-info" id="buttob_searc"><i class="icon-search"></i></button>
+                <button type="button" class="btn btn-info" id="button_search"><i class="icon-search"></i></button>
                 <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" id="button_search_toggle"> <span class="caret"></span></button>
                 <ul class="dropdown-menu search_options">
                   <li>
                     <label rel="tooltip" data-placement="right" title="Search for identifiers and disease name only" class="radio">
                       <input type="radio" name="search_id" id="search_id" value="search_id" checked>Identifiers only
-                    </label>                    
+                    </label>
                   </li>
                   <li>
                     <label rel="tooltip" data-placement="right" title="Search for full text in all connected content" class="radio">
                       <input type="radio" name="search_full" id="search_full" value="search_full">Full text search
-                    </label>                    
+                    </label>
                   </li>
                 </ul>
               </div><!-- /btn-group -->
-            </div><!-- /input-group -->            
+            </div><!-- /input-group -->
           </form>
         </div>
         <div class="row form" id="helper">

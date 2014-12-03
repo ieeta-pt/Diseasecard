@@ -3,14 +3,14 @@
         "name": "Diseasecard",
         "description": "Diseasecard: rare genetic diseases research portal",
         "keyprefix":"diseasecard",
-        "version": "4.3",
+        "version": "4.4",
         "ontology": "http://bioinformatics.ua.pt/diseasecard/diseasecard.owl",
         "setup": "dc4_setup.rdf",
         "sdb":"dc4_sdb.ttl",
         "predicates":"dc4_predicates.csv",
         "built": true,
         "debug": false,
-        "environment": "testing",
+        "environment": "production",
         "index": "http://localhost:8983/solr"
     },
     "prefixes" : {

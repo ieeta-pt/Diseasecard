@@ -66,6 +66,9 @@ public class DC4 {
     }
 
     public static JSONObject getRedis_host() {
+        if(!loaded) {
+            load();
+        }
         return redis_host;
     }
 
