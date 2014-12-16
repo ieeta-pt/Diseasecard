@@ -11,7 +11,8 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
- *
+ * Ontology Entity mirror class.
+ * 
  * @author pedrolopes
  */
 public class Ontology {
@@ -20,15 +21,6 @@ public class Ontology {
     private HashMap<String, MeSH> mesh = new HashMap<String, MeSH>();
     private HashMap<String, HPO> hpo = new HashMap<String, HPO>();
     private HashMap<String, ICD> icd = new HashMap<String, ICD>();
-    private HashMap<String, UMLS> umls = new HashMap<String, UMLS>();
-
-    public HashMap<String, UMLS> getUmls() {
-        return umls;
-    }
-
-    public void setUmls(HashMap<String, UMLS> umls) {
-        this.umls = umls;
-    }
 
     public HashMap<String, ICD> getIcd() {
         return icd;
@@ -92,27 +84,7 @@ public class Ontology {
                     }
                 }
             }
-            // Disabled UMLS, results are not viable
-           /* if (!this.disease.getOmim().getHpo().isEmpty()) {
-                for (HPO o : this.disease.getOmim().getHpo()) {
-                    ResultSet results = Boot.getAPI().selectRS("SELECT ?p ?o {<http://bioinformatics.ua.pt/diseasecard/resource/hpo_" + o.getId() + "> ?p ?o }", false);
-                    while (results.hasNext()) {
-                        QuerySolution row = results.next();
-                        if (PrefixFactory.encode(row.get("p").toString()).equals("coeus:isAssociatedTo")) {
-                           
-                            if (row.get("o").toString().contains("umls")) {
-                                String code = ItemFactory.getTokenFromItem(row.get("o").toString());
-                                if (!this.disease.getOntology().getUmls().containsKey(code)) {
-                                    UMLS u = new UMLS(row.get("o").toString(), o);
-                                    this.disease.getOntology().getUmls().put(u.getId(), u);
-                                } else {
-                                    o.getUmls().add(this.disease.getOntology().getUmls().get(code));
-                                }
-                            } 
-                        }
-                    }
-                }
-            } */
+          
             success = true;
         } catch (Exception ex) {
             if (Config.isDebug()) {

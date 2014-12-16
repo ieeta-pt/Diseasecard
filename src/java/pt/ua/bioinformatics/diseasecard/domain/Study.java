@@ -3,7 +3,8 @@ package pt.ua.bioinformatics.diseasecard.domain;
 import java.util.HashMap;
 
 /**
- *
+ * Study Entity mirror class.
+ * 
  * @author pedrolopes
  */
 public class Study {

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.services;
 
 import com.hp.hpl.jena.query.QuerySolution;
@@ -18,7 +14,8 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
- *
+ * Utility class to build and cache disease browsing list.
+ * 
  * @author pedrolopes
  */
 public class Browsier {

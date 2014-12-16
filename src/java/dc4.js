@@ -1,9 +1,9 @@
 {
     "config": {
-        "name": "Diseasecard4",
+        "name": "Diseasecard",
         "description": "DiseaseCard v4.4",
         "solr":"http://localhost:8983/solr/",
-        "index":"jdbc:mysql://localhost:3306/dc4?user=diseasecard&password=diseasecard",
+        "index":"jdbc:mysql://localhost:3306/diseasecard_45?user=diseasecard&password=diseasecard",
         "redis": {"host":"localhost", "port":6379}
     }
 }

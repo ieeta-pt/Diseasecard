@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.services;
 
 import java.util.logging.Level;
@@ -10,7 +6,8 @@ import pt.ua.bioinformatics.coeus.api.DB;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
- *
+ * Utility class to store feedback messages on database.
+ * 
  * @author pedrolopes
  */
 public class Feedback {
@@ -41,6 +38,11 @@ public class Feedback {
         this.db = new DB("DC4");
     }
 
+    /**
+     * Save message on database.
+     * 
+     * @return success of the operation.
+     */
     public boolean save() {
         boolean success = false;
         try {

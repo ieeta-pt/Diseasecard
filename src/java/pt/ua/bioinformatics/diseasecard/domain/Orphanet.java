@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
 
 /**
- *
+ * Orphanet mirror class.
+ * 
  * @author pedrolopes
  */
 public class Orphanet {

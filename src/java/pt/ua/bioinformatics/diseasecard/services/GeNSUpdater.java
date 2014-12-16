@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pt.ua.bioinformatics.diseasecard.services;
 
 import com.hp.hpl.jena.query.QuerySolution;
@@ -23,7 +20,7 @@ public class GeNSUpdater {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
         try {
             Boot.start();
             DB gens = new DB();

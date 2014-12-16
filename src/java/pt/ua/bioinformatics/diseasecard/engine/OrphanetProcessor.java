@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.engine;
 
 import com.hp.hpl.jena.query.QuerySolution;
@@ -12,9 +8,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
 import pt.ua.bioinformatics.coeus.common.Boot;
-import pt.ua.bioinformatics.coeus.common.Run;
 
 /**
+ * Threaded execution for Orphanet details.
  *
  * @author pedrolopes
  */
@@ -22,7 +18,8 @@ public class OrphanetProcessor implements Runnable {
 
     private HashMap<String, String> map;
     private String key;
-    private  ExecutorService es;
+    private ExecutorService es;
+
     public HashMap<String, String> getMap() {
         return map;
     }
@@ -53,10 +50,10 @@ public class OrphanetProcessor implements Runnable {
                 QuerySolution row = results.next();
                 System.out.println(row.get("label").toString() + " -> " + row.get("concept").toString());
                 map.put(row.get("label").toString(), row.get("concept").toString());
-                if(row.get("concept").toString().contains("omim")) {
-                    OMIMProcessor omim = new OMIMProcessor(map, ItemFactory.getTokenFromItem(row.get("label").toString() ), es);
+                if (row.get("concept").toString().contains("omim")) {
+                    OMIMProcessor omim = new OMIMProcessor(map, ItemFactory.getTokenFromItem(row.get("label").toString()), es);
                     /*Thread t_o = new Thread(omim);
-                    t_o.start();*/
+                     t_o.start();*/
                     es.execute(omim);
                 }
             }

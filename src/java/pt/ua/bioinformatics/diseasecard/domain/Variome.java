@@ -1,21 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.domain;
 
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
+ * Variome Entity mirror class.
  *
  * @author pedrolopes
  */
 public class Variome {
-        private Disease disease;
-        private HashMap<String, SwissVar> swissvar = new HashMap<String, SwissVar>();
+
+    private Disease disease;
+    private HashMap<String, SwissVar> swissvar = new HashMap<String, SwissVar>();
 
     public Disease getDisease() {
         return disease;
@@ -39,9 +34,8 @@ public class Variome {
 
     public boolean load() {
         boolean success = false;
-       
+
         return success;
     }
-        
-    
+
 }

@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.domain;
 
 import com.hp.hpl.jena.query.QuerySolution;
@@ -16,6 +12,7 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
+ * OMIM mirror class.
  *
  * @author pedrolopes
  */
@@ -30,7 +27,6 @@ public class OMIM {
     private ArrayList<HGNC> hgnc = new ArrayList<HGNC>();
     private ArrayList<HPO> hpo = new ArrayList<HPO>();
     private ArrayList<SwissVar> svar = new ArrayList<SwissVar>();
-    private ArrayList<UMLS> umls = new ArrayList<UMLS>();
     private ArrayList<Orphanet> orphanets = new ArrayList<Orphanet>();
     private HashMap<String, HPO> hpos = new HashMap<String, HPO>();
     private HashMap<String, Orphanet> orphanet = new HashMap<String, Orphanet>();
@@ -45,14 +41,6 @@ public class OMIM {
 
     public void setHpos(HashMap<String, HPO> hpos) {
         this.hpos = hpos;
-    }
-
-    public ArrayList<UMLS> getUmls() {
-        return umls;
-    }
-
-    public void setUmls(ArrayList<UMLS> umls) {
-        this.umls = umls;
     }
 
     public ArrayList<Orphanet> getOrphanets() {
@@ -229,7 +217,7 @@ public class OMIM {
                         }
                     } else if (row.get("o").toString().contains("entrez")) {
                         String code = ItemFactory.getTokenFromItem(row.get("o").toString());
-                        if(!this.disease.getLocus().getEntrezgene().containsKey(code)) {
+                        if (!this.disease.getLocus().getEntrezgene().containsKey(code)) {
                             EntrezGene entrez = new EntrezGene(this, row.get("o").toString());
                             this.entrezgene.add(entrez);
                             this.disease.getLocus().getEntrezgene().put(code, entrez);
@@ -238,16 +226,16 @@ public class OMIM {
                         }
                     } else if (row.get("o").toString().contains("hpo_")) {
                         String code = ItemFactory.getTokenFromItem(row.get("o").toString());
-                        if(!this.disease.getOntology().getHpo().containsKey(code)) {
+                        if (!this.disease.getOntology().getHpo().containsKey(code)) {
                             HPO hp = new HPO(row.get("o").toString(), this);
                             this.hpo.add(hp);
                             this.disease.getOntology().getHpo().put(code, hp);
                         } else {
                             this.hpo.add(this.disease.getOntology().getHpo().get(code));
                         }
-                    }  else if (row.get("o").toString().contains("swissvar_")) {
+                    } else if (row.get("o").toString().contains("swissvar_")) {
                         String code = ItemFactory.getTokenFromItem(row.get("o").toString());
-                        if(!this.disease.getVariome().getSwissvar().containsKey(code)) {
+                        if (!this.disease.getVariome().getSwissvar().containsKey(code)) {
                             SwissVar sv = new SwissVar(row.get("o").toString(), this);
                             this.svar.add(sv);
                             this.disease.getVariome().getSwissvar().put(code, sv);
@@ -256,7 +244,7 @@ public class OMIM {
                         }
                     } else if (row.get("o").toString().contains("orphanet")) {
                         String code = ItemFactory.getTokenFromItem(row.get("o").toString());
-                        if(!this.disease.getOmim().getOrphanet().containsKey(code)) {
+                        if (!this.disease.getOmim().getOrphanet().containsKey(code)) {
                             Orphanet orpha = new Orphanet(row.get("o").toString(), this);
                             this.orphanets.add(orpha);
                             this.disease.getOmim().getOrphanet().put(code, orpha);

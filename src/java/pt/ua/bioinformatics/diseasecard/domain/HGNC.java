@@ -11,7 +11,8 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
- *
+ * HGNC mirror class.
+ * 
  * @author pedrolopes
  */
 public class HGNC {

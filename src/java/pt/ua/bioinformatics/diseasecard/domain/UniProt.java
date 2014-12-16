@@ -11,7 +11,8 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
- *
+ * UniProt mirror class.
+ * 
  * @author pedrolopes
  */
 public class UniProt {
@@ -24,16 +25,7 @@ public class UniProt {
     private ArrayList<InterPro> interpro = new ArrayList<InterPro>();
     private ArrayList<PROSITE> prosite = new ArrayList<PROSITE>();
     private ArrayList<MeSH> mesh = new ArrayList<MeSH>();
-    private ArrayList<DrugBank> drugbank = new ArrayList<DrugBank>();
     private Disease disease;
-
-    public ArrayList<DrugBank> getDrugbank() {
-        return drugbank;
-    }
-
-    public void setDrugbank(ArrayList<DrugBank> drugbank) {
-        this.drugbank = drugbank;
-    }
 
     public ArrayList<MeSH> getMesh() {
         return mesh;
@@ -165,16 +157,7 @@ public class UniProt {
                         } else {
                             mesh.add(this.disease.getOntology().getMesh().get(code));
                         }
-                    } else if (row.get("o").toString().contains("drugbank")) {
-                        String code = ItemFactory.getTokenFromItem(row.get("o").toString());
-                        if (!this.disease.getDrug().getDrugbank().containsKey(code)) {
-                            DrugBank db = new DrugBank(row.get("o").toString(), this.disease);
-                            drugbank.add(db);
-                            this.disease.getDrug().getDrugbank().put(db.getId(), db);
-                        } else {
-                            drugbank.add(this.disease.getDrug().getDrugbank().get(code));
-                        }
-                    }
+                    } 
                 }
             }
             success = true;

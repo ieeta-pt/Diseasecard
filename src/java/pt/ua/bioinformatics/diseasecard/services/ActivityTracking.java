@@ -1,10 +1,12 @@
 package pt.ua.bioinformatics.diseasecard.services;
 
 import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.DB;
 
 /**
- * Single thread handler for importing single resources.
+ * Single thread handler for storing atomic activity transactions in Diseasecard's database.
  *
  * @author pedrolopes
  */
@@ -74,7 +76,7 @@ public class ActivityTracking implements Runnable {
     }
 
     /**
-     * Launch single Resource import process.
+     * Run database store process.
      */
     public void run() {
         try {
@@ -89,7 +91,7 @@ public class ActivityTracking implements Runnable {
             p.execute();
             db.close();
         } catch (Exception e) {
-            //System.out.println(e.getMessage());
+            Logger.getLogger(ActivityTracking.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 }

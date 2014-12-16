@@ -16,6 +16,7 @@ import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
+ * Main entry point for diseases (by OMIM).
  *
  * @author pedrolopes
  */
@@ -41,17 +42,28 @@ public class DiseaseActionBean implements ActionBean {
         this.key = key;
     }
 
+    /**
+     * Loads HTML view for diseases (based on OMIM).
+     *
+     * @return
+     */
     @DefaultHandler
     public Resolution html() {
         try {
             Activity.log(key, "entry", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
         } catch (Exception e) {
+            Logger.getLogger(DiseaseActionBean.class.getName()).log(Level.WARNING, null, e);
         }
         return new ForwardResolution("/final/view/entry.jsp");
     }
 
+    /**
+     * Delivers disease network as JSON object (based on OMIM).
+     *
+     * @return
+     */
     public Resolution js() {
-       try {
+        try {
             return new StreamingResolution("application/json", Boot.getJedis().get("omim:" + key));
         } catch (Exception ex) {
             if (Config.isDebug()) {

@@ -1,7 +1,8 @@
 package pt.ua.bioinformatics.diseasecard.domain;
 
 /**
- *
+ * PROSITE mirror class.
+ * 
  * @author pedrolopes
  */
 public class PROSITE {

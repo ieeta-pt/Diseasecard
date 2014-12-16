@@ -11,11 +11,13 @@ import org.json.simple.parser.JSONParser;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
+ * Diseasecard-specific configuration properties loader.
  *
  * @author pedrolopes
  */
 public class DC4 {
-    private static boolean loaded  = false;
+
+    private static boolean loaded = false;
     private static String solrHost = "";
     private static String indexString = "";
     private static String path = "";
@@ -23,7 +25,7 @@ public class DC4 {
     private static JSONObject redis_host = null;
 
     public static String getIndexString() {
-        if(!loaded) {
+        if (!loaded) {
             load();
         }
         return indexString;
@@ -66,7 +68,7 @@ public class DC4 {
     }
 
     public static JSONObject getRedis_host() {
-        if(!loaded) {
+        if (!loaded) {
             load();
         }
         return redis_host;
@@ -75,16 +77,21 @@ public class DC4 {
     public static void setRedis_host(JSONObject redis_host) {
         DC4.redis_host = redis_host;
     }
-    
+
+    /**
+     * Load properties from configuration file.
+     *
+     * @return success of the properties loading operation.
+     */
     public static boolean load() {
         if (!loaded) {
             try {
-                path = DC4.class.getResource("/").getPath();                
+                path = DC4.class.getResource("/").getPath();
                 JSONParser parser = new JSONParser();
                 file = (JSONObject) parser.parse(readFile());
                 JSONObject config = (JSONObject) file.get("config");
-                solrHost = (String) config.get("solr");  
-                indexString = (String) config.get("index");  
+                solrHost = (String) config.get("solr");
+                indexString = (String) config.get("index");
                 redis_host = (JSONObject) config.get("redis");
                 loaded = true;
             } catch (Exception ex) {
@@ -96,7 +103,7 @@ public class DC4 {
         }
         return loaded;
     }
-    
+
     /**
      * Reads JSON configuration file to simple string.
      *
@@ -109,18 +116,18 @@ public class DC4 {
             BufferedInputStream f = null;
             try {
                 f = new BufferedInputStream(new FileInputStream(path + "dc4.js"));
-
                 f.read(buffer);
             } finally {
                 if (f != null) {
                     try {
                         f.close();
                     } catch (IOException ignored) {
+                        Logger.getLogger(DC4.class.getName()).log(Level.SEVERE, null, ignored);
                     }
                 }
             }
         } catch (Exception ex) {
-            Logger.getLogger(Config.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DC4.class.getName()).log(Level.SEVERE, null, ex);
         }
         return new String(buffer);
     }

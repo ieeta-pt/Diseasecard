@@ -6,7 +6,8 @@ import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
- *
+ * Protein Entity mirror class.
+ * 
  * @author pedrolopes
  */
 public class Protein {

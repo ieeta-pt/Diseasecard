@@ -3,7 +3,8 @@ package pt.ua.bioinformatics.diseasecard.domain;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
 
 /**
- *
+ * KEGG mirror class.
+ * 
  * @author pedrolopes
  */
 public class KEGG {

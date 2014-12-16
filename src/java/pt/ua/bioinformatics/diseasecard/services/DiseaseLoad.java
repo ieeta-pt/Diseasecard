@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.services;
 
 import java.util.logging.Level;
@@ -10,7 +6,8 @@ import pt.ua.bioinformatics.diseasecard.domain.Disease;
 import pt.ua.bioinformatics.diseasecard.domain.OMIM;
 
 /**
- *
+ * Threaded utility to load network information for each disease.
+ * 
  * @author pedrolopes
  */
 public class DiseaseLoad implements Runnable {
@@ -24,6 +21,9 @@ private Disease disease;
         this.disease = d;
     }
 
+    /**
+     * Main execution loading data into disease variable.
+     */
     @Override
     public void run() {
         try {
@@ -34,8 +34,6 @@ private Disease disease;
             disease.getOntology().load();
         } catch (Exception ex) {
             Logger.getLogger(DiseaseLoad.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            
-        }
+        } 
     }
 } 

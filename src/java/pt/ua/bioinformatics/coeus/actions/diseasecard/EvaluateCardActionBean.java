@@ -9,10 +9,10 @@ import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 
 /**
- *
+ * Helper URL to cover Diseasecard 3 links.
+ * 
  * @author pedrolopes
  */
-//@UrlBinding("/entry/{diseaseid}.{$event}")
 @UrlBinding("/evaluateCard.do")
 public class EvaluateCardActionBean implements ActionBean {
 

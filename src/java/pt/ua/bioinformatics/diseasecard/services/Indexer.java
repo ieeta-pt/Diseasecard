@@ -28,6 +28,7 @@ import pt.ua.bioinformatics.diseasecard.domain.EntrezGene;
 import pt.ua.bioinformatics.diseasecard.domain.Orphanet;
 
 /**
+ * Main indexing controller controlling Solr indexing process.
  *
  * @author pedrolopes
  */
@@ -51,7 +52,7 @@ public class Indexer implements Runnable {
     /**
      * Load OMIM objects from Redis server into local HashMap
      */
-     void loadOMIMs() {
+    void loadOMIMs() {
         Boot.start();
         // select OMIM identifiers
         System.out.println("[DC4] Indexer started, loading OMIMs");
@@ -70,8 +71,8 @@ public class Indexer implements Runnable {
     /**
      * Process each OMIM object (from HashMap) into full-content indexing engine
      */
-     void indexer() {
-         System.out.println("[DC4] OMIMs loaded, starting Solr import");
+    void indexer() {
+        System.out.println("[DC4] OMIMs loaded, starting Solr import");
         HttpSolrServer server = new HttpSolrServer("http://localhost:8983/solr");
         server.setDefaultMaxConnectionsPerHost(256);
         server.setMaxTotalConnections(256);
@@ -84,14 +85,14 @@ public class Indexer implements Runnable {
                 for (int i = 0; i < names.length(); i++) {
                     SolrLoad load = new SolrLoad(omim, "name", server);
                     load.setValue(names.getString(i));
-                    
+
                     pool.execute(load);
-                    
+
                 }
                 System.out.println("[Diseasecard][Indexer] launched indexing for " + omim);
             } catch (Exception ex) {
                 Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
-               
+
             }
             try {
                 JSONArray network = obj.getJSONArray("network");
@@ -104,7 +105,7 @@ public class Indexer implements Runnable {
             } catch (Exception ex) {
                 Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Activity.log(omim, "indexed", omim , "Indexer",  "127.0.0.1");
+            Activity.log(omim, "indexed", omim, "Indexer", "127.0.0.1");
         }
 
     }
@@ -510,24 +511,23 @@ public class Indexer implements Runnable {
 //        name.start();
 //    }
 
-   /* static ArrayList<SolrObject> getConcept(String c) {
-        ArrayList<SolrObject> list = new ArrayList<SolrObject>();
-        try {
-            String q = "SELECT DISTINCT * FROM DiseaseIndex WHERE type LIKE '" + c + "';";
-            DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
-            db.connect();
-            java.sql.ResultSet results = db.getData(q);
-            while (results.next()) {
-                list.add(new SolrObject(results.getString("omim"), results.getString("info")));
-            }
-            db.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    /* static ArrayList<SolrObject> getConcept(String c) {
+     ArrayList<SolrObject> list = new ArrayList<SolrObject>();
+     try {
+     String q = "SELECT DISTINCT * FROM DiseaseIndex WHERE type LIKE '" + c + "';";
+     DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+     db.connect();
+     java.sql.ResultSet results = db.getData(q);
+     while (results.next()) {
+     list.add(new SolrObject(results.getString("omim"), results.getString("info")));
+     }
+     db.close();
+     } catch (SQLException ex) {
+     Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
+     }
 
-        return list;
-    }*/
-
+     return list;
+     }*/
     static void addNames() {
         try {
             String q = "SELECT DISTINCT(omim) FROM Diseases;";

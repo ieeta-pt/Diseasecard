@@ -11,7 +11,8 @@ import pt.ua.bioinformatics.diseasecard.domain.Disease;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
- *
+ * Diseasecard homepage.
+ * 
  * @author pedrolopes
  */
 @UrlBinding("/")

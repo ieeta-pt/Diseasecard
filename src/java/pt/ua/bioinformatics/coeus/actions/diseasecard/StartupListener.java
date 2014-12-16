@@ -6,7 +6,8 @@ import javax.servlet.http.HttpSessionListener;
 import pt.ua.bioinformatics.coeus.common.Boot;
 
 /**
- *
+ * Startup listener for Tomcat server preloading.
+ * 
  * @author pedrolopes
  */
 public class StartupListener implements HttpSessionListener {

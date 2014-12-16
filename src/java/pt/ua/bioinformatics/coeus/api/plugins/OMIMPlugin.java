@@ -21,6 +21,7 @@ import pt.ua.bioinformatics.diseasecard.domain.Disease;
 
 /**
  * DiseaseCard plugin for OMIM data handling.
+ * 
  * <p>Generates initial gene and disease dataset based on OMIM's morbid map.
  * </p>
  *

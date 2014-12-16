@@ -84,6 +84,9 @@ public class SolrLoad implements Runnable {
         this.concept = c;
     }
 
+    /**
+     * Run indexing process for each term.
+     */
     public void run() {
         if (type.equals("omim")) {
             try {

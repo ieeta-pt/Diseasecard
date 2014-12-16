@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.domain;
 
 import java.util.HashMap;
@@ -10,7 +6,8 @@ import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
- *
+ * Locus entity mirror class.
+ * 
  * @author pedrolopes
  */
 public class Locus {

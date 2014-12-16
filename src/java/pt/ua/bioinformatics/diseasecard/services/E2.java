@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.services;
 
 import java.util.HashMap;
@@ -14,7 +10,8 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.diseasecard.engine.ICD10Processor;
 
 /**
- *
+ * Utility class to trigger ICD10 integration process ad-hoc.
+ * 
  * @author pedrolopes
  */
 public class E2 {
@@ -25,9 +22,11 @@ public class E2 {
 
     public static void main(String[] args) throws InterruptedException {
         load();
-
     }
 
+    /**
+     * Internal loading process.
+     */
     static void load() {
         try {
             Boot.start();

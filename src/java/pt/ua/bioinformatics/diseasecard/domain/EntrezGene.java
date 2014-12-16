@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.domain;
 
 import com.hp.hpl.jena.query.QuerySolution;
@@ -15,7 +11,8 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
- *
+ * Entrez Gene mirror class.
+ * 
  * @author pedrolopes
  */
 public class EntrezGene {

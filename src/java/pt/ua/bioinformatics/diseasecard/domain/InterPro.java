@@ -1,7 +1,8 @@
 package pt.ua.bioinformatics.diseasecard.domain;
 
 /**
- *
+ * InterPro mirror class.
+ * 
  * @author pedrolopes
  */
 public class InterPro {
