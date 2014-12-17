@@ -9,6 +9,7 @@ import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 
 /**
+ * UI handler for showing latest tracked activities.
  *
  * @author pedrolopes
  */
@@ -29,6 +30,6 @@ public class RedirectActivityActionBean implements ActionBean {
     public Resolution get() {
         return new ForwardResolution("/final/view/activity.jsp");
     }
-    
-    
+
+
 }

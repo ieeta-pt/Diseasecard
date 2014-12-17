@@ -9,6 +9,9 @@ import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.common.Boot;
 
 /**
+ * Triple matcher API.
+ *
+ * <p>Get matching triples directly from the triplestore, filtering by combinations of subject, predicate and object.</p>
  *
  * @author pedrolopes
  */
@@ -97,6 +100,11 @@ public class TripleActionBean implements ActionBean {
         return context;
     }
 
+    /**
+     * Returns list of triples wrapped in JSON object.
+     *
+     * @return Streaming JSON Object.
+     */
     @DefaultHandler
     public Resolution handle() {
         Boot.start();

@@ -8,12 +8,13 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 
 /**
+ * Redirect to COEUS query results XSLT transformation engine  (clean URL for internal .xsl).
  *
  * @author pedrolopes
  */
 @UrlBinding("/api/translate")
 public class RedirectTranslateActionBean implements ActionBean {
-    private ActionBeanContext context;  
+    private ActionBeanContext context;
 
     public void setContext(ActionBeanContext context) {
         this.context = context;

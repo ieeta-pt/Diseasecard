@@ -8,12 +8,13 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 
 /**
+ * Redirect to COEUS SPARQL query interface (clean URL for internal .html).
  *
  * @author pedrolopes
  */
 @UrlBinding("/api/sparqler/")
 public class RedirectSPARQLerActionBean implements ActionBean {
-    private ActionBeanContext context;  
+    private ActionBeanContext context;
 
     public void setContext(ActionBeanContext context) {
         this.context = context;

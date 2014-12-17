@@ -17,7 +17,7 @@ import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
  * Entry action for accessing network links based on HGNC identifiers.
- * 
+ *
  * @author pedrolopes
  */
 @UrlBinding("/hgnc/{key}.{$event}")
@@ -43,9 +43,9 @@ public class HGNCEntryActionBean implements ActionBean {
     }
 
     /**
-     * Default redirect to entry JSP.
-     * 
-     * @return 
+     * Loads HTML view for genes (based on HGNC).
+     *
+     * @return
      */
     @DefaultHandler
     public Resolution html() {
@@ -57,18 +57,20 @@ public class HGNCEntryActionBean implements ActionBean {
     }
 
     /**
-     * Load data as JSON object.
-     * 
-     * @return 
+     * Delivers gene network as JSON object (based on HGNC).
+     *
+     * @return
      */
     public Resolution js() {
         try {
+            // check if content is available on Redis cache
             return new StreamingResolution("application/json", Boot.getJedis().get("hgnc:" + key.toUpperCase()));
         } catch (Exception ex) {
             if (Config.isDebug()) {
                 System.err.println("[COEUS][HGNCEntry] Unable to load data for " + key);
                 Logger.getLogger(HGNCEntryActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
+            // not on cache, load directly from triplestore using DiseaseAPI
             DiseaseAPI d = new DiseaseAPI();
             return new StreamingResolution("application/json", d.loadHGNC(this.key).toString());
         }

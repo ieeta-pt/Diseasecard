@@ -8,12 +8,13 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 
 /**
+ * Redirect for API Documentation (clean URL for internal .jsp).
  *
  * @author pedrolopes
  */
 @UrlBinding("/api/documentation/")
 public class RedirectDocumentationActionBean implements ActionBean {
-    private ActionBeanContext context;  
+    private ActionBeanContext context;
 
     public void setContext(ActionBeanContext context) {
         this.context = context;

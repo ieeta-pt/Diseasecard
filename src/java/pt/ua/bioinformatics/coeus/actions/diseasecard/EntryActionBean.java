@@ -16,10 +16,10 @@ import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
- * Main entry point for diseases (by OMIM). 
- * 
+ * Main entry point for diseases (by OMIM).
+ *
  * <p>Duplicate from DiseaseActionBean.java</p>
- * 
+ *
  * @author pedrolopes
  */
 @UrlBinding("/entry/{key}.{$event}")
@@ -46,8 +46,8 @@ public class EntryActionBean implements ActionBean {
 
     /**
      * Loads HTML view for diseases (based on OMIM).
-     * 
-     * @return 
+     *
+     * @return
      */
     @DefaultHandler
     public Resolution html() {
@@ -65,13 +65,15 @@ public class EntryActionBean implements ActionBean {
      * @return
      */
     public Resolution js() {
-        try {
+       try {
+            // check if content is available on Redis cache
             return new StreamingResolution("application/json", Boot.getJedis().get("omim:" + key));
         } catch (Exception ex) {
             if (Config.isDebug()) {
                 System.err.println("[COEUS][Entry] Unable to load data for " + key);
                 Logger.getLogger(EntryActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
+            // not on cache, load directly from triplestore using DiseaseAPI
             DiseaseAPI d = new DiseaseAPI(key);
             return new StreamingResolution("application/json", d.load().toString());
         }

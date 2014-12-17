@@ -9,6 +9,7 @@ import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 
 /**
+ * Redirect for About page (clean URL for internal .jsp).
  *
  * @author pedrolopes
  */

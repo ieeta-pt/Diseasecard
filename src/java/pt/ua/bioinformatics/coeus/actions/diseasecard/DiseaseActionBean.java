@@ -64,12 +64,14 @@ public class DiseaseActionBean implements ActionBean {
      */
     public Resolution js() {
         try {
+            // check if content is available on Redis cache
             return new StreamingResolution("application/json", Boot.getJedis().get("omim:" + key));
         } catch (Exception ex) {
             if (Config.isDebug()) {
                 System.err.println("[COEUS][Entry] Unable to load data for " + key);
                 Logger.getLogger(EntryActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
+            // not on cache, load directly from triplestore using DiseaseAPI
             DiseaseAPI d = new DiseaseAPI(key);
             return new StreamingResolution("application/json", d.load().toString());
         }

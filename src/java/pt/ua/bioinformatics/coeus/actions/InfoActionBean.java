@@ -9,6 +9,9 @@ import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.common.Boot;
 
 /**
+ * Retrieve all triples for a given subject.
+ *
+ * <p><strong>id</strong> should be a valid Diseasecard identifier.</p>
  *
  * @author pedrolopes
  */
@@ -17,7 +20,7 @@ public class InfoActionBean implements ActionBean {
 
     private ActionBeanContext context;
     private String id;
-    
+
     public String getId() {
         return id;
     }
@@ -34,8 +37,25 @@ public class InfoActionBean implements ActionBean {
         return context;
     }
 
+    /**
+     * Returns a JSON object with the subjects' triples, including predicates and objects.
+     *
+     * @return Streaming JSON Object.
+     */
     @DefaultHandler
     public Resolution json() {
+        Boot.start();
+        id = id.replace(":", "_");
+        String query = "SELECT ?p ?o WHERE { coeus:" + id + " ?p ?o }";
+        return new StreamingResolution("application/json", (String) Boot.getAPI().select(query, "json", false));
+    }
+
+    /**
+     * Returns a JSON object with the subjects' triples, including predicates and objects.
+     *
+     * @return Streaming JSON Object.
+     */
+    public Resolution js() {
         Boot.start();
         id = id.replace(":", "_");
         String query = "SELECT ?p ?o WHERE { coeus:" + id + " ?p ?o }";

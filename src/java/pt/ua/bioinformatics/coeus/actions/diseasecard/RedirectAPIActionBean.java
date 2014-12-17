@@ -9,6 +9,7 @@ import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 
 /**
+ * Redirect to COEUS/API page (clean URL for internal .jsp).
  *
  * @author pedrolopes
  */

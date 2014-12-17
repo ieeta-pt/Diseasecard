@@ -10,7 +10,7 @@ import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 
 /**
- *
+ * Redirect handler to Status page (clean URL for internal .jsp).
  * @author pedrolopes
  */
 @UrlBinding("/status")
@@ -40,6 +40,6 @@ public class RedirectStatusActionBean implements ActionBean {
         version = Config.getVersion();
         return new ForwardResolution("/final/view/status.jsp");
     }
-    
-    
+
+
 }
