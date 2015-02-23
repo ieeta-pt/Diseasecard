@@ -13,8 +13,7 @@
 
 <#conn> rdf:type sdb:SDBConnection ;
     sdb:sdbType       "MySQL" ;
-    #sdb:sdbHost       "localhost:3306" ;
-    sdb:jdbcURL        "jdbc:mysql://localhost:3306/diseasecard?autoReconnect=true" ;
+    sdb:jdbcURL        "jdbc:mysql://localhost:3306/diseasecard_45?autoReconnect=true" ;
     sdb:sdbUser       "diseasecard" ;
     sdb:sdbPassword   "diseasecard" ;
     sdb:driver        "com.mysql.jdbc.Driver" ;

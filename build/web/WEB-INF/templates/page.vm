@@ -1,3 +1,7 @@
+#*
+Velocity template for Pubby LinkedData interface.
+*#
+
 #parse("header.vm")
 
 #if (!$properties.isEmpty())

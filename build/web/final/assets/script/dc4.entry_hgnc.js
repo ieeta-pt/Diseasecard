@@ -28,7 +28,7 @@ function logoPulse() {
  * @returns {undefined}
  */
 function query() {
-    $.getJSON('../hgnc/' + key + '.js', function(data) {
+    $.getJSON('../hgnc/' + key + '/js', function(data) {
         network.id = '<h6>' + key + ' ' + data.hgnc + '</h6>';
         network.name = '<h6>' + data.hgnc + '</h6>';
         network.children = [];

@@ -67,6 +67,7 @@ public class EntryActionBean implements ActionBean {
     public Resolution js() {
        try {
             // check if content is available on Redis cache
+           context.getResponse().addHeader("Access-Control-Allow-Origin", "*");
             return new StreamingResolution("application/json", Boot.getJedis().get("omim:" + key));
         } catch (Exception ex) {
             if (Config.isDebug()) {

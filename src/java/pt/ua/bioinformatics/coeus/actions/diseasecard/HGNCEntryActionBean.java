@@ -20,7 +20,7 @@ import pt.ua.bioinformatics.diseasecard.services.Activity;
  *
  * @author pedrolopes
  */
-@UrlBinding("/hgnc/{key}.{$event}")
+@UrlBinding("/hgnc/{key}/{$event}")
 public class HGNCEntryActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;
@@ -64,6 +64,7 @@ public class HGNCEntryActionBean implements ActionBean {
     public Resolution js() {
         try {
             // check if content is available on Redis cache
+            context.getResponse().addHeader("Access-Control-Allow-Origin", "*");
             return new StreamingResolution("application/json", Boot.getJedis().get("hgnc:" + key.toUpperCase()));
         } catch (Exception ex) {
             if (Config.isDebug()) {
