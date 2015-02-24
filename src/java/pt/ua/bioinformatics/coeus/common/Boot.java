@@ -6,6 +6,8 @@ import pt.ua.bioinformatics.coeus.api.API;
 import pt.ua.bioinformatics.coeus.data.Storage;
 import pt.ua.bioinformatics.diseasecard.services.DC4;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
 
 /**
  * Seed launcher.
@@ -16,19 +18,22 @@ public class Boot {
 
     private static boolean started = false;
     private static API api = null;
-    private static Jedis jedis = null;
+    //private static Jedis jedis = null;
+    private static JedisPool jedis_pool = new JedisPool(new JedisPoolConfig(),"localhost", 6379 );
 
     public static Jedis getJedis() {
-        if (jedis == null) {
-            jedis = new Jedis(DC4.getRedis_host().get("host").toString(), Integer.parseInt(DC4.getRedis_host().get("port").toString()));
+        if (jedis_pool == null) {
+            jedis_pool = new JedisPool(new JedisPoolConfig(),"localhost", 6379, 10000 );
         }
+        Jedis jedis = jedis_pool.getResource();
+        
         return jedis;
     }
-
+/*
     public static void setJedis(Jedis jedis) {
         Boot.jedis = jedis;
     }
-
+*/
     public static boolean isStarted() {
         return started;
     }
@@ -38,11 +43,22 @@ public class Boot {
     }
 
     public static API getAPI() {
+        if (api.getModel() == null) {
+            api.setModel(Storage.getModel());
+        }
         return api;
     }
 
     public static void setAPI(API api) {
         Boot.api = api;
+    }
+
+    public static JedisPool getJedis_pool() {
+        return jedis_pool;
+    }
+
+    public static void setJedis_pool(JedisPool jedis_pool) {
+        Boot.jedis_pool = jedis_pool;
     }
 
     /**
@@ -83,7 +99,8 @@ public class Boot {
                 } else {
                     Storage.connect();
                     api = new API();
-                    jedis = new Jedis(DC4.getRedis_host().get("host").toString(), Integer.parseInt(DC4.getRedis_host().get("port").toString()));
+                    //jedis_pool = new JedisPool(new JedisPoolConfig(),DC4.getRedis_host().get("host").toString(), Integer.parseInt(DC4.getRedis_host().get("port").toString()), 10000 );
+                    //jedis = new 
                     Storage.loadPredicates();
                     System.out.println("\n\t[COEUS] " + Config.getName() + " Online\n");
                 }

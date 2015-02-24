@@ -14,11 +14,13 @@ import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
+import redis.clients.jedis.Jedis;
 
 /**
  * Main entry point for diseases (by OMIM).
  *
- * <p>Duplicate from DiseaseActionBean.java</p>
+ * <p>
+ * Duplicate from DiseaseActionBean.java</p>
  *
  * @author pedrolopes
  */
@@ -65,14 +67,19 @@ public class EntryActionBean implements ActionBean {
      * @return
      */
     public Resolution js() {
-       try {
+        try {
             // check if content is available on Redis cache
-           context.getResponse().addHeader("Access-Control-Allow-Origin", "*");
-            return new StreamingResolution("application/json", Boot.getJedis().get("omim:" + key));
+            context.getResponse().addHeader("Access-Control-Allow-Origin", "*");
+
+            Jedis j = Boot.getJedis();
+            String output = j.get("omim:" + key.toUpperCase());
+            Boot.getJedis_pool().returnResource(j);
+            return new StreamingResolution("application/json", output);
+            // return new StreamingResolution("application/json", Boot.getJedis().get("omim:" + key));
         } catch (Exception ex) {
             if (Config.isDebug()) {
                 System.err.println("[COEUS][Entry] Unable to load data for " + key);
-                Logger.getLogger(EntryActionBean.class.getName()).log(Level.SEVERE, null, ex);
+               // Logger.getLogger(EntryActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
             // not on cache, load directly from triplestore using DiseaseAPI
             DiseaseAPI d = new DiseaseAPI(key);

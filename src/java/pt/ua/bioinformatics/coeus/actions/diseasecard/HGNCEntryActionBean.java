@@ -14,6 +14,7 @@ import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
+import redis.clients.jedis.Jedis;
 
 /**
  * Entry action for accessing network links based on HGNC identifiers.
@@ -65,11 +66,15 @@ public class HGNCEntryActionBean implements ActionBean {
         try {
             // check if content is available on Redis cache
             context.getResponse().addHeader("Access-Control-Allow-Origin", "*");
-            return new StreamingResolution("application/json", Boot.getJedis().get("hgnc:" + key.toUpperCase()));
+            Jedis j = Boot.getJedis();
+            String output = j.get("hgnc:" + key.toUpperCase());
+            Boot.getJedis_pool().returnResource(j);
+            return new StreamingResolution("application/json", output); //Boot.getJedis().get("hgnc:" + key.toUpperCase()));
+            //return new StreamingResolution("application/json", Boot.getJedis().get("hgnc:" + key.toUpperCase()));
         } catch (Exception ex) {
             if (Config.isDebug()) {
                 System.err.println("[COEUS][HGNCEntry] Unable to load data for " + key);
-                Logger.getLogger(HGNCEntryActionBean.class.getName()).log(Level.SEVERE, null, ex);
+               // Logger.getLogger(HGNCEntryActionBean.class.getName()).log(Level.SEVERE, null, ex);
             }
             // not on cache, load directly from triplestore using DiseaseAPI
             DiseaseAPI d = new DiseaseAPI();

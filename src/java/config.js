@@ -10,7 +10,7 @@
         "predicates":"dc4_predicates.csv",
         "built": true,
         "debug": true,
-        "environment": "testing",
+        "environment": "production",
         "index": "http://localhost:8983/solr"
     },
     "prefixes" : {

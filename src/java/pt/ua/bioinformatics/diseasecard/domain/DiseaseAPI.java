@@ -203,11 +203,18 @@ public class DiseaseAPI {
             map.put("size", list.size());
 
             map.put("network", results);
+        } catch (NullPointerException ex) {
+            if (Config.isDebug()) {
+                System.err.println("[COEUS][API] Unable to load data for " + omim);
+                Logger.getLogger(DiseaseAPI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            map.put("message", "[Diseasecard] error loading HGNC data from knowledge base.");
         } catch (Exception ex) {
             if (Config.isDebug()) {
                 System.err.println("[COEUS][API] Unable to load data for " + omim);
                 Logger.getLogger(DiseaseAPI.class.getName()).log(Level.SEVERE, null, ex);
             }
+            map.put("message", "[Diseasecard] gene does not exist in knowledge base.");
         }
         return map;
     }
