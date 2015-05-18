@@ -244,8 +244,6 @@ $(document).ready(function() {
         <div class="tab-pane" id="contacts">
             <h2>Contacts</h2>
             <dl>
-                <dt>Pedro Lopes</dt>
-                <dd><i class="icon-envelope-alt"></i> <a href="mailto:pedrolopes@ua.pt">pedrolopes@ua.pt</a></dd>
                 <dt>José Luís Oliveira</dt>
                 <dd><i class="icon-envelope-alt"></i> <a href="mailto:jlo@ua.pt">jlo@ua.pt</a></dd>
             </dl>
@@ -254,7 +252,7 @@ $(document).ready(function() {
                 <dt>From ISCIII, Spain</dt>
                 <dd>Fernando Martín-Sánchez, Francisco-Javier Vicente</dd>
                 <dt>From University of Aveiro</dt>
-                <dd>Gaspar Dias, Hugo Pais</dd>
+                <dd>Gaspar Dias, Hugo Pais, Pedro Lopes</dd>
             </dl>
             <h3>Endorsement</h3>
             The development of Diseasecard and <a href="http://bioinformatics.ua.pt/coeus" rel="tooltip" title="COEUS Semantic Web Application Framework" target="_blank">COEUS</a> is being supported by the following institutions and projects.
