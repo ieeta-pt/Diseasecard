@@ -2,11 +2,9 @@ package pt.ua.bioinformatics.diseasecard.services;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import java.net.URL;
 import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
 import pt.ua.bioinformatics.coeus.api.DB;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
@@ -14,8 +12,8 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
- * Utility class to build and cache disease browsing list.
- * 
+ * Utility class to build and cache disease browsing list into Redis.
+ *
  * @author pedrolopes
  */
 public class Browsier {
@@ -26,39 +24,13 @@ public class Browsier {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //*
-        tester();
-        //*/
-        //*
-        //count();
-        //*/
-        /*
-         toDB();
-         //*/
 
-        /*
+        toDB();
         toCache();
-        //*/
-    }
-    
-        public static void tester() {
-        Boot.start();
-        ResultSet rs = Boot.getAPI().selectRS("SELECT ?u WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM } ORDER BY ?u", false);
-        while (rs.hasNext()) {
-
-            try {
-                QuerySolution row = rs.next();
-                IOUtils.toString(new URL("http://bioinformatics.ua.pt/diseasecard/entry/" + row.get("u").toString().replace("http://bioinformatics.ua.pt/diseasecard/resource/omim_","")));
-                 IOUtils.toString(new URL("http://bioinformatics.ua.pt/diseasecard/entry/" + row.get("u").toString().replace("http://bioinformatics.ua.pt/diseasecard/resource/omim_","") + ".js"));
-                  IOUtils.toString(new URL("http://bioinformatics.ua.pt/diseasecard/services/results/full/" + row.get("u").toString().replace("http://bioinformatics.ua.pt/diseasecard/resource/omim_","")));
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }
     }
 
     /**
-     * Load entry list summary into database
+     * Load entry list summary into temporary database.
      */
     public static void toDB() {
         Boot.start();

@@ -9,8 +9,8 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
 
 /**
- * Class with helper methods to preload UI JSON content on Redis cache.
- * 
+ * Class with helper methods to preload JSON content into Redis cache.
+ *
  * @author pedrolopes
  */
 public class Cashier {
@@ -19,19 +19,23 @@ public class Cashier {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        cache_hgnc();
 
+        // cache disease content
+        cacheDiseases();
+
+        // cache gene content
+        cache_hgnc();
     }
 
     /**
      * Cache content for OMIM entries.
-     * 
+     *
      * <ul>
-     *  <li>Load OMIM entries list from knowledge base</li>
-     *  <li>Get network for each entry</li>
-     *  <li>Store network on Redis as JSON object</li>
+     * <li>Load OMIM entries list from knowledge base</li>
+     * <li>Get network for each entry</li>
+     * <li>Store network on Redis as JSON object</li>
      * </ul>
-     * 
+     *
      */
     private static void cacheDiseases() {
         Boot.start();
@@ -51,15 +55,15 @@ public class Cashier {
 
     }
 
-     /**
+    /**
      * Cache content for HGNC entries.
-     * 
+     *
      * <ul>
-     *  <li>Load HGNC entries list from knowledge base</li>
-     *  <li>Get network for each entry</li>
-     *  <li>Store network on Redis as JSON object</li>
+     * <li>Load HGNC entries list from knowledge base</li>
+     * <li>Get network for each entry</li>
+     * <li>Store network on Redis as JSON object</li>
      * </ul>
-     * 
+     *
      */
     private static void cache_hgnc() {
         Boot.start();

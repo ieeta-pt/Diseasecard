@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.engine;
 
 import com.hp.hpl.jena.query.QuerySolution;
@@ -15,6 +11,8 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 
 /**
  *
+ * Helper class to process ICD10 data relationships.
+ * 
  * @author pedrolopes
  */
 public class ICD10Processor implements Runnable {

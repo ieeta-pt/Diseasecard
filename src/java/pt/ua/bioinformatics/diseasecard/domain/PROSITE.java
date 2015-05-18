@@ -4,6 +4,7 @@ package pt.ua.bioinformatics.diseasecard.domain;
  * PROSITE mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class PROSITE {
 

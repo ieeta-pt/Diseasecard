@@ -1,3 +1,4 @@
+<%-- Status page. --%>
 <%@include file="/final/layout/taglib.jsp" %>
 <c:set var="this" value="${actionBean}" />
 <s:layout-render name="/final/layout/html.jsp">
@@ -14,7 +15,7 @@
                 </ul>
             </div><!--/.navbar-collapse -->
         </div>
-        <ul class="nav navbar-nav navbar-right top_menu collapse navbar-collapse">  
+        <ul class="nav navbar-nav navbar-right top_menu collapse navbar-collapse">
             <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
             <li data-placement="bottom" rel="tooltip" title="Jump to Diseasecard rare diseases browsing"><a href="<c:url value="/browse" />" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
             <li><a href="#" class="mag" rel="tooltip"  data-placement="bottom" title="Search for rare diseases" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>

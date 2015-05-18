@@ -9,7 +9,7 @@ import net.sourceforge.stripes.action.UrlBinding;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 
 /**
- * Redirect tp Disease browsing page (clean URL for internal .jsp).
+ * Redirect to Disease browsing page (clean URL for internal .jsp).
  *
  * @author pedrolopes
  */
@@ -28,8 +28,7 @@ public class RedirectBrowseActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution get() {
-         return new ForwardResolution("/final/view/browse.jsp");
+        return new ForwardResolution("/final/view/browse.jsp");
     }
-
 
 }

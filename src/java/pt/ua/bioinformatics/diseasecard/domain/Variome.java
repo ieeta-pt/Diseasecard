@@ -6,6 +6,7 @@ import java.util.HashMap;
  * Variome Entity mirror class.
  *
  * @author pedrolopes
+ * @deprecated
  */
 public class Variome {
 

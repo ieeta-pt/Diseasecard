@@ -6,6 +6,7 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
  * Enzyme mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class Enzyme {
     private String id;

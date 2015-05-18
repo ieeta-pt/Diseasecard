@@ -9,19 +9,18 @@ import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
  * Utility class to load LSDB data into cache.
- * 
+ *
  * @author pedrolopes
  */
 public class LSDBier {
-
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         //*
-         process();
-         //*/
+        process();
+        //*/
 
     }
 

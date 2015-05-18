@@ -11,6 +11,8 @@ import pt.ua.bioinformatics.diseasecard.services.Finder;
 
 /**
  *
+ * Returns JSON object with short disease information.
+ * 
  * @author pedrolopes
  */
 @UrlBinding("/services/info/{key}.{$event}")

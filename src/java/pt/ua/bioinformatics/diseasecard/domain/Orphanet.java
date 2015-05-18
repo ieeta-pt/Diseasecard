@@ -11,6 +11,7 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
  * Orphanet mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class Orphanet {
     private String id;

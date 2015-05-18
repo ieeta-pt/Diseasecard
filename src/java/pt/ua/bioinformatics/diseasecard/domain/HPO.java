@@ -6,6 +6,7 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
  * HPO mirror class.
  *
  * @author pedrolopes
+ * @deprecated
  */
 public class HPO {
 

@@ -10,7 +10,9 @@ import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
- *
+ * 
+ * The main disease view.
+ * 
  * @author pedrolopes
  */
 @UrlBinding("/view/{key}")

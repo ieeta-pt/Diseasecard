@@ -1,8 +1,17 @@
+/**
+ * Helper class with misc JS functions for internal use.
+ *
+ * @summary   JS helper functions.
+ *
+ * @since     4.0
+ * @author    Pedro Lopes hello@pedrolopes.net
+ *
+ */
 var jsontree = {};
 
-/** 
+/**
  * Capitalizes given string.
- * 
+ *
  * @returns {@exp;@call;@call;toUpperCase}
  */
 String.prototype.capitalize = function() {
@@ -11,7 +20,7 @@ String.prototype.capitalize = function() {
 
 /**
  * Check if given string ends with pattern.
- * 
+ *
  * @param {String} pattern
  * @returns {Boolean} for match.
  */
@@ -22,22 +31,21 @@ String.prototype.endsWith = function(pattern) {
 
 /**
  * Check if given string starts with pattern.
- * 
+ *
  * @param {type} str
  * @returns {Boolean} match
  */
-String.prototype.startsWith = function(str) 
-{
-    return (this.match("^"+str) === str);
+String.prototype.startsWith = function(str) {
+    return (this.match("^" + str) === str);
 };
 
 /**
  * Check if element is present in Array.
- * 
+ *
  * @param {type} needle
  * @returns {Boolean} contains
  */
-Array.prototype.contains = function ( needle ) {
+Array.prototype.contains = function(needle) {
     for (var i in this) {
         if (this[i] === needle) return true;
     }
@@ -46,7 +54,7 @@ Array.prototype.contains = function ( needle ) {
 
 /**
  * Get an empty _content frame.
- * 
+ *
  * @returns {String}
  */
 function getFrame() {
@@ -55,7 +63,7 @@ function getFrame() {
 
 /**
  * Gets content frame with LiveView link.
- * 
+ *
  * @param {type} pair
  * @returns {String}
  */
@@ -65,7 +73,7 @@ function getFrame(pair) {
 
 /**
  * Returns item in <key>_<value> format for given URI.
- * 
+ *
  * @param {type} uri
  * @returns {unresolved}
  */
@@ -75,25 +83,25 @@ function uri2item(uri) {
 };
 
 function shortName(full) {
-	var result = '';
-	if(full.length > 28) {
-		result = full.substring(0, 28);
-	} else {
-		result = full;
-	}
-	return result;
+    var result = '';
+    if (full.length > 28) {
+        result = full.substring(0, 28);
+    } else {
+        result = full;
+    }
+    return result;
 }
 
 
 function toggleTopButton(id) {
-    switch(id) {
+    switch (id) {
         case 'mag':
-            if( ($('.mag').data('active')).toString() === 'false') {
+            if (($('.mag').data('active')).toString() === 'false') {
                 hideTopButton('syns');
                 $('.search').fadeIn(300);
                 $('.mag').addClass('mag_enabled');
                 $('.mag').data('active', 'true');
-            } else if(($('.mag').data('active')).toString() === 'true') {
+            } else if (($('.mag').data('active')).toString() === 'true') {
                 $('.search').hide();
                 $('.mag').data('active', 'false');
                 $('.mag').removeClass('mag_enabled');
@@ -107,17 +115,17 @@ function toggleTopButton(id) {
 }
 
 function showSearch(i) {
-    if( (i.data('active')).toString() === 'false') {
+    if ((i.data('active')).toString() === 'false') {
         i.addClass('mag_enabled').data('active', 'true');
         $('.search').fadeIn(300);
         setTimeout(function() {
-            if($('#text_search').val() === '') {
+            if ($('#text_search').val() === '') {
                 $('.search').fadeOut('slow');
                 i.data('active', 'false');
                 i.removeClass('mag_enabled');
             }
-        },10000);
-    } else if((i.data('active')).toString() === 'true') {
+        }, 10000);
+    } else if ((i.data('active')).toString() === 'true') {
         $('.search').hide();
         i.data('active', 'false');
         i.removeClass('mag_enabled');
@@ -125,7 +133,7 @@ function showSearch(i) {
 }
 
 function hideTopButton(id) {
-    switch(id) {
+    switch (id) {
         case 'mag':
             $('.search').fadeOut(300);
             $('.mag').data('active', 'false');
@@ -137,7 +145,7 @@ function hideTopButton(id) {
     }
 }
 
-function hideTopButtons() {   
+function hideTopButtons() {
     $('.search').hide();
     $('.mag').data('active', 'false');
     $('.mag').removeClass('mag_enabled');
@@ -145,64 +153,65 @@ function hideTopButtons() {
 }
 
 function showTopButton(id) {
-    switch(id) {
+    switch (id) {
         case 'mag':
-            hideTopButton('syns'); 
+            hideTopButton('syns');
             $('.search').show();
             $('.mag').addClass('mag_enabled');
             $('.mag').data('active', 'true');
             $('#text_search').focus();
             break;
         case 'syns':
-            $('.synonyms').show();     
-            hideTopButton('syns'); 
+            $('.synonyms').show();
+            hideTopButton('syns');
             break;
     }
 }
 
-$(document).ready(function(){
+$(document).ready(function() {
     // bootstrap tooltip loader
     $('*[rel=tooltip]').tooltip();
-    
+
     /** autocomplete handler **/
-    $('#text_search').keypress(function(e){
-        if ( e.which == 13 ) {
+    $('#text_search').keypress(function(e) {
+        if (e.which == 13) {
             e.preventDefault();
-            if($('#text_search').data('omim') != undefined) {
-                window.location = path + '/entry/' + $('#text_search').data('omim');                
+            if ($('#text_search').data('omim') != undefined) {
+                window.location = path + '/entry/' + $('#text_search').data('omim');
             } else {
                 window.location = path + '/search/' + search + '/' + $('#text_search').val();
             }
-        }         
+        }
     });
-    
-    $( "#text_search" ).autocomplete({
+
+    $("#text_search").autocomplete({
         minLength: 3,
         delay: 500,
         source: path + '/services/autocomplete/' + search,
-        focus: function( event, ui ) {            
-        $('#text_search').data('omim',ui.item.omim);
-        $("#text_search" ).val( ui.item.info );
-        return false;
+        focus: function(event, ui) {
+            $('#text_search').data('omim', ui.item.omim);
+            $("#text_search").val(ui.item.info);
+            return false;
         },
-        open :function(){
-        $(this).autocomplete('widget').css('z-index', 1000);
-        return false;        },
-        select: function( event, ui ) {
-        event.preventDefault();
-        $('#text_search').data('omim',ui.item.omim);
-        if (ui.item.info.indexOf(':') > 0) {
-        window.location = path + '/entry/' + ui.item.omim + '#' + ui.item.info.replace('[','').replace(']','');       
-        } else {
-        window.location = path + '/entry/' + ui.item.omim;
+        open: function() {
+            $(this).autocomplete('widget').css('z-index', 1000);
+            return false;
+        },
+        select: function(event, ui) {
+            event.preventDefault();
+            $('#text_search').data('omim', ui.item.omim);
+            if (ui.item.info.indexOf(':') > 0) {
+                window.location = path + '/entry/' + ui.item.omim + '#' + ui.item.info.replace('[', '').replace(']', '');
+            } else {
+                window.location = path + '/entry/' + ui.item.omim;
+            }
         }
-        }
-        })
-    .data( "autocomplete" )._renderItem = function( ul, item ) {
-        return $( "<li></li>" )
-        .data( "item.autocomplete", item )
-        .data("item.omim",item.omim)
-        .append( '<a>' + item.omim + ' <i class="icon-angle-right"></i> '  + item.info + '</a>' )
-        .appendTo( ul );
-    };     
+    })
+        .data("autocomplete")._renderItem = function(ul, item) {
+            return $("<li></li>")
+                .data("item.autocomplete", item)
+                .data("item.omim", item.omim)
+                .append('<a>' + item.omim + ' <i class="icon-angle-right"></i> ' + item.info + '</a>')
+                .appendTo(ul);
+    };
 });

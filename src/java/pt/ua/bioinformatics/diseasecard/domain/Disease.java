@@ -9,6 +9,7 @@ import pt.ua.bioinformatics.coeus.domain.Item;
 /**
  *
  * @author pedrolopes
+ * @deprecated
  */
 public class Disease {
     private int id = 0;

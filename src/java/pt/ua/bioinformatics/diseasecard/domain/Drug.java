@@ -5,6 +5,7 @@ import java.util.HashMap;
 /**
  *
  * @author pedrolopes
+ * @deprecated
  */
 public class Drug {
     private Disease disease;

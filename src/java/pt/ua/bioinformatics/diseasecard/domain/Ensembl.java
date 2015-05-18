@@ -4,6 +4,7 @@ package pt.ua.bioinformatics.diseasecard.domain;
  * Ensembl mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class Ensembl {
     private String id;

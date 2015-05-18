@@ -6,6 +6,8 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
  * MeSH mirror class.
  * 
  * @author pedrolopes
+ * 
+ * @deprecated
  */
 public class MeSH {
 

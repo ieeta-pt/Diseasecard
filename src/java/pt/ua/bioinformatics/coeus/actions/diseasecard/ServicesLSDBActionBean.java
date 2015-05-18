@@ -11,6 +11,8 @@ import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 
 /**
  *
+ * Handler for internal locus-specific database redirects.
+ * 
  * @author pedrolopes
  */
 @UrlBinding("/services/lsdb/{key}")

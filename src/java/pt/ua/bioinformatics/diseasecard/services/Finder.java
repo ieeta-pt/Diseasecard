@@ -3,15 +3,12 @@ package pt.ua.bioinformatics.diseasecard.services;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.text.WordUtils;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.client.solrj.response.QueryResponse;
@@ -28,12 +25,14 @@ import pt.ua.bioinformatics.diseasecard.domain.SearchResult;
 
 /**
  *
+ * Helper methods to load disease information, lists and other miscellaneous
+ * topics. Finds everything.
+ *
  * @author pedrolopes
  */
 public class Finder {
 
     private String query;
-    private ArrayList<Disease> diseases;
     private Matcher match_omim_id;
     private Pattern omimid = Pattern.compile("[0-9]{6}");
     private DB db = new DB("DC4");
@@ -93,14 +92,6 @@ public class Finder {
         this.result = result;
     }
 
-    public ArrayList<Disease> getDiseases() {
-        return diseases;
-    }
-
-    public void setDiseases(ArrayList<Disease> diseases) {
-        this.diseases = diseases;
-    }
-
     public String getQuery() {
         return query;
     }
@@ -109,14 +100,10 @@ public class Finder {
         this.query = query;
     }
 
-    public Finder(String query) {
-        this.query = query;
-        this.diseases = new ArrayList<Disease>();
-        Boot.start();
-    }
-
     /**
-     * Finds disease matches in COEUS S3DB. <p> Used in search. </p>
+     * Finds disease matches in COEUS S3DB.
+     * <p>
+     * Used in search. </p>
      *
      * @return
      */
@@ -207,16 +194,17 @@ public class Finder {
     }
 
     /**
-     * Finds disease matches in DC4 index. <p> Used in Autocomplete. </p>
+     * Finds disease matches in DC4 index.
+     * <p>
+     * Used in Autocomplete. </p>
      *
      * @return
      */
     public String get(String type) {
         JSONArray list = new JSONArray();
         ModifiableSolrParams params = new ModifiableSolrParams();
-        
+
         //arams.set("q", "id:*\"" + query.toLowerCase() + "\"* OR id:*\"" + WordUtils.capitalize(query.toLowerCase()) + "\"*");
-        
         params.set("q", "title:*" + query + "*");
         params.set("rows", 254);
 
@@ -240,6 +228,12 @@ public class Finder {
         return list.toString();
     }
 
+    /**
+     * Load JSON object with activity items (why is it called status?).
+     *
+     * @param limit
+     * @return
+     */
     public String status(int limit) {
         JSONObject response = new JSONObject();
         JSONArray list = new JSONArray();
@@ -268,6 +262,13 @@ public class Finder {
         return response.toString();
     }
 
+    /**
+     *
+     * Loads JSON object with disease browsing list based on initial char.
+     *
+     * @param key First character for disease name.
+     * @return
+     */
     public String browse(String key) {
         JSONObject alldiseases = new JSONObject();
         JSONArray list = new JSONArray();
@@ -313,6 +314,12 @@ public class Finder {
         return alldiseases.toString();
     }
 
+    /**
+     *
+     * Query tester for Solr indexer.
+     *
+     * @return
+     */
     public String query() {
         String response = null;
         try {
@@ -330,6 +337,6 @@ public class Finder {
                 Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return response.toString();
+        return response;
     }
 }

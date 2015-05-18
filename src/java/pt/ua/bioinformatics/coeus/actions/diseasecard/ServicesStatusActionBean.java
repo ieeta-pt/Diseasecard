@@ -11,6 +11,8 @@ import pt.ua.bioinformatics.diseasecard.services.Finder;
 
 /**
  *
+ * Handler for activity data. Returns JSON object with activity details (Why is called status?).
+ * 
  * @author pedrolopes
  */
 @UrlBinding("/services/status/{key}.{$event}")

@@ -18,6 +18,9 @@ import pt.ua.bioinformatics.diseasecard.services.Activity;
 
 /**
  *
+ * Linking service entry point. Provided key:value pairs are converted into URLs
+ * for use in LiveView or external services.
+ *
  * @author pedrolopes
  */
 @UrlBinding("/services/linkout/{key}:{value}/")
@@ -82,6 +85,7 @@ public class ServicesLinkOutActionBean implements ActionBean {
     public Resolution html() {
         Boot.start();
         try {
+            // generate url
             url = Links.get(key.toLowerCase()).replace("#replace#", value);
         } catch (Exception ex) {
             if (Config.isDebug()) {
@@ -90,9 +94,12 @@ public class ServicesLinkOutActionBean implements ActionBean {
             url = getContext().getRequest().getContextPath() + "/final/view/empty_frame.jsp";
         }
         try {
+            // log activity
             Activity.log(key + ":" + value, "link", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
         } catch (Exception e) {
         }
+
+        // if request contains a + (plus sign) return the URL, otherwise simply redirect
         if (getContext().getRequest().getRequestURI().endsWith("+")) {
             return new StreamingResolution("txt", url);
         } else {

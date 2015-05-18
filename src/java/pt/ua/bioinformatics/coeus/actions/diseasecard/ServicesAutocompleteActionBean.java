@@ -15,6 +15,8 @@ import pt.ua.bioinformatics.diseasecard.services.Finder;
 
 /**
  *
+ * Autocomplete handler, searches Solr and returns JSON object with results.
+ *
  * @author pedrolopes
  */
 @UrlBinding("/services/autocomplete/{$event}")

@@ -6,6 +6,7 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
  * ICD mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class ICD {
         private String id;

@@ -4,6 +4,7 @@ package pt.ua.bioinformatics.diseasecard.domain;
  *  PDB mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class PDB {
 

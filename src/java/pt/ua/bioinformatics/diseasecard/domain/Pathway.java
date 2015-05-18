@@ -6,6 +6,7 @@ import java.util.HashMap;
  * Pathway Entity mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class Pathway {
     private Disease disease;

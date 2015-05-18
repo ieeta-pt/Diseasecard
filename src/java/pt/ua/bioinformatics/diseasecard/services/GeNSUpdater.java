@@ -12,6 +12,8 @@ import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
  *
+ * Not everything in GeNS is updated... move to HUMMER for updates.
+ * 
  * @author pedrolopes
  */
 public class GeNSUpdater {

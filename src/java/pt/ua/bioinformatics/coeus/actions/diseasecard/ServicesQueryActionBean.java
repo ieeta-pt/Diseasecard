@@ -17,6 +17,8 @@ import pt.ua.bioinformatics.diseasecard.services.Finder;
 
 /**
  *
+ * Handler for custom queries to SPARQL endpoint.
+ *
  * @author pedrolopes
  */
 @UrlBinding("/services/query/{query}")
@@ -62,7 +64,7 @@ public class ServicesQueryActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution js() throws IOException {
-        return new StreamingResolution("application/js",new Scanner(new URL(Config.getIndex() + "/diseasecard/select?q=" + query + "&rows=1000&wt=json").openStream(), "UTF-8").useDelimiter("\\A").next());
+        return new StreamingResolution("application/js", new Scanner(new URL(Config.getIndex() + "/diseasecard/select?q=" + query + "&rows=1000&wt=json").openStream(), "UTF-8").useDelimiter("\\A").next());
 
     }
 }

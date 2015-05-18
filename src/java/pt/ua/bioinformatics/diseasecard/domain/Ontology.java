@@ -14,6 +14,7 @@ import pt.ua.bioinformatics.coeus.common.Config;
  * Ontology Entity mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class Ontology {
 

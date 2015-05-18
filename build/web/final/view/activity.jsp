@@ -1,3 +1,4 @@
+<%-- Activity subpage. --%>
 <%@include file="/final/layout/taglib.jsp" %>
 <c:set var="this" value="${actionBean}" />
 <s:layout-render name="/final/layout/html.jsp">
@@ -12,12 +13,12 @@
                     <li class="active"><a href="#">About Diseasecard</a></li>
                 </ul>
             </div>
-            <ul class="nav navbar-nav navbar-right top_menu collapse navbar-collapse">  
+            <ul class="nav navbar-nav navbar-right top_menu collapse navbar-collapse">
                     <li><a href="<c:url value="/about" />" rel="tooltip" data-placement="bottom" title="Jump to Diseasecard about section"><i class="icon-book"></i></a></li>
                     <li data-placement="bottom" rel="tooltip" title="Jump to Diseasecard rare diseases browsing"><a href="<c:url value="/browse" />" title="Jump to Diseasecard rare diseases browsing"><i class="icon-reorder"></i></a></li>
                     <li><a href="#" class="mag" rel="tooltip"  data-placement="bottom" title="Search for rare diseases" data-active="false" data-toggle="dropdown" id="nav_search"><i class="icon-search"></i></a></li>
                 </ul>
-            
+
         </div>
         <!-- Top search bar -->
         <div id="top" class="col-md-4 pull-right search">
@@ -41,7 +42,7 @@
     </s:layout-component>
     <s:layout-component name="custom_scripts">
         <script src="<c:url value="/final/assets/script/jquery.dataTables.min.js" />"></script>
-        <script>   
+        <script>
             var loaded = new Array();
             /* Default class modification */
             $.extend( $.fn.dataTableExt.oStdClasses, {
@@ -56,19 +57,19 @@
                 sData = typeof sData.replace == 'function' ?
                     sData.replace( /<[\s\S]*?>/g, "" ) : sData;
                 sData = $.trim(sData);
-      
+
                 var sValidFirstChars = "0123456789-";
                 var sValidChars = "0123456789.";
                 var Char;
                 var bDecimal = false;
-      
+
                 /* Check for a valid first char (no period and allow negatives) */
                 Char = sData.charAt(0);
                 if (sValidFirstChars.indexOf(Char) == -1)
                 {
                     return null;
                 }
-      
+
                 /* Check all the other characters are valid */
                 for ( var i=1 ; i<sData.length ; i++ )
                 {
@@ -77,7 +78,7 @@
                     {
                         return null;
                     }
-          
+
                     /* Only allowed one decimal place... */
                     if ( Char == "." )
                     {
@@ -88,7 +89,7 @@
                         bDecimal = true;
                     }
                 }
-      
+
                 return 'num-html';
             } );
 
@@ -97,11 +98,11 @@
                     var x = String(a).replace( /<[\s\S]*?>/g, "" );
                     return parseFloat( x );
                 },
- 
+
                 "num-html-asc": function ( a, b ) {
                     return ((a < b) ? -1 : ((a > b) ? 1 : 0));
                 },
- 
+
                 "num-html-desc": function ( a, b ) {
                     return ((a < b) ? 1 : ((a > b) ? -1 : 0));
                 }
@@ -204,12 +205,12 @@
                 }
             } );
 
-            /** 
+            /**
              * Update pagination
              */
             (function($, window, document) {
- 
- 
+
+
                 $.fn.dataTableExt.oApi.fnPagingInfo = function ( oSettings )
                 {
                     return {
@@ -222,7 +223,7 @@
                         "iTotalPages":    Math.ceil( oSettings.fnRecordsDisplay() / oSettings._iDisplayLength )
                     };
                 }
- 
+
                 var DT_PagingControl = function ( oDTSettings )
                 {
                     oDTSettings.aoDrawCallback.push( {
@@ -235,7 +236,7 @@
                         "sName": "PagingControl"
                     } );
                 }
- 
+
                 if ( typeof $.fn.dataTable == "function" &&
                     typeof $.fn.dataTableExt.fnVersionCheck == "function" &&
                     $.fn.dataTableExt.fnVersionCheck('1.8.0') )
@@ -252,18 +253,18 @@
                 {
                     alert( "Warning: PagingControl requires DataTables 1.8.0 or greater - www.datatables.net/download");
                 }
- 
- 
+
+
             })(jQuery, window, document);
- 
-           
-            /** 
+
+
+            /**
              * Launch datatables on given element
              **/
             function dtables(id) {
                 $(id).dataTable({
                     "bProcessing": true,
-                    "sAjaxSource": './services/browse/' + window.location.hash.charAt(window.location.hash.length - 1) + '.js',                
+                    "sAjaxSource": './services/browse/' + window.location.hash.charAt(window.location.hash.length - 1) + '.js',
                     "bSort": true,
                     "aaSorting": [[2, 'desc']],
                     "bPaginate": true,
@@ -290,24 +291,24 @@
                     "sCookiePrefix": "diseasecard_browse_",
                     "aoColumnDefs": [
                         {
-                            "sClass": "connections", 
+                            "sClass": "connections",
                             "aTargets": [ 2 ]
                         }
                     ],
-                    "fnInitComplete": function() {                            
+                    "fnInitComplete": function() {
                         loaded.push(window.location.toString());
                         $(window.location.hash).tooltip({
                             selector: "*[rel=tooltip]"
                         });
                         $('.dataTables_filter input').attr('placeholder','Filter').addClass('input-lg').focus();
                     }
-                }); 
+                });
             }
 
-            $(document).ready(function(){  
+            $(document).ready(function(){
                 $('#status_list').dataTable({
                     "bProcessing": true,
-                    "sAjaxSource": './services/status/1000.js',                
+                    "sAjaxSource": './services/status/1000.js',
                     "bSort": true,
                     "aaSorting": [[0, 'desc']],
                     "bPaginate": true,
@@ -332,16 +333,16 @@
                     "iDisplayLength": 100,
                     "bAutoWidth" : false,
                     "sCookiePrefix": "diseasecard_status_"
-                }); 
-                
-                             $(document).ready(function(){                
+                });
+
+                             $(document).ready(function(){
                 $('.mag').click(function() {
                     toggleTopButton('mag');
-                    setTimeout(function(){                            
+                    setTimeout(function(){
                         $('#text_search').focus();
-                    }, 400);                    
-                });                   
-            });  
+                    }, 400);
+                });
+            });
             });
         </script>
     </s:layout-component>

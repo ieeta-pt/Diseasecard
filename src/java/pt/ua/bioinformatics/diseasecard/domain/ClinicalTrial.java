@@ -6,6 +6,7 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
  * Clinical Trials mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class ClinicalTrial {
     private HGNC hgnc;

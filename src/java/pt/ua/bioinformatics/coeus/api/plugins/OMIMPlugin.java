@@ -21,8 +21,9 @@ import pt.ua.bioinformatics.diseasecard.domain.Disease;
 
 /**
  * DiseaseCard plugin for OMIM data handling.
- * 
- * <p>Generates initial gene and disease dataset based on OMIM's morbid map.
+ *
+ * <p>
+ * Generates initial gene and disease dataset based on OMIM's morbid map.
  * </p>
  *
  * @author pedrolopes
@@ -68,7 +69,8 @@ public class OMIMPlugin {
 
     /**
      * OMIMPlugin controller.
-     * <p><b>Workflow:</b><ul>
+     * <p>
+     * <b>Workflow:</b><ul>
      * <li>Load genotype information from OMIM genemap</li>
      * <li>Load phenotype information from OMIM morbidmap</li>
      * <li>Import loaded dataset into COEUS SDB</li>
@@ -212,7 +214,8 @@ public class OMIMPlugin {
 
     /**
      * Loads the in-memory data into COEUS SDB.
-     * <p><b>Workflow</b><br /><ul>
+     * <p>
+     * <b>Workflow</b><br /><ul>
      * <li>Loads genotypes</li>
      * <li>Loads genes for each genotype</li>
      * <li>Loads genotypes for each genotype</li>

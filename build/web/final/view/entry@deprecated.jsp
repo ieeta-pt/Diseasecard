@@ -27,7 +27,7 @@
                                 </ul>
                                 <ul class="nav">
                                     <li>
-                                        <a href="#" id="omim" data-id="${actionBean.disease.omim.id}" rel="popover" data-original-title="Synonyms" data-animate="false"> ${actionBean.disease.omim.description}</a>     
+                                        <a href="#" id="omim" data-id="${actionBean.disease.omim.id}" rel="popover" data-original-title="Synonyms" data-animate="false"> ${actionBean.disease.omim.description}</a>
                                     </li>
                                 </ul>
 
@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-            </div>     
+            </div>
             <!-- Top search bar -->
             <div id="top">
                 <div class="search menu">
@@ -51,12 +51,12 @@
                             <button class="btn btn-inverse" type="button"  id="button_search">GO!</button>
                         </div>
                     </form>
-                </div>  
+                </div>
             </div>
             <div id="wrap">
                 <div id="diseasebar">
                     <div id="sidebar_menu">
-                        <div class="btn-group" id="dc4_tree_control">                           
+                        <div class="btn-group" id="dc4_tree_control">
                             <a data-placement="bottom" data-container="body" rel="tooltip" data-title="Expand all tree nodes" id="dc4_tree_expand" class="btn"><i class="icon-double-angle-down"></i></a>
                             <a data-placement="bottom" rel="tooltip" data-container="body" data-title="Collapse all tree nodes" id="dc4_tree_collapse" class="btn"><i class="icon-double-angle-up"></i></a>
                         </div>
@@ -68,7 +68,7 @@
                     </div>
                     <div id="tree">
 
-                    </div> 
+                    </div>
                 </div>
                 <div id="frame_loading">
                     <div class="progress progress-striped active">
@@ -79,7 +79,7 @@
                     <div id="container">
                         <div id="center-container">
                             <div id="infovis"></div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                     </ul>
                 </div>
             </div>
-        </div>    
+        </div>
         <div id="wrap">
             <div class="container" id="index">
                 <div class="row">
@@ -137,8 +137,8 @@
                             </ul>
                         </div>
                     </div>
-                </div>              
-            </div>            
+                </div>
+            </div>
         </div>
     </c:otherwise>
 </c:choose>

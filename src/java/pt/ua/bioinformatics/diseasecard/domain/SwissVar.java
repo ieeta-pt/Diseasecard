@@ -6,6 +6,7 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
  * SwissVar mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class SwissVar {
     private String id;

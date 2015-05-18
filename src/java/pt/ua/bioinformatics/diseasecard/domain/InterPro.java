@@ -4,6 +4,7 @@ package pt.ua.bioinformatics.diseasecard.domain;
  * InterPro mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class InterPro {
     private String id;

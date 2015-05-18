@@ -13,9 +13,12 @@ import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 
 /**
  *
+ * Helper class to start indexing content.
+ * 
  * @author pedrolopes
  */
 @UrlBinding("/services/indexer")
+@Deprecated
 public class ServicesIndexerActionBean implements ActionBean {
 
     private COEUSActionBeanContext context;

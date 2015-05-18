@@ -39,7 +39,7 @@ public class Run {
             System.out.println(PrefixFactory.encode("http://bioinformatics.ua.pt/diseasecard/resource/malacards_vohwinkel_syndrome_lol"));
             // LEVEL 0
            //Boot.start();
-            /*   SingleImport single = new SingleImport("resource_lsdb");
+            /*   SingleImport single = new SingleImport("resource_omim");
              Thread t = new Thread(single);
              t.start();*/
             //*/ 

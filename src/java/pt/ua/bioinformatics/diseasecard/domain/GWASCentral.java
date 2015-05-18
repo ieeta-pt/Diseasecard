@@ -6,6 +6,7 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
  * GWASCentral mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class GWASCentral {
     private String id;

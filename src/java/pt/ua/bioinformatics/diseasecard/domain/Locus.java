@@ -9,6 +9,7 @@ import pt.ua.bioinformatics.coeus.common.Config;
  * Locus entity mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class Locus {
 

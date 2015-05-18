@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pt.ua.bioinformatics.diseasecard.domain;
 
 import com.hp.hpl.jena.query.QuerySolution;
@@ -17,6 +13,11 @@ import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.common.Config;
 
 /**
+ *
+ * Disease data loading API. Loads network information both diseases (based on
+ * OMIM code) and genes (based on HGNC symbol). Data are queried to
+ * Diseasecard's SPARQL endpoint, results are preprocessed based on the desired
+ * network configuration and returned as a single JSON object.
  *
  * @author pedrolopes
  */
@@ -39,20 +40,29 @@ public class DiseaseAPI {
         Boot.start();
         this.api = Boot.getAPI();
     }
-    
+
     public DiseaseAPI(String omim) {
         Boot.start();
         this.omim = omim;
         this.api = Boot.getAPI();
     }
 
+    /**
+     * Load disease network information from knowledge base.
+     *
+     * @return
+     */
     public JSONObject load() {
         try {
             map.put("omim", omim);
+
+            // the SPARQL query
             ResultSet rs = api.selectRS("SELECT * WHERE { diseasecard:omim_" + omim + " diseasecard:chromosomalLocation ?chromo . diseasecard:omim_" + omim + " dc:description ?d . diseasecard:omim_" + omim + " coeus:isAssociatedTo ?a1 . ?a1 coeus:isAssociatedTo ?a2 . { OPTIONAL {diseasecard:omim_" + omim + " diseasecard:hasGenotype ?g} . OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasPhenotype ?p }. OPTIONAL { diseasecard:omim_" + omim + " diseasecard:name ?n } . OPTIONAL {diseasecard:omim_" + omim + " diseasecard:phenotype ?pheno} . OPTIONAL {diseasecard:omim_" + omim + " diseasecard:genotype ?geno .}}}", false);
             JSONArray synonyms = new JSONArray();
             JSONArray results = new JSONArray();
             String description = "";
+
+            // process results (select what matters for the network)
             while (rs.hasNext()) {
                 String a1 = "";
                 String a2 = "";
@@ -116,6 +126,8 @@ public class DiseaseAPI {
             }
             list.add("pubmed:" + description);
             results.addAll(list);
+
+            // add meta
             map.put("size", list.size());
             map.put("synonyms", synonyms);
             map.put("network", results);
@@ -128,6 +140,13 @@ public class DiseaseAPI {
         return map;
     }
 
+    /**
+     *
+     * Load gene network from knowledge base.
+     *
+     * @param hgnc Gene symbol.
+     * @return
+     */
     public JSONObject loadHGNC(String hgnc) {
         map.put("hgnc", hgnc);
 
@@ -144,9 +163,7 @@ public class DiseaseAPI {
                 QuerySolution row = rs.next();
 
                 // Process column 1
-                
-                    a1 = ItemFactory.getTokenFromURI(row.get("a1").toString()).replace("_", ":");
-                
+                a1 = ItemFactory.getTokenFromURI(row.get("a1").toString()).replace("_", ":");
 
                 if (!list.contains(a1)) {
                     list.add(a1);
@@ -176,26 +193,12 @@ public class DiseaseAPI {
                         a3 = ItemFactory.getTokenFromURI(row.get("a3").toString()).replace("_", ":");
                     }
 
-                    if (a3.contains("genecards") || a3.contains("mesh") ) {
+                    if (a3.contains("genecards") || a3.contains("mesh")) {
                         if (!list.contains(a3)) {
                             list.add(a3);
                         }
                     }
                 }
-
-                /*if (row.contains("p")) {
-                 String p = ItemFactory.getTokenFromURI(row.get("p").toString()).replace("_", ":");
-                 if (!list.contains(p)) {
-                 list.add(p);
-                 }
-                 }*/
-                /*
-                 if (row.contains("g")) {
-                 String g = ItemFactory.getTokenFromURI(row.get("g").toString()).replace("_", ":");
-                 if (!list.contains(g)) {
-                 list.add(g);
-                 }
-                 }*/
             }
 
             list.add("wave:" + hgnc);

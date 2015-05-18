@@ -14,6 +14,7 @@ import pt.ua.bioinformatics.coeus.common.Config;
  * Entrez Gene mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class EntrezGene {
 

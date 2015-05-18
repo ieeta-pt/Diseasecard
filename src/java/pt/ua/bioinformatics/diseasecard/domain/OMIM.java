@@ -15,6 +15,7 @@ import pt.ua.bioinformatics.coeus.common.Config;
  * OMIM mirror class.
  *
  * @author pedrolopes
+ * @deprecated
  */
 public class OMIM {
 

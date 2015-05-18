@@ -13,6 +13,9 @@ import pt.ua.bioinformatics.diseasecard.services.Finder;
 
 /**
  *
+ * Handler for search results. Returns JSON object with search results for
+ * full-text search and identifier-only search.
+ *
  * @author pedrolopes
  */
 @UrlBinding("/services/results/{$event}/{query}")
@@ -56,6 +59,8 @@ public class ServicesSearchResultsActionBean implements ActionBean {
         this.diseases = diseases;
     }
 
+    // TODO
+    // - add activity tracking
     @DefaultHandler
     public Resolution id() {
         finder = new Finder(query.replace("%20", " "));

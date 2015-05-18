@@ -6,6 +6,7 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
  * KEGG mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class KEGG {
     private String id;

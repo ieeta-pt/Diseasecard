@@ -15,6 +15,8 @@ import pt.ua.bioinformatics.diseasecard.domain.Links;
 
 /**
  *
+ * Returns frame with requested content (for LiveView).
+ *
  * @author pedrolopes
  */
 @UrlBinding("/services/frame/{key}:{value}")
@@ -78,6 +80,7 @@ public class ServicesFrameActionBean implements ActionBean {
     @DefaultHandler
     public Resolution html() {
         try {
+            // process link from provided key:value pair
             if (!key.equals("0")) {
                 url = Links.get(key).replace("#replace#", value);
             } else {
@@ -89,6 +92,7 @@ public class ServicesFrameActionBean implements ActionBean {
             }
             url = getContext().getRequest().getContextPath() + "/final/view/empty_frame.jsp";
         }
+        // send frame with updated URL source
         return new ForwardResolution("/final/view/frame.jsp");
     }
 }

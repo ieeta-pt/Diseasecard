@@ -10,6 +10,8 @@ import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 
 /**
  *
+ * Helper URL to cover Diseasecard 3 links.
+ *
  * @author pedrolopes
  */
 @UrlBinding("/searchDisease.do")

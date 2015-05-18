@@ -1,3 +1,4 @@
+<%-- Diseasecard Javascripts. --%>
 <%@include file="/final/layout/taglib.jsp" %>
 <script>var path = '${path}', search = 'id';</script>
 <script src="<c:url value="/final/assets/script/jquery.min.js" />"></script>

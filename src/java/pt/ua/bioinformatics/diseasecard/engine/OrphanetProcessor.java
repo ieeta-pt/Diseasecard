@@ -10,7 +10,7 @@ import pt.ua.bioinformatics.coeus.api.ItemFactory;
 import pt.ua.bioinformatics.coeus.common.Boot;
 
 /**
- * Threaded execution for Orphanet details.
+ * Threaded execution for additional Orphanet details.
  *
  * @author pedrolopes
  */

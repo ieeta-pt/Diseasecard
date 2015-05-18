@@ -6,6 +6,7 @@ import java.util.HashMap;
  * Study Entity mirror class.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class Study {
 

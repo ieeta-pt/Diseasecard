@@ -9,6 +9,7 @@ import pt.ua.bioinformatics.diseasecard.domain.OMIM;
  * Threaded utility to load network information for each disease.
  * 
  * @author pedrolopes
+ * @deprecated
  */
 public class DiseaseLoad implements Runnable {
 

@@ -11,7 +11,7 @@ import pt.ua.bioinformatics.diseasecard.engine.ICD10Processor;
 
 /**
  * Utility class to trigger ICD10 integration process ad-hoc.
- * 
+ *
  * @author pedrolopes
  */
 public class E2 {

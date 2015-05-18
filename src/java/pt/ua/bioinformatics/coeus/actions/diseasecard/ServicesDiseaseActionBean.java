@@ -11,6 +11,8 @@ import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
 
 /**
  *
+ * Returns JSON object with disease network.
+ *
  * @author pedrolopes
  */
 @UrlBinding("/services/disease/{key}.{$event}")
