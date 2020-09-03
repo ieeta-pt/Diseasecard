@@ -25,7 +25,7 @@ public class ServicesAutocompleteActionBean implements ActionBean {
     private ActionBeanContext context;
     private String term;
     private Finder finder;
-    private String auto;
+    private String auto = "[]";
 
     public String getAuto() {
         return auto;

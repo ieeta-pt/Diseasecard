@@ -45,7 +45,7 @@
     # Homepage with description of the project for the link in the page header
     conf:projectHomepage <http://bioinformatics.ua.pt/diseasecard/>;
     # The Pubby root, where the webapp is running inside the servlet container.
-    #conf:webBase <http://localhost:8084/diseasecard/>;
+    #conf:webBase <http://localhost:8080/diseasecard/>;
     conf:webBase <http://bioinformatics.ua.pt/diseasecard/>;
     # URL of an RDF file whose prefix mapping is to be used by the
     # server; defaults to <>, which is *this* file.
@@ -63,7 +63,7 @@
 # URIs on the Web:             http://localhost:8080/resource/*
     conf:dataset [
         # SPARQL endpoint URL of the dataset
-        #conf:sparqlEndpoint <http://localhost:8084/diseasecard/sparql>;
+        conf:sparqlEndpoint <http://localhost:8080/diseasecard/sparql>;
         conf:sparqlEndpoint <http://bioinformatics.ua.pt/diseasecard/sparql>;
         # Default graph name to query (not necessary for most endpoints)
         # conf:sparqlDefaultGraph <>;

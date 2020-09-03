@@ -6,6 +6,7 @@ import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.action.UrlBinding;
+import pt.ua.bioinformatics.coeus.common.Boot;
 import pt.ua.bioinformatics.coeus.ext.COEUSActionBeanContext;
 import pt.ua.bioinformatics.diseasecard.services.Activity;
 import pt.ua.bioinformatics.diseasecard.services.Finder;
@@ -41,20 +42,22 @@ public class ServicesBrowseActionBean implements ActionBean {
     @DefaultHandler
     public Resolution js() {
         try {
-            // log browse request
-            Activity.log(key, "browse", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
-        } catch (Exception e) {
-        }
-        try {
+            try {
+                Activity.log(key, "browse", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
+            } catch (Exception e) {
+            }
+            return new StreamingResolution("application/json", Boot.getJedis().get("browse:" + key));
 
-        } catch (Exception e) {
-            // load disease finder
+        } catch (Exception ex) {
+            
             Finder f = new Finder();
-
-            // return JSON object with all diseases starting with provided character
+            try {
+                Activity.log(key, "browse", context.getRequest().getRequestURI(), context.getRequest().getHeader("User-Agent"), context.getRequest().getHeader("X-Forwarded-For"));
+            } catch (Exception e) {
+            }
             return new StreamingResolution("application/json", f.browse(key));
+            
         }
-        return new StreamingResolution("application/json", "");
 
     }
 }

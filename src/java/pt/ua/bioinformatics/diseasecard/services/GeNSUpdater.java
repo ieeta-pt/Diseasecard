@@ -36,7 +36,7 @@ public class GeNSUpdater {
                 System.out.println("\tuniprot:" + uniprot);
                 java.sql.ResultSet gens_rs = gens.getData("select distinct BE.BioEntityName as entry from Protein P inner join ProteinBioEntity PBO on PBO.ProteinId = P.ProteinId inner join BioEntity BE on BE.BioEntityId = PBO.BioEntityId where BE.DataTypeId = 114 and P.ProteinId in (select P.ProteinId from Protein P inner join Identifier I on I.ProteinId = P.ProteinId where P.TaxonomicId = 9606 and I.DataTypeId = 3 and I.Alias like '" + uniprot + "');");
                 while(gens_rs.next()) {
-                    hummer.connect("jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica");
+                    hummer.connect(Config.getConnectionInfo("hummer_root"));
                     //hummer.insert(uniprot, "INSERT INTO kegg (uniprot, kegg) VALUES ('" + uniprot + "','" + gens_rs.getString(1) + "');");
                     System.out.println("\t\t\t- " + uniprot + " -> " + gens_rs.getString(1));
                     hummer.close();

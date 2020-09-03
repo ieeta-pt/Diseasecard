@@ -67,7 +67,7 @@ public class SQLFactory implements ResourceFactory {
                 for (String item : extensions) {
                     db.connect(res.getEndpoint());
                     query = res.getQuery().replace("#replace#", ItemFactory.getTokenFromItem(item));
-                    System.out.println(query);
+                    System.out.println("QUERY" + query);
                     rs = db.getData(query);
                     try {
                         while (rs.next()) {

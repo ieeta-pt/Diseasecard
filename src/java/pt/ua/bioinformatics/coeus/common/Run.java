@@ -3,6 +3,7 @@ package pt.ua.bioinformatics.coeus.common;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.PrefixFactory;
+import pt.ua.bioinformatics.coeus.api.plugins.SingleImport;
 
 /**
  *
@@ -38,57 +39,57 @@ public class Run {
             Boot.start();
             System.out.println(PrefixFactory.encode("http://bioinformatics.ua.pt/diseasecard/resource/malacards_vohwinkel_syndrome_lol"));
             // LEVEL 0
-           //Boot.start();
-            /*   SingleImport single = new SingleImport("resource_omim");
-             Thread t = new Thread(single);
-             t.start();*/
-            //*/ 
+            // Boot.start();
+            SingleImport single = new SingleImport("resource_omim");
+            Thread t = new Thread(single);
+            t.start();
+            // 
 
             // LEVEL 1
             // Orphanet
             // UniProt
-            /*
-             SingleImport single_uniprot = new SingleImport("resource_uniprot");
-             SingleImport single_orphanet = new SingleImport("resource_orphanet");
-             Thread uniprot = new Thread(single_uniprot);
-             Thread orphanet = new Thread(single_orphanet);
-             uniprot.start();
-             orphanet.start();
-             //*/
+            
+//            SingleImport single_uniprot = new SingleImport("resource_uniprot");
+//            SingleImport single_orphanet = new SingleImport("resource_orphanet");
+//            Thread uniprot = new Thread(single_uniprot);
+//            Thread orphanet = new Thread(single_orphanet);
+//            uniprot.start();
+//            orphanet.start();
+            
 
             // LEVEL 2
             // ICD 10
             // MeSH
             // Interpro
             // PDB
-            // Enzyme
+            // Enzyme  
             // KEGG
-            /*
-            SingleImport single_icd10 = new SingleImport("resource_icd10");
-            SingleImport single_mesh = new SingleImport("resource_mesh");
-            SingleImport single_interpro = new SingleImport("resource_interpro");
-            SingleImport single_pdb = new SingleImport("resource_pdb");
-            SingleImport single_enzyme = new SingleImport("resource_enzyme");
-            SingleImport single_kegg = new SingleImport("resource_kegg");
-            SingleImport single_genecards = new SingleImport("resource_genecards");
-            
-            Thread icd10 = new Thread(single_icd10);
-            Thread mesh = new Thread(single_mesh);
-            Thread interpro = new Thread(single_interpro);
-            Thread pdb = new Thread(single_pdb);
-            Thread enzyme = new Thread(single_enzyme);
-            Thread kegg = new Thread(single_kegg);
-            Thread genecards = new Thread(single_genecards);
-            
-           
-             icd10.start();
-           interpro.start();
-            mesh.start();
-            pdb.start();
-          enzyme.start();
-            kegg.start();
-            genecards.start();
-            //*/             
+//            
+//            SingleImport single_icd10 = new SingleImport("resource_icd10");
+//            SingleImport single_mesh = new SingleImport("resource_mesh");
+//            SingleImport single_interpro = new SingleImport("resource_interpro");
+//            SingleImport single_pdb = new SingleImport("resource_pdb");
+//            SingleImport single_enzyme = new SingleImport("resource_enzyme");
+//            SingleImport single_kegg = new SingleImport("resource_kegg");
+//            SingleImport single_genecards = new SingleImport("resource_genecards");
+//            
+//            Thread icd10 = new Thread(single_icd10);
+//            Thread mesh = new Thread(single_mesh);
+//            Thread interpro = new Thread(single_interpro);
+//            Thread pdb = new Thread(single_pdb);
+//            Thread enzyme = new Thread(single_enzyme);
+//            Thread kegg = new Thread(single_kegg);
+//            Thread genecards = new Thread(single_genecards);
+//            
+//           
+//            icd10.start();
+//            interpro.start();
+//            mesh.start();
+//            pdb.start();
+//            enzyme.start();
+//            kegg.start();
+//            genecards.start();
+                         
 
 
             // LEVEL 3
@@ -98,29 +99,29 @@ public class Run {
             // PharmGKB
             // GO
             // PROSITE
-            /*
-             SingleImport single_gwas = new SingleImport("resource_gwascentral");
-             SingleImport single_ct = new SingleImport("resource_clinicaltrials");
-             SingleImport single_lsdb = new SingleImport("resource_lsdb");
-             SingleImport single_pharmgkb = new SingleImport("resource_pharmgkb");
-             SingleImport single_prosite = new SingleImport("resource_prosite");
-             SingleImport single_go = new SingleImport("resource_go");
-
-             Thread gwas = new Thread(single_gwas);
-             Thread clinical = new Thread(single_ct);
-             Thread lsdb = new Thread(single_lsdb);
-             Thread pharmgkb = new Thread(single_pharmgkb);
-             Thread go = new Thread(single_go);
-             Thread prosite = new Thread(single_prosite);
-
-
-             //gwas.start();
-             //clinical.start();
-             lsdb.start();
-             //pharmgkb.start();
-             //go.start();
-             //prosite.start();
-             //*/
+            
+//            SingleImport single_gwas = new SingleImport("resource_gwascentral");
+//            SingleImport single_ct = new SingleImport("resource_clinicaltrials");
+//            SingleImport single_lsdb = new SingleImport("resource_lsdb");
+//            SingleImport single_pharmgkb = new SingleImport("resource_pharmgkb");
+//            SingleImport single_prosite = new SingleImport("resource_prosite");
+//            SingleImport single_go = new SingleImport("resource_go");
+//
+//            Thread gwas = new Thread(single_gwas);
+//            Thread clinical = new Thread(single_ct);
+//            Thread lsdb = new Thread(single_lsdb);
+//            Thread pharmgkb = new Thread(single_pharmgkb);
+//            Thread go = new Thread(single_go);
+//            Thread prosite = new Thread(single_prosite);
+//
+//
+//            gwas.start();
+//            clinical.start();
+//            lsdb.start();
+//            pharmgkb.start();
+//            go.start();
+//            prosite.start();
+             
             
             // LEVEL 4
             // 

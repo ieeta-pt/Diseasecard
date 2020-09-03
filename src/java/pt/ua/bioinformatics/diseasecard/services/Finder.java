@@ -43,6 +43,11 @@ public class Finder {
 
     public Finder() {
     }
+    
+    public Finder(String query) {
+        this.query = query;
+        Boot.start();
+    }
 
     public HashMap<String, ArrayList<String>> getResults() {
         return results;
@@ -209,6 +214,7 @@ public class Finder {
         params.set("rows", 254);
 
         try {
+            String s = Config.getIndex();
             SolrServer server = new HttpSolrServer(Config.getIndex());
             QueryResponse response = server.query(params);
             SolrDocumentList docs = response.getResults();

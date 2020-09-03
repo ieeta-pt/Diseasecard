@@ -4,7 +4,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.API;
 import pt.ua.bioinformatics.coeus.data.Storage;
+import pt.ua.bioinformatics.diseasecard.services.Browsier;
+import pt.ua.bioinformatics.diseasecard.services.Cashier;
 import pt.ua.bioinformatics.diseasecard.services.DC4;
+import pt.ua.bioinformatics.diseasecard.services.Indexer;
+import pt.ua.bioinformatics.diseasecard.services.LoadResources;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -19,11 +23,12 @@ public class Boot {
     private static boolean started = false;
     private static API api = null;
     //private static Jedis jedis = null;
-    private static JedisPool jedis_pool = new JedisPool(new JedisPoolConfig(),"localhost", 6379 );
+    private static JedisPool jedis_pool = null;
 
     public static Jedis getJedis() {
         if (jedis_pool == null) {
-            jedis_pool = new JedisPool(new JedisPoolConfig(),"localhost", 6379, 10000 );
+            DC4.load();
+            jedis_pool = new JedisPool(new JedisPoolConfig(),DC4.getRedis_host().get("host").toString(), Integer.parseInt(DC4.getRedis_host().get("port").toString()), 10000 );
         }
         Jedis jedis = jedis_pool.getResource();
         
@@ -99,10 +104,47 @@ public class Boot {
                 } else {
                     Storage.connect();
                     api = new API();
-                    //jedis_pool = new JedisPool(new JedisPoolConfig(),DC4.getRedis_host().get("host").toString(), Integer.parseInt(DC4.getRedis_host().get("port").toString()), 10000 );
-                    //jedis = new 
                     Storage.loadPredicates();
                     System.out.println("\n\t[COEUS] " + Config.getName() + " Online\n");
+                }
+                
+                
+                if (!Config.isInfoLoaded()) {
+                    Config.setLoad(true);
+                    /*
+                        This loop is necessary to REALLY setup the system. 
+                        Here we're going to: 
+                            1) Load data by level;
+                            2) Load disease list into browsing cache;
+                            3) Load knowledge network into cache for each disease (OMIM based) and each gene;
+                            4) Index full-text content for Solr-based search;
+                    
+                        Sadly, this is a sequencial process. 
+                        Prepare your self, this is going to take some time :) 
+                    */
+                    
+                    System.out.println("\n\nTIME TO LOAD");
+                    //LoadResources.load("FULL");
+                    
+                    System.out.println("\n\nTIME TO BROWSER");
+                    Browsier.start();
+                    System.out.println("\n\nTIME TO CASHIER");
+                    Cashier.start();
+                    
+                    
+                    /*
+                        This is the last step and takes a lot of time to finish. 
+                        Maybe we can leave it like this? 
+                    
+                        PS: By doing this process here, we no longer need to go to "/services/indexer" 
+                    */
+                    System.out.println("\n\nTIME TO INDEX");
+                    Indexer index = new Indexer();
+                    Thread t = new Thread(index);
+                    t.start();
+                    
+                    
+                    
                 }
 
                 started = true;

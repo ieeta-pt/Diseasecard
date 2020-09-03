@@ -4,8 +4,11 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.naming.ldap.HasControls;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -32,9 +35,12 @@ public class Config {
     private static JSONArray data = new JSONArray();
     private static boolean debug = false;
     private static boolean built = false;
+    private static boolean load = false;
     private static String path = "";
     private static String environment = "development";
     private static String version = "";
+    private static HashMap<String,String> connections = new HashMap();
+    private static HashMap<String,String[]> resources = new HashMap();
 
     public static String getVersion() {
         return version;
@@ -87,6 +93,10 @@ public class Config {
     public static boolean isBuilt() {
         return built;
     }
+    
+    public static boolean isInfoLoaded() {
+        return load;
+    }
 
     public static void setBuilt(boolean builder) {
         Config.built = builder;
@@ -131,6 +141,10 @@ public class Config {
     public static void setLoaded(boolean loaded) {
         Config.loaded = loaded;
     }
+    
+    public static void setLoad(boolean load) {
+        Config.load = load;
+    }
 
     public static JSONArray getData() {
         return data;
@@ -155,7 +169,19 @@ public class Config {
     public static void setSdb(String store) {
         Config.sdb = store;
     }
+    
+    public static String getConnectionInfo(String key) {
+        return connections.get(key);
+    }
+    
+    public static String[] getResourcesByLevel(String level) {
+        return resources.get(level);
+    }
 
+    public static HashMap<String,String[]> getResources() {
+        return resources;
+    }
+    
     public static boolean isDebug() {
         return debug;
     }
@@ -193,18 +219,37 @@ public class Config {
                 ontology = (String) config.get("ontology");                                     
                 setup = (String) config.get("setup");                                           
                 debug = (Boolean) config.get("debug");                                          
-                built = (Boolean) config.get("built");                                          
+                built = (Boolean) config.get("built");   
+                load = (Boolean) config.get("load");    
                 predicates = (String) config.get("predicates");       
                 version = (String) config.get("version");
                 environment = (String) config.get("environment");                               
                 index = (String) config.get("index");                               
                 sdb = ((String) config.get("sdb")).replace(".ttl", "_" + environment + ".ttl");
                 keyPrefix = (String) config.get("keyprefix");
+                
                 JSONObject prefixes = (JSONObject) file.get("prefixes");
                 for (Object o : prefixes.keySet()) {
                     String jo = (String) o;
                     PrefixFactory.add(jo, prefixes.get(jo).toString());
                 }
+                
+                JSONObject connectionsJSON = (JSONObject) file.get("connections");
+                for (Object o : connectionsJSON.keySet()) {
+                    String jo = (String) o;
+                    connections.put(jo, connectionsJSON.get(jo).toString());
+                }
+                
+                /*
+                    Each entry corresponds to a different level in the load process. 
+                */
+                JSONObject resourcesJSON = (JSONObject) file.get("resources");
+                for (Object o : resourcesJSON.keySet()) {
+                    String jo = (String) o;
+                    resources.put(jo, resourcesJSON.get(jo).toString().split(","));
+                }
+                
+                
                 if (Config.isDebug()) {
                     System.out.println("[COEUS][Config] Configuration loaded");
                 }

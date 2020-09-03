@@ -8,7 +8,9 @@ import com.hp.hpl.jena.rdf.model.InfModel;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.Statement;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.parser.JSONParser;
@@ -372,5 +374,59 @@ public class API {
         } catch (Exception e) {
             return "";
         }
+    }
+    
+    
+    /**
+     * Read into the model any rdf data
+     *
+     * @param is
+     * @param base
+     */
+    public void readModel(InputStream is, String base) {
+        try {
+            this.model.read(is, base);
+        } catch (Exception ex) {
+            if (Config.isDebug()) {
+                System.out.println("[COEUS][API] Unable to read into the model");
+            }
+            Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Remove a statement from the model.
+     *
+     * @param statement
+     */
+    public void removeStatement(Statement statement) {
+        try {
+            this.model.remove(statement);
+        } catch (Exception ex) {
+            if (Config.isDebug()) {
+                System.out.println("[COEUS][API] Unable to remove statement from the model");
+            }
+            Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+    
+    /**
+     * Add statement to the model
+     *
+     * @param statement
+     * @return
+     */
+    public void addStatement(Statement statement) {
+        try {
+            this.model.add(statement);
+        } catch (Exception ex) {
+            if (Config.isDebug()) {
+                String stat = statement.getSubject() + " " + statement.getPredicate() + " " + statement.getObject();
+                System.out.println("[COEUS][API] Unable add statement in the model: " + stat);
+                Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
     }
 }

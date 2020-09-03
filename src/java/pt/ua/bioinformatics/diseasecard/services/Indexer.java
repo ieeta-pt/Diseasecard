@@ -17,9 +17,11 @@ import org.json.JSONArray;
 import pt.ua.bioinformatics.coeus.api.DB;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
 import pt.ua.bioinformatics.coeus.common.Boot;
+import pt.ua.bioinformatics.coeus.common.Config;
 import pt.ua.bioinformatics.diseasecard.domain.Disease;
 import pt.ua.bioinformatics.diseasecard.domain.EntrezGene;
 import pt.ua.bioinformatics.diseasecard.domain.Orphanet;
+import redis.clients.jedis.Jedis;
 
 /**
  * Main indexing controller controlling Solr indexing process.
@@ -50,11 +52,13 @@ public class Indexer implements Runnable {
         // select OMIM identifiers
         System.out.println("[DC4] Indexer started, loading OMIMs");
         ResultSet rs = Boot.getAPI().selectRS("SELECT ?t WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM . ?u diseasecard:omim ?t  }", false);
+        Jedis jedis = Boot.getJedis();
         while (rs.hasNext()) {
             QuerySolution row = rs.next();
             try {
+                //System.out.println("OMIM: " + jedis.get("omim:" + row.get("t").toString()));
                 // add to HashMap
-                omims.put(row.get("t").toString(), new JSONObject(Boot.getJedis().get("omim:" + row.get("t").toString())));
+                omims.put(row.get("t").toString(), new JSONObject(jedis.get("omim:" + row.get("t").toString())));
             } catch (Exception e) {
                 Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);
             }
@@ -65,8 +69,11 @@ public class Indexer implements Runnable {
      * Process each OMIM object (from HashMap) into full-content indexing engine
      */
     void indexer() {
+        Boot.start();
+        
         System.out.println("[DC4] OMIMs loaded, starting Solr import");
-        HttpSolrServer server = new HttpSolrServer("http://localhost:8983/solr");
+//        HttpSolrServer server = new HttpSolrServer("http://container_solr:8983/solr");
+        HttpSolrServer server = new HttpSolrServer(Config.getIndex());                      // Pode não estar inicializado!
         server.setDefaultMaxConnectionsPerHost(256);
         server.setMaxTotalConnections(256);
         ExecutorService pool = Executors.newFixedThreadPool(64);
@@ -113,8 +120,8 @@ public class Indexer implements Runnable {
         while (results.hasNext()) {
             QuerySolution row = results.next();
             try {
-                DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
-                db.connect("jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+                DB db = new DB("DC4", Config.getConnectionInfo("diseasecard_root"));
+                db.connect(Config.getConnectionInfo("diseasecard_root"));
                 String q = "INSERT INTO DiseaseIndex(omim, info, type) VALUES(?, ? ,?);";
                 PreparedStatement p = db.getConnection().prepareStatement(q);
                 p.setInt(1, Integer.parseInt(row.get("omim").toString()));
@@ -133,8 +140,8 @@ public class Indexer implements Runnable {
         while (results.hasNext()) {
             QuerySolution row = results.next();
             try {
-                DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
-                db.connect("jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+                DB db = new DB("DC4", "jdbc:mysql://container_mysql:3306/diseasecard?user=root&password=telematica");
+                db.connect("jdbc:mysql://container_mysql:3306/diseasecard?user=root&password=telematica");
                 String q = "INSERT INTO DiseaseIndex(omim, info, type) VALUES(?, ? ,?);";
                 PreparedStatement p = db.getConnection().prepareStatement(q);
                 p.setInt(1, Integer.parseInt(row.get("omim").toString()));
@@ -159,8 +166,8 @@ public class Indexer implements Runnable {
         while (results.hasNext()) {
             QuerySolution row = results.next();
             try {
-                DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
-                db.connect("jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+                DB db = new DB("DC4", "jdbc:mysql://container_mysql:3306/diseasecard?user=root&password=telematica");
+                db.connect("jdbc:mysql://container_mysql:3306/diseasecard?user=root&password=telematica");
                 String q = "INSERT INTO DiseaseIndex(omim, info, type) VALUES(?, ? ,?);";
                 PreparedStatement p = db.getConnection().prepareStatement(q);
                 p.setInt(1, Integer.parseInt(row.get("omim").toString()));
@@ -179,8 +186,8 @@ public class Indexer implements Runnable {
         while (results.hasNext()) {
             QuerySolution row = results.next();
             try {
-                DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
-                db.connect("jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+                DB db = new DB("DC4", "jdbc:mysql://container_mysql:3306/diseasecard?user=root&password=telematica");
+                db.connect("jdbc:mysql://container_mysql:3306/diseasecard?user=root&password=telematica");
                 String q = "INSERT INTO DiseaseIndex(omim, info, type) VALUES(?, ? ,?);";
                 PreparedStatement p = db.getConnection().prepareStatement(q);
                 p.setInt(1, Integer.parseInt(row.get("omim").toString()));
@@ -196,7 +203,7 @@ public class Indexer implements Runnable {
 
         query = "SELECT DISTINCT ?omim{?d coeus:hasConcept diseasecard:concept_OMIM . ?d diseasecard:omim ?omim}";
         results = Boot.getAPI().selectRS(query, false);
-        DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+        DB db = new DB("DC4", "jdbc:mysql://container_mysql:3306/diseasecard?user=root&password=telematica");
         while (results.hasNext()) {
             QuerySolution row = results.next();
             try {
@@ -247,8 +254,8 @@ public class Indexer implements Runnable {
                 while (rresults.hasNext()) {
                     QuerySolution rrow = rresults.next();
 
-                    DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
-                    db.connect("jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+                    DB db = new DB("DC4", "jdbc:mysql://container_mysql:3306/diseasecard?user=root&password=telematica");
+                    db.connect("jdbc:mysql://container_mysql:3306/diseasecard?user=root&password=telematica");
                     String item = rrow.get("o").toString();
                     if (item.contains("hgnc")) {
                         item = item.replace("http://bioinformatics.ua.pt/diseasecard/resource/hgnc_", "");
@@ -270,8 +277,10 @@ public class Indexer implements Runnable {
      */
     static void process() {
         String query_omims = "SELECT DISTINCT ?omim {?d coeus:hasConcept diseasecard:concept_OMIM . ?d diseasecard:omim ?omim}";
-        DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+        
         Boot.start();
+        DB db = new DB("DC4", Config.getConnectionInfo("diseasecard_root"));
+//        Boot.start();
         ResultSet results_omim = Boot.getAPI().selectRS(query_omims, false);
         while (results_omim.hasNext()) {
             QuerySolution row = results_omim.next();
@@ -513,7 +522,7 @@ public class Indexer implements Runnable {
         ArrayList<SolrObject> list = new ArrayList<SolrObject>();
         try {
             String q = "SELECT DISTINCT * FROM DiseaseIndex WHERE type LIKE '" + c + "';";
-            DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+            DB db = new DB("DC4", Config.getConnectionInfo("diseasecard_root"));
             db.connect();
             java.sql.ResultSet results = db.getData(q);
             while (results.next()) {
@@ -530,8 +539,8 @@ public class Indexer implements Runnable {
     static void addNames() {
         try {
             String q = "SELECT DISTINCT(omim) FROM Diseases;";
-            DB db = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
-            DB dbx = new DB("DC4", "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica");
+            DB db = new DB("DC4", Config.getConnectionInfo("diseasecard_root"));
+            DB dbx = new DB("DC4", Config.getConnectionInfo("diseasecard_root"));
             db.connect();
             java.sql.ResultSet results = db.getData(q);
             while (results.next()) {

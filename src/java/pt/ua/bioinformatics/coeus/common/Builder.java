@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import pt.ua.bioinformatics.coeus.data.connect.CSVFactory;
+import pt.ua.bioinformatics.coeus.data.connect.LinkedDataFactory;
 import pt.ua.bioinformatics.coeus.data.connect.PluginFactory;
 import pt.ua.bioinformatics.coeus.data.connect.ResourceFactory;
 import pt.ua.bioinformatics.coeus.data.connect.SPARQLFactory;
@@ -151,14 +152,12 @@ public class Builder {
         ResourceFactory factory;
         try {
             if (!r.isBuilt()) {
-                /*
-                 if (r.getPublisher().equals("plugin")) {
-                 factory = new PluginFactory(r);
-                
-                 } else 
-                 //*/
-                if (r.getPublisher().equals("csv")) {
+                if (r.getPublisher().equals("plugin")) {
+                    factory = new PluginFactory(r);
+                } else if (r.getPublisher().equals("csv")) {
                     factory = new CSVFactory(r);
+                } else if (r.getPublisher().equals("ld")) {
+                    factory = new LinkedDataFactory(r);
                 } else if (r.getPublisher().equals("xml")) {
                     factory = new XMLFactory(r);
                 } else if (r.getPublisher().equals("sql")) {

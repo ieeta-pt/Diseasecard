@@ -81,9 +81,9 @@ public class OMIMPlugin {
         loadHGNC();
         loadGenotype();
         loadPhenotype();
-        //if (loadGenotype() && loadPhenotype()) {
-        triplify();
-        //}
+        if (loadGenotype() && loadPhenotype()) {
+            triplify();
+        }
     }
 
     /**
@@ -92,9 +92,9 @@ public class OMIMPlugin {
      * @return success of the operation.
      */
     private boolean loadGenotype() {
-        boolean success = true;
+        boolean success = false;
         try {
-            //URL u = new URL("ftp://ftp.ncbi.nih.gov/repository/OMIM/ARCHIVE/genemap");
+//            URL u = new URL("ftp://ftp.ncbi.nih.gov/repository/OMIM/ARCHIVE/genemap");
             URL u = new URL("http://omim.dev/genemap");
             BufferedReader in = new BufferedReader(new InputStreamReader(u.openStream()));
             CSVReader reader = new CSVReader(in, '|');
@@ -126,9 +126,9 @@ public class OMIMPlugin {
      * @return success of the operation.
      */
     private boolean loadPhenotype() {
-        boolean success = true;
+        boolean success = false;
         try {
-            //URL u = new URL("ftp://ftp.ncbi.nih.gov/repository/OMIM/ARCHIVE/morbidmap");            
+//            URL u = new URL("ftp://ftp.ncbi.nih.gov/repository/OMIM/ARCHIVE/morbidmap");            
             URL u = new URL("http://omim.dev/morbidmap");
             BufferedReader in = new BufferedReader(new InputStreamReader(u.openStream()));
             CSVReader reader = new CSVReader(in, '|');
