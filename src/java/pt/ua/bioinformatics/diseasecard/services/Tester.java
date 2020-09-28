@@ -2,7 +2,7 @@ package pt.ua.bioinformatics.diseasecard.services;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import pt.ua.bioinformatics.coeus.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
 
 /**
  * Utility class to test random scenarios.

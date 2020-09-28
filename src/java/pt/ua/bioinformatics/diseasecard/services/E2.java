@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pt.ua.bioinformatics.coeus.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
 import pt.ua.bioinformatics.diseasecard.engine.ICD10Processor;
 
 /**

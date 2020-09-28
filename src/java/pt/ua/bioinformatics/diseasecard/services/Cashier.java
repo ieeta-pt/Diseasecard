@@ -5,7 +5,7 @@ import com.hp.hpl.jena.query.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
-import pt.ua.bioinformatics.coeus.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
 import pt.ua.bioinformatics.diseasecard.domain.DiseaseAPI;
 import redis.clients.jedis.Jedis;
 

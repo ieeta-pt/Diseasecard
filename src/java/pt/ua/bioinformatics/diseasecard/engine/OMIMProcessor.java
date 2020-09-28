@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pt.ua.bioinformatics.coeus.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
 
 /**
  *

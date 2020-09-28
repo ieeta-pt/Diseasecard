@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 import org.json.JSONObject;
 import pt.ua.bioinformatics.coeus.api.DB;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
-import pt.ua.bioinformatics.coeus.common.Boot;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -24,7 +24,7 @@ public class Browsier {
     
     public static void start() {
 
-//        toDB();
+        toDB();
         toCache();
     }
 
@@ -33,6 +33,7 @@ public class Browsier {
      */
     public static void toDB() {
         Boot.start();
+        Jedis jedis = Boot.getJedis();  
         db = new DB("DC4", Config.getConnectionInfo("diseasecard_diseasecard"));
         ResultSet rs = Boot.getAPI().selectRS("SELECT ?u WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM } ORDER BY ?u", false);
         while (rs.hasNext()) {
@@ -40,7 +41,7 @@ public class Browsier {
             try {
                 QuerySolution row = rs.next();
                 System.out.println("omim:" + ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString())));
-                JSONObject disease = new JSONObject(Boot.getJedis().get("omim:" + ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString()))));
+                JSONObject disease = new JSONObject(jedis.get("omim:" + ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString()))));
                 db.connect();
                 String q = "INSERT INTO Diseases(omim, c, name) VALUES(?, ? ,?);";
 

@@ -8,14 +8,14 @@
         "setup": "dc4_setup.rdf",
         "sdb":"dc4_sdb.ttl",
         "predicates":"dc4_predicates.csv",
-        "built": false,
-        "load": false,
+        "built": true,
+        "load": true,
         "debug": true,
         "environment": "testing",
-        "index": "http://container_solr:8983/solr"
+        "index": "http://localhost:8983/solr"
     },
     "prefixes" : {
-        "coeus": "http://bioinformatics.ua.pt/coeus/",
+        "coeus": "http://bioinformatics.ua.pt/coeus/resource/",
         "owl2xml":"http://www.w3.org/2006/12/owl2-xml#",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
         "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
@@ -26,12 +26,12 @@
         "diseasecard":"http://bioinformatics.ua.pt/diseasecard/resource/"
     },
     "connections": {
-        "diseasecard_root": "jdbc:mysql://container_mysql:3306/diseasecard?user=root&password=telematica",
-        "diseasecard_diseasecard": "jdbc:mysql://container_mysql:3306/diseasecard?user=diseasecard&password=diseasecard",
-        "hummer_root": "jdbc:mysql://container_mysql:3306/hummer?user=root&amp;password=telematica"
+        "diseasecard_root": "jdbc:mysql://localhost:3306/diseasecard?user=root&password=telematica",
+        "diseasecard_diseasecard": "jdbc:mysql://localhost:3306/diseasecard?user=diseasecard&password=diseasecard",
+        "hummer_root": "jdbc:mysql://localhost:3306/hummer?user=root&amp;password=telematica"
     },
     "resources": {
-        "level0": "resource_uniprot",
+        "level0": "resource_omim",
         "level1": "resource_uniprot,resource_orphanet",
         "level2": "resource_icd10,resource_mesh,resource_interpro,resource_pdb,resource_enzyme,resource_kegg,resource_genecards",
         "level3": "resource_gwascentral, resource_clinicaltrials,resource_lsdb,resource_pharmgkb,resource_prosite,resource_go",

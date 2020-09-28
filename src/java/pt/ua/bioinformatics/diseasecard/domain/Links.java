@@ -8,8 +8,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pt.ua.bioinformatics.coeus.common.Boot;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 
 /**
  *
@@ -34,7 +34,7 @@ public class Links {
         //Literature
         links.put("pubmed", "http://www.ncbi.nlm.nih.gov/pubmed?term=#replace#");
         // Locus
-        links.put("hgnc", "http://www.genenames.org/data/hgnc_data.php?match=#replace#");
+        links.put("hgnc", "https://www.genenames.org/data/gene-symbol-report/#!/hgnc_id/#replace#");
         links.put("genecards", "http://www.genecards.org/cgi-bin/carddisp.pl?gc_id=#replace#");
         links.put("ensembl", "http://www.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g=#replace#");
         links.put("entrez", "http://www.ncbi.nlm.nih.gov/sites/entrez?db=gene&term=#replace#");
