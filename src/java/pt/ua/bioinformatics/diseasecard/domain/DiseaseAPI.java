@@ -65,7 +65,15 @@ public class DiseaseAPI {
             map.put("omim", omim);
 
             // the SPARQL query
-            ResultSet rs = api.selectRS("SELECT * WHERE { diseasecard:omim_" + omim + " diseasecard:chromosomalLocation ?chromo . diseasecard:omim_" + omim + " dc:description ?d . diseasecard:omim_" + omim + " coeus:isAssociatedTo ?a1 . ?a1 coeus:isAssociatedTo ?a2 . { OPTIONAL {diseasecard:omim_" + omim + " diseasecard:hasGenotype ?g} . OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasPhenotype ?p }. OPTIONAL { diseasecard:omim_" + omim + " diseasecard:name ?n } . OPTIONAL {diseasecard:omim_" + omim + " diseasecard:phenotype ?pheno} . OPTIONAL {diseasecard:omim_" + omim + " diseasecard:genotype ?geno .}}}", false);
+            ResultSet rs = api.selectRS("SELECT * WHERE { diseasecard:omim_" + omim + " diseasecard:chromosomalLocation ?chromo ."
+                    + " diseasecard:omim_" + omim + " dc:description ?d . "
+                    + "{ OPTIONAL {diseasecard:omim_" + omim + " diseasecard:hasGenotype ?g} . "
+                    + "OPTIONAL {diseasecard:omim_" + omim + " coeus:isAssociatedTo ?a1} . "
+                    + "OPTIONAL {?a1 coeus:isAssociatedTo ?a2} . "
+                    + "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasPhenotype ?p }. "
+                    + "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:name ?n } . "
+                    + "OPTIONAL {diseasecard:omim_" + omim + " diseasecard:phenotype ?pheno} . "
+                    + "OPTIONAL {diseasecard:omim_" + omim + " diseasecard:genotype ?geno .}}}", false);
             JSONArray synonyms = new JSONArray();
             JSONArray results = new JSONArray();
             String description = "";

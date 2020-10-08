@@ -34,13 +34,21 @@ public class Browsier {
     public static void toDB() {
         Boot.start();
         Jedis jedis = Boot.getJedis();  
+<<<<<<< HEAD
 
+=======
+        db = new DB("DC4", Config.getConnectionInfo("diseasecard_diseasecard"));
+>>>>>>> 2b44b690fc77cce62ee513cbea06d8eecfe15115
         ResultSet rs = Boot.getAPI().selectRS("SELECT ?u WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM } ORDER BY ?u", false);
         while (rs.hasNext()) {
 
             try {
                 QuerySolution row = rs.next();
+<<<<<<< HEAD
                 //System.out.println("omim:" + ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString())));
+=======
+                System.out.println("omim:" + ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString())));
+>>>>>>> 2b44b690fc77cce62ee513cbea06d8eecfe15115
                 JSONObject disease = new JSONObject(jedis.get("omim:" + ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString()))));
                 db.connect();
                 String q = "INSERT INTO Diseases(omim, c, name) VALUES(?, ? ,?);";

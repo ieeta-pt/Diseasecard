@@ -12,6 +12,7 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< HEAD
         <group>
             <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/actions/RedirectBrowseActionBean.java</file>
             <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/services/Indexer.java</file>
@@ -25,5 +26,8 @@
             <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/domain/DiseaseAPI.java</file>
             <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/actions/RedirectStatusActionBean.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> 2b44b690fc77cce62ee513cbea06d8eecfe15115
     </open-files>
 </project-private>
