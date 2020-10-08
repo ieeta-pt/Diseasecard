@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import pt.ua.bioinformatics.coeus.api.DB;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 
 /**
  * Utility class to store feedback messages on database.

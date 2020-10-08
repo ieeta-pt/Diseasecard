@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pt.ua.bioinformatics.coeus.api.plugins.SingleImport;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 
 /**
  * This class is an upgrade of part of the old Run.java 
@@ -44,10 +43,10 @@ public class LoadResources {
         
         for (String resource : resourcesToLoad)
         {
-            SingleImport single = new SingleImport(resource);
-            Thread t = new Thread(single);
-            threads.add(t);
-            t.start();
+//            SingleImport single = new SingleImport(resource);
+//            Thread t = new Thread(single);
+//            threads.add(t);
+//            t.start();
         }
         
         

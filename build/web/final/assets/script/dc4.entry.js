@@ -554,6 +554,10 @@ $(document).ready(function() {
         if (window.location.hash.substring(1).indexOf(':') > 0) {
 
             $('#frame_loading').fadeIn('slow');
+            
+            // NEW STUFF
+            window.open(path + '/services/linkout/' + window.location.hash.substring(1), '_blank');
+            
             $('#content').html(getFrame(window.location.hash.substring(1)));
             $('#_content').load(function() {
                 $('#frame_loading').fadeOut('slow');

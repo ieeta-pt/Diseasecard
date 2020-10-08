@@ -18,8 +18,8 @@ import org.apache.solr.common.params.ModifiableSolrParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import pt.ua.bioinformatics.coeus.api.DB;
-import pt.ua.bioinformatics.coeus.common.Boot;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 import pt.ua.bioinformatics.diseasecard.domain.Disease;
 import pt.ua.bioinformatics.diseasecard.domain.SearchResult;
 

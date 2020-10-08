@@ -9,8 +9,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import pt.ua.bioinformatics.coeus.api.API;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
-import pt.ua.bioinformatics.coeus.common.Boot;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 
 /**
  *
@@ -24,10 +24,18 @@ import pt.ua.bioinformatics.coeus.common.Config;
 public class DiseaseAPI {
 
     private String omim;
-    private API api;
+    private static API api;
     private ArrayList<String> list = new ArrayList<String>();
     private JSONObject map = new JSONObject();
-
+    
+    
+    static JSONObject aux = new JSONObject();
+    static JSONArray synonyms = new JSONArray();
+    static JSONArray results = new JSONArray();
+    static ArrayList<String> listaux = new ArrayList<String>();
+   
+    
+    
     public String getOmim() {
         return omim;
     }
@@ -46,7 +54,7 @@ public class DiseaseAPI {
         this.omim = omim;
         this.api = Boot.getAPI();
     }
-
+    
     /**
      * Load disease network information from knowledge base.
      *
@@ -139,7 +147,8 @@ public class DiseaseAPI {
         }
         return map;
     }
-
+    
+    
     /**
      *
      * Load gene network from knowledge base.
@@ -151,8 +160,7 @@ public class DiseaseAPI {
         map.put("hgnc", hgnc);
 
         try {
-            ResultSet rs = api.selectRS("SELECT DISTINCT ?a1 ?a2 ?a3 WHERE { diseasecard:hgnc_" + hgnc + " coeus:isAssociatedTo ?a1 .\n"
-                    + "    ?a1 coeus:isAssociatedTo ?a2 . ?a2 coeus:isAssociatedTo ?a3}", false);
+            ResultSet rs = api.selectRS("SELECT DISTINCT ?a1 ?a2 ?a3 WHERE { diseasecard:hgnc_" + hgnc + " coeus:isAssociatedTo ?a1 . ?a1 coeus:isAssociatedTo ?a2 . ?a2 coeus:isAssociatedTo ?a3}", false);
 
             JSONArray results = new JSONArray();
 
@@ -221,4 +229,6 @@ public class DiseaseAPI {
         }
         return map;
     }
+
+
 }

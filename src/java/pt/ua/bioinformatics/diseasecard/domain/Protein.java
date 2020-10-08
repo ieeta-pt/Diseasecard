@@ -3,7 +3,7 @@ package pt.ua.bioinformatics.diseasecard.domain;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 
 /**
  * Protein Entity mirror class.

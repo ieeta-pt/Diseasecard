@@ -4,8 +4,8 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import pt.ua.bioinformatics.coeus.common.Boot;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 
 /**
  * Utility class to load LSDB data into cache.

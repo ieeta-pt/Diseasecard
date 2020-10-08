@@ -13,10 +13,17 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/mfs98/Documents/BOLSA/Repositories/Diseasecard/src/java/dc4_sdb_testing.ttl</file>
-            <file>file:/home/mfs98/Documents/BOLSA/Repositories/Diseasecard/src/java/dc4.js</file>
-            <file>file:/home/mfs98/Documents/BOLSA/Repositories/Diseasecard/src/java/config.js</file>
-            <file>file:/home/mfs98/Documents/BOLSA/Repositories/Diseasecard/src/java/dc4_joseki_sdb.ttl</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/actions/RedirectBrowseActionBean.java</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/services/Indexer.java</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/common/Boot.java</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/services/Cashier.java</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/config.js</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/domain/Links.java</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/coeus/data/Storage.java</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/services/Browsier.java</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/services/Finder.java</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/domain/DiseaseAPI.java</file>
+            <file>file:/home/mariana/Documents/BOLSA/Repositories/Diseasecard/src/java/pt/ua/bioinformatics/diseasecard/actions/RedirectStatusActionBean.java</file>
         </group>
     </open-files>
 </project-private>

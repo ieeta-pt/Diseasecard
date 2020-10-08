@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 import org.json.JSONObject;
 import pt.ua.bioinformatics.coeus.api.DB;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
-import pt.ua.bioinformatics.coeus.common.Boot;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -19,12 +19,12 @@ import redis.clients.jedis.Jedis;
  */
 public class Browsier {
 
-    private static DB db;
+    private static DB db = new DB("DC4", Config.getConnectionInfo("diseasecard_diseasecard"));;
 
     
     public static void start() {
 
-//        toDB();
+        toDB();
         toCache();
     }
 
@@ -33,14 +33,15 @@ public class Browsier {
      */
     public static void toDB() {
         Boot.start();
-        db = new DB("DC4", Config.getConnectionInfo("diseasecard_diseasecard"));
+        Jedis jedis = Boot.getJedis();  
+
         ResultSet rs = Boot.getAPI().selectRS("SELECT ?u WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM } ORDER BY ?u", false);
         while (rs.hasNext()) {
 
             try {
                 QuerySolution row = rs.next();
-                System.out.println("omim:" + ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString())));
-                JSONObject disease = new JSONObject(Boot.getJedis().get("omim:" + ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString()))));
+                //System.out.println("omim:" + ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString())));
+                JSONObject disease = new JSONObject(jedis.get("omim:" + ItemFactory.getTokenFromItem(ItemFactory.getTokenFromURI(row.get("u").toString()))));
                 db.connect();
                 String q = "INSERT INTO Diseases(omim, c, name) VALUES(?, ? ,?);";
 
@@ -66,7 +67,7 @@ public class Browsier {
      */
     public static void toCache() {
         String[] list = {"#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
-        Boot.start();
+//        Boot.start();
         Finder f = new Finder();
         Jedis jedis = Boot.getJedis();
         for (String start : list) {
@@ -80,6 +81,6 @@ public class Browsier {
                 }
             }
         }
-        Boot.getJedis().save();
+        jedis.save();
     }
 }

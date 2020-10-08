@@ -16,8 +16,8 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import pt.ua.bioinformatics.coeus.api.DB;
 import pt.ua.bioinformatics.coeus.api.ItemFactory;
-import pt.ua.bioinformatics.coeus.common.Boot;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Boot;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 import pt.ua.bioinformatics.diseasecard.domain.Disease;
 import pt.ua.bioinformatics.diseasecard.domain.EntrezGene;
 import pt.ua.bioinformatics.diseasecard.domain.Orphanet;
@@ -51,12 +51,13 @@ public class Indexer implements Runnable {
         Boot.start();
         // select OMIM identifiers
         System.out.println("[DC4] Indexer started, loading OMIMs");
+        
         ResultSet rs = Boot.getAPI().selectRS("SELECT ?t WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM . ?u diseasecard:omim ?t  }", false);
         Jedis jedis = Boot.getJedis();
         while (rs.hasNext()) {
             QuerySolution row = rs.next();
             try {
-                //System.out.println("OMIM: " + jedis.get("omim:" + row.get("t").toString()));
+                System.out.println("OMIM: " + jedis.get("omim:" + row.get("t").toString()));
                 // add to HashMap
                 omims.put(row.get("t").toString(), new JSONObject(jedis.get("omim:" + row.get("t").toString())));
             } catch (Exception e) {
@@ -73,9 +74,11 @@ public class Indexer implements Runnable {
         
         System.out.println("[DC4] OMIMs loaded, starting Solr import");
 //        HttpSolrServer server = new HttpSolrServer("http://container_solr:8983/solr");
+        
         HttpSolrServer server = new HttpSolrServer(Config.getIndex());                      // Pode não estar inicializado!
         server.setDefaultMaxConnectionsPerHost(256);
         server.setMaxTotalConnections(256);
+        
         ExecutorService pool = Executors.newFixedThreadPool(64);
 
         for (String omim : omims.keySet()) {
@@ -105,7 +108,6 @@ public class Indexer implements Runnable {
             } catch (Exception ex) {
                 Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Activity.log(omim, "indexed", omim, "Indexer", "127.0.0.1");
         }
 
     }

@@ -6,15 +6,11 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.InfModel;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Property;
-import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.Statement;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.simple.parser.JSONParser;
-import pt.ua.bioinformatics.coeus.common.Config;
+import pt.ua.bioinformatics.diseasecard.common.Config;
 import pt.ua.bioinformatics.coeus.data.Storage;
 
 /**
@@ -30,7 +26,6 @@ public class API {
 
     private Model model = Storage.getModel();                   // Jena Model access
     private InfModel inferredModel = Storage.getInfmodel();     // Jena InferredModel access (when active!)
-    private Internal internal = new Internal();                 // Cross-usage with Internal
     private JSONParser jsonparser = new JSONParser();           // JSONParser for JSON outputs
 
     public JSONParser getJsonparser() {
@@ -41,13 +36,6 @@ public class API {
         this.jsonparser = jsonparser;
     }
 
-    public Internal getInternal() {
-        return internal;
-    }
-
-    public void setInternal(Internal internal) {
-        this.internal = internal;
-    }
 
     public InfModel getInferredModel() {
         return inferredModel;
@@ -131,27 +119,6 @@ public class API {
         return response;
     }
 
-    /**
-     * Gets all properties associated with a given individual.
-     *
-     * @param individual the individual COEUS id <concept>_<id>.
-     * @param format the response format.
-     * @return
-     */
-    public String getIndividual(String individual, String format) {
-        String response = "";
-        try {
-            String sparqlQuery = PrefixFactory.allToString() + "SELECT ?pred ?obj WHERE  { coeus:" + individual + " ?pred ?obj}";
-            QueryExecution qe = QueryExecutionFactory.create(sparqlQuery, model);
-            response = execute(qe, format);
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][API] Unable to get individual from COEUS Data");
-                Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return response;
-    }
 
     /**
      * Gets triple-based information according to given parameters.
@@ -231,113 +198,6 @@ public class API {
     }
 
     /**
-     * Adds the given triple statement to COEUS model.
-     *
-     * @param subject a Resource for to the statement subject.
-     * @param predicate a Property for the statement predicate.
-     * @param object a Resource for the statement object.
-     * @return success of the operation.
-     */
-    public boolean addStatement(Resource subject, Property predicate, Resource object) {
-        boolean success = false;
-        try {
-            
-            this.model.add(subject, predicate, object);
-            success = true;
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][API] Unable to add triple to database: " + subject.toString() + "-" + predicate.toString() + "-" + object.toString());
-                Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return success;
-    }
-
-    /**
-     * Adds the given triple statement to COEUS model
-     *
-     * @param subject a Resource for to the statement subject.
-     * @param predicate a Property for the statement predicate.
-     * @param object a String for the statement object.
-     * @return success of the operation.
-     */
-    public boolean addStatement(Resource subject, Property predicate, String object) {
-        boolean success = false;
-        try {
-            this.model.add(subject, predicate, object);
-            success = true;
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][API] Unable to add triple to database");
-                Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return success;
-    }
-
-    /**
-     * Adds the given triple statement to COEUS model
-     *
-     * @param subject a Resource for to the statement subject.
-     * @param predicate a Property for the statement predicate.
-     * @param object a boolean value for the statement object.
-     * @return success of the operation.
-     */
-    public boolean addStatement(Resource subject, Property predicate, boolean object) {
-        boolean success = false;
-        try {
-            this.model.addLiteral(subject, predicate, object);
-            success = true;
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][API] Unable to add triple to database");
-                Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return success;
-    }
-
-    /**
-     * Gets information for a given Resource in COEUS SDB.
-     *
-     * TODO: shouldn't this be in Internal?
-     *
-     * @param uri the desired Resource URI.
-     * @return the loaded Resource.
-     */
-    public Resource getResource(String uri) {
-        Resource resource = null;
-        try {
-            resource = this.model.getResource(uri);
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][API] Unable to obtain new Resource from Model");
-                Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return resource;
-    }
-
-    /**
-     * Creates a new Resource in COEUS SDB.
-     *
-     * @param uri the URI for the new Resource.
-     * @return the newly created Resource.
-     */
-    public Resource createResource(String uri) {
-        Resource resource = null;
-        try {
-            resource = this.model.createResource(uri);
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][API] Unable to create new Resource in model");
-            }
-            Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return resource;
-    }
-
-    /**
      * Extracts an item identifier from a full URI.
      *
      * @param uri
@@ -374,59 +234,5 @@ public class API {
         } catch (Exception e) {
             return "";
         }
-    }
-    
-    
-    /**
-     * Read into the model any rdf data
-     *
-     * @param is
-     * @param base
-     */
-    public void readModel(InputStream is, String base) {
-        try {
-            this.model.read(is, base);
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][API] Unable to read into the model");
-            }
-            Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    /**
-     * Remove a statement from the model.
-     *
-     * @param statement
-     */
-    public void removeStatement(Statement statement) {
-        try {
-            this.model.remove(statement);
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                System.out.println("[COEUS][API] Unable to remove statement from the model");
-            }
-            Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-    
-    /**
-     * Add statement to the model
-     *
-     * @param statement
-     * @return
-     */
-    public void addStatement(Statement statement) {
-        try {
-            this.model.add(statement);
-        } catch (Exception ex) {
-            if (Config.isDebug()) {
-                String stat = statement.getSubject() + " " + statement.getPredicate() + " " + statement.getObject();
-                System.out.println("[COEUS][API] Unable add statement in the model: " + stat);
-                Logger.getLogger(API.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-
     }
 }

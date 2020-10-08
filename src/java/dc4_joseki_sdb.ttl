@@ -53,7 +53,7 @@ sdb:Model rdfs:subClassOf  ja:Model .
     [ rdf:type sdb:SDBConnection ;
        sdb:sdbType        "mysql" ;
        #sdb:sdbHost       "localhost:3306" ;
-       sdb:jdbcURL        "jdbc:mysql://container_mysql:3306/diseasecard?autoReconnect=true" ;
+       sdb:jdbcURL        "jdbc:mysql://localhost:3306/diseasecard?autoReconnect=true" ;
        sdb:sdbUser       "diseasecard" ;
        sdb:sdbPassword   "diseasecard" ;
     ]

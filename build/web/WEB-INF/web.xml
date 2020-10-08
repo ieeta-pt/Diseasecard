@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
     <description>Diseasecard: your rare disease portal</description>
     <display-name>Diseasecard</display-name>
     <listener>
-        <listener-class>pt.ua.bioinformatics.coeus.actions.diseasecard.StartupListener</listener-class>
+        <listener-class>pt.ua.bioinformatics.diseasecard.actions.StartupListener</listener-class>
     </listener>
     <filter>
         <filter-name>StripesFilter</filter-name>
@@ -15,12 +14,12 @@
         </init-param>
         <init-param>
             <param-name>Extension.Packages</param-name>
-            <param-value>pt.ua.bioinformatics.coeus.ext</param-value>
+            <param-value>pt.ua.bioinformatics.diseasecard.ext</param-value>
         </init-param>
         <init-param>
             <description>COEUS actions (check subpackages)</description>
             <param-name>ActionResolver.Packages</param-name>
-            <param-value>pt.ua.bioinformatics.coeus.actions</param-value>
+            <param-value>pt.ua.bioinformatics.diseasecard.actions</param-value>
         </init-param>
     </filter>
     <filter>
@@ -58,13 +57,11 @@
         <param-name>config-file</param-name>
         <param-value>classes/dc4_pubby.ttl</param-value>
     </context-param>
-
     <servlet>
         <servlet-name>WebURIServlet</servlet-name>
         <servlet-class>de.fuberlin.wiwiss.pubby.servlets.WebURIServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet>
         <servlet-name>PageURLServlet</servlet-name>
         <servlet-class>de.fuberlin.wiwiss.pubby.servlets.PageURLServlet</servlet-class>
@@ -75,50 +72,41 @@
         <servlet-class>de.fuberlin.wiwiss.pubby.servlets.PageURLServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>WebURLServlet</servlet-name>
         <url-pattern>/resource/*</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>PageURLServlet</servlet-name>
         <url-pattern>/page/*</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>PathPageURLServlet</servlet-name>
         <servlet-class>de.fuberlin.wiwiss.pubby.servlets.PathPageURLServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>PathPageURLServlet</servlet-name>
         <url-pattern>/pathpage/*</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>DataURLServlet</servlet-name>
         <servlet-class>de.fuberlin.wiwiss.pubby.servlets.DataURLServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>DataURLServlet</servlet-name>
         <url-pattern>/data/*</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>PathDataURLServlet</servlet-name>
         <servlet-class>de.fuberlin.wiwiss.pubby.servlets.PathDataURLServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>PathDataURLServlet</servlet-name>
         <url-pattern>/pathdata/*</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>RootServlet</servlet-name>
         <servlet-class>de.fuberlin.wiwiss.pubby.servlets.RootServlet</servlet-class>
