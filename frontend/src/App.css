@@ -1,0 +1,33 @@
+#app {
+  font-family: 'Titillium Web', sans-serif;
+  font-weight: 300;
+}
+
+/**
+      Search CSS
+ */
+      #logo {
+        margin: 20% auto 8%;
+      }
+
+      #index {
+        height: 100%;
+        vertical-align: middle;
+        text-align: center;
+      }
+
+      #search_form {
+        margin-left: 20%;
+        width: 60%;
+      }
+
+      .btn  {
+        background-color: #46b8da;
+        border-color: #46b8da;
+      }
+
+      .btn:hover, .btn:focus, .btn:active, .btn.active, .open>.dropdown-toggle.btn {
+        color: #fff;
+        background-color: #46b8da;
+        border-color: #46b8da; /*set the color you want here*/
+      }
