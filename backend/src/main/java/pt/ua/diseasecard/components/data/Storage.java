@@ -11,7 +11,7 @@ import com.hp.hpl.jena.sdb.Store;
 import org.springframework.stereotype.Component;
 import com.hp.hpl.jena.rdf.model.Model;
 import org.springframework.util.ResourceUtils;
-import pt.ua.diseasecard.components.utils.PrefixFactory;
+import pt.ua.diseasecard.utils.PrefixFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import javax.annotation.PostConstruct;
 import java.io.FileReader;

@@ -3,7 +3,7 @@ package pt.ua.diseasecard.configuration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import pt.ua.diseasecard.components.utils.PrefixFactory;
+import pt.ua.diseasecard.utils.PrefixFactory;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;

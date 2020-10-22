@@ -1,6 +1,5 @@
-package pt.ua.diseasecard.components.utils;
+package pt.ua.diseasecard.utils;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.common.SolrInputDocument;
 

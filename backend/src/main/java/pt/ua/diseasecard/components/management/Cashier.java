@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.DiseaseAPI;
 import pt.ua.diseasecard.components.data.SparqlAPI;
-import pt.ua.diseasecard.components.utils.ItemFactory;
+import pt.ua.diseasecard.utils.ItemFactory;
 import redis.clients.jedis.Jedis;
 import java.util.Objects;
 import java.util.logging.Level;

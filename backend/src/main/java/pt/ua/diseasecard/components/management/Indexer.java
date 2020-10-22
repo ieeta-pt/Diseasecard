@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.SparqlAPI;
-import pt.ua.diseasecard.components.utils.SolrLoad;
+import pt.ua.diseasecard.utils.SolrLoad;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import redis.clients.jedis.Jedis;
 import java.util.HashMap;

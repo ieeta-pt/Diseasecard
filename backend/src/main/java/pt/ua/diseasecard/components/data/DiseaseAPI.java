@@ -4,7 +4,7 @@ import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import pt.ua.diseasecard.components.utils.ItemFactory;
+import pt.ua.diseasecard.utils.ItemFactory;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -1,10 +1,6 @@
-package pt.ua.diseasecard.components.utils;
-
-import org.springframework.stereotype.Component;
-import pt.ua.diseasecard.configuration.DiseasecardProperties;
+package pt.ua.diseasecard.utils;
 
 import java.util.HashMap;
-import java.util.Objects;
 
 
 public class PrefixFactory {

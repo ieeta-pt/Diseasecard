@@ -1,4 +1,4 @@
-package pt.ua.diseasecard.components.utils;
+package pt.ua.diseasecard.utils;
 
 
 public class ItemFactory {

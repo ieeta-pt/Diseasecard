@@ -2,8 +2,10 @@
   "name": "diseasecardapp",
   "version": "0.1.0",
   "private": true,
+  "api_url": "http://localhost:8080/diseasecard/",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.11",
     "@testing-library/jest-dom": "^4.2.4",
@@ -12,10 +14,13 @@
     "bootstrap": "^4.5.2",
     "react": "^16.13.1",
     "react-bootstrap": "^1.3.0",
+    "react-data-table-component": "^6.11.5",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
-    "react-scripts": "3.4.3",
-    "redux": "^4.0.5"
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.4",
+    "redux": "^4.0.5",
+    "styled-components": "^5.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -37,5 +42,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@reduxjs/toolkit": "^1.4.0",
+    "axios": "^0.20.0"
   }
 }
