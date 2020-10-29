@@ -6,6 +6,7 @@ import { Container, Badge } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark } from '@fortawesome/free-regular-svg-icons'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
+import {AsyncTypeahead} from "react-bootstrap-typeahead";
 
 
 
@@ -29,7 +30,9 @@ export const SearchResults = () => {
                 </div>,
         },
     ];
-    const ExpandableComponent = ({ data }) => <div style={{paddingLeft:4+"rem", paddingTop:0.6+'rem'}}>
+
+    const ExpandableComponent = ({ data }) =>
+        <div style={{paddingLeft:4+"rem", paddingTop:0.6+'rem'}}>
             <ul className="results_items">
                 { data.links.map(link => <li key={ link } > <FontAwesomeIcon icon={ faAngleRight }/>  { link } </li>) }
             </ul>
@@ -47,10 +50,13 @@ export const SearchResults = () => {
                 columns={columns}
                 data={results}
                 sortIcon={<FontAwesomeIcon icon={ faAngleRight }/>}
-                expandableRows
                 pagination={true}
-                expandableRowDisabled={row => row.disabled}
+                keyField="omim"
+                highlightOnHover
+                expandableRows
+                expandableRowDisabled={data => data.links.length === 0}
                 expandableRowsComponent={<ExpandableComponent />}
+                // onRowClicked={(row) =>  redirectToProject(row)}    -> https://github.com/jbetancur/react-data-table-component/issues/195
             />
         }
         else {

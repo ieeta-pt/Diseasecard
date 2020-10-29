@@ -12,21 +12,31 @@ const API = axios.create({
 const getModuleURL = function (module) {
     switch (module){
         case "searchResults":                  return "/services/results";
+        case "searchAutocomplete":             return "/services/autocomplete";
         default:                               return "";
     }
 };
 
+const getTypeParameters = function (module) {
+    switch (module){
+        case "searchResults":                  return ["query"];
+        case "searchAutocomplete":             return ["query"];
+        default:                               return "";
+    }
+}
+
 /*
  * Function to build the get webservices path
+ * The parameters in array must be presented in the same order establish in the typeParameters array.
  */
-const buildGETPath = function (globalPath, urlPath, parameters) {
-    if (urlPath === undefined)
-        return globalPath + "/";
+const buildGETPath = function (globalPath, urlPath, typeParameters, parameters) {
+    let path = globalPath;
 
-    if (parameters === undefined)
-        return globalPath + "/" + urlPath + "/";
+    if (urlPath !== "") path = path + "/" + urlPath;
 
-    return globalPath + "/" + urlPath + "?query=" + parameters;
+    for (let i = 0 ; i < typeParameters.length; i++) path = path + "?" + typeParameters[i] + "=" + parameters[i]
+
+    return path;
 };
 
 /*
@@ -71,7 +81,8 @@ API.POST = function (module, urlPath, parameters) {
  * */
 API.GET = function (module, urlPath, parameters) {
     let url = getModuleURL(module);
-    let path = buildGETPath(url, urlPath, parameters);
+    let typeParameters = getTypeParameters(module)
+    let path = buildGETPath(url, urlPath, typeParameters, parameters);
     return API.get(path)
 };
 

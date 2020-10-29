@@ -40,4 +40,12 @@ public class DiseasecardController {
             return finder.find("full");
     }
 
+    @GetMapping("/services/autocomplete")
+    @ResponseBody
+    public String autocomplete(
+            @RequestParam(name = "query", required = true) String query) {
+
+        Finder finder = new Finder(this.api, this.solrIndex, query);
+        return finder.get("id");
+    }
 }

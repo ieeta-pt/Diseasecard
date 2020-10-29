@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { useDispatch } from "react-redux";
-import { Form, InputGroup, FormControl } from 'react-bootstrap'
+import { Form, InputGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { getResults } from "./searchSlice";
+import { getResults, getAutocomplete } from "./searchSlice";
 import { Link } from "react-router-dom";
+import { AsyncTypeahead, Token } from 'react-bootstrap-typeahead';
+import { unwrapResult } from "@reduxjs/toolkit";
 
 
 export const SearchForm = () => {
     const [searchInput, setSearchInput] = useState('')
-    const dispatch = useDispatch();
+    const [isLoading, setIsLoading] = useState(false);
+    const [options, setOptions] = useState([]);
+    const props = {};
 
-    const onSearchInputChanged = e => setSearchInput(e.target.value)
+    props.multiple = true;
+    props.renderToken = (option, {onRemove}, index) => (
+        <Token key={option.omim} onRemove={onRemove} option={option} onClick={console.log("omim:" + option.omim)}> {`${option.info} (OMIM: ${option.omim})`} </Token>
+    )
+
+    const dispatch = useDispatch();
 
     const onSearchButtonClicked = () => {
         if (searchInput) {
@@ -20,7 +29,16 @@ export const SearchForm = () => {
         }
     }
 
-    //TODO: Adicionar validação de input! input.lenght >= 4
+    const handleSearchAutocomplete = async query => {
+        setIsLoading(true);
+        setSearchInput(query);
+        const results = await dispatch(getAutocomplete(query))
+        setOptions(unwrapResult(results))
+        setIsLoading(false);
+    };
+
+
+
     return (
         <div className="container" id="index">
             <div id="logo">
@@ -33,12 +51,22 @@ export const SearchForm = () => {
                     <Form.Label htmlFor="inlineSearch" srOnly>
                         Search
                     </Form.Label>
-                    <InputGroup value={ searchInput } onChange={ onSearchInputChanged }>
-                        <FormControl id="inlineFormInputGroupUsername" placeholder="Search here..." />
+                    <InputGroup value={ searchInput }>
+                        <AsyncTypeahead
+                            {...props}
+                            id="async_search"
+                            isLoading={isLoading}
+                            labelKey={(option) => `${option.info}`}
+                            minLength={4}
+                            onSearch={ handleSearchAutocomplete }
+                            options={options}
+                            placeholder="Search..."
+                        />
                         <InputGroup.Append>
                             <Link to={'/searchResults'} onClick={ onSearchButtonClicked } className="btn btn-primary"><FontAwesomeIcon icon={ faSearch }/></Link>
                         </InputGroup.Append>
                     </InputGroup>
+
                 </Form.Group>
             </Form>
         </div>

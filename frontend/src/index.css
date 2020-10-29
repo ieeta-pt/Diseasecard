@@ -35,6 +35,22 @@ code {
   width: 60%;
 }
 
+/**
+  Change css of AsyncTypeahead field, in search input
+ */
+.rbt {
+  flex: 1 1 auto;
+  width: 1%;
+  min-width: 0;
+  margin-bottom: 0;
+}
+
+.mark,
+mark {
+  padding:.0em;
+  background-color:#f7e5df
+}
+
 .btn  {
   background-color: #46b8da;
   border-color: #46b8da;

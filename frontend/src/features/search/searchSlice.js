@@ -10,8 +10,15 @@ const initialState = {
 }
 
 export const getResults = createAsyncThunk('search/getResults', async (searchInput) => {
-    return API.GET("searchResults", "id", searchInput ).then(res => {
+    return API.GET("searchResults", "id", [searchInput] ).then(res => {
         return res.data.results.length > 0 ? res.data.results : []
+    })
+})
+
+export const getAutocomplete = createAsyncThunk('search/autocomplete', async (searchInput) => {
+    return API.GET("searchAutocomplete", "", [searchInput] ).then(res => {
+        console.log(res.data)
+        return res.data;
     })
 })
 
@@ -25,12 +32,26 @@ const searchSlice = createSlice({
             state.query = action.meta.arg
         },
         [getResults.fulfilled]: (state, action) => {
-            console.log(action)
             state.status = 'succeeded'
             state.results = action.payload
             state.query = action.meta.arg
         },
         [getResults.rejected]: (state, action) => {
+            state.status = 'failed'
+            state.query = action.meta.arg
+            state.error = action.error.message
+        },
+
+        [getAutocomplete.pending]: (state, action) => {
+            state.status = 'loading'
+            state.query = action.meta.arg
+        },
+        [getAutocomplete.fulfilled]: (state, action) => {
+            state.status = 'succeeded'
+            state.results = action.payload
+            state.query = action.meta.arg
+        },
+        [getAutocomplete.rejected]: (state, action) => {
             state.status = 'failed'
             state.query = action.meta.arg
             state.error = action.error.message

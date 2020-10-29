@@ -41,7 +41,6 @@ public class Finder {
         this.result = new JSONObject();
     }
 
-
     public String browse(String key) {
         JSONObject alldiseases = new JSONObject();
         JSONArray list = new JSONArray();
@@ -166,5 +165,29 @@ public class Finder {
         }
         //return (ArrayList<Disease>) new ArrayList(map.values());
         return result.toString();
+    }
+
+    public String get(String type) {
+        JSONArray list = new JSONArray();
+        ModifiableSolrParams params = new ModifiableSolrParams();
+        params.set("q", "title:*" + query + "*");
+        params.set("rows", 254);
+
+        try {
+            SolrServer server = new HttpSolrServer(this.solrIndex);
+            QueryResponse response = server.query(params);
+            SolrDocumentList docs = response.getResults();
+            for (SolrDocument sol : docs) {
+                JSONObject obj = new JSONObject();
+                obj.put("info", sol.get("title").toString());
+                obj.put("omim", Integer.parseInt(sol.get("omim").toString()));
+                list.put(obj);
+            }
+            result.put("results", list);
+        } catch (Exception ex) {
+            System.out.println("[COEUS][Diseasecard][Finder] Unable to get disease");
+            Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list.toString();
     }
 }
