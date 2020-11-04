@@ -2,12 +2,14 @@ import React from 'react';
 import NavbarD from "./app/Navbar";
 import { SearchForm } from "./features/search/SearchForm";
 import { SearchResults } from "./features/search/SearchResults";
+import { DiseasePage } from "./features/disease/DiseasePage";
+
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Switch from "react-bootstrap/Switch";
 
 
-class App extends React.Component {
 
+class App extends React.Component {
     render() {
         return (
             <div id="app">
@@ -20,11 +22,11 @@ class App extends React.Component {
                             </React.Fragment>
                         )}/>*/}
                         <Route exact path="/" component={ SearchForm }/>
+                        <Route exact path="/disease/:omim" component={ DiseasePage }/>
                         <Route exact path="/searchResults" component={ SearchResults }/>
                         <Redirect to="/" />
                     </Switch>
                 </Router>
-
             </div>
         );
     }

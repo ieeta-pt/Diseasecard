@@ -13,6 +13,7 @@ const getModuleURL = function (module) {
     switch (module){
         case "searchResults":                  return "/services/results";
         case "searchAutocomplete":             return "/services/autocomplete";
+        case "diseaseByOMIM":                  return "/services/disease";
         default:                               return "";
     }
 };
@@ -21,6 +22,7 @@ const getTypeParameters = function (module) {
     switch (module){
         case "searchResults":                  return ["query"];
         case "searchAutocomplete":             return ["query"];
+        case "diseaseByOMIM":                  return ["omim"];
         default:                               return "";
     }
 }
@@ -36,6 +38,7 @@ const buildGETPath = function (globalPath, urlPath, typeParameters, parameters) 
 
     for (let i = 0 ; i < typeParameters.length; i++) path = path + "?" + typeParameters[i] + "=" + parameters[i]
 
+    console.log(path)
     return path;
 };
 

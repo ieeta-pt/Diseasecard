@@ -1,6 +1,8 @@
 package pt.ua.diseasecard.controller;
 
+import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
+import pt.ua.diseasecard.components.data.DiseaseAPI;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.utils.Finder;
@@ -47,5 +49,15 @@ public class DiseasecardController {
 
         Finder finder = new Finder(this.api, this.solrIndex, query);
         return finder.get("id");
+    }
+
+    @GetMapping("/services/disease")
+    @ResponseBody
+    public JSONObject getDiseaseByOMIM(
+            @RequestParam(name = "omim", required = true) String omim) {
+
+        DiseaseAPI d = new DiseaseAPI(this.api, omim);
+
+        return d.load();
     }
 }

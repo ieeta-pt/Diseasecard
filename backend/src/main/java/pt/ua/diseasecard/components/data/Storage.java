@@ -39,8 +39,13 @@ public class Storage {
         this.predicates = new HashMap<>();
     }
 
-    @PostConstruct
-    public void connect() {
+    @PostConstruct()
+    public void init() {
+        connect();
+        loadPredicates();
+    }
+
+    private void connect() {
         try {
             this.store = (Store) SDBFactory.connectStore(ResourceUtils.getFile("classpath:configuration/" + this.config.getSdb()).getPath() );
             this.model = SDBFactory.connectDefaultModel(store);
@@ -57,8 +62,7 @@ public class Storage {
         }
     }
 
-    @PostConstruct
-    public void loadPredicates() {
+    private void loadPredicates() {
         try {
             CSVReader predicatesFile = new CSVReader(new FileReader(ResourceUtils.getFile("classpath:configuration/" + this.config.getPredicates()).getPath()));
             String[] nextLine;

@@ -5,6 +5,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+html {
+  height: 100%;
 }
 
 code {
@@ -108,4 +113,8 @@ mark {
 
 #queryField {
   background-color: #46b8da ;
+}
+
+.custom-switch {
+  padding-left: 0;
 }

@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import API from '../../api/Api'
 
 
@@ -59,7 +59,6 @@ const searchSlice = createSlice({
     }
 })
 
-export const { searchById } = searchSlice.actions
 export const selectAllResults = state => state.search.results
 export const selectQuery = state => state.search.query
 export const getNumberOfResults = state => state.search.results.length === 0 ? 0 : state.search.results.length

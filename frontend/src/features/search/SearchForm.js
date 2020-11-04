@@ -1,12 +1,13 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
-import { Form, InputGroup } from 'react-bootstrap'
+import { Container, Form, InputGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { getResults, getAutocomplete } from "./searchSlice";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { AsyncTypeahead, Token } from 'react-bootstrap-typeahead';
 import { unwrapResult } from "@reduxjs/toolkit";
+import {getDiseaseByOMIM} from "../disease/diseaseSlice";
 
 
 export const SearchForm = () => {
@@ -14,13 +15,14 @@ export const SearchForm = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
     const props = {};
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     props.multiple = true;
     props.renderToken = (option, {onRemove}, index) => (
-        <Token key={option.omim} onRemove={onRemove} option={option} onClick={console.log("omim:" + option.omim)}> {`${option.info} (OMIM: ${option.omim})`} </Token>
+        <Token key={option.omim} onRemove={onRemove} option={option} > {`${option.info} (OMIM: ${option.omim})`} </Token>
     )
 
-    const dispatch = useDispatch();
 
     const onSearchButtonClicked = () => {
         if (searchInput) {
@@ -37,10 +39,13 @@ export const SearchForm = () => {
         setIsLoading(false);
     };
 
-
+    const handleSelectedOption = ( selected ) => {
+        dispatch(getDiseaseByOMIM(selected[0].omim))
+        history.push('/disease/' + selected[0].omim)
+    }
 
     return (
-        <div className="container" id="index">
+        <Container id="index">
             <div id="logo">
                 <a href="#about" title="About Diseasecard" >
                     <img className="logo img-responsive" width="434" height="59" src={ process.env.PUBLIC_URL + 'logo.png' } alt="" />
@@ -59,6 +64,7 @@ export const SearchForm = () => {
                             labelKey={(option) => `${option.info}`}
                             minLength={4}
                             onSearch={ handleSearchAutocomplete }
+                            onChange={ handleSelectedOption }
                             options={options}
                             placeholder="Search..."
                         />
@@ -69,6 +75,6 @@ export const SearchForm = () => {
 
                 </Form.Group>
             </Form>
-        </div>
+        </Container>
     );
 }
