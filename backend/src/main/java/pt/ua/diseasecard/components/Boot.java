@@ -8,7 +8,6 @@ import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-
 import javax.annotation.PostConstruct;
 import java.util.Objects;
 
@@ -42,13 +41,11 @@ public class Boot {
         // TODO: if diseasecard is not built!  (?)
         if (this.config.getLoad()) {
             this.config.setLoad(false);
-
             this.cashier.start();
             this.browsier.start();
 
             Thread t = new Thread(this.indexer);
             t.start();
-
         }
     }
 

@@ -47,7 +47,7 @@ public class Storage {
 
     private void connect() {
         try {
-            this.store = (Store) SDBFactory.connectStore(ResourceUtils.getFile("classpath:configuration/" + this.config.getSdb()).getPath() );
+            this.store = SDBFactory.connectStore(ResourceUtils.getFile("classpath:configuration/" + this.config.getSdb()).getPath() );
             this.model = SDBFactory.connectDefaultModel(store);
             this.infmodel = ModelFactory.createInfModel(reasoner, model);
 
@@ -79,7 +79,6 @@ public class Storage {
             }
         }
     }
-
 
     public Model getModel() {
         return model;

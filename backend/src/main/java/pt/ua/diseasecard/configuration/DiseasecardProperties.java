@@ -7,6 +7,7 @@ import pt.ua.diseasecard.utils.PrefixFactory;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -30,6 +31,9 @@ public class DiseasecardProperties {
     private Map<String, String> redis;
     private Map<String, String> database;
     private Map<String, String> prefixes;
+    private Map<String, String> sources;
+
+    private List<String> protectedSources;
 
     public String getName() {
         return name;
@@ -147,9 +151,27 @@ public class DiseasecardProperties {
         return predicates;
     }
 
+    public List<String> getProtectedSources() {
+        return protectedSources;
+    }
+
+    public void setProtectedSources(List<String> protectedSources) {
+        this.protectedSources = protectedSources;
+    }
+
     public void setPredicates(String predicates) {
         this.predicates = predicates;
     }
+
+    public Map<String, String> getSources() {
+        return sources;
+    }
+
+    public void setSources(Map<String, String> sources) {
+        this.sources = sources;
+    }
+
+
 
     @PostConstruct
     public void addPrefix() {

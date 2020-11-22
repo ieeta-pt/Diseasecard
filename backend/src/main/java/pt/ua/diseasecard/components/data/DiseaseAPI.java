@@ -31,6 +31,7 @@ public class DiseaseAPI {
 
     @SuppressWarnings("unchecked")
     public JSONObject load() {
+        long startTime = System.nanoTime();
         try {
             this.map.put("omim", this.omim);
 
@@ -39,11 +40,11 @@ public class DiseaseAPI {
                     "diseasecard:omim_" + omim + " dc:description ?d . " +
                     "diseasecard:omim_" + omim + " coeus:isAssociatedTo ?a1 . " +
                     "?a1 coeus:isAssociatedTo ?a2 . " +
-                    "{ OPTIONAL {diseasecard:omim_" + omim + " diseasecard:hasGenotype ?g} . " +
+                    "{ OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasGenotype ?g} . " +
                     "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasPhenotype ?p }. " +
                     "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:name ?n } . " +
-                    "OPTIONAL {diseasecard:omim_" + omim + " diseasecard:phenotype ?pheno} . " +
-                    "OPTIONAL {diseasecard:omim_" + omim + " diseasecard:genotype ?geno .}}}", false);
+                    "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:phenotype ?pheno} . " +
+                    "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:genotype ?geno .}}}", false);
 
 
             JSONArray synonyms = new JSONArray();
@@ -52,8 +53,8 @@ public class DiseaseAPI {
 
             // process results (select what matters for the network)
             while (rs.hasNext()) {
-                String a1;
-                String a2;
+                String a1 = "";
+                String a2 = "";
                 QuerySolution row = rs.next();
                 if (row.get("a1").toString().contains("malacards")) {
                     a1 = row.get("a1").toString().replace("http://bioinformatics.ua.pt/diseasecard/resource/malacards_", "malacards:");
@@ -122,6 +123,9 @@ public class DiseaseAPI {
         } catch (Exception ex) {
             Logger.getLogger(DiseaseAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("[Diseasecard][DiseaseAPI][Load] OMIM " + omim + " took " + duration);
         return this.map;
     }
 

@@ -6,7 +6,6 @@ import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.InfModel;
 import com.hp.hpl.jena.rdf.model.Model;
-import org.json.simple.parser.JSONParser;
 import org.springframework.stereotype.Component;
 import pt.ua.diseasecard.utils.PrefixFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
@@ -21,7 +20,6 @@ public class SparqlAPI {
 
     private Model model;
     private InfModel inferredModel;
-    private JSONParser jsonParser;
     private DiseasecardProperties config;
 
 
@@ -31,7 +29,6 @@ public class SparqlAPI {
         this.config = diseasecardProperties;
         this.model = storage.getModel();
         this.inferredModel = storage.getInfmodel();
-        this.jsonParser = new JSONParser();
     }
 
 
@@ -39,12 +36,16 @@ public class SparqlAPI {
         ResultSet response = null;
         try {
             String sparqlQuery = PrefixFactory.allToString() + query;
-            QueryExecution qe = null;
+            QueryExecution qe;
 
-            if (inferred)    qe = QueryExecutionFactory.create(sparqlQuery, inferredModel);
+            if ( inferred )  qe = QueryExecutionFactory.create(sparqlQuery, inferredModel);
             else             qe = QueryExecutionFactory.create(sparqlQuery, model);
 
+            long startTime = System.nanoTime();
             response = qe.execSelect();
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime);
+            System.out.println("[Diseasecard][SparqlAPI][selectRS] Query execution took " + duration);
 
         } catch (Exception ex) {
             if (this.config.getDebug()) {

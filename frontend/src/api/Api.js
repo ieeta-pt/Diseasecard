@@ -14,6 +14,7 @@ const getModuleURL = function (module) {
         case "searchResults":                  return "/services/results";
         case "searchAutocomplete":             return "/services/autocomplete";
         case "diseaseByOMIM":                  return "/services/disease";
+        case "sourceURL":                      return "/services/linkout";
         default:                               return "";
     }
 };
@@ -23,6 +24,7 @@ const getTypeParameters = function (module) {
         case "searchResults":                  return ["query"];
         case "searchAutocomplete":             return ["query"];
         case "diseaseByOMIM":                  return ["omim"];
+        case "sourceURL":                      return [];
         default:                               return "";
     }
 }

@@ -7,7 +7,7 @@ import { getResults, getAutocomplete } from "./searchSlice";
 import { Link, useHistory } from "react-router-dom";
 import { AsyncTypeahead, Token } from 'react-bootstrap-typeahead';
 import { unwrapResult } from "@reduxjs/toolkit";
-import {getDiseaseByOMIM} from "../disease/diseaseSlice";
+import { getDiseaseByOMIM, showFrame } from "../disease/diseaseSlice";
 
 
 export const SearchForm = () => {
@@ -26,6 +26,7 @@ export const SearchForm = () => {
 
     const onSearchButtonClicked = () => {
         if (searchInput) {
+            dispatch(showFrame(false))
             dispatch(getResults(searchInput))
             setSearchInput('')
         }
@@ -40,6 +41,7 @@ export const SearchForm = () => {
     };
 
     const handleSelectedOption = ( selected ) => {
+        dispatch(showFrame(false))
         dispatch(getDiseaseByOMIM(selected[0].omim))
         history.push('/disease/' + selected[0].omim)
     }
@@ -47,7 +49,7 @@ export const SearchForm = () => {
     return (
         <Container id="index">
             <div id="logo">
-                <a href="#about" title="About Diseasecard" >
+                <a href="#about" title="About DiseaseCard" >
                     <img className="logo img-responsive" width="434" height="59" src={ process.env.PUBLIC_URL + 'logo.png' } alt="" />
                 </a>
             </div>

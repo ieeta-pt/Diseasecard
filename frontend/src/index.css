@@ -5,10 +5,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height: 100%;
 }
 
-html {
+html, #root, body, #app {
   height: 100%;
 }
 
@@ -118,3 +117,8 @@ mark {
 .custom-switch {
   padding-left: 0;
 }
+
+.Iframe {
+  margin-bottom: 50px;
+}
+/** { border: 1px solid red; }*/
