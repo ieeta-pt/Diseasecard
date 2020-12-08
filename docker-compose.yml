@@ -1,60 +1,74 @@
 version: '3'
 services:
-  dc_mysql:
-    container_name: dc_mysql
-    image: mysql:5.6
-    command: --default-authentication-plugin=mysql_native_password
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_DATABASE: 'diseasecard'
-      MYSQL_USER: 'diseasecard'
-      MYSQL_PASSWORD: 'diseasecard'
-      MYSQL_ROOT_PASSWORD: 'diseasecard'
-    volumes:
-      - ./docker/mysql:/docker-entrypoint-initdb.d/
-    networks:
-      - backend
+  	dc_mysql:
+		container_name: dc_mysql
+		image: mysql:5.6
+		command: --default-authentication-plugin=mysql_native_password
+		ports:
+			- ${MYSQL_PORT}:3306
+		environment:
+			MYSQL_DATABASE: ${MYSQL_DATABASE}
+			MYSQL_USER: ${MYSQL_USER}
+			MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+			MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+		volumes:
+			- ./docker/mysql:/docker-entrypoint-initdb.d/
+		networks:
+			- all
       
-  dc_redis:
-    container_name: dc_redis
-    image: redis:2.6.17
-    ports:
-      - "6379:6379"
-    volumes:
-      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
-    networks:
-      - backend
+	dc_redis:
+		container_name: dc_redis
+		image: redis:2.6.17
+		ports:
+			- ${REDIS_PORT}:6379
+		volumes:
+			- ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+		networks:
+			- all
   
-  dc_solr:
-    container_name: dc_solr
-    build: ./docker/solr
-    ports:
-      - "8983:8983"
-    volumes:
-      - ./docker/solr/conf:/opt/solr/solr/collection1/conf
-    networks:
-      - backend
+   dc_solr:
+		container_name: dc_solr
+		build: ./solr
+		ports:
+			- ${SOLR_PORT}:8983
+		volumes:
+			- ./docker/solr/conf:/opt/solr/solr/collection1/conf
+		networks:
+			- all
   
-  dc_diseasecard:
-    container_name: dc_diseasecard
-    depends_on:
-      - dc_mysql
-      - dc_redis
-      - dc_solr
-    build: .
-    ports:
-      - "8080:8080"
-    links:
-      - dc_mysql:container_mysql
-      - dc_redis:container_redis
-      - dc_solr:container_solr
-    networks:
-      - backend
-    volumes:
-      - ./dist/diseasecard.war:/usr/local/tomcat/webapps/diseasecard.war
-  
+	dc_backend:
+		container_name: dc_backend
+		depends_on:
+			- dc_mysql
+			- dc_redis
+			- dc_solr
+		build: ./backend
+		ports:
+			- ${BACKEND_PORT}:8080
+		links:
+			- dc_mysql:container_mysql
+			- dc_redis:container_redis
+			- dc_solr:container_solr
+		networks:
+			- all
+
+	dc_frontend:
+		container_name: dc_frontend
+		depends_on:
+			- dc_mysql
+			- dc_redis
+			- dc_solr
+			# Se eu colocar apenas este ele sabe que tem de ir buscar os outros ? 
+			- dc_backend
+		build: ./frontend
+		ports:
+			- ${FRONTEND_PORT}:3000
+		links:
+			- dc_backend:container_backend
+		networks:
+			- all
+
 
 networks:
-  backend:
-    driver: "bridge"
+	all:
+		driver: default
