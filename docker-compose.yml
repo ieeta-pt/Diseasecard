@@ -1,70 +1,70 @@
 version: '3'
 services:
   	dc_mysql:
-		container_name: dc_mysql
-		image: mysql:5.6
-		command: --default-authentication-plugin=mysql_native_password
-		ports:
-			- ${MYSQL_PORT}:3306
-		environment:
-			MYSQL_DATABASE: ${MYSQL_DATABASE}
-			MYSQL_USER: ${MYSQL_USER}
-			MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-			MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-		volumes:
-			- ${MYSQL_VOLUME}:/docker-entrypoint-initdb.d/
-		networks:
-			- all
+        container_name: dc_mysql
+        image: mysql:5.6
+        command: --default-authentication-plugin=mysql_native_password
+        ports:
+            - ${MYSQL_PORT}:3306
+        environment:
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        volumes:
+            - ${MYSQL_VOLUME}:/docker-entrypoint-initdb.d/
+        networks:
+            - all
       
 	dc_redis:
-		container_name: dc_redis
-		image: redis:2.6.17
-		ports:
-			- ${REDIS_PORT}:6379
-		volumes:
-			- ${REDIS_VOLUME}:/usr/local/etc/redis/redis.conf
-		networks:
-			- all
+        container_name: dc_redis
+        image: redis:2.6.17
+        ports:
+            - ${REDIS_PORT}:6379
+        volumes:
+            - ${REDIS_VOLUME}:/usr/local/etc/redis/redis.conf
+        networks:
+            - all
   
     dc_solr:
-		container_name: dc_solr
-		build: ./solr
-		ports:
-			- ${SOLR_PORT}:8983
-		volumes:
-			- ${SOLR_VOLUME}:/opt/solr/solr/collection1/conf
-		networks:
-			- all
+        container_name: dc_solr
+        build: ./solr
+        ports:
+            - ${SOLR_PORT}:8983
+        volumes:
+            - ${SOLR_VOLUME}:/opt/solr/solr/collection1/conf
+        networks:
+            - all
   
-	dc_backend:
-		container_name: dc_backend
-		depends_on:
-			- dc_mysql
-			- dc_redis
-			- dc_solr
-		build: ./backend
-		ports:
-			- ${BACKEND_PORT}:8080
-		links:
-			- dc_mysql:container_mysql
-			- dc_redis:container_redis
-			- dc_solr:container_solr
-		networks:
-			- all
+    dc_backend:
+        container_name: dc_backend
+        depends_on:
+            - dc_mysql
+            - dc_redis
+            - dc_solr
+        build: ./backend
+        ports:
+            - ${BACKEND_PORT}:8080
+        links:
+            - dc_mysql:container_mysql
+            - dc_redis:container_redis
+            - dc_solr:container_solr
+        networks:
+            - all
 
-	dc_frontend:
-		container_name: dc_frontend
-		depends_on:
-			- dc_backend
-		build: ./frontend
-		ports:
-			- ${FRONTEND_PORT}:3000
-		links:
-			- dc_backend:container_backend
-		networks:
-			- all
+    dc_frontend:
+        container_name: dc_frontend
+        depends_on:
+            - dc_backend
+        build: ./frontend
+        ports:
+            - ${FRONTEND_PORT}:3000
+        links:
+            - dc_backend:container_backend
+        networks:
+            - all
 
 
 networks:
-	all:
-		driver: default
+    all:
+        driver: default
