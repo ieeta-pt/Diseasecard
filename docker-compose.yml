@@ -12,7 +12,7 @@ services:
 			MYSQL_PASSWORD: ${MYSQL_PASSWORD}
 			MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 		volumes:
-			- ./docker/mysql:/docker-entrypoint-initdb.d/
+			- ${MYSQL_VOLUME}:/docker-entrypoint-initdb.d/
 		networks:
 			- all
       
@@ -22,7 +22,7 @@ services:
 		ports:
 			- ${REDIS_PORT}:6379
 		volumes:
-			- ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+			- ${REDIS_VOLUME}:/usr/local/etc/redis/redis.conf
 		networks:
 			- all
   
@@ -32,7 +32,7 @@ services:
 		ports:
 			- ${SOLR_PORT}:8983
 		volumes:
-			- ./docker/solr/conf:/opt/solr/solr/collection1/conf
+			- ${SOLR_VOLUME}:/opt/solr/solr/collection1/conf
 		networks:
 			- all
   
@@ -55,10 +55,6 @@ services:
 	dc_frontend:
 		container_name: dc_frontend
 		depends_on:
-			- dc_mysql
-			- dc_redis
-			- dc_solr
-			# Se eu colocar apenas este ele sabe que tem de ir buscar os outros ? 
 			- dc_backend
 		build: ./frontend
 		ports:
