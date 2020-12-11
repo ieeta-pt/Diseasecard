@@ -16,7 +16,7 @@ services:
         networks:
             - all
       
-	dc_redis:
+    dc_redis:
         container_name: dc_redis
         image: redis:2.6.17
         ports:
