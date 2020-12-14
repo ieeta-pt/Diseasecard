@@ -2,10 +2,14 @@ package pt.ua.diseasecard.controller;
 
 import org.json.simple.JSONObject;
 import org.springframework.web.bind.annotation.*;
+import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.DiseaseAPI;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.utils.Finder;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -17,16 +21,20 @@ public class DiseasecardController {
 
     private SparqlAPI api;
     private String solrIndex;
+    private String connectionString;
     private Map<String, String> sources;
     private List<String> protectedSources;
+    private Jedis jedis;
 
-    public DiseasecardController(DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI) {
+    public DiseasecardController(DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI, Boot boot) {
         Objects.requireNonNull(diseasecardProperties);
         Objects.requireNonNull(sparqlAPI);
         this.api = sparqlAPI;
         this.solrIndex = diseasecardProperties.getSolr().get("host") + ":" + diseasecardProperties.getSolr().get("port") + "/" + diseasecardProperties.getSolr().get("index");
         this.sources = diseasecardProperties.getSources();
         this.protectedSources = diseasecardProperties.getProtectedSources();
+        this.connectionString = diseasecardProperties.getDatabase().get("url") + "?user=" + diseasecardProperties.getDatabase().get("username") + "&password=" + diseasecardProperties.getDatabase().get("password");
+        this.jedis = boot.getJedis();
     }
 
     @GetMapping("/")
@@ -55,6 +63,7 @@ public class DiseasecardController {
         return finder.get("id");
     }
 
+    // TODO: Em vez de estar sempre a fazer load, tentar ir ver se não tem no jedis
     @GetMapping("/services/disease")
     @ResponseBody
     public JSONObject getDiseaseByOMIM(
@@ -65,6 +74,7 @@ public class DiseasecardController {
         return d.load();
     }
 
+    // TODO: Tornar mais bonito o código
     @GetMapping("/services/linkout/{key}:{value}")
     @ResponseBody
     public JSONObject getSourceURL(
@@ -85,6 +95,20 @@ public class DiseasecardController {
         } catch (Exception ex) {
             System.out.println("[Diseasecard][API][getSourceURL] Source not found");
             return null;
+        }
+    }
+
+
+    @GetMapping("/services/browse")
+    @ResponseBody
+    public String getBrowserResultsByLetter(
+            @RequestParam(name = "letter", required = true) String letter) {
+
+        Finder finder = new Finder(this.connectionString);
+        try {
+            return jedis.get("browse:" + letter);
+        } catch (Exception ex) {
+            return finder.browse(letter);
         }
     }
 }
