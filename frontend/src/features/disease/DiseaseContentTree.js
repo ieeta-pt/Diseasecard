@@ -9,7 +9,6 @@ import {getListOfIds, getSourceURL, getStatus, selectNetwork, showFrame} from ".
 import {IconButton, Tooltip, Typography, Switch, FormGroup} from "@material-ui/core";
 import { ArrowDropDown, ArrowRight, BubbleChart } from "@material-ui/icons";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import {Col, Row} from "react-bootstrap";
 
 export const DiseaseContentTree = () => {
     const [isCheck, setCheck] = useState(false)

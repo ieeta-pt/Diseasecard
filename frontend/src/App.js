@@ -1,11 +1,11 @@
 import React from 'react';
-import NavbarD from "./app/Navbar";
 import { SearchForm } from "./features/search/SearchForm";
 import { SearchResults } from "./features/search/SearchResults";
 import { DiseasePage } from "./features/disease/DiseasePage";
-
+import { BrowserResults } from "./features/browser/BrowserResults";
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
 import Switch from "react-bootstrap/Switch";
+import {NavbarD} from "./app/Navbar";
 
 
 
@@ -16,6 +16,7 @@ class App extends React.Component {
                 <Router >
                     <NavbarD />
                     <Switch style={{ position:"absolute", height: "100%", width: "100%"}}>
+
                         {/*<Route exact path="/" render={() => (
                             <React.Fragment>
                                 <SearchForm/>
@@ -24,6 +25,7 @@ class App extends React.Component {
                         <Route exact path="/" component={ SearchForm }/>
                         <Route exact path="/disease/:omim" component={ DiseasePage }/>
                         <Route exact path="/searchResults" component={ SearchResults }/>
+                        <Route exact path="/browse/:letter" component={ BrowserResults }/>
                         <Redirect to="/" />
                     </Switch>
                 </Router>

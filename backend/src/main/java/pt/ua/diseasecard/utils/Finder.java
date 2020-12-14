@@ -41,6 +41,7 @@ public class Finder {
         this.result = new JSONObject();
     }
 
+    // TODO: Mudar o raça do Browsier para que ele retorne algo de jeito
     public String browse(String key) {
         JSONObject alldiseases = new JSONObject();
         JSONArray list = new JSONArray();

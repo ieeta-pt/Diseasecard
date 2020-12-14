@@ -40,4 +40,7 @@ const browserSlice = createSlice({
     }
 })
 
+export const selectBrowserResults = state => state.browser.results
+export const getStatus = state => state.search.status
+
 export default browserSlice.reducer
