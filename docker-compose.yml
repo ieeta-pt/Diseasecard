@@ -1,11 +1,14 @@
 version: '3'
 services:
-    dc_mysql:
+    mysql:
         container_name: dc_mysql
         image: mysql:5.6
+        restart: always
         command: --default-authentication-plugin=mysql_native_password
         ports:
             - ${MYSQL_PORT}:3306
+        expose:
+            - 3306
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_USER: ${MYSQL_USER}
@@ -14,7 +17,7 @@ services:
         volumes:
             - ${MYSQL_VOLUME}:/docker-entrypoint-initdb.d/
         networks:
-            - all
+            - backend
       
     dc_redis:
         container_name: dc_redis
@@ -24,36 +27,39 @@ services:
         volumes:
             - ${REDIS_VOLUME}:/usr/local/etc/redis/redis.conf
         networks:
-            - all
+            - backend
   
     dc_solr:
         container_name: dc_solr
-        build: ./solr
+        build: ./docker/solr
         ports:
             - ${SOLR_PORT}:8983
         volumes:
             - ${SOLR_VOLUME}:/opt/solr/solr/collection1/conf
         networks:
-            - all
+            - backend
   
     dc_backend:
         container_name: dc_backend
         depends_on:
-            - dc_mysql
+            - mysql
             - dc_redis
             - dc_solr
         build: ./backend
         ports:
             - ${BACKEND_PORT}:8080
         links:
-            - dc_mysql:container_mysql
+            - mysql:container_mysql
             - dc_redis:container_redis
             - dc_solr:container_solr
         networks:
-            - all
+            - backend
+        environment:
+            - WAIT_HOSTS=mysql:3306
 
     dc_frontend:
         container_name: dc_frontend
+        stdin_open: true        
         depends_on:
             - dc_backend
         build: ./frontend
@@ -62,9 +68,11 @@ services:
         links:
             - dc_backend:container_backend
         networks:
-            - all
+            - backend
+        expose:
+            - 3000
 
 
 networks:
-    all:
-        driver: default
+    backend:
+        driver: "bridge"

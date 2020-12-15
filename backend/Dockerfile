@@ -1,26 +1,27 @@
 #####################################################################################
 # Build Spring Boot Application
 #####################################################################################
+FROM maven:3.6.1-jdk-8-alpine as builder
 
-FROM adoptopenjdk:11-jre-hotspot as builder
+COPY . ./diseasecard
+WORKDIR /diseasecard
 
-RUN mkdir -p /srv/app/diseasecard-backend
-WORKDIR /srv/app/diseasecard-backend
-
-COPY . /srv/app/diseasecard-backend
-RUN mvn clean package
-
-# Layered Jars (https://www.baeldung.com/spring-boot-docker-images)
-RUN java -Djarmode=layertools -jar bakcend.jar extract
+RUN mvn clean package -DskipTests
 
 
 #####################################################################################
 # Run Application
 #####################################################################################
+FROM openjdk:8-jdk-alpine
 
-FROM adoptopenjdk:11-jre-hotspot
-COPY --from=builder dependencies/ ./
-COPY --from=builder snapshot-dependencies/ ./
-COPY --from=builder spring-boot-loader/ ./
-COPY --from=builder application/ ./
-ENTRYPOINT ["java", "org.springframework.boot.loader.JarLauncher"]
+COPY --from=builder ./diseasecard/target/diseasecard-0.0.1-SNAPSHOT.jar diseasecard-0.0.1-SNAPSHOT.jar
+COPY --from=builder ./diseasecard/src/main/resources/configuration /configuration
+
+
+# Add docker-compose-wait tool -------------------
+ENV WAIT_VERSION 2.7.2
+ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
+RUN chmod +x /wait
+
+CMD /wait && java -jar /diseasecard-0.0.1-SNAPSHOT.jar
+#ENTRYPOINT ["java","-jar","/diseasecard-0.0.1-SNAPSHOT.jar"]

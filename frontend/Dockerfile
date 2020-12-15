@@ -4,14 +4,21 @@
 
 FROM node:15.3.0-alpine3.10
 
-RUN mkdir -p /srv/app/diseasecard-frontend
-WORKDIR /srv/app/diseasecard-frontend
+# set working directory
+WORKDIR /app
 
-COPY package.json /srv/app/diseasecard-frontend
-COPY package-lock.json /srv/app/diseasecard-frontend
+# add `/app/node_modules/.bin` to $PATH
+ENV PATH /app/node_modules/.bin:$PATH
 
-RUN npm install
+COPY package.json ./
+COPY package-lock.json ./
 
-COPY . /srv/app/diseasecard-frontend
 
+RUN npm install --silent
+RUN npm install react-scripts@3.4.1 -g --silent
+
+# add app
+COPY . ./
+
+# start app
 CMD ["npm", "start"]

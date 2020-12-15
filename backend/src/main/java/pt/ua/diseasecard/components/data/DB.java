@@ -4,8 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DB {
 
@@ -27,14 +25,23 @@ public class DB {
         this.connectionString = connectionString;
     }
 
-
+    /*
+        Method to connect to DB. It tries 10 times until gives up.
+     */
     public void connect() {
-        try {
-            connection = DriverManager.getConnection(connectionString);
-            statement = connection.createStatement();
-        } catch (SQLException e) {
-            System.out.println("[Diseasecard][DB] Unable to connect to " + database + "\n\t" + e.toString());
+        this.connection = null;
+        int count = 0;
+        while (this.connection == null && count < 10)
+        {
+            try {
+                connection = DriverManager.getConnection(connectionString);
+                statement = connection.createStatement();
+            } catch (SQLException e) {
+                count++;
+                System.out.println("[Diseasecard][DB] Unable to connect to " + database);
+            }
         }
+
     }
 
     public void close() {
