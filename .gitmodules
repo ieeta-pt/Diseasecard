@@ -1,0 +1,4 @@
+[submodule "coeus"]
+	path = coeus
+	url = https://github.com/MarianaSequeira/COEUS.git
+	branch = diseasecard_conf

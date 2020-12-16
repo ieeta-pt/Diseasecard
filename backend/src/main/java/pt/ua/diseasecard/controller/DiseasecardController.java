@@ -10,6 +10,7 @@ import pt.ua.diseasecard.utils.Finder;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -25,6 +26,7 @@ public class DiseasecardController {
     private Map<String, String> sources;
     private List<String> protectedSources;
     private Jedis jedis;
+    private Boot boot;
 
     public DiseasecardController(DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI, Boot boot) {
         Objects.requireNonNull(diseasecardProperties);
@@ -35,12 +37,14 @@ public class DiseasecardController {
         this.protectedSources = diseasecardProperties.getProtectedSources();
         this.connectionString = diseasecardProperties.getDatabase().get("url") + "?user=" + diseasecardProperties.getDatabase().get("username") + "&password=" + diseasecardProperties.getDatabase().get("password");
         this.jedis = boot.getJedis();
+        this.boot = boot;
     }
 
     @GetMapping("/")
     public String index() {
         return "Greetings from Spring Boot! ";
     }
+
 
     @GetMapping("/services/results/{searchType}")
     public String searchResults(
@@ -54,6 +58,7 @@ public class DiseasecardController {
             return finder.find("full");
     }
 
+
     @GetMapping("/services/autocomplete")
     @ResponseBody
     public String autocomplete(
@@ -62,6 +67,7 @@ public class DiseasecardController {
         Finder finder = new Finder(this.api, this.solrIndex, query);
         return finder.get("id");
     }
+
 
     // TODO: Em vez de estar sempre a fazer load, tentar ir ver se não tem no jedis
     @GetMapping("/services/disease")
@@ -73,6 +79,7 @@ public class DiseasecardController {
 
         return d.load();
     }
+
 
     // TODO: Tornar mais bonito o código
     @GetMapping("/services/linkout/{key}:{value}")
@@ -110,5 +117,12 @@ public class DiseasecardController {
         } catch (Exception ex) {
             return finder.browse(letter);
         }
+    }
+
+
+    @PostMapping("/startup")
+    public void startInternalProcess() {
+        System.out.println("[Diseasecard][Controller] Receive alert to start my internal processing");
+        this.boot.startInternalProcess();
     }
 }

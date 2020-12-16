@@ -40,12 +40,7 @@ public class Boot {
 
         // TODO: if diseasecard is not built!  (?)
         if (this.config.getLoad()) {
-            this.config.setLoad(false);
-            this.cashier.start();
-            this.browsier.start();
-
-            Thread t = new Thread(this.indexer);
-            t.start();
+            this.startInternalProcess();
         }
     }
 
@@ -53,4 +48,15 @@ public class Boot {
         return jedis_pool.getResource();
     }
 
+    public void startInternalProcess() {
+        // TODO: garantir que primeiro são eliminados os dados que já lá estão
+
+
+        this.config.setLoad(false);
+        this.cashier.start();
+        this.browsier.start();
+
+        Thread t = new Thread(this.indexer);
+        t.start();
+    }
 }
