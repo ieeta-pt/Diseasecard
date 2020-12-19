@@ -25,7 +25,7 @@ class App extends React.Component {
                         <Route exact path="/" component={ SearchForm }/>
                         <Route exact path="/disease/:omim" component={ DiseasePage }/>
                         <Route exact path="/searchResults" component={ SearchResults }/>
-                        <Route exact path="/browse/:letter" component={ BrowserResults }/>
+                        <Route exact path="/browse" component={ BrowserResults }/>
                         <Redirect to="/" />
                     </Switch>
                 </Router>

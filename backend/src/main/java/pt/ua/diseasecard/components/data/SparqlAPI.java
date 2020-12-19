@@ -45,7 +45,7 @@ public class SparqlAPI {
             response = qe.execSelect();
             long endTime = System.nanoTime();
             long duration = (endTime - startTime);
-            System.out.println("[Diseasecard][SparqlAPI][selectRS] Query execution took " + duration);
+            //System.out.println("[Diseasecard][SparqlAPI][selectRS] Query execution took " + duration);
 
         } catch (Exception ex) {
             if (this.config.getDebug()) {

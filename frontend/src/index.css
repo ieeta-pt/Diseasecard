@@ -121,4 +121,8 @@ mark {
 .Iframe {
   margin-bottom: 50px;
 }
-/** { border: 1px solid red; }*/
+
+#browserContainer {
+  margin-top: 2%;
+}
+/** { border: 1px so lid red; }*/

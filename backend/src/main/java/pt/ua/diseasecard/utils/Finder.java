@@ -56,24 +56,28 @@ public class Finder {
             }
             ResultSet rs = p.executeQuery();
             while (rs.next()) {
-                JSONArray o = new JSONArray();
-                o.put("<a rel=\"tooltip\" title=\"View " + rs.getString("name") + "\" href=\"./entry/" + rs.getInt("omim") + "\">" + rs.getInt("omim") + "</a>");
-                o.put("<i class=\"icon-angle-right\"></i> <a rel=\"tooltip\" title=\"View " + rs.getString("name") + "\" href=\"./entry/" + rs.getInt("omim") + "\">" + rs.getString("name") + "</a><a href=\"http://omim.org/entry/" + rs.getInt("omim") + "\" class=\"pull-right\" target=\"_blank\"><i class=\"icon-external-link\"></i></a>");
+                //JSONArray o = new JSONArray();
+                JSONObject o = new JSONObject();
+                o.put("name", rs.getString("name"));
+                o.put("omim", rs.getInt("omim"));
+
+                //o.put("<a rel=\"tooltip\" title=\"View " + rs.getString("name") + "\" href=\"./entry/" + rs.getInt("omim") + "\">" + rs.getInt("omim") + "</a>");
+                //o.put("<i class=\"icon-angle-right\"></i> <a rel=\"tooltip\" title=\"View " + rs.getString("name") + "\" href=\"./entry/" + rs.getInt("omim") + "\">" + rs.getString("name") + "</a><a href=\"http://omim.org/entry/" + rs.getInt("omim") + "\" class=\"pull-right\" target=\"_blank\"><i class=\"icon-external-link\"></i></a>");
+
                 double progress = (rs.getInt("c") / 1127.0) * 100;
                 String type;
-                if (progress > 30.0) {
-                    type = "";
-                } else if (progress > 20.0) {
-                    type = " progress-bar-info";
-                } else if (progress > 15.0) {
-                    type = " progress-bar-success";
-                } else if (progress > 10.0) {
-                    type = " progress-bar-warning";
-                } else {
-                    progress = 10.0;
-                    type = " progress-bar-danger";
-                }
-                o.put("<div class=\"progress\"><div rel=\"tooltip\" title=\"" + rs.getInt("c") + " connections\" class=\"progress-bar " + type + "\" role=\"progressbar\" style=\"width: " + progress + "%;\">" + rs.getInt("c") + "</div></div>");
+
+                if (progress > 30.0)        type = "";
+                else if (progress > 20.0)   type = " progress-bar-info";
+                else if (progress > 15.0)   type = " progress-bar-success";
+                else if (progress > 10.0)   type = " progress-bar-warning";
+                else {   progress = 10.0;   type = " progress-bar-danger"; }
+
+                o.put("c", rs.getInt("c"));
+                o.put("type", type);
+                o.put("progress", progress);
+
+                //o.put("<div class=\"progress\"><div rel=\"tooltip\" title=\"" + rs.getInt("c") + " connections\" class=\"progress-bar " + type + "\" role=\"progressbar\" style=\"width: " + progress + "%;\">" + rs.getInt("c") + "</div></div>");
                 list.put(o);
             }
             db.close();

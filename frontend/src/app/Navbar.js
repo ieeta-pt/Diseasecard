@@ -14,11 +14,11 @@ export const NavbarD = () => {
 
             <Nav className="ml-auto">
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Jump to Diseasecard about section</Tooltip>}>
-                        <Nav.Link as={Link} to={'/browse/A'} ><FontAwesomeIcon icon={faBook}/></Nav.Link>
+                        <Nav.Link as={Link} to={'/'} ><FontAwesomeIcon icon={faBook}/></Nav.Link>
                 </OverlayTrigger>
 
-                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Jump to Disease ard rare diseases browsing</Tooltip>}>
-                    <Nav.Link as={Link} to={'/browse/A'} style={{marginLeft: 10}}><FontAwesomeIcon icon={faAlignJustify}/></Nav.Link>
+                <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Jump to Diseasecard rare diseases browsing</Tooltip>}>
+                    <Nav.Link as={Link} to={'/browse'} style={{marginLeft: 10}}><FontAwesomeIcon icon={faAlignJustify}/></Nav.Link>
                 </OverlayTrigger>
 
             </Nav>
