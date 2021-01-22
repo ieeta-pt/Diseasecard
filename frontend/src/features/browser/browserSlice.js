@@ -12,8 +12,8 @@ const initialState = {
 export const getResults = createAsyncThunk('browse/getResults', async (letter) => {
     return API.GET("browserResults", "", [letter] ).then(res => {
         // TODO: fazer processamento
-        console.log(res.data)
-        return res.data
+        console.log(res.data.aaData)
+        return res.data.aaData
     })
 })
 
@@ -41,6 +41,6 @@ const browserSlice = createSlice({
 })
 
 export const selectBrowserResults = state => state.browser.results
-export const getStatus = state => state.search.status
+export const getStatus = state => state.browser.status
 
 export default browserSlice.reducer

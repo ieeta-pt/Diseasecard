@@ -68,10 +68,10 @@ public class Finder {
                 String type;
 
                 if (progress > 30.0)        type = "";
-                else if (progress > 20.0)   type = " progress-bar-info";
-                else if (progress > 15.0)   type = " progress-bar-success";
-                else if (progress > 10.0)   type = " progress-bar-warning";
-                else {   progress = 10.0;   type = " progress-bar-danger"; }
+                else if (progress > 20.0)   type = " info";
+                else if (progress > 15.0)   type = " success";
+                else if (progress > 10.0)   type = " warning";
+                else {   progress = 10.0;   type = " danger"; }
 
                 o.put("c", rs.getInt("c"));
                 o.put("type", type);
