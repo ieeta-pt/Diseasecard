@@ -10,7 +10,7 @@ export const DiseaseSourceFrame = () => {
     let content;
 
     if (status === 'succeeded') {
-        if (protection) content = <iframe is="x-frame-bypass" title={url} src={ url } style={{ width: "100%", height: "100%"}}> </iframe>;
+        if (protection) content = <iframe is="x-frame-bypass" title={url} src={ url } style={{ width: "100%", height: "100%", marginBottom: 0}}> </iframe>;
         else            content = <Iframe id="myId" className="Iframe" title={url} url={ url } width="100%" height="100%"> </Iframe>;
     }
 

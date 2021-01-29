@@ -12,10 +12,10 @@ import {NavbarD} from "./app/Navbar";
 class App extends React.Component {
     render() {
         return (
-            <div id="app" style={{overflow: "hidden", position: "relative", width: "100%"}}>
+            <div id="app" style={{ position: "relative", width: "100%"}}>
                 <Router >
                     <NavbarD />
-                    <Switch style={{ position:"absolute", height: "100%", width: "100%"}}>
+                    <Switch style={{ position:"absolute", width: "100%", minHeight:"calc(100vh - 3.5em)"}}>
 
                         {/*<Route exact path="/" render={() => (
                             <React.Fragment>

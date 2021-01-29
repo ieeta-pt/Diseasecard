@@ -69,15 +69,19 @@ public class DiseasecardController {
     }
 
 
-    // TODO: Em vez de estar sempre a fazer load, tentar ir ver se não tem no jedis
+    // TODO: Em vez de estar sempre a fazer load, tentar ir ver se não tem no jedis ------ done
     @GetMapping("/services/disease")
     @ResponseBody
-    public JSONObject getDiseaseByOMIM(
+    public String getDiseaseByOMIM(
             @RequestParam(name = "omim", required = true) String omim) {
 
-        DiseaseAPI d = new DiseaseAPI(this.api, omim);
+        try {
+            return jedis.get("omim:" + omim);
+        } catch (Exception ex) {
+            DiseaseAPI d = new DiseaseAPI(this.api, omim);
+            return d.load().toString();
+        }
 
-        return d.load();
     }
 
 
@@ -111,10 +115,10 @@ public class DiseasecardController {
     public String getBrowserResultsByLetter(
             @RequestParam(name = "letter", required = true) String letter) {
 
-        Finder finder = new Finder(this.connectionString);
         try {
             return jedis.get("browse:" + letter);
         } catch (Exception ex) {
+            Finder finder = new Finder(this.connectionString);
             return finder.browse(letter);
         }
     }

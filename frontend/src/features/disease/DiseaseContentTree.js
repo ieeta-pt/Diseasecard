@@ -1,16 +1,16 @@
 import React, {useState} from 'react';
-import { makeStyles, withStyles } from "@material-ui/core/styles";
-import { orange } from '@material-ui/core/colors';
-import TreeItem from '@material-ui/lab/TreeItem';
-import TreeView from '@material-ui/lab/TreeView';
-import PropTypes from 'prop-types';
-import {useDispatch, useSelector} from "react-redux";
-import {getListOfIds, getSourceURL, getStatus, selectNetwork, showFrame} from "./diseaseSlice";
-import {IconButton, Tooltip, Typography, Switch, FormGroup} from "@material-ui/core";
-import { ArrowDropDown, ArrowRight, BubbleChart } from "@material-ui/icons";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { useDispatch, useSelector } from "react-redux";
+import   PropTypes  from 'prop-types';
+import { getListOfIds, getSourceURL, getStatus, selectNetwork, showFrame } from "./diseaseSlice";
+import { Typography, Divider, Paper, Tooltip } from "@material-ui/core";
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { ArrowDropDown, ArrowRight, BubbleChart, AllOut, FormatListBulleted } from "@material-ui/icons";
+import { TreeItem, TreeView, ToggleButtonGroup, ToggleButton }  from '@material-ui/lab';
+
 
 export const DiseaseContentTree = () => {
+    const [view, setView] = useState('graph');
+    const [expand, setExpand] = useState('');
     const [isCheck, setCheck] = useState(false)
     const network = useSelector(selectNetwork)
     const listOfIds = useSelector(getListOfIds)
@@ -114,26 +114,36 @@ export const DiseaseContentTree = () => {
         hasChildren: PropTypes.bool.isRequired
     };
 
-    const useStyles = makeStyles({
+    const renderTree = (nodes) => {
+        return <StyledTreeItem key={nodes.id} nodeId={nodes.id} labelText={nodes.name}
+                        hasChildren={Array.isArray(nodes.children)}>
+            {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
+        </StyledTreeItem>
+    };
+
+    const useStyles = makeStyles((theme) => ({
         root: {
             height: 264,
             flexGrow: 1,
             maxWidth: 400,
         },
-    });
+        paper: {
+            display: 'flex',
+            border: `1px solid ${theme.palette.divider}`,
+            flexWrap: 'wrap',
+        },
+        divider: {
+            margin: theme.spacing(1, 0.5),
+        },
+    }));
 
     const classes = useStyles();
-
-    const renderTree = (nodes) => (
-        <StyledTreeItem key={nodes.id} nodeId={nodes.id} labelText={nodes.name} hasChildren={ Array.isArray(nodes.children) } >
-            {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
-        </StyledTreeItem>
-    );
 
     const handleSelect = (event, nodeIds) => {
         if (nodeIds.includes(":")) {
             dispatch(getSourceURL(nodeIds))
             dispatch(showFrame(true))
+            setView('none')
         }
     };
 
@@ -141,51 +151,78 @@ export const DiseaseContentTree = () => {
         setExpanded(nodeIds);
     };
 
-    const OrangeSwitch = withStyles({
-        switchBase: {
-            color: orange[400],
-            '&$checked': {
-                color: orange[600],
+    const StyledToggleButtonGroup = withStyles((theme) => ({
+        grouped: {
+            margin: theme.spacing(0.5),
+            border: 'none',
+            '&:not(:first-child)': {
+                borderRadius: theme.shape.borderRadius,
             },
-            '&$checked + $track': {
-                backgroundColor: orange[500],
+            '&:first-child': {
+                borderRadius: theme.shape.borderRadius,
             },
         },
-        checked: {},
-        track: {},
-    })(Switch);
+    }))(ToggleButtonGroup);
 
-    const expandTree = (event) => {
-        setCheck(event.target.checked);
+    const handleExpansion = (event, info) => {
+        console.log(info)
+        setExpand(info)
+        setCheck(!isCheck)
         if (!isCheck)   setExpanded( listOfIds )
         else            setExpanded(["root"] )
     };
 
+    const handleView = (event, info) => {
+        setView(info)
+        console.log(info)
+        dispatch(showFrame(false))
+    };
+
+
     if (status === 'succeeded'){
         tree = <div>
-                    <div style={{width: "100%", display: "table"}}>
-                        <div style={{display: "table-row"}}>
-                            <FormGroup style={{paddingLeft: "8%", alignItems: "center", display:"table-cell"}}>
-                                <FormControlLabel
-                                    style={{paddingTop: "8%"}}
-                                    control={<OrangeSwitch checked={ isCheck } onChange={ expandTree } name="checkedA" size="small" />}
-                                    label="Expand"
-                                />
-                            </FormGroup>
+                    <Paper elevation={0} className={classes.paper}>
+                        <StyledToggleButtonGroup
+                            size="small"
+                            aria-label="text alignment"
+                            onChange={handleExpansion}
+                            value={expand}
+                        >
 
-                            <Tooltip title="Graph" placement="top" style={{display:"table-cell"}}>
-                                <IconButton aria-label="delete" className={classes.margin} onClick={() => { dispatch(showFrame(false))}}>
-                                    <BubbleChart fontSize="small" color={orange[400]}/>
-                                </IconButton>
-                            </Tooltip>
-                        </div>
+                            <ToggleButton value="check" aria-label="check" >
+                                <Tooltip title="Expand Content Tree" aria-label="add" placement="top">
+                                    <AllOut />
+                                </Tooltip>
+                            </ToggleButton>
 
-                    </div>
+                        </StyledToggleButtonGroup>
+                        <Divider flexItem orientation="vertical" className={classes.divider} />
+                        <StyledToggleButtonGroup
+                            size="small"
+                            exclusive
+                            aria-label="text formatting"
+                            onChange={handleView}
+                            value={view}
+                        >
+
+                            <ToggleButton value="graph" aria-label="bold">
+                                <Tooltip title="Show Graph" aria-label="add" placement="top">
+                                    <BubbleChart />
+                                </Tooltip>
+                            </ToggleButton>
 
 
+                            <ToggleButton value="detailed" aria-label="left aligned" disabled>
+                                <Tooltip title="Show Detailed Info" aria-label="add" placement="top">
+                                    <FormatListBulleted />
+                                </Tooltip>
+                            </ToggleButton>
+
+                        </StyledToggleButtonGroup>
+                    </Paper>
 
                     <TreeView
-                        style={{paddingTop: "3%"}}
+                        style={{paddingTop: "4%"}}
                         className={classes.root}
                         defaultCollapseIcon={<ArrowDropDown /> }
                         defaultExpandIcon={<ArrowRight />}
@@ -196,13 +233,10 @@ export const DiseaseContentTree = () => {
                         {renderTree( { "id":"root", "name": "Sources", "children" : network} )}
                     </TreeView>
                </div>
-
-
     }
 
-
     return (
-        <div style={{ paddingTop: "5%", paddingLeft: "4%", overflow: "scroll" , height: "90vh"}}>
+        <div style={{ paddingTop: "5%", paddingLeft: "4%", overflow: "scroll" , minHeight:"calc(100vh - 3.5em)", borderRight: '1px solid rgba(0, 0, 0, 0.12)'}}>
             { tree }
         </div>
     );

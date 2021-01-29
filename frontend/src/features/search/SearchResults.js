@@ -21,6 +21,24 @@ export const SearchResults = () => {
 
     // DataTable Fields
     let content;
+
+    const customStyles = {
+        rows: {
+            style: {
+                fontSize: '13px',
+                color: 'rgba(0, 0, 0, 0.87)',
+                backgroundColor: '#ffffff',
+                minHeight: '48px',
+                '&:not(:last-of-type)': {
+                    borderBottomStyle: 'solid',
+                    borderBottomWidth: '1px',
+                    borderRadius: '20px',
+                    borderBottomColor: 'rgba(0,0,0,0)',
+                },
+            }
+        }
+    };
+
     const columns = [
         {
             sortable: true,
@@ -41,7 +59,6 @@ export const SearchResults = () => {
         </div>;
 
     const handleSelectedOption = ( selected ) => {
-
         dispatch(getDiseaseByOMIM(selected.omim))
         history.push('/disease/' + selected.omim)
     }
@@ -60,6 +77,7 @@ export const SearchResults = () => {
                 pagination={true}
                 keyField="omim"
                 highlightOnHover
+                customStyles={customStyles}
                 expandableRows
                 expandableRowDisabled={data => data.links.length === 0}
                 expandableRowsComponent={<ExpandableComponent />}
