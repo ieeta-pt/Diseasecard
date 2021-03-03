@@ -56,7 +56,6 @@ public class SparqlAPI {
         return response;
     }
 
-
     public String getOmimName(String omim) {
         try {
             return this.getTriple("diseasecard:omim_" + omim, "diseasecard:name", "o", "csv").split("\n")[1];

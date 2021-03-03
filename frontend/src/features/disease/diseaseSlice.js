@@ -20,11 +20,15 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
         const data = res.data
         const network = data.network
 
+        console.log(network)
+
         for (const connection in network) {
-            const info = network[connection].split(":")
+            const info = network[connection].split(/:(.+)/)
             if (!(info[0] in values)) values[info[0]] = []
-            values[info[0]].push(info[1])
+            values[info[0]].push(info[1].replaceAll(":", "_"))
         }
+
+        console.log(values)
 
         let results = []
         let id = 1
