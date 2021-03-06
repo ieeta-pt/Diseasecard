@@ -1,11 +1,15 @@
 package pt.ua.diseasecard.controller;
 
 import org.json.simple.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.DiseaseAPI;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
+import pt.ua.diseasecard.service.FileService;
 import pt.ua.diseasecard.utils.Finder;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -27,6 +31,9 @@ public class DiseasecardController {
     private List<String> protectedSources;
     private Jedis jedis;
     private Boot boot;
+
+    @Autowired
+    FileService fileService;
 
     public DiseasecardController(DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI, Boot boot) {
         Objects.requireNonNull(diseasecardProperties);
@@ -128,5 +135,13 @@ public class DiseasecardController {
     public void startInternalProcess() {
         System.out.println("[Diseasecard][Controller] Receive alert to start my internal processing");
         this.boot.startInternalProcess();
+    }
+
+
+    @PostMapping("/dcadmin/uploadOntology")
+    public String uploadOntology(@RequestParam("file") MultipartFile file) {
+        fileService.uploadFile(file);
+        //redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
+        return "redirect:/";
     }
 }
