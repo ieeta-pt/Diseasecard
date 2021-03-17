@@ -33,6 +33,9 @@ public class DiseasecardProperties {
     private Map<String, String> prefixes;
     private Map<String, String> sources;
 
+    public DiseasecardProperties() {
+    }
+
     private List<String> protectedSources;
 
     public String getName() {
@@ -170,8 +173,6 @@ public class DiseasecardProperties {
     public void setSources(Map<String, String> sources) {
         this.sources = sources;
     }
-
-
 
     @PostConstruct
     public void addPrefix() {

@@ -17,6 +17,8 @@ FROM openjdk:8-jdk-alpine
 COPY --from=builder ./diseasecard/target/diseasecard-0.0.1-SNAPSHOT.jar diseasecard-0.0.1-SNAPSHOT.jar
 COPY --from=builder ./diseasecard/src/main/resources/configuration /configuration
 
+COPY datasets ./datasets
+RUN ls
 
 # Add docker-compose-wait tool -------------------
 ENV WAIT_VERSION 2.7.2

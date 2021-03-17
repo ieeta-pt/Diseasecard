@@ -37,26 +37,7 @@ services:
         volumes:
             - ${SOLR_VOLUME}:/opt/solr/solr/collection1/conf
         networks:
-            - backend
-  
-
-    coeus:
-        container_name: dc_coeus
-        build: ./coeus
-        ports:
-            - ${COEUS_PORT}:8080
-        depends_on:
-            - mysql
-        links:
-            - mysql:container_mysql
-            - dc_backend:containerbackend
-        networks:
-            - backend
-        expose: 
-            - 8080
-        environment:
-            - WAIT_HOSTS=mysql:3306
-        
+            - backend   
 
     dc_backend:
         env_file: .env

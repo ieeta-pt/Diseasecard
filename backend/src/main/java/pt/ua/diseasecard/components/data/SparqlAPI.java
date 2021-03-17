@@ -4,8 +4,7 @@ import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
-import com.hp.hpl.jena.rdf.model.InfModel;
-import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.*;
 import org.springframework.stereotype.Component;
 import pt.ua.diseasecard.utils.PrefixFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
@@ -52,6 +51,26 @@ public class SparqlAPI {
                 System.out.println("[COEUS][API] Unable to select ResultSet items from COEUS Data");
                 Logger.getLogger(SparqlAPI.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        return response;
+    }
+
+    public String select(String query, String format, boolean inferred) {
+        String response = "";
+        try
+        {
+            String sparqlQuery = PrefixFactory.allToString() + query;
+
+            QueryExecution qe = null;
+            if (inferred)  qe = QueryExecutionFactory.create(sparqlQuery, inferredModel);
+            else           qe = QueryExecutionFactory.create(sparqlQuery, model);
+
+            response = execute(qe, format);
+        }
+        catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][API] Unable to select items from COEUS Data");
+            Logger.getLogger(SparqlAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
         return response;
     }
@@ -123,5 +142,102 @@ public class SparqlAPI {
             }
         }
         return response;
+    }
+
+    public void addStatement(Statement statement) {
+        try
+        {
+            this.model.add(statement);
+        } catch (Exception ex)
+        {
+            if (this.config.getDebug())
+            {
+                String stat = statement.getSubject() + " " + statement.getPredicate() + " " + statement.getObject();
+                System.out.println("[COEUS][API] Unable add statement in the model: " + stat);
+                Logger.getLogger(SparqlAPI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    public void addStatement(Resource subject, Property predicate, boolean object) throws Exception {
+        try
+        {
+            this.model.addLiteral(subject, predicate, object);
+        }
+        catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][API] Unable to add triple to database");
+            Logger.getLogger(SparqlAPI.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+    }
+
+    public void addStatement(Resource subject, Property predicate, Resource object) throws Exception {
+        try
+        {
+            this.model.add(subject, predicate, object);
+        }
+        catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][API] Unable to add triple to database");
+            Logger.getLogger(SparqlAPI.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+    }
+
+    public void addStatement(Resource subject, Property predicate, String object) throws Exception {
+        try
+        {
+            this.model.add(subject, predicate, object);
+        }
+        catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][API] Unable to add triple to database. (" + subject + "| " + predicate + "| " + object + ")");
+            Logger.getLogger(SparqlAPI.class.getName()).log(Level.SEVERE, null, ex);
+            throw ex;
+        }
+    }
+
+    public Resource createResource(String uri) {
+        Resource resource = null;
+        try
+        {
+            resource = this.model.createResource(uri);
+        }
+        catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][API] Unable to create new Resource in model");
+            Logger.getLogger(SparqlAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resource;
+    }
+
+    public void removeStatement(Statement statement) {
+        try
+        {
+            this.model.remove(statement);
+        } catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][API] Unable to remove statement from the model");
+            Logger.getLogger(SparqlAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public Resource getResource(String uri) {
+        Resource resource = null;
+        try
+        {
+            resource = this.model.getResource(uri);
+        } catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][API] Unable to obtain new Resource from Model");
+            Logger.getLogger(SparqlAPI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resource;
+    }
+
+    public Model getModel() {
+        return this.model;
     }
 }

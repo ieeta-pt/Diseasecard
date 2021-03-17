@@ -4,17 +4,14 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.DiseaseAPI;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
-import pt.ua.diseasecard.service.FileService;
+import pt.ua.diseasecard.service.DataManagementService;
 import pt.ua.diseasecard.utils.Finder;
 import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -25,6 +22,7 @@ import java.util.Objects;
 public class DiseasecardController {
 
     private SparqlAPI api;
+    private DataManagementService dataManagementService;
     private String solrIndex;
     private String connectionString;
     private Map<String, String> sources;
@@ -32,10 +30,7 @@ public class DiseasecardController {
     private Jedis jedis;
     private Boot boot;
 
-    @Autowired
-    FileService fileService;
-
-    public DiseasecardController(DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI, Boot boot) {
+    public DiseasecardController(DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI, Boot boot, DataManagementService dataManagementService) {
         Objects.requireNonNull(diseasecardProperties);
         Objects.requireNonNull(sparqlAPI);
         this.api = sparqlAPI;
@@ -45,6 +40,7 @@ public class DiseasecardController {
         this.connectionString = diseasecardProperties.getDatabase().get("url") + "?user=" + diseasecardProperties.getDatabase().get("username") + "&password=" + diseasecardProperties.getDatabase().get("password");
         this.jedis = boot.getJedis();
         this.boot = boot;
+        this.dataManagementService = dataManagementService;
     }
 
     @GetMapping("/")
@@ -140,7 +136,7 @@ public class DiseasecardController {
 
     @PostMapping("/dcadmin/uploadOntology")
     public String uploadOntology(@RequestParam("file") MultipartFile file) {
-        fileService.uploadFile(file);
+        dataManagementService.uploadSetup(file);
         //redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
         return "redirect:/";
     }
