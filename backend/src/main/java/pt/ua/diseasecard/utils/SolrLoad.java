@@ -2,7 +2,6 @@ package pt.ua.diseasecard.utils;
 
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.common.SolrInputDocument;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;

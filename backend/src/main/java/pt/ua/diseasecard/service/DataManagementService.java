@@ -1,9 +1,9 @@
 package pt.ua.diseasecard.service;
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import pt.ua.diseasecard.connectors.PluginFactory;
 import pt.ua.diseasecard.domain.Concept;
 import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.connectors.ResourceFactory;
-import pt.ua.diseasecard.utils.Finder;
+import pt.ua.diseasecard.utils.PrefixFactory;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -26,6 +26,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -48,6 +49,45 @@ public class DataManagementService {
         this.sparqlAPI = sparqlAPI;
         this.beanFactory = beanFactory;
     }
+    // TODO: COMPOR A CENA DO PREFIXES PORUQE AGR SÓ TEM MESMO O PREFIXOS.. FALTA O À FRENTE
+    /*
+    public void validateSetup(MultipartFile file) {
+
+        Map<String, String> prefixes = this.config.getPrefixes();
+
+        try
+        {
+            Path copyLocation = Paths.get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+
+            // TODO: Get endpoints
+            OntModel model = ModelFactory.createOntologyModel();
+            RDFReader r = model.getReader();
+            r.read(model, file.getInputStream(), PrefixFactory.getURIForPrefix(this.config.getKeyprefix()));
+
+            Property endpoint = model.getProperty(prefixes.get("coeus") + "endpoint");
+            Property name = model.getProperty(prefixes.get("rdfs") + "label");
+
+            ResIterator iter = model.listSubjectsWithProperty(endpoint);
+            while (iter.hasNext())
+            {
+                com.hp.hpl.jena.rdf.model.Resource res = iter.nextResource();
+                String originalEndpoint = res.getProperty(endpoint).getString();
+
+                if (!(originalEndpoint.contains("hgnc") || originalEndpoint.contains("omim") || originalEndpoint.contains("http")))
+                {
+                    res.removeAll(endpoint);
+                    res.addProperty(endpoint, "submittedFiles/endpoints/" + res.getProperty(name).getString());
+                    System.out.println(res.getProperty(endpoint).getString());
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+    */
 
     public void uploadSetup(MultipartFile file) {
         try
@@ -56,10 +96,11 @@ public class DataManagementService {
             Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
 
             // TODO: Get endpoints
-
-            // TODO: validate file!
-            this.storage.loadSetup(file.getInputStream());
-            this.build();
+            Map<String, String> newEndpoints = this.storage.loadSetup(file.getInputStream());
+            for (Map.Entry<String, String> entry : newEndpoints.entrySet()) {
+                System.out.println(entry.getKey() + ":" + entry.getValue().toString());
+            }
+            //this.build();
         }
         catch (Exception e)
         {
@@ -142,7 +183,6 @@ public class DataManagementService {
                 JSONObject identifiers = (JSONObject) binding.get("identifiers");
 
                 Resource r = new Resource(s.get("value").toString(), t.get("value").toString(), l.get("value").toString(), d.get("value").toString(), publisher.get("value").toString(), endpoint.get("value").toString(), method.get("value").toString());
-                this.beanFactory.autowireBean(r);
                 r.setExtendsConcept(ext.get("value").toString());
                 r.setIsResourceOf(new Concept((resof.get("value").toString())));
                 r.setRegex(!(regex == null) ? regex.get("value").toString() : "");
@@ -175,6 +215,7 @@ public class DataManagementService {
                         break;
                     case "plugin":
                         factory = new PluginFactory(r);
+                        //this.beanFactory.autowireBean(factory);
                         break;
                     default:
                         factory = null;

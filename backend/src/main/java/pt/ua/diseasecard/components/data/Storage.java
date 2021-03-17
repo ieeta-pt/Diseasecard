@@ -1,12 +1,12 @@
 package pt.ua.diseasecard.components.data;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.ReasonerRegistry;
 import com.hp.hpl.jena.sdb.SDBFactory;
 import com.hp.hpl.jena.sdb.Store;
-import com.hp.hpl.jena.util.FileManager;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,10 +49,11 @@ public class Storage {
         loadPredicates();
     }
 
-    private void connect() throws IOException {
+    private void connect()  {
         try {
             this.store = SDBFactory.connectStore(ResourceUtils.getFile("classpath:configuration/" + this.config.getSdb()).getPath() );
             //this.store = SDBFactory.connectStore("/configuration/" + this.config.getSdb());
+
             this.model = SDBFactory.connectDefaultModel(store);
             this.infmodel = ModelFactory.createInfModel(reasoner, model);
 
@@ -84,11 +86,35 @@ public class Storage {
         }
     }
 
-    public void loadSetup(InputStream stream) {
+    public Map<String, String> loadSetup(InputStream stream) {
+        Map<String, String> newEndpoints = new HashMap<>();
+
         try {
             //InputStream in = FileManager.get().open(filepath);
+            //RDFReader r = this.model.getReader();
+            //r.read(this.model, stream, PrefixFactory.getURIForPrefix(this.config.getKeyprefix()));
+
             RDFReader r = this.model.getReader();
             r.read(this.model, stream, PrefixFactory.getURIForPrefix(this.config.getKeyprefix()));
+
+            Property endpoint = this.model.getProperty(this.config.getPrefixes().get("coeus") + "endpoint");
+            Property name = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "label");
+
+            ResIterator iter = this.model.listSubjectsWithProperty(endpoint);
+            while (iter.hasNext())
+            {
+                com.hp.hpl.jena.rdf.model.Resource res = iter.nextResource();
+                String originalEndpoint = res.getProperty(endpoint).getString();
+
+                if (!(originalEndpoint.contains("hgnc") || originalEndpoint.contains("omim") || originalEndpoint.contains("http")))
+                {
+                    String label = res.getProperty(name).getString();
+                    res.removeAll(endpoint);
+                    res.addProperty(endpoint, "submittedFiles/endpoints/" + label);
+                    newEndpoints.put(label, "submittedFiles/endpoints/" + label);
+                }
+            }
+
             if (this.config.getDebug()) {
                 System.out.println("[COEUS][Storage] " + this.config.getName() + " setup loaded");
             }
@@ -98,6 +124,7 @@ public class Storage {
                 Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return newEndpoints;
     }
 
     public Model getModel() {

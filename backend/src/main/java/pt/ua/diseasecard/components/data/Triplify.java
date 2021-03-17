@@ -3,34 +3,27 @@ package pt.ua.diseasecard.components.data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
-import pt.ua.diseasecard.connectors.plugins.HGNCPlugin;
 import pt.ua.diseasecard.domain.Resource;
+import pt.ua.diseasecard.utils.BeanUtil;
 import pt.ua.diseasecard.utils.ConceptFactory;
 import pt.ua.diseasecard.utils.PrefixFactory;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Configurable
 public class Triplify {
-
 
     private HashMap<String, ArrayList<String>> properties;
     private Resource resource;
     private String extension;
 
-    @Autowired
-    private SparqlAPI api;
+    private final SparqlAPI api = BeanUtil.getBean(SparqlAPI.class);;
 
-    @Autowired
-    private DiseasecardProperties config;
+    private final DiseasecardProperties config = BeanUtil.getBean(DiseasecardProperties.class);;
 
-    @Autowired
-    private Storage storage;
-
+    private final Storage storage = BeanUtil.getBean(Storage.class);;
 
     public Triplify(Resource resource, String extension) {
         this.resource = resource;

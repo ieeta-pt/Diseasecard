@@ -8,6 +8,7 @@ import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.domain.HGNC;
 import pt.ua.diseasecard.domain.Resource;
+import pt.ua.diseasecard.utils.BeanUtil;
 import pt.ua.diseasecard.utils.PrefixFactory;
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,14 +27,11 @@ public class HGNCPlugin {
     private final Resource res;
     private final Map<String, String> prefixes;
 
-    @Autowired
-    private DiseasecardProperties config;
+    private final DiseasecardProperties config = BeanUtil.getBean(DiseasecardProperties.class);;
 
-    @Autowired
-    private SparqlAPI api;
+    private final SparqlAPI api = BeanUtil.getBean(SparqlAPI.class);;
 
-    @Autowired
-    private Storage storage;
+    private final Storage storage = BeanUtil.getBean(Storage.class);;
 
     public HGNCPlugin(Resource res) {
         this.prefixes = this.config.getPrefixes();

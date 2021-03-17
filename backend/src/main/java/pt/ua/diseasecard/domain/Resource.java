@@ -3,20 +3,15 @@ package pt.ua.diseasecard.domain;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.springframework.beans.factory.annotation.Autowire;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
-import org.springframework.beans.factory.annotation.Qualifier;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
-import pt.ua.diseasecard.service.DataManagementService;
+import pt.ua.diseasecard.utils.BeanUtil;
 import pt.ua.diseasecard.utils.PrefixFactory;
 
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Configurable
 public class Resource {
     private String description;
     private String label;
@@ -34,11 +29,9 @@ public class Resource {
     private String regex;
     private String identifiers;
 
-    @Autowired
-    private SparqlAPI sparqlAPI;
+    private final SparqlAPI sparqlAPI = BeanUtil.getBean(SparqlAPI.class);;
 
-    @Autowired
-    private DiseasecardProperties config;
+    private final DiseasecardProperties config = BeanUtil.getBean(DiseasecardProperties.class);;
 
     private boolean built = false;
 

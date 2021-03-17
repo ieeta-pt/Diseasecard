@@ -8,6 +8,7 @@ import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.domain.Disease;
 import pt.ua.diseasecard.domain.Resource;
+import pt.ua.diseasecard.utils.BeanUtil;
 import pt.ua.diseasecard.utils.PrefixFactory;
 
 import java.io.BufferedReader;
@@ -30,14 +31,11 @@ public class OMIMPlugin {
     private HashMap<String, Disease> genotypes;
     private static HashMap<String, String[]> omims;
 
-    @Autowired
-    private SparqlAPI api;
+    private final SparqlAPI api = BeanUtil.getBean(SparqlAPI.class);;
 
-    @Autowired
-    private DiseasecardProperties config;
+    private final DiseasecardProperties config = BeanUtil.getBean(DiseasecardProperties.class);;
 
-    @Autowired
-    private Storage storage;
+    private final Storage storage = BeanUtil.getBean(Storage.class);;
 
     public OMIMPlugin(Resource res) {
         this.res = res;

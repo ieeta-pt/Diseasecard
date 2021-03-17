@@ -12,6 +12,7 @@ import pt.ua.diseasecard.components.data.Triplify;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.connectors.plugins.OMIMPlugin;
 import pt.ua.diseasecard.domain.Resource;
+import pt.ua.diseasecard.utils.BeanUtil;
 import pt.ua.diseasecard.utils.ItemFactory;
 
 import java.io.File;
@@ -25,21 +26,17 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Configurable
 public class CSVFactory implements ResourceFactory {
 
     private Resource res;
     private Triplify rdfizer;
     private boolean hasError;
 
-    @Autowired
-    private SparqlAPI api;
+    private final SparqlAPI api = BeanUtil.getBean(SparqlAPI.class);;
 
-    @Autowired
-    private DiseasecardProperties config;
+    private DiseasecardProperties config = BeanUtil.getBean(DiseasecardProperties.class);;
 
-    @Autowired
-    private Storage storage;
+    private Storage storage = BeanUtil.getBean(Storage.class);;
 
     public CSVFactory(Resource res) {
         this.res = res;

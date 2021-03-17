@@ -1,31 +1,26 @@
 package pt.ua.diseasecard.connectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.connectors.plugins.HGNCPlugin;
 import pt.ua.diseasecard.connectors.plugins.OMIMPlugin;
 import pt.ua.diseasecard.domain.Resource;
+import pt.ua.diseasecard.utils.BeanUtil;
 
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@Configurable
 public class PluginFactory implements ResourceFactory{
 
     private Resource res;
 
-    @Autowired
-    private DiseasecardProperties config;
+    private final DiseasecardProperties config = BeanUtil.getBean(DiseasecardProperties.class);;
 
-    @Autowired
-    private SparqlAPI api;
+    private final SparqlAPI api = BeanUtil.getBean(SparqlAPI.class);
 
-    @Autowired
-    private Storage storage;
+    private final Storage storage = BeanUtil.getBean(Storage.class);
 
     public PluginFactory(Resource res) {
         this.res = res;
@@ -33,6 +28,8 @@ public class PluginFactory implements ResourceFactory{
 
     @Override
     public void read() {
+        System.out.println("Sparql API in PluginFactory" + this.api);
+
         String[] divide = res.getEndpoint().split("://");
         try {
             switch (divide[0].trim())
