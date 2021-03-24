@@ -1,7 +1,6 @@
 package pt.ua.diseasecard.components.data;
 
 import au.com.bytecode.opencsv.CSVReader;
-import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.ReasonerRegistry;
@@ -10,6 +9,7 @@ import com.hp.hpl.jena.sdb.Store;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
+import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import javax.annotation.PostConstruct;
@@ -30,7 +30,6 @@ public class Storage {
     private Model model;
     private final Reasoner reasoner;
     private InfModel infmodel;
-    private HashMap<String, Property> predicates;
     private ResourceLoader resourceLoader;
 
     private DiseasecardProperties config;
@@ -39,7 +38,6 @@ public class Storage {
         Objects.requireNonNull(diseasecardProperties);
         this.config = diseasecardProperties;
         this.reasoner = ReasonerRegistry.getTransitiveReasoner();
-        this.predicates = new HashMap<>();
         this.resourceLoader = resourceLoader;
     }
 
@@ -73,11 +71,13 @@ public class Storage {
             CSVReader predicatesFile = new CSVReader(new InputStreamReader(resourceLoader.getResource ("classpath:configuration/" + this.config.getPredicates()).getInputStream()));
             String[] nextLine;
             while ((nextLine = predicatesFile.readNext()) != null) {
-                this.predicates.put(PrefixFactory.encode(nextLine[0]), this.model.getProperty(nextLine[0]));
+                if (!(nextLine[0].indexOf("#") == 0)) {
+                    Predicate.add(PrefixFactory.encode(nextLine[0]), this.model.getProperty(nextLine[0]));
+                }
+                //this.predicates.put(PrefixFactory.encode(nextLine[0]), this.model.getProperty(nextLine[0]));
             }
-            if (this.config.getDebug()) {
-                System.out.println("[Diseasecard][Storage] Successfully loaded predicates");
-            }
+            if (this.config.getDebug()) System.out.println("[Diseasecard][Storage] Successfully loaded predicates");
+
         } catch (Exception ex) {
             if (this.config.getDebug()) {
                 System.out.println("[Diseasecard][API] Unable to read Predicates File select");
@@ -105,13 +105,22 @@ public class Storage {
             {
                 com.hp.hpl.jena.rdf.model.Resource res = iter.nextResource();
                 String originalEndpoint = res.getProperty(endpoint).getString();
+                String label = res.getProperty(name).getString();
 
-                if (!(originalEndpoint.contains("hgnc") || originalEndpoint.contains("omim") || originalEndpoint.contains("http")))
+                if (originalEndpoint.contains("hgnc"))
                 {
-                    String label = res.getProperty(name).getString();
+                    newEndpoints.put(label, originalEndpoint);
+                }
+                else if (originalEndpoint.contains("omim"))
+                {
+                    newEndpoints.put(label, originalEndpoint);
+                    //newEndpoints.put("omim_morbidmap", originalEndpoint);
+                }
+                else if (!originalEndpoint.contains("http"))
+                {
                     res.removeAll(endpoint);
                     res.addProperty(endpoint, "submittedFiles/endpoints/" + label);
-                    newEndpoints.put(label, "submittedFiles/endpoints/" + label);
+                    newEndpoints.put(label, originalEndpoint);
                 }
             }
 

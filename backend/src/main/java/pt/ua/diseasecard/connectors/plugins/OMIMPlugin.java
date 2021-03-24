@@ -9,6 +9,7 @@ import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.domain.Disease;
 import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.utils.BeanUtil;
+import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
 
 import java.io.BufferedReader;
@@ -35,8 +36,6 @@ public class OMIMPlugin {
 
     private final DiseasecardProperties config = BeanUtil.getBean(DiseasecardProperties.class);;
 
-    private final Storage storage = BeanUtil.getBean(Storage.class);;
-
     public OMIMPlugin(Resource res) {
         this.res = res;
         this.diseases = new HashMap<>();
@@ -53,8 +52,7 @@ public class OMIMPlugin {
         boolean success = false;
         try
         {
-            // TODO: Não posso deixar isto assim!
-            File file = new File("/usr/local/tomcat/datasets/genemap");
+            File file = new File("submittedFiles/endpoints/omim_genemap");
             BufferedReader in = new BufferedReader(new FileReader(file));
 
             CSVReader reader = new CSVReader(in, '|');
@@ -85,7 +83,7 @@ public class OMIMPlugin {
         boolean success = false;
         try
         {
-            File file = new File("/usr/local/tomcat/datasets/morbidmap");
+            File file = new File("submittedFiles/endpoints/omim_morbidmap");
             BufferedReader in = new BufferedReader(new FileReader(file));
 
             CSVReader reader = new CSVReader(in, '|');
@@ -154,66 +152,66 @@ public class OMIMPlugin {
     }
 
     private void triplify() {
-        Map<String, String> prefixes = this.config.getPrefixes();
+        //Map<String, String> prefixes = this.config.getPrefixes();
         for (Disease genotype : genotypes.values()) {
             if (!genotype.getOmimId().equals("")) {
                 try {
                     String[] itemTmp = res.getIsResourceOf().getLabel().split("_");
                     com.hp.hpl.jena.rdf.model.Resource geno_item = api.createResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + itemTmp[1] + "_" + genotype.getOmimId());
                     com.hp.hpl.jena.rdf.model.Resource geno_obj = api.createResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + "Item");
-                    api.addStatement(geno_item, this.storage.getProperty(prefixes.get("rdf:type")), geno_obj);
+                    api.addStatement(geno_item, Predicate.get("rdf:type"), geno_obj);
 
                     // set Item label
-                    api.addStatement(geno_item, this.storage.getProperty(prefixes.get("rdfs:label")), "omim_" + genotype.getOmimId());
+                    api.addStatement(geno_item, Predicate.get("rdfs:label"), "omim_" + genotype.getOmimId());
 
                     // associate Item with Concept
                     com.hp.hpl.jena.rdf.model.Resource con = api.getResource(res.getIsResourceOf().getUri());
-                    api.addStatement(geno_item, this.storage.getProperty(prefixes.get("coeus:hasConcept")), con);
-                    api.addStatement(con, this.storage.getProperty(prefixes.get("coeus:isConceptOf")), geno_item);
+                    api.addStatement(geno_item, Predicate.get("coeus:hasConcept"), con);
+                    api.addStatement(con, Predicate.get("coeus:isConceptOf"), geno_item);
 
                     // add name/comment
-                    api.addStatement(geno_item, this.storage.getProperty(prefixes.get("rdfs:comment")), genotype.getName());
-                    api.addStatement(geno_item, this.storage.getProperty(prefixes.get("dc:description")), genotype.getName());
+                    api.addStatement(geno_item, Predicate.get("rdfs:comment"), genotype.getName());
+                    api.addStatement(geno_item, Predicate.get("dc:description"), genotype.getName());
                     for (String name : genotype.getNames()) {
-                        api.addStatement(geno_item, this.storage.getProperty(prefixes.get("diseasecard:name")), name);
+                        api.addStatement(geno_item, Predicate.get("diseasecard:name"), name);
                     }
 
-                    api.addStatement(geno_item, this.storage.getProperty(prefixes.get("diseasecard:omim")), genotype.getOmimId());
-                    api.addStatement(geno_item, this.storage.getProperty(prefixes.get("diseasecard:chromosomalLocation")), genotype.getLocation());
+                    api.addStatement(geno_item, Predicate.get("diseasecard:omim"), genotype.getOmimId());
+                    api.addStatement(geno_item, Predicate.get("diseasecard:chromosomalLocation"), genotype.getLocation());
 
                     //triplifyGenes(genotype.getGenes(), geno_item);
 
                     for (Disease phenotype : genotype.getPhenotypes()) {
                         com.hp.hpl.jena.rdf.model.Resource pheno_item = api.createResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + itemTmp[1] + "_" + phenotype.getOmimId());
                         com.hp.hpl.jena.rdf.model.Resource pheno_obj = api.createResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + "Item");
-                        api.addStatement(pheno_item, this.storage.getProperty(prefixes.get("rdf:type")), pheno_obj);
+                        api.addStatement(pheno_item, Predicate.get("rdf:type"), pheno_obj);
 
                         // set Item label
-                        api.addStatement(pheno_item, this.storage.getProperty(prefixes.get("rdfs:label")), "omim_" + phenotype.getOmimId());
+                        api.addStatement(pheno_item, Predicate.get("rdfs:label"), "omim_" + phenotype.getOmimId());
 
                         // associate Item with Concept
                         com.hp.hpl.jena.rdf.model.Resource pheno_concept = api.getResource(res.getIsResourceOf().getUri());
-                        api.addStatement(pheno_item, this.storage.getProperty(prefixes.get("coeus:hasConcept")), pheno_concept);
-                        api.addStatement(pheno_concept, this.storage.getProperty(prefixes.get("coeus:isConceptOf")), pheno_item);
+                        api.addStatement(pheno_item, Predicate.get("coeus:hasConcept"), pheno_concept);
+                        api.addStatement(pheno_concept, Predicate.get("coeus:isConceptOf"), pheno_item);
 
                         // add name/comment
-                        api.addStatement(pheno_item, this.storage.getProperty(prefixes.get("rdfs:comment")), phenotype.getName());
-                        api.addStatement(pheno_item, this.storage.getProperty(prefixes.get("dc:description")), phenotype.getName());
+                        api.addStatement(pheno_item, Predicate.get("rdfs:comment"), phenotype.getName());
+                        api.addStatement(pheno_item, Predicate.get("dc:description"), phenotype.getName());
                         for (String name : phenotype.getNames()) {
-                            api.addStatement(pheno_item, this.storage.getProperty(prefixes.get("diseasecard:name")), name);
+                            api.addStatement(pheno_item, Predicate.get("diseasecard:name"), name);
                         }
-                        api.addStatement(pheno_item, this.storage.getProperty(prefixes.get("diseasecard:omim")), phenotype.getOmimId());
-                        api.addStatement(pheno_item, this.storage.getProperty(prefixes.get("diseasecard:chromosomalLocation")), phenotype.getLocation());
+                        api.addStatement(pheno_item, Predicate.get("diseasecard:omim"), phenotype.getOmimId());
+                        api.addStatement(pheno_item, Predicate.get("diseasecard:chromosomalLocation"), phenotype.getLocation());
 
                         //add diseasecard-specific info
-                        api.addStatement(pheno_item, this.storage.getProperty(prefixes.get("diseasecard:phenotype")), "true");
-                        api.addStatement(pheno_item, this.storage.getProperty(prefixes.get("diseasecard:hasGenotype")), geno_item);
-                        api.addStatement(geno_item, this.storage.getProperty(prefixes.get("diseasecard:hasPhenotype")), pheno_item);
+                        api.addStatement(pheno_item, Predicate.get("diseasecard:phenotype"), "true");
+                        api.addStatement(pheno_item, Predicate.get("diseasecard:hasGenotype"), geno_item);
+                        api.addStatement(geno_item, Predicate.get("diseasecard:hasPhenotype"), pheno_item);
 
                         //triplifyGenes(phenotype.getGenes(), pheno_item);
                     }
 
-                    api.addStatement(geno_item, this.storage.getProperty(prefixes.get("diseasecard:genotype")), "true");
+                    api.addStatement(geno_item, Predicate.get("diseasecard:genotype"), "true");
                 }
                 catch (Exception ex)
                 {

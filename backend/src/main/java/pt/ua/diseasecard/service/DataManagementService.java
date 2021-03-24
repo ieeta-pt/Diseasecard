@@ -9,6 +9,7 @@ import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
@@ -20,11 +21,13 @@ import pt.ua.diseasecard.connectors.ResourceFactory;
 import pt.ua.diseasecard.utils.PrefixFactory;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Level;
@@ -33,7 +36,6 @@ import java.util.logging.Logger;
 @Service
 public class DataManagementService {
 
-    @Value("${app.upload.dir:${user.home}}")
     private String uploadDir;
     private Storage storage;
     private DiseasecardProperties config;
@@ -41,13 +43,16 @@ public class DataManagementService {
     private SparqlAPI sparqlAPI;
 
     private AutowireCapableBeanFactory beanFactory;
+    private Boot boot;
 
-    public DataManagementService(Storage storage, DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI, AutowireCapableBeanFactory beanFactory) {
+    public DataManagementService(Storage storage, DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI, AutowireCapableBeanFactory beanFactory, Boot boot) {
+        this.uploadDir = "submittedFiles";
         this.storage = storage;
         this.config = diseasecardProperties;
         this.resources = new ArrayList<>();
         this.sparqlAPI = sparqlAPI;
         this.beanFactory = beanFactory;
+        this.boot = boot;
     }
     // TODO: COMPOR A CENA DO PREFIXES PORUQE AGR SÓ TEM MESMO O PREFIXOS.. FALTA O À FRENTE
     /*
@@ -89,7 +94,7 @@ public class DataManagementService {
     }
     */
 
-    public void uploadSetup(MultipartFile file) {
+    public Map<String, String> uploadSetup(MultipartFile file) {
         try
         {
             Path copyLocation = Paths.get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
@@ -100,12 +105,23 @@ public class DataManagementService {
             for (Map.Entry<String, String> entry : newEndpoints.entrySet()) {
                 System.out.println(entry.getKey() + ":" + entry.getValue().toString());
             }
+
+            return newEndpoints;
             //this.build();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public void uploadEndpoints(List<MultipartFile> endpoints) throws IOException {
+        for (MultipartFile file : endpoints) {
+            Path copyLocation = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
+            Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+        }
+        this.build();
     }
 
     private void build() {
@@ -131,6 +147,7 @@ public class DataManagementService {
                     Logger.getLogger(DataManagementService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+            this.boot.startInternalProcess();
         }
         catch (Exception ex)
         {
@@ -156,7 +173,7 @@ public class DataManagementService {
                     + " ?s coeus:order ?order . "
                     + "OPTIONAL { ?s coeus:built ?built} . "
                     + "OPTIONAL { ?s coeus:line ?line} . "
-                    + "OPTIONAL { ?s coeus:identifiers ?prop} . "
+                    + "OPTIONAL { ?s coeus:identifiers ?identifiers} . "
                     + "OPTIONAL { ?s coeus:regex ?regex} . "
                     + "OPTIONAL { ?s coeus:extension ?extension} . "
                     + "OPTIONAL {?s coeus:query ?query}} "

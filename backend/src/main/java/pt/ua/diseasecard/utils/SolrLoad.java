@@ -4,6 +4,7 @@ import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.apache.solr.common.SolrInputDocument;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,6 +68,7 @@ public class SolrLoad implements Runnable{
                     SolrInputDocument d = new SolrInputDocument();
                     if (this.uri.contains(":")) {
                         String[] uris = this.uri.split(":");
+                        System.out.println(Arrays.toString(uris));
                         this.concept = uris[0];
                         if (uris.length == 3) {
                             this.value = uris[1] + ":" + uris[2];

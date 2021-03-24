@@ -14,6 +14,7 @@ import pt.ua.diseasecard.connectors.plugins.OMIMPlugin;
 import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.utils.BeanUtil;
 import pt.ua.diseasecard.utils.ItemFactory;
+import pt.ua.diseasecard.utils.Predicate;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +23,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,11 +32,8 @@ public class CSVFactory implements ResourceFactory {
     private Triplify rdfizer;
     private boolean hasError;
 
-    private final SparqlAPI api = BeanUtil.getBean(SparqlAPI.class);;
-
-    private DiseasecardProperties config = BeanUtil.getBean(DiseasecardProperties.class);;
-
-    private Storage storage = BeanUtil.getBean(Storage.class);;
+    private final SparqlAPI api = BeanUtil.getBean(SparqlAPI.class);
+    private DiseasecardProperties config = BeanUtil.getBean(DiseasecardProperties.class);
 
     public CSVFactory(Resource res) {
         this.res = res;
@@ -50,9 +47,9 @@ public class CSVFactory implements ResourceFactory {
         CsvParser parser = new CsvParser(settings);
         try {
             // Read Local File
-            if (this.res.getEndpoint().contains("sourceFilesLocation"))
+            if (!this.res.getEndpoint().contains("http"))
             {
-                return parser.parseAll(new File("/usr/local/tomcat/datasets/malacards_diseasecards_dump.csv"));
+                return parser.parseAll(new File("submittedFiles/endpoints/" + res.getLabel()));
             }
             // Read Online File
             else
@@ -86,7 +83,7 @@ public class CSVFactory implements ResourceFactory {
                     if ( r[Integer.parseInt(res.getRegex())].equals(item) )
                     {
                         rdfizer = new Triplify(res, extensions.get(itemRaw));
-                        String[] tmp = res.getDescription().split("\\|");
+                        String[] tmp = res.getIdentifiers().split("\\|");
 
                         for (String inside : tmp)
                         {
@@ -114,10 +111,9 @@ public class CSVFactory implements ResourceFactory {
             //only change built property if there are no errors
             if (!hasError) {
                 com.hp.hpl.jena.rdf.model.Resource resource = api.getResource(this.res.getUri());
-                Map<String, String> prefixes = this.config.getPrefixes();
-                Statement statementToRemove = api.getModel().createLiteralStatement(resource, this.storage.getProperty(prefixes.get("coeus:built")), false);
+                Statement statementToRemove = api.getModel().createLiteralStatement(resource, Predicate.get("coeus:built"), false);
                 api.removeStatement(statementToRemove);
-                api.addStatement(resource, this.storage.getProperty(prefixes.get("coeus:built")), true);
+                api.addStatement(resource, Predicate.get("coeus:built"), true);
             }
             if (this.config.getDebug()) {
                 System.out.println("[COEUS][API] Saved resource " + res.getUri());
@@ -136,8 +132,7 @@ public class CSVFactory implements ResourceFactory {
         try
         {
             com.hp.hpl.jena.rdf.model.Resource resource = this.api.getResource(this.res.getUri());
-            Map<String, String> prefixes = this.config.getPrefixes();
-            Statement statement = api.getModel().createLiteralStatement(resource, this.storage.getProperty(prefixes.get("dc:coverage")), "ERROR: "+ex.getMessage()+". For more information, please see the application server log.");
+            Statement statement = api.getModel().createLiteralStatement(resource, Predicate.get("dc:coverage"), "ERROR: "+ex.getMessage()+". For more information, please see the application server log.");
             api.addStatement(statement);
             hasError = true;
 

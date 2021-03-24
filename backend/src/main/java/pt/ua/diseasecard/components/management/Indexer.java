@@ -49,7 +49,7 @@ public class Indexer implements Runnable{
         while (rs.hasNext()) {
             QuerySolution row = rs.next();
             try {
-                System.out.println("OMIM: " + jedis.get("omim:" + row.get("t").toString()));
+                //System.out.println("OMIM: " + jedis.get("omim:" + row.get("t").toString()));
                 omims.put(row.get("t").toString(), new JSONObject(jedis.get("omim:" + row.get("t").toString())));
             } catch (Exception e) {
                 Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);
@@ -73,7 +73,7 @@ public class Indexer implements Runnable{
                 for (int i = 0; i < names.length(); i++) {
                     SolrLoad load = new SolrLoad(omim, "name", server);
                     load.setValue(names.getString(i));
-
+                    // TODO: VERIFICAR SE NÃO FALTA AQUI CENS
                     pool.execute(load);
 
                 }

@@ -39,41 +39,7 @@ services:
         networks:
             - backend   
 
-    dc_backend:
-        env_file: .env
-        container_name: dc_backend
-        depends_on:
-            - mysql
-            - dc_redis
-            - dc_solr
-        build: ./backend
-        ports:
-            - ${BACKEND_PORT}:8080
-        links:
-            - mysql:container_mysql
-            - dc_redis:container_redis
-            - dc_solr:container_solr
-        networks:
-            - backend
-        environment:
-            - WAIT_HOSTS=mysql:3306
 
-            
-    dc_frontend:
-        container_name: dc_frontend
-        stdin_open: true        
-        depends_on:
-            - dc_backend
-        build: ./frontend
-        ports:
-            - ${FRONTEND_PORT}:3000
-        links:
-            - dc_backend:container_backend
-            - dc_backend:containerbackend
-        networks:
-            - backend
-        expose:
-            - 3000
 
 
 networks:

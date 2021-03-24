@@ -2,8 +2,10 @@ package pt.ua.diseasecard.controller;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.DiseaseAPI;
 import pt.ua.diseasecard.components.data.SparqlAPI;
@@ -12,6 +14,9 @@ import pt.ua.diseasecard.service.DataManagementService;
 import pt.ua.diseasecard.utils.Finder;
 import redis.clients.jedis.Jedis;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -135,9 +140,15 @@ public class DiseasecardController {
 
 
     @PostMapping("/dcadmin/uploadOntology")
-    public String uploadOntology(@RequestParam("file") MultipartFile file) {
-        dataManagementService.uploadSetup(file);
+    public Map<String, String> uploadOntology(@RequestParam("file") MultipartFile file) {
+        Map<String, String> endpoints = dataManagementService.uploadSetup(file);
         //redirectAttributes.addFlashAttribute("message", "You successfully uploaded " + file.getOriginalFilename() + "!");
-        return "redirect:/";
+        return endpoints;
+    }
+
+
+    @PostMapping(value = "/dcadmin/uploadEndpoints", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+    public void uploadEndpoints(@RequestParam("information[]") List<MultipartFile> information) throws IOException {
+        dataManagementService.uploadEndpoints(information);
     }
 }

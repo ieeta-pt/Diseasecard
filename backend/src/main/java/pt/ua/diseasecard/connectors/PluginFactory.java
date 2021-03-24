@@ -7,6 +7,7 @@ import pt.ua.diseasecard.connectors.plugins.HGNCPlugin;
 import pt.ua.diseasecard.connectors.plugins.OMIMPlugin;
 import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.utils.BeanUtil;
+import pt.ua.diseasecard.utils.Predicate;
 
 import java.util.Map;
 import java.util.logging.Level;
@@ -61,7 +62,7 @@ public class PluginFactory implements ResourceFactory{
         try
         {
             com.hp.hpl.jena.rdf.model.Resource resource = api.getResource(this.res.getUri());
-            api.addStatement(resource, this.storage.getProperty(prefixes.get("coeus:built")), true);
+            api.addStatement(resource, Predicate.get("coeus:built"), true);
 
             if (this.config.getDebug()) System.out.println("[COEUS][API] Saved resource " + res.getUri());
         }

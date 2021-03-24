@@ -9,6 +9,7 @@ import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.domain.HGNC;
 import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.utils.BeanUtil;
+import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
 import java.io.BufferedReader;
 import java.io.File;
@@ -25,16 +26,11 @@ public class HGNCPlugin {
     private final HashMap<String, com.hp.hpl.jena.rdf.model.Resource> hgncRes;
     private final HashMap<String, com.hp.hpl.jena.rdf.model.Resource> uniprotRes;
     private final Resource res;
-    private final Map<String, String> prefixes;
 
     private final DiseasecardProperties config = BeanUtil.getBean(DiseasecardProperties.class);;
-
     private final SparqlAPI api = BeanUtil.getBean(SparqlAPI.class);;
 
-    private final Storage storage = BeanUtil.getBean(Storage.class);;
-
     public HGNCPlugin(Resource res) {
-        this.prefixes = this.config.getPrefixes();
         this.hgncs = new ArrayList<>();
         this.hgncRes = new HashMap<>();
         this.uniprotRes = new HashMap<>();
@@ -47,7 +43,7 @@ public class HGNCPlugin {
 
     private boolean load() {
         boolean sucess = false;
-        File file = new File("/usr/local/tomcat/datasets/hgnc_data");
+        File file = new File("submittedFiles/endpoints/resource_hgnc");
         BufferedReader in;
         try
         {
@@ -171,15 +167,15 @@ public class HGNCPlugin {
             item = api.createResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + o + ID);
             com.hp.hpl.jena.rdf.model.Resource obj = api.createResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + "Item");
 
-            api.addStatement(item, this.storage.getProperty(this.prefixes.get("rdf:type")), obj);
+            api.addStatement(item, Predicate.get("rdf:type"), obj);
 
-            api.addStatement(item, this.storage.getProperty(this.prefixes.get("rdfs:label")), o + name);
-            api.addStatement(item, this.storage.getProperty(this.prefixes.get("dc:title")), name.toUpperCase());
+            api.addStatement(item, Predicate.get("rdfs:label"), o + name);
+            api.addStatement(item, Predicate.get("dc:title"), name.toUpperCase());
 
             com.hp.hpl.jena.rdf.model.Resource con = api.getResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + concept);
 
-            api.addStatement(item, this.storage.getProperty(this.prefixes.get("coeus:hasConcept")), con);
-            api.addStatement(con, this.storage.getProperty(this.prefixes.get("coeus:isConceptOf")), item);
+            api.addStatement(item, Predicate.get("coeus:hasConcept"), con);
+            api.addStatement(con, Predicate.get("coeus:isConceptOf"), item);
 
         }
         catch (Exception ex)
@@ -192,8 +188,8 @@ public class HGNCPlugin {
 
     private void associateItems(com.hp.hpl.jena.rdf.model.Resource item, com.hp.hpl.jena.rdf.model.Resource parent) {
         try {
-            api.addStatement(item, this.storage.getProperty(this.prefixes.get("coeus:isAssociatedTo")), parent);
-            api.addStatement(parent, this.storage.getProperty(this.prefixes.get("coeus:isAssociatedTo")), item);
+            api.addStatement(item, Predicate.get("coeus:isAssociatedTo"), parent);
+            api.addStatement(parent, Predicate.get("coeus:isAssociatedTo"), item);
         } catch (Exception ex) {
             Logger.getLogger(HGNCPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
