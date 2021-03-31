@@ -29,8 +29,6 @@ public class PluginFactory implements ResourceFactory{
 
     @Override
     public void read() {
-        System.out.println("Sparql API in PluginFactory" + this.api);
-
         String[] divide = res.getEndpoint().split("://");
         try {
             switch (divide[0].trim())

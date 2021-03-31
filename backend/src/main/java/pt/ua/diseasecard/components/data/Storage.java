@@ -90,10 +90,6 @@ public class Storage {
         Map<String, String> newEndpoints = new HashMap<>();
 
         try {
-            //InputStream in = FileManager.get().open(filepath);
-            //RDFReader r = this.model.getReader();
-            //r.read(this.model, stream, PrefixFactory.getURIForPrefix(this.config.getKeyprefix()));
-
             RDFReader r = this.model.getReader();
             r.read(this.model, stream, PrefixFactory.getURIForPrefix(this.config.getKeyprefix()));
 
@@ -152,7 +148,4 @@ public class Storage {
         this.infmodel = infmodel;
     }
 
-    public Property getProperty(String s) {
-        return this.model.getProperty(s);
-    }
 }

@@ -219,8 +219,6 @@ public class Resource {
     }
 
     public void loadConcept() {
-        System.out.println("Config: " + this.config);
-        System.out.println("SparqlAPI: " + this.sparqlAPI);
         try
         {
             JSONParser parser = new JSONParser();

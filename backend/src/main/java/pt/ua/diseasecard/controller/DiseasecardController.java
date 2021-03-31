@@ -1,5 +1,6 @@
 package pt.ua.diseasecard.controller;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -48,6 +49,7 @@ public class DiseasecardController {
         this.dataManagementService = dataManagementService;
     }
 
+
     @GetMapping("/")
     public String index() {
         return "Greetings from Spring Boot! ";
@@ -77,7 +79,6 @@ public class DiseasecardController {
     }
 
 
-    // TODO: Em vez de estar sempre a fazer load, tentar ir ver se não tem no jedis ------ done
     @GetMapping("/services/disease")
     @ResponseBody
     public String getDiseaseByOMIM(
@@ -120,8 +121,7 @@ public class DiseasecardController {
 
     @GetMapping("/services/browse")
     @ResponseBody
-    public String getBrowserResultsByLetter(
-            @RequestParam(name = "letter", required = true) String letter) {
+    public String getBrowserResultsByLetter( @RequestParam(name = "letter", required = true) String letter) {
 
         try {
             return jedis.get("browse:" + letter);
@@ -150,5 +150,17 @@ public class DiseasecardController {
     @PostMapping(value = "/dcadmin/uploadEndpoints", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
     public void uploadEndpoints(@RequestParam("information[]") List<MultipartFile> information) throws IOException {
         dataManagementService.uploadEndpoints(information);
+    }
+
+
+    @GetMapping("/dcadmin/status/labels")
+    public JSONObject getFormLabelsInfo() {
+        return dataManagementService.getFormLabels();
+    }
+
+
+    @GetMapping("/dcadmin/status/allEntities")
+    public JSONObject getAllEntitiesInfo() {
+        return dataManagementService.getAllEntities();
     }
 }
