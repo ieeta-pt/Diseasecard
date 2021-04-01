@@ -1,10 +1,12 @@
 package pt.ua.diseasecard.service;
+import com.github.jsonldjava.utils.Obj;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.openjena.atlas.json.JSON;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -225,30 +228,23 @@ public class DataManagementService {
                 String comment = ((JSONObject) binding.get("comment")).get("value").toString();
                 String description = ((JSONObject) binding.get("description")).get("value").toString();
                 String title = ((JSONObject) binding.get("title")).get("value").toString();
+                String isIncludedIn = ((JSONObject) binding.get("isIncludedIn")).get("value").toString();
 
-                if (!finalR.containsKey(label)) finalR.put(label, new JSONObject());
-
-                ((JSONObject) finalR.get(label)).put("label", label);
-                ((JSONObject) finalR.get(label)).put("uri", uri);
-                ((JSONObject) finalR.get(label)).put("comment", comment);
-                ((JSONObject) finalR.get(label)).put("description", description);
-                ((JSONObject) finalR.get(label)).put("title", title);
-                ((JSONObject) finalR.get(label)).put("isIncludedIn", new JSONArray());
-                ((JSONObject) finalR.get(label)).put("isEntityOf", new JSONArray());
-
-
-
-                JSONObject isIncludedInJSON = (JSONObject) binding.get("isIncludedIn");
-                JSONObject isEntityOfJSON = (JSONObject) binding.get("isEntityOf");
-
-                if (isIncludedInJSON != null) {
-                    String x = isIncludedInJSON.get("value").toString();
-                    ((JSONArray) ((JSONObject) finalR.get(label)).get("isIncludedIn")).add(new String[]{ x.substring( x.lastIndexOf("/") + 1 ), x });
+                if (!finalR.containsKey(uri)) {
+                    finalR.put(uri, new JSONObject());
+                    ((JSONObject) finalR.get(uri)).put("label", label);
+                    ((JSONObject) finalR.get(uri)).put("uri", uri);
+                    ((JSONObject) finalR.get(uri)).put("comment", comment);
+                    ((JSONObject) finalR.get(uri)).put("description", description);
+                    ((JSONObject) finalR.get(uri)).put("title", title);
+                    ((JSONObject) finalR.get(uri)).put("isIncludedIn", isIncludedIn);
+                    ((JSONObject) finalR.get(uri)).put("isEntityOf", new JSONArray());
                 }
 
+                JSONObject isEntityOfJSON = (JSONObject) binding.get("isEntityOf");
+
                 if (isEntityOfJSON != null) {
-                    String x = isEntityOfJSON.get("value").toString();
-                    ((JSONArray) ((JSONObject) finalR.get(label)).get("isEntityOf")).add(new String[]{ x.substring( x.lastIndexOf("/") + 1 ), x });
+                    ((JSONArray) ((JSONObject) finalR.get(uri)).get("isEntityOf")).add(isEntityOfJSON.get("value").toString());
                 }
             }
         }
@@ -265,12 +261,12 @@ public class DataManagementService {
      */
     public JSONObject getAllConcepts() {
         if (this.config.getDebug()) System.out.println("[COEUS][Builder] Getting all the existing concepts on " + this.config.getName());
-        JSONObject info = new JSONObject();
+        JSONObject finalR = new JSONObject();
         try
         {
             JSONParser parser = new JSONParser();
             JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT ?s ?label ?comment ?title ?description ?hasEntity ?hasResource"
-                    + " WHERE { ?s rdf:type coeus:Entity ."
+                    + " WHERE { ?s rdf:type coeus:Concept ."
                     + " ?s rdfs:label ?label ."
                     + " ?s rdfs:comment ?comment ."
                     + " ?s dc:description ?description ."
@@ -281,7 +277,6 @@ public class DataManagementService {
             JSONObject results = (JSONObject) response.get("results");
             JSONArray bindings = (JSONArray) results.get("bindings");
 
-
             for (Object o : bindings) {
                 JSONObject binding = (JSONObject) o;
                 String uri = ((JSONObject) binding.get("s")).get("value").toString();
@@ -289,28 +284,25 @@ public class DataManagementService {
                 String comment = ((JSONObject) binding.get("comment")).get("value").toString();
                 String description = ((JSONObject) binding.get("description")).get("value").toString();
                 String title = ((JSONObject) binding.get("title")).get("value").toString();
+                String hasEntity = ((JSONObject) binding.get("hasEntity")).get("value").toString();
 
-                if (!info.containsKey("label")) {
-                    info.put("label", label);
-                    info.put("uri", uri);
-                    info.put("comment", comment);
-                    info.put("description", description);
-                    info.put("title", title);
-                    info.put("hasEntity", "");
-                    info.put("hasResource", "");
+                if (!finalR.containsKey(uri)) {
+                    finalR.put(uri, new JSONObject());
+
+                    ((JSONObject) finalR.get(uri)).put("label", label);
+                    ((JSONObject) finalR.get(uri)).put("uri", uri);
+                    ((JSONObject) finalR.get(uri)).put("comment", comment);
+                    ((JSONObject) finalR.get(uri)).put("description", description);
+                    ((JSONObject) finalR.get(uri)).put("title", title);
+                    ((JSONObject) finalR.get(uri)).put("title", title);
+                    ((JSONObject) finalR.get(uri)).put("hasEntity", hasEntity);
+                    ((JSONObject) finalR.get(uri)).put("hasResource", new JSONArray());
                 }
 
                 JSONObject hasResourceJSON = (JSONObject) binding.get("hasResource");
-                JSONObject hasEntityJSON = (JSONObject) binding.get("hasEntity");
 
                 if (hasResourceJSON != null) {
-                    String x = hasResourceJSON.get("value").toString();
-                    ((JSONArray) info.get("hasResource")).add(new String[]{ x.substring( x.lastIndexOf("/") + 1 ), x });
-                }
-
-                if (hasEntityJSON != null) {
-                    String x = hasEntityJSON.get("value").toString();
-                    ((JSONArray) info.get("hasEntity")).add(new String[]{ x.substring( x.lastIndexOf("/") + 1 ), x });
+                    ((JSONArray) ((JSONObject) finalR.get(uri)).get("hasResource")).add(hasResourceJSON.get("value").toString());
                 }
             }
         }
@@ -318,7 +310,8 @@ public class DataManagementService {
         {
             e.printStackTrace();
         }
-        return info;
+
+        return finalR;
     }
 
 
@@ -330,7 +323,8 @@ public class DataManagementService {
         try
         {
             JSONParser parser = new JSONParser();
-            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT ?s ?resof ?method ?comment ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built ?query ?regex ?identifiers ?line WHERE { ?s rdf:type coeus:Resource ."
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT ?s ?resof ?method ?comment ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built ?query ?regex ?identifiers ?line "
+                    + " WHERE { ?s rdf:type coeus:Resource ."
                     + " ?s rdfs:comment ?comment ."
                     + " ?s rdfs:label ?label ."
                     + " ?s dc:title ?title ."
@@ -399,6 +393,76 @@ public class DataManagementService {
 
 
     /*
+        Description
+     */
+    private JSONObject getResource(String resourceURI) {
+        JSONObject resource = new JSONObject();
+        try
+        {
+            JSONParser parser = new JSONParser();
+
+            String queryString = "SELECT * "
+                + " WHERE { <" + resourceURI + "> dc:title ?title ."
+                + " <" + resourceURI + "> rdfs:comment ?comment ."
+                + " <" + resourceURI + "> rdfs:label ?label ."
+                + " <" + resourceURI + "> dc:title ?title ."
+                + " <" + resourceURI + "> dc:publisher ?publisher ."
+                + " <" + resourceURI + "> coeus:isResourceOf ?resof ."
+                + " <" + resourceURI + "> coeus:extends ?extends ."
+                + " <" + resourceURI + "> coeus:method ?method ."
+                + " <" + resourceURI + "> coeus:endpoint ?endpoint ."
+                + " <" + resourceURI + "> coeus:order ?order . "
+                + "OPTIONAL { <" + resourceURI + "> coeus:built ?built} . "
+                + "OPTIONAL { <" + resourceURI + "> coeus:identifiers ?identifiers} . "
+                + "OPTIONAL { <" + resourceURI + "> coeus:regex ?regex} . "
+                + "OPTIONAL { <" + resourceURI + "> coeus:query ?query}} ";
+
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select(queryString, "js", false));
+
+            JSONObject results = (JSONObject) response.get("results");
+            JSONArray bindings = (JSONArray) results.get("bindings");
+
+            try {
+                JSONObject a = (JSONObject) bindings.get(0);
+                resource.put("comment", ((JSONObject) a.get("comment")).get("value").toString());
+                resource.put("label", ((JSONObject) a.get("label")).get("value").toString());
+                resource.put("title", ((JSONObject) a.get("title")).get("value").toString());
+                resource.put("publisher", ((JSONObject) a.get("publisher")).get("value").toString());
+                resource.put("resof", ((JSONObject) a.get("resof")).get("value").toString());
+                resource.put("extends", ((JSONObject) a.get("extends")).get("value").toString());
+                resource.put("method", ((JSONObject) a.get("method")).get("value").toString());
+                resource.put("method", ((JSONObject) a.get("method")).get("value").toString());
+                resource.put("endpoint", ((JSONObject) a.get("endpoint")).get("value").toString());
+                resource.put("endpoint", ((JSONObject) a.get("endpoint")).get("value").toString());
+                resource.put("order", ((JSONObject) a.get("order")).get("value").toString());
+
+                JSONObject built = (JSONObject) a.get("built");
+                JSONObject query = (JSONObject) a.get("query");
+                JSONObject regex = (JSONObject) a.get("regex");
+                JSONObject identifiers = (JSONObject) a.get("identifiers");
+
+                if (built != null) resource.put("built", Boolean.parseBoolean(built.get("value").toString()));
+                else resource.put("built", false);
+
+                if (query != null) resource.put("query", query.get("value").toString());
+                else resource.put("query", "");
+
+                if (regex != null) resource.put("regex", regex.get("value").toString());
+                else resource.put("regex", "");
+
+                if (identifiers != null) resource.put("identifiers", identifiers.get("value").toString());
+                else resource.put("identifiers", "");
+            } catch (Exception ex) {}
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return resource;
+    }
+
+
+    /*
         Get labels needed in forms: entities_labels, concept_labels, resources_labels, plugins_labels.
         For now, the plugins_labels are going to be hardcoded, since the current ontology is not yet ready.
      */
@@ -447,14 +511,38 @@ public class DataManagementService {
         The idea is to organize all the entities, concepts and resources into a single object, mapping the relations between them.
         This map is then used in DiseasecardAdmin platform.
      */
-    public void getOntologyStructure() {
+    public JSONObject getOntologyStructure() {
+        if (this.config.getDebug()) System.out.println("[COEUS][Builder] Getting Ontology Structure of " + this.config.getName() );
+
         JSONObject entities = this.getAllEntities();
         JSONObject concepts = this.getAllConcepts();
-        JSONArray resources = this.getAllResources();
 
+        for (Object key : entities.keySet()) {
+            JSONObject entityValues = (JSONObject) entities.get(key);
 
+            JSONArray entityOf = (JSONArray) entityValues.get("isEntityOf");
+            JSONObject auxE = new JSONObject();
+            for (Object conceptURI : entityOf) {
+                try
+                {
+                    JSONObject conceptValues = (JSONObject) concepts.get(conceptURI);
+                    JSONArray resourcesExtending = (JSONArray) conceptValues.get("hasResource");
+                    JSONObject auxR = new JSONObject();
+
+                    for (Object resourceURI : resourcesExtending) {
+                        JSONObject resource = this.getResource(resourceURI.toString());
+                        auxR.put(resourceURI, resource);
+                    }
+
+                    ((JSONObject) concepts.get(conceptURI)).replace("hasResource", auxR);
+                } catch (Exception ex) { }
+                auxE.put(conceptURI, concepts.get(conceptURI));
+            }
+            ((JSONObject) entities.get(key)).replace("isEntityOf", auxE);
+        }
+
+        return entities;
     }
-
 
 
     /*
@@ -477,8 +565,9 @@ public class DataManagementService {
     /*
         Description
      */
-    private void addEntity() {
-
+    public void addEntity() {
+        System.out.println("OÁ");
+        this.storage.getSeedURI();
     }
 
 

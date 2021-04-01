@@ -13,9 +13,7 @@ import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -103,15 +101,8 @@ public class Storage {
                 String originalEndpoint = res.getProperty(endpoint).getString();
                 String label = res.getProperty(name).getString();
 
-                if (originalEndpoint.contains("hgnc"))
-                {
-                    newEndpoints.put(label, originalEndpoint);
-                }
-                else if (originalEndpoint.contains("omim"))
-                {
-                    newEndpoints.put(label, originalEndpoint);
-                    //newEndpoints.put("omim_morbidmap", originalEndpoint);
-                }
+                if (originalEndpoint.contains("hgnc")) { newEndpoints.put(label, originalEndpoint); }
+                else if (originalEndpoint.contains("omim")) { newEndpoints.put(label, originalEndpoint); }
                 else if (!originalEndpoint.contains("http"))
                 {
                     res.removeAll(endpoint);
@@ -148,4 +139,43 @@ public class Storage {
         this.infmodel = infmodel;
     }
 
+
+    /*
+        This function allows to verify if the model is empty.
+        It's used to assure that when the user decides to add new statements (entities, concepts or resources) the model has the
+        necessary properties.
+        If the model is empty a default ontology is uploaded.
+     */
+    private void prepareModel() throws IOException {
+        if (this.model.isEmpty()) {
+
+            // Upload Default Ontology
+            File file = resourceLoader.getResource ("classpath:configuration/default_setup.rdf").getFile();
+            InputStream stream = new FileInputStream(file);
+
+            RDFReader r = this.model.getReader();
+            r.read(this.model, stream, PrefixFactory.getURIForPrefix(this.config.getKeyprefix()));
+
+            if (this.config.getDebug()) System.out.println("[COEUS][Storage] " + this.config.getName() + " setup loaded");
+        }
+    }
+
+
+    /*
+        Pretty sure that exists a easier way to get this information
+     */
+    public String getSeedURI() {
+        Property type = this.model.getProperty(this.config.getPrefixes().get("rdf") + "type");
+        Property seed = this.model.getProperty(this.config.getPrefixes().get("coeus") + "Seed");
+        System.out.println(type);
+
+        StmtIterator iter = model.listStatements( new SimpleSelector(null, type, seed) { public boolean selects(Statement s) { return true; }});
+
+        if (iter.hasNext()) {
+            System.out.println(iter.nextStatement().getSubject().toString());
+            return iter.nextStatement().getSubject().toString();
+        }
+        
+        return null;
+    }
 }

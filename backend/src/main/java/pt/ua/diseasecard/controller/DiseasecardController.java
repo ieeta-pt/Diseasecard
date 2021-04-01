@@ -153,6 +153,22 @@ public class DiseasecardController {
     }
 
 
+    @PostMapping(value = "/dcadmin/operations/addEntity")
+    public void addEntity(@RequestParam("titleEntity") String title,
+                          @RequestParam("labelEntity") String label,
+                          @RequestParam("descriptionEntity") String description,
+                          @RequestParam("commentEntity") String comment,
+                          @RequestParam(name= "isEntityOfEntity", required = false) String entityOf ) throws IOException {
+
+        System.out.println(title);
+        System.out.println(label);
+        System.out.println(description);
+        System.out.println(comment);
+        System.out.println(entityOf);
+        dataManagementService.addEntity();
+    }
+
+
     @GetMapping("/dcadmin/status/labels")
     public JSONObject getFormLabelsInfo() {
         return dataManagementService.getFormLabels();
@@ -163,4 +179,17 @@ public class DiseasecardController {
     public JSONObject getAllEntitiesInfo() {
         return dataManagementService.getAllEntities();
     }
+
+    @GetMapping("/dcadmin/status/allConcepts")
+    public JSONObject getAllConceptsInfo() {
+        return dataManagementService.getAllConcepts();
+    }
+
+
+    @GetMapping("/dcadmin/status/ontologyStructure")
+    public JSONObject getOntologyStructureInfo() {
+        return dataManagementService.getOntologyStructure();
+    }
+
+
 }
