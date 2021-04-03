@@ -160,12 +160,8 @@ public class DiseasecardController {
                           @RequestParam("commentEntity") String comment,
                           @RequestParam(name= "isEntityOfEntity", required = false) String entityOf ) throws IOException {
 
-        System.out.println(title);
-        System.out.println(label);
-        System.out.println(description);
-        System.out.println(comment);
         System.out.println(entityOf);
-        dataManagementService.addEntity();
+        dataManagementService.prepareAddEntity(title, label, description, comment, entityOf);
     }
 
 

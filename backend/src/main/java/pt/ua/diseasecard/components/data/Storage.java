@@ -45,6 +45,10 @@ public class Storage {
         loadPredicates();
     }
 
+
+    /*
+        Description
+     */
     private void connect()  {
         try {
             this.store = SDBFactory.connectStore(ResourceUtils.getFile("classpath:configuration/" + this.config.getSdb()).getPath() );
@@ -64,6 +68,10 @@ public class Storage {
         }
     }
 
+
+    /*
+        Description
+     */
     private void loadPredicates() {
         try {
             CSVReader predicatesFile = new CSVReader(new InputStreamReader(resourceLoader.getResource ("classpath:configuration/" + this.config.getPredicates()).getInputStream()));
@@ -84,6 +92,10 @@ public class Storage {
         }
     }
 
+
+    /*
+        Description
+     */
     public Map<String, String> loadSetup(InputStream stream) {
         Map<String, String> newEndpoints = new HashMap<>();
 
@@ -123,22 +135,6 @@ public class Storage {
         return newEndpoints;
     }
 
-    public Model getModel() {
-        return model;
-    }
-
-    public void setModel(Model model) {
-        this.model = model;
-    }
-
-    public InfModel getInfmodel() {
-        return infmodel;
-    }
-
-    public void setInfmodel(InfModel infmodel) {
-        this.infmodel = infmodel;
-    }
-
 
     /*
         This function allows to verify if the model is empty.
@@ -156,7 +152,7 @@ public class Storage {
             RDFReader r = this.model.getReader();
             r.read(this.model, stream, PrefixFactory.getURIForPrefix(this.config.getKeyprefix()));
 
-            if (this.config.getDebug()) System.out.println("[COEUS][Storage] " + this.config.getName() + " setup loaded");
+            if (this.config.getDebug()) System.out.println("[COEUS][Storage] " + this.config.getName() + " default setup loaded");
         }
     }
 
@@ -175,7 +171,76 @@ public class Storage {
             System.out.println(iter.nextStatement().getSubject().toString());
             return iter.nextStatement().getSubject().toString();
         }
-        
+
+        if (this.config.getDebug()) System.out.println("[COEUS][Storage] Successfully extracted11 " + this.config.getName() + " default setup loaded");
+
         return null;
+    }
+
+
+    /*
+        Description
+        TODO: O entity of pode ser um array!! A entity pode ter multiplos "entity of" logo no ínicio..
+     */
+    public void addEntity(String title, String label, String description, String comment, String entityOf)  {
+        try {
+            this.prepareModel();
+            System.out.println("URI of the new entity: " + this.config.getPrefixes().get("diseasecard") + label);
+
+            Property labelProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "label");
+            Property commentProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "comment");
+            Property titleProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "title");
+            Property descriptionProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "description");
+
+            Resource newEntity = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
+
+            newEntity.addProperty(labelProperty, label);
+            newEntity.addProperty(commentProperty, comment);
+            newEntity.addProperty(titleProperty, title);
+            newEntity.addProperty(descriptionProperty, description);
+
+            Property isIncludedInProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isIncludedIn");
+            Resource seed = this.model.getResource(this.getSeedURI());
+
+            newEntity.addProperty(isIncludedInProperty, seed);
+
+            if ( !entityOf.equals("") ) {
+                System.out.println("URI of the concept: " + this.config.getPrefixes().get("diseasecard") + entityOf);
+
+                Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + entityOf);
+                Resource concept = this.model.getResource(this.config.getPrefixes().get("diseasecard") + entityOf);
+
+                newEntity.addProperty(entityOfProperty, concept);
+            }
+
+        } catch (IOException ex) {
+            if (this.config.getDebug()) {
+                System.out.println("[COEUS][Storage] Error while preparing model");
+                Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+
+
+    /*
+        Description
+     */
+    public Model getModel() {
+        return model;
+    }
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+
+    /*
+        Description
+     */
+    public InfModel getInfmodel() {
+        return infmodel;
+    }
+    public void setInfmodel(InfModel infmodel) {
+        this.infmodel = infmodel;
     }
 }
