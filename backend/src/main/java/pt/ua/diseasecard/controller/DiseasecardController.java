@@ -160,8 +160,18 @@ public class DiseasecardController {
                           @RequestParam("commentEntity") String comment,
                           @RequestParam(name= "isEntityOfEntity", required = false) String entityOf ) throws IOException {
 
-        System.out.println(entityOf);
         dataManagementService.prepareAddEntity(title, label, description, comment, entityOf);
+    }
+
+    @PostMapping(value = "/dcadmin/operations/addConcept")
+    public void addEntity(@RequestParam("titleConcept") String title,
+                          @RequestParam("labelConcept") String label,
+                          @RequestParam("descriptionConcept") String description,
+                          @RequestParam("commentConcept") String comment,
+                          @RequestParam("hasEntityConcept") String hasEntity,
+                          @RequestParam(name= "hasResourceConcept", required = false) String hasResource ) throws IOException {
+
+        dataManagementService.prepareAddConcept(title, label, description, comment, hasEntity, hasResource);
     }
 
 

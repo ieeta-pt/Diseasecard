@@ -165,7 +165,7 @@
         <rdfs:comment rdf:datatype="&xsd;string">Concept relating ENZYME metabolism data.</rdfs:comment>
         <dc:title rdf:datatype="&xsd;string">ENZYME</dc:title>
         <hasEntity rdf:resource="&diseasecard;entity_Metabolism"/>
-        <asResource rdf:resource="&diseasecard;resource_ENZYME"/>
+        <hasResource rdf:resource="&diseasecard;resource_ENZYME"/>
     </owl:NamedIndividual>   
 
 

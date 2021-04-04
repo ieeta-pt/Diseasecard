@@ -562,6 +562,7 @@ public class DataManagementService {
         return bindings;
     }
 
+
     /*
         Description
      */
@@ -570,6 +571,17 @@ public class DataManagementService {
 
         this.storage.addEntity(title, label, description, comment, entityOf);
     }
+
+
+    /*
+        Description
+     */
+    public void prepareAddConcept(String title, String label, String description, String comment, String hasEntity, String hasResource) {
+        if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Add Concept to " + this.config.getName() );
+
+        this.storage.addConcept(title, label, description, comment, hasEntity, hasResource);
+    }
+
 
     /*
         Description
@@ -585,5 +597,6 @@ public class DataManagementService {
     private void addResource() {
 
     }
+
 
 }

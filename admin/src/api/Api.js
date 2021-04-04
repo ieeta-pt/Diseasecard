@@ -20,6 +20,7 @@ const getModuleURL = function (module) {
         case "getAllEntitiesInfo":             return "/dcadmin/status/allEntities";
         case "getOntologyStructureInfo":       return "/dcadmin/status/ontologyStructure";
         case "addEntity":                      return "/dcadmin/operations/addEntity";
+        case "addConcept":                     return "/dcadmin/operations/addConcept";
         default:                               return "";
     }
 };

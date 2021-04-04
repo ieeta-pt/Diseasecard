@@ -185,20 +185,8 @@ public class Storage {
             this.prepareModel();
             System.out.println("URI of the new entity: " + this.config.getPrefixes().get("diseasecard") + label);
 
-            Property labelProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "label");
-            Property typeProperty = this.model.getProperty(this.config.getPrefixes().get("rdf") + "type");
-            Property commentProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "comment");
-            Property titleProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "title");
-            Property descriptionProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "description");
-
             Resource newEntity = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
-            Resource type = this.model.getResource(this.config.getPrefixes().get("coeus") + "Entity");
-
-            newEntity.addProperty(labelProperty, label);
-            newEntity.addProperty(commentProperty, comment);
-            newEntity.addProperty(titleProperty, title);
-            newEntity.addProperty(descriptionProperty, description);
-            newEntity.addProperty(typeProperty, type);
+            this.addCore(newEntity, title, label, description, comment, "Entity");
 
             Property isIncludedInProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isIncludedIn");
             Resource seed = this.model.getResource(this.getSeedURI());
@@ -210,8 +198,11 @@ public class Storage {
                 System.out.println("URI of the concept: " + this.config.getPrefixes().get("diseasecard") + entityOf);
 
                 Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
+                Property hasEntityProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
+
                 Resource concept = this.model.getResource(this.config.getPrefixes().get("diseasecard") + entityOf);
 
+                concept.addProperty(hasEntityProperty, newEntity);
                 newEntity.addProperty(entityOfProperty, concept);
             }
 
@@ -224,6 +215,60 @@ public class Storage {
         }
     }
 
+
+    /*
+        Description
+     */
+    public void addConcept(String title, String label, String description, String comment, String relatedEntity, String relatedResource)  {
+        try {
+            this.prepareModel();
+            System.out.println("URI of the new concept: " + this.config.getPrefixes().get("diseasecard") + label);
+
+            Resource newConcept = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
+            this.addCore(newConcept, title, label, description, comment, "Concept");
+
+            Property hasEntity = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
+            Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
+
+            Resource entity = this.model.getResource(this.config.getPrefixes().get("diseasecard") + relatedEntity);
+
+            entity.addProperty(entityOfProperty, newConcept);
+            newConcept.addProperty(hasEntity, entity);
+
+            if ( !relatedResource.equals("") ) {
+                Property hasResource = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasResource");
+                Property extendsProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "extends");
+
+                Resource resource = this.model.getResource(this.config.getPrefixes().get("diseasecard") + relatedResource);
+
+                resource.addProperty(extendsProperty, newConcept);
+                newConcept.addProperty(hasResource, resource);
+            }
+
+        } catch (IOException ex) {
+            if (this.config.getDebug()) {
+                System.out.println("[COEUS][Storage] Error while preparing model");
+                Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+
+    private void addCore(Resource resource, String title, String label, String description, String comment, String type) {
+        Property labelProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "label");
+        Property typeProperty = this.model.getProperty(this.config.getPrefixes().get("rdf") + "type");
+        Property commentProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "comment");
+        Property titleProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "title");
+        Property descriptionProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "description");
+
+        Resource typeR = this.model.getResource(this.config.getPrefixes().get("coeus") + type);
+
+        resource.addProperty(labelProperty, label);
+        resource.addProperty(commentProperty, comment);
+        resource.addProperty(titleProperty, title);
+        resource.addProperty(descriptionProperty, description);
+        resource.addProperty(typeProperty, typeR);
+    }
 
 
     /*

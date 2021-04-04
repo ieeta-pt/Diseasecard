@@ -1,21 +1,10 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import asyncValidate from './asyncValidate'
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Divider,
-    Grid,
-    MenuItem
-} from "@material-ui/core";
-import { Col, Row } from "react-bootstrap";
+import { Grid, MenuItem } from "@material-ui/core";
 import {FootForm, renderSelectField, renderTextField, useStyles} from "./FormElements";
 import {useSelector} from "react-redux";
-import {getConceptsLabels, getEntitiesLabels, getResourcesLabels} from "../addSourceSlice";
+import { getEntitiesLabels, getResourcesLabels } from "../addSourceSlice";
 
 
 const validate = values => {
@@ -39,26 +28,6 @@ const validate = values => {
 }
 
 
-const currencies = [
-    {
-        value: 'USD',
-        label: '$',
-    },
-    {
-        value: 'EUR',
-        label: '€',
-    },
-    {
-        value: 'BTC',
-        label: '฿',
-    },
-    {
-        value: 'JPY',
-        label: '¥',
-    },
-];
-
-
 const AddConceptForm = props => {
     const { handleSubmit, classes} = props
 
@@ -69,7 +38,7 @@ const AddConceptForm = props => {
 
     return (
         <div style={{width: "94%"}}>
-            <form className={c.root} style={{width: "100%"}} onSubmit={handleSubmit}>
+            <form className={c.root} style={{width: "100%"}} onSubmit={handleSubmit} name="addConceptForm">
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Field

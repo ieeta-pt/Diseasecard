@@ -480,11 +480,11 @@ const SelectBetweenECR = props => {
     Description
  */
 const AddEntities = props => {
-    const dispact = useDispatch();
+    const dispatch = useDispatch();
 
     const submit = (values) => {
         let formData = new FormData(document.forms.namedItem("addEntityForm"))
-        dispact(addEntity(formData))
+        dispatch(addEntity(formData))
     }
 
     return (
@@ -501,8 +501,11 @@ const AddEntities = props => {
     Description
  */
 const AddConcepts = props => {
+    const dispatch = useDispatch();
+
     const submit = (values) => {
-        // Do something with the form values
+        let formData = new FormData(document.forms.namedItem("addConceptForm"))
+        dispatch(addEntity(formData))
         console.log(values);
     }
 
