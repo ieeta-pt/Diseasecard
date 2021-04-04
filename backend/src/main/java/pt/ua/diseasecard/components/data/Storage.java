@@ -163,12 +163,10 @@ public class Storage {
     public String getSeedURI() {
         Property type = this.model.getProperty(this.config.getPrefixes().get("rdf") + "type");
         Property seed = this.model.getProperty(this.config.getPrefixes().get("coeus") + "Seed");
-        System.out.println(type);
 
         StmtIterator iter = model.listStatements( new SimpleSelector(null, type, seed) { public boolean selects(Statement s) { return true; }});
 
         if (iter.hasNext()) {
-            System.out.println(iter.nextStatement().getSubject().toString());
             return iter.nextStatement().getSubject().toString();
         }
 
@@ -188,31 +186,36 @@ public class Storage {
             System.out.println("URI of the new entity: " + this.config.getPrefixes().get("diseasecard") + label);
 
             Property labelProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "label");
+            Property typeProperty = this.model.getProperty(this.config.getPrefixes().get("rdf") + "type");
             Property commentProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "comment");
             Property titleProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "title");
             Property descriptionProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "description");
 
             Resource newEntity = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
+            Resource type = this.model.getResource(this.config.getPrefixes().get("coeus") + "Entity");
 
             newEntity.addProperty(labelProperty, label);
             newEntity.addProperty(commentProperty, comment);
             newEntity.addProperty(titleProperty, title);
             newEntity.addProperty(descriptionProperty, description);
+            newEntity.addProperty(typeProperty, type);
 
             Property isIncludedInProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isIncludedIn");
             Resource seed = this.model.getResource(this.getSeedURI());
+            System.out.println("URI of the seed: " + this.getSeedURI());
 
             newEntity.addProperty(isIncludedInProperty, seed);
 
             if ( !entityOf.equals("") ) {
                 System.out.println("URI of the concept: " + this.config.getPrefixes().get("diseasecard") + entityOf);
 
-                Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + entityOf);
+                Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
                 Resource concept = this.model.getResource(this.config.getPrefixes().get("diseasecard") + entityOf);
 
                 newEntity.addProperty(entityOfProperty, concept);
             }
 
+            System.out.println(newEntity);
         } catch (IOException ex) {
             if (this.config.getDebug()) {
                 System.out.println("[COEUS][Storage] Error while preparing model");
