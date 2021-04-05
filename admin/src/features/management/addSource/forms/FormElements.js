@@ -91,7 +91,6 @@ export const renderSelectField = ({ input,  label, labelText, meta: { touched, i
     <TextField
         id="outlined-select-currency"
         select
-        value="1"
         variant="outlined"
         label={label}
         placeholder={label}
@@ -106,37 +105,30 @@ export const renderSelectField = ({ input,  label, labelText, meta: { touched, i
 
 
 export const renderDropzoneInput = (field) => {
-    let files = field.input.value || [];
+    let f = field.input.value || null;
     const style = field.style
     return (
         <div>
             <DropZone
                 onDrop={(filesToUpload) => {
-                    filesToUpload.map((file) =>
-                        files.push({
-                            preview: file.preview,
-                            name: file.name
-                        })
-                    );
-                    console.log(files);
-                    field.input.onChange(files);
-                } }>
+                    filesToUpload.map((file) => {
+                        f = file
+                    });
+                    field.input.onChange(f);
+                }}
+                maxFiles={1}>
                 {({getRootProps, getInputProps}) => (
                     <section>
                         <div {...getRootProps({style})}>
                             <input {...getInputProps()} />
-                            <p style={{marginBottom: "0", color: "#888"}}>Drag 'n' drop a RDF file here, or click to select one</p>
+                            {f &&  <p style={{marginBottom: "0", color: "#888"}}><b>Selected File:</b>&nbsp;{f.name}</p>}
+                            {f==null && <p style={{marginBottom: "0", color: "#888"}}>Drag 'n' drop a file here, or click to select one</p> }
                         </div>
                     </section>
                 )}
             </DropZone>
             {field.meta.touched && field.meta.error && <span className="error">{field.meta.error}</span>}
 
-            {files && Array.isArray(files) && files.length !== 0 && (
-                <Row style={{ marginTop: "20px" }} className="d-flex justify-content-md-center" align="center">
-                    <p style={{width: "100%"}}><b>Selected File:</b>&nbsp;{files[0].name}</p>
-                </Row>
-            )}
         </div>
     );
 }

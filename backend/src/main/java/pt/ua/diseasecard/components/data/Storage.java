@@ -183,7 +183,6 @@ public class Storage {
     public void addEntity(String title, String label, String description, String comment, String entityOf)  {
         try {
             this.prepareModel();
-            System.out.println("URI of the new entity: " + this.config.getPrefixes().get("diseasecard") + label);
 
             Resource newEntity = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
             this.addCore(newEntity, title, label, description, comment, "Entity");
@@ -222,7 +221,6 @@ public class Storage {
     public void addConcept(String title, String label, String description, String comment, String relatedEntity, String relatedResource)  {
         try {
             this.prepareModel();
-            System.out.println("URI of the new concept: " + this.config.getPrefixes().get("diseasecard") + label);
 
             Resource newConcept = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
             this.addCore(newConcept, title, label, description, comment, "Concept");
@@ -254,6 +252,53 @@ public class Storage {
     }
 
 
+    /*
+        Description
+     */
+    public void addResource(String title, String label, String description, String comment, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, String location) {
+        try {
+            this.prepareModel();
+            System.out.println("URI of the new resource: " + this.config.getPrefixes().get("diseasecard") + label);
+
+            Resource newResource = this.model.createResource(this.config.getPrefixes().get("diseasecard") + label);
+            this.addCore(newResource, title, label, description, comment, "Resource");
+
+            Property orderProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "order");
+            Property publisherProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "publisher");
+            Property regexProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "regex");
+            Property queryProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "query");
+            Property endpointProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "endpoint");
+
+            newResource.addProperty(orderProperty, order);
+            newResource.addProperty(publisherProperty, publisher);
+            newResource.addProperty(regexProperty, regex);
+            newResource.addProperty(queryProperty, query);
+
+            newResource.addProperty(endpointProperty, location);
+
+            Property resourceOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isResourceOf");
+            Property extendsProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "extends");
+            Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasResource");
+
+            Resource conceptResourceOf = this.model.getResource(this.config.getPrefixes().get("diseasecard") + resourceOf);
+            Resource conceptExtends = this.model.getResource(this.config.getPrefixes().get("diseasecard") + extendsResource);
+
+            newResource.addProperty(resourceOfProperty, conceptResourceOf);
+            newResource.addProperty(extendsProperty, conceptExtends);
+            conceptResourceOf.addProperty(hasResourceProperty, newResource);
+
+        } catch (IOException ex) {
+            if (this.config.getDebug()) {
+                System.out.println("[COEUS][Storage] Error while preparing model");
+                Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+
+    /*
+        Description
+     */
     private void addCore(Resource resource, String title, String label, String description, String comment, String type) {
         Property labelProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "label");
         Property typeProperty = this.model.getProperty(this.config.getPrefixes().get("rdf") + "type");
@@ -291,4 +336,6 @@ public class Storage {
     public void setInfmodel(InfModel infmodel) {
         this.infmodel = infmodel;
     }
+
+
 }

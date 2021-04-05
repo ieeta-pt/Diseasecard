@@ -203,7 +203,7 @@ public class DataManagementService {
         Description
      */
     public JSONObject getAllEntities() {
-        if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting all the existing entities on " + this.config.getName());
+        //if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting all the existing entities on " + this.config.getName());
         JSONObject finalR = new JSONObject();
         try
         {
@@ -260,7 +260,7 @@ public class DataManagementService {
         Description
      */
     public JSONObject getAllConcepts() {
-        if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting all the existing concepts on " + this.config.getName());
+        //if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting all the existing concepts on " + this.config.getName());
         JSONObject finalR = new JSONObject();
         try
         {
@@ -404,14 +404,14 @@ public class DataManagementService {
             String queryString = "SELECT * "
                 + " WHERE { <" + resourceURI + "> dc:title ?title ."
                 + " <" + resourceURI + "> rdfs:comment ?comment ."
+                + " <" + resourceURI + "> dc:description ?description ."
                 + " <" + resourceURI + "> rdfs:label ?label ."
-                + " <" + resourceURI + "> dc:title ?title ."
                 + " <" + resourceURI + "> dc:publisher ?publisher ."
                 + " <" + resourceURI + "> coeus:isResourceOf ?resof ."
                 + " <" + resourceURI + "> coeus:extends ?extends ."
-                + " <" + resourceURI + "> coeus:method ?method ."
                 + " <" + resourceURI + "> coeus:endpoint ?endpoint ."
                 + " <" + resourceURI + "> coeus:order ?order . "
+                + "OPTIONAL { <" + resourceURI + "> coeus:method ?method} . "
                 + "OPTIONAL { <" + resourceURI + "> coeus:built ?built} . "
                 + "OPTIONAL { <" + resourceURI + "> coeus:identifiers ?identifiers} . "
                 + "OPTIONAL { <" + resourceURI + "> coeus:regex ?regex} . "
@@ -431,8 +431,6 @@ public class DataManagementService {
                 resource.put("resof", ((JSONObject) a.get("resof")).get("value").toString());
                 resource.put("extends", ((JSONObject) a.get("extends")).get("value").toString());
                 resource.put("method", ((JSONObject) a.get("method")).get("value").toString());
-                resource.put("method", ((JSONObject) a.get("method")).get("value").toString());
-                resource.put("endpoint", ((JSONObject) a.get("endpoint")).get("value").toString());
                 resource.put("endpoint", ((JSONObject) a.get("endpoint")).get("value").toString());
                 resource.put("order", ((JSONObject) a.get("order")).get("value").toString());
 
@@ -440,9 +438,13 @@ public class DataManagementService {
                 JSONObject query = (JSONObject) a.get("query");
                 JSONObject regex = (JSONObject) a.get("regex");
                 JSONObject identifiers = (JSONObject) a.get("identifiers");
+                JSONObject method = (JSONObject) a.get("method");
 
                 if (built != null) resource.put("built", Boolean.parseBoolean(built.get("value").toString()));
                 else resource.put("built", false);
+
+                if (method != null) resource.put("method", method.get("value").toString());
+                else resource.put("method", "");
 
                 if (query != null) resource.put("query", query.get("value").toString());
                 else resource.put("query", "");
@@ -467,7 +469,7 @@ public class DataManagementService {
         For now, the plugins_labels are going to be hardcoded, since the current ontology is not yet ready.
      */
     public JSONObject getFormLabels(){
-        if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting labels needed in forms of " + this.config.getName() + "Admin");
+        //if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting labels needed in forms of " + this.config.getName() + "Admin");
         JSONObject finalR = new JSONObject();
         try
         {
@@ -512,7 +514,7 @@ public class DataManagementService {
         This map is then used in DiseasecardAdmin platform.
      */
     public JSONObject getOntologyStructure() {
-        if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting Ontology Structure of " + this.config.getName() );
+        //if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting Ontology Structure of " + this.config.getName() );
 
         JSONObject entities = this.getAllEntities();
         JSONObject concepts = this.getAllConcepts();
@@ -545,9 +547,6 @@ public class DataManagementService {
     }
 
 
-    /*
-        Description
-     */
     private JSONArray performSimpleQuery(String query) {
         JSONArray bindings = new JSONArray();
         try
@@ -563,9 +562,6 @@ public class DataManagementService {
     }
 
 
-    /*
-        Description
-     */
     public void prepareAddEntity(String title, String label, String description, String comment, String entityOf) {
         if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Add Entity to " + this.config.getName() );
 
@@ -573,9 +569,6 @@ public class DataManagementService {
     }
 
 
-    /*
-        Description
-     */
     public void prepareAddConcept(String title, String label, String description, String comment, String hasEntity, String hasResource) {
         if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Add Concept to " + this.config.getName() );
 
@@ -583,20 +576,29 @@ public class DataManagementService {
     }
 
 
-    /*
-        Description
-     */
-    private void addConcept() {
+    public void prepareAddResource(String title, String label, String description, String comment, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, MultipartFile file) {
+        try {
+            Path copyLocation = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + StringUtils.cleanPath(label));
+            Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
 
+            this.storage.addResource(title, label, description, comment, resourceOf, extendsResource, order, publisher, regex, query, copyLocation.toString());
+        } catch (IOException ex) {
+            System.out.println("[COEUS][DataManagementService] Error while processing endpoint of resource");
+        }
     }
 
 
-    /*
-        Description
-     */
-    private void addResource() {
+    public void prepareAddOMIMResource(String title, String label, String description, String comment, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, MultipartFile morbidmap, MultipartFile genemap) {
+        try {
+            Path copyLocationGenemap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_genemap");
+            Files.copy(genemap.getInputStream(), copyLocationGenemap, StandardCopyOption.REPLACE_EXISTING);
 
+            Path copyLocationMorbidmap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_morbidmap");
+            Files.copy(morbidmap.getInputStream(), copyLocationMorbidmap, StandardCopyOption.REPLACE_EXISTING);
+
+            this.storage.addResource(title, label, description, comment, resourceOf, extendsResource, order, publisher, regex, query, "omim://full");
+        } catch (IOException ex) {
+            System.out.println("[COEUS][DataManagementService] Error while processing endpoint of resource");
+        }
     }
-
-
 }

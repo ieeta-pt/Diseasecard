@@ -49,6 +49,12 @@ export const addConcept = createAsyncThunk('addSource/addConcept', async (form) 
     })
 })
 
+export const addResource = createAsyncThunk('addSource/addResource', async (form) => {
+    return API.POST("addResource", '', form ).then(res => {
+        return res.data
+    })
+})
+
 const addSourceSlice = createSlice({
     name: 'addSource',
     initialState,

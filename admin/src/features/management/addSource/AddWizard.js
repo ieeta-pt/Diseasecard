@@ -5,7 +5,14 @@ import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
 import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from "react-redux";
-import { addEntity, getFormLabels, getInvalidEndpoints, uploadEndpoints, uploadOntology } from "./addSourceSlice";
+import {
+    addConcept,
+    addEntity, addResource,
+    getFormLabels,
+    getInvalidEndpoints,
+    uploadEndpoints,
+    uploadOntology
+} from "./addSourceSlice";
 import Dropzone from 'react-dropzone'
 import AddConceptForm from "./forms/FormConcept";
 import AddEntityFrom from "./forms/FormEntity";
@@ -505,7 +512,7 @@ const AddConcepts = props => {
 
     const submit = (values) => {
         let formData = new FormData(document.forms.namedItem("addConceptForm"))
-        dispatch(addEntity(formData))
+        dispatch(addConcept(formData))
         console.log(values);
     }
 
@@ -522,8 +529,12 @@ const AddConcepts = props => {
     Description
  */
 const AddResources = props => {
+    const dispatch = useDispatch()
     const submit = (values) => {
         console.log(values);
+        let formData = new FormData(document.forms.namedItem("addResourceForm"))
+        formData.append("files", values.files)
+        dispatch(addResource(formData))
     }
 
     return (

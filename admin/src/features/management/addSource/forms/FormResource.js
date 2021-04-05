@@ -1,10 +1,10 @@
-import React, {useMemo} from 'react'
+import React, {useMemo, useState} from 'react'
 import { Field, reduxForm } from 'redux-form'
 import asyncValidate from './asyncValidate'
 import { FormLabel, Grid, MenuItem } from "@material-ui/core";
-import {renderDropzoneInput, FootForm, renderSelectField, renderTextField, useStyles} from "./FormElements";
-import {getConceptsLabels, getInvalidEndpoints, getPluginsLabels, getResourcesLabels} from "../addSourceSlice";
-import {useSelector} from "react-redux";
+import { renderDropzoneInput, FootForm, renderSelectField, renderTextField, useStyles} from "./FormElements";
+import { getConceptsLabels, getPluginsLabels } from "../addSourceSlice";
+import { useSelector } from "react-redux";
 
 
 const validate = values => {
@@ -14,7 +14,6 @@ const validate = values => {
         'labelResource',
         'descriptionResource',
         'commentResource',
-        'hasEntityResource',
         'resourceOf',
         'extendsResource',
         'orderResource',
@@ -55,7 +54,7 @@ const currencies = [
 
 
 const AddResourceForm = props => {
-    const { handleSubmit, classes} = props
+    const { handleSubmit, classes } = props
     const c = useStyles();
 
     const baseStyle = {
@@ -81,9 +80,11 @@ const AddResourceForm = props => {
     const conceptLabels = useSelector(getConceptsLabels)
     const pluginLabels = useSelector(getPluginsLabels)
 
+    const [publisher, setPublisher] = useState(true);
+
     return (
         <div style={{width: "94%"}}>
-            <form className={c.root} style={{width: "100%"}} onSubmit={handleSubmit}>
+            <form className={c.root} style={{width: "100%"}} onSubmit={handleSubmit} name="addResourceForm">
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Field
@@ -107,6 +108,7 @@ const AddResourceForm = props => {
                             labelText="olaaa"
                         />
                     </Grid>
+
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>
                         <Field
                             size="small"
@@ -120,6 +122,7 @@ const AddResourceForm = props => {
                             rows={2}
                         />
                     </Grid>
+
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>
                         <Field
                             size="small"
@@ -172,16 +175,7 @@ const AddResourceForm = props => {
                         </Field>
                     </Grid>
 
-                    <Grid item xs={12} style={{marginLeft: "16px", marginRight: "-16px"}}>
-                        <FormLabel style={{ fontSize: "12px", marginLeft: "16px", letterSpacing: "0.0333em" }}>Endpoint</FormLabel>
-                        <Field
-                            name="files"
-                            style={style}
-                            component={renderDropzoneInput}
-                        />
-                    </Grid>
-
-                    <Grid item xs={3} style={{marginTop: "0.5%"}} >
+                    <Grid item xs={6} style={{marginTop: "0.5%"}} >
                         <Field
                             classes={classes}
                             size="small"
@@ -200,12 +194,13 @@ const AddResourceForm = props => {
                             ))}
                         </Field>
                     </Grid>
-                    <Grid item xs={3} style={{marginTop: "0.5%"}} >
+                    <Grid item xs={6} style={{marginTop: "0.5%"}} >
                         <Field
                             size="small"
                             name="publisherEndpoint"
                             component={renderSelectField}
                             label="Publisher"
+                            onChange={e => setPublisher(e.target.value)}
                             variant="outlined"
                             className={c.field}
                             labelText="olaaa"
@@ -218,27 +213,60 @@ const AddResourceForm = props => {
                             ))}
                         </Field>
                     </Grid>
-                    <Grid item xs={3} style={{marginTop: "0.5%"}} >
+
+                    {publisher==='OMIM' && (
+                        <Grid container spacing={2}>
+                            <Grid item xs={6} style={{marginLeft: "24px", paddingRight: "16px"}}>
+                                <Field
+                                    name="genecard"
+                                    style={style}
+                                    component={renderDropzoneInput}
+                                />
+                                <FormLabel style={{ fontSize: "12px", marginLeft: "16px", letterSpacing: "0.0333em", marginTop: "12px" }}>Upload Genecard file</FormLabel>
+                            </Grid>
+                            <Grid item xs={6} style={{marginLeft: "-16px", marginRight: "-8px", paddingLeft: "16px"}}>
+                                <Field
+                                    name="morbidmap"
+                                    style={style}
+                                    component={renderDropzoneInput}
+                                />
+                                <FormLabel style={{ fontSize: "12px", marginLeft: "16px", letterSpacing: "0.0333em", marginTop: "12px" }}>Upload Morbidmap file</FormLabel>
+                            </Grid>
+                        </Grid>
+                    )}
+                    {publisher!=='OMIM' && (
+                        <Grid item xs={12} style={{marginLeft: "16px", marginRight: "-16px"}}>
+                            <Field
+                                name="files"
+                                style={style}
+                                component={renderDropzoneInput}
+                            />
+                            <FormLabel style={{ fontSize: "12px", marginLeft: "16px", letterSpacing: "0.0333em", marginTop: "12px" }}>Endpoint</FormLabel>
+                        </Grid>
+                    )}
+
+
+                    <Grid item xs={6} style={{marginTop: "0.5%"}} >
                         <Field
                             classes={classes}
                             size="small"
                             name="regexResource"
                             component={renderTextField}
-                            label="Regex"
+                            label="Column"
                             variant="outlined"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Extended Resource Identifier"
                         />
                     </Grid>
-                    <Grid item xs={3} style={{marginTop: "0.5%"}} >
+                    <Grid item xs={6} style={{marginTop: "0.5%"}} >
                         <Field
                             size="small"
                             name="queryResource"
                             component={renderTextField}
-                            label="Query"
+                            label="Column"
                             variant="outlined"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Resource Identifier"
                         />
                     </Grid>
 

@@ -6,7 +6,13 @@
       <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/management/addSource/AddWizard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/AddWizard.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/management/addSource/addSourceSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/addSourceSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormConcept.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormConcept.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormElements.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormElements.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormResource.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormResource.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/components/data/Storage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/components/data/Storage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/submittedFiles/endpoints/hgnc_data" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/submittedFiles/setup_valid.rdf" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/submittedFiles/setup_valid.rdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,7 +123,8 @@
       <workItem from="1617299428607" duration="1226000" />
       <workItem from="1617351925870" duration="455000" />
       <workItem from="1617525480611" duration="1502000" />
-      <workItem from="1617564318791" duration="1619000" />
+      <workItem from="1617564318791" duration="2128000" />
+      <workItem from="1617613134431" duration="13173000" />
     </task>
     <servers />
   </component>

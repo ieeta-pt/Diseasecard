@@ -21,6 +21,7 @@ const getModuleURL = function (module) {
         case "getOntologyStructureInfo":       return "/dcadmin/status/ontologyStructure";
         case "addEntity":                      return "/dcadmin/operations/addEntity";
         case "addConcept":                     return "/dcadmin/operations/addConcept";
+        case "addResource":                    return "/dcadmin/operations/addResource";
         default:                               return "";
     }
 };

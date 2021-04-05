@@ -164,7 +164,7 @@ public class DiseasecardController {
     }
 
     @PostMapping(value = "/dcadmin/operations/addConcept")
-    public void addEntity(@RequestParam("titleConcept") String title,
+    public void addConcept(@RequestParam("titleConcept") String title,
                           @RequestParam("labelConcept") String label,
                           @RequestParam("descriptionConcept") String description,
                           @RequestParam("commentConcept") String comment,
@@ -172,6 +172,40 @@ public class DiseasecardController {
                           @RequestParam(name= "hasResourceConcept", required = false) String hasResource ) throws IOException {
 
         dataManagementService.prepareAddConcept(title, label, description, comment, hasEntity, hasResource);
+    }
+
+
+    @PostMapping(value = "/dcadmin/operations/addResource")
+    public void addResource(@RequestParam("titleResource") String title,
+                          @RequestParam("labelResource") String label,
+                          @RequestParam("descriptionResource") String description,
+                          @RequestParam("commentResource") String comment,
+                          @RequestParam("resourceOf") String resourceOf,
+                          @RequestParam("extendsResource") String extendsResource,
+                          @RequestParam("orderResource") String order,
+                          @RequestParam("publisherEndpoint") String publisher,
+                          @RequestParam("regexResource") String regex,
+                          @RequestParam("files") MultipartFile files,
+                          @RequestParam("queryResource") String query ) throws IOException {
+
+        dataManagementService.prepareAddResource(title, label, description, comment, resourceOf, extendsResource, order, publisher, regex, query, files);
+    }
+
+    @PostMapping(value = "/dcadmin/operations/addResource")
+    public void addOMIMResource(@RequestParam("titleResource") String title,
+                            @RequestParam("labelResource") String label,
+                            @RequestParam("descriptionResource") String description,
+                            @RequestParam("commentResource") String comment,
+                            @RequestParam("resourceOf") String resourceOf,
+                            @RequestParam("extendsResource") String extendsResource,
+                            @RequestParam("orderResource") String order,
+                            @RequestParam("publisherEndpoint") String publisher,
+                            @RequestParam("regexResource") String regex,
+                            @RequestParam("morbidmap") MultipartFile morbidmap,
+                            @RequestParam("genemap") MultipartFile genemap,
+                            @RequestParam("queryResource") String query ) throws IOException {
+
+        dataManagementService.prepareAddOMIMResource(title, label, description, comment, resourceOf, extendsResource, order, publisher, regex, query, morbidmap, genemap);
     }
 
 
