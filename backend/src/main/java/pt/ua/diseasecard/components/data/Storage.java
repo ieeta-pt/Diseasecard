@@ -51,8 +51,8 @@ public class Storage {
      */
     private void connect()  {
         try {
-            this.store = SDBFactory.connectStore(ResourceUtils.getFile("classpath:configuration/" + this.config.getSdb()).getPath() );
-            //this.store = SDBFactory.connectStore("/configuration/" + this.config.getSdb());
+            //this.store = SDBFactory.connectStore(ResourceUtils.getFile("classpath:configuration/" + this.config.getSdb()).getPath() );
+            this.store = SDBFactory.connectStore("/configuration/" + this.config.getSdb());
 
             this.model = SDBFactory.connectDefaultModel(store);
             this.infmodel = ModelFactory.createInfModel(reasoner, model);

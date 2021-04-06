@@ -3,7 +3,7 @@ import API from '../../api/Api'
 
 
 const initialState = {
-    results:[],
+    results: [],
     letter: "",
     status: 'idle',
     error: null
@@ -11,7 +11,6 @@ const initialState = {
 
 export const getResults = createAsyncThunk('browse/getResults', async (letter) => {
     return API.GET("browserResults", "", [letter] ).then(res => {
-        console.log(res.data.aaData)
         return res.data.aaData
     })
 })
@@ -28,6 +27,7 @@ const browserSlice = createSlice({
         },
         [getResults.fulfilled]: (state, action) => {
             state.status = 'succeeded'
+            //if (action.payload) state.results = action.payload
             state.results = action.payload
             state.letter = action.meta.arg
         },

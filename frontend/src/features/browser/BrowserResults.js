@@ -133,7 +133,7 @@ export const BrowserResults = ({ match })  => {
             />
         }
         else {
-            content = <div>TODO: inserir cena de pesquisa e dizer que não há resultados. </div>
+            content = <div>There is no data to display.</div>
         }
     }
     else if (status === 'error') {

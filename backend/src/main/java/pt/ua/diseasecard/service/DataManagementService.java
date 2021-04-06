@@ -65,14 +65,9 @@ public class DataManagementService {
             Path copyLocation = Paths.get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
             Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            // TODO: Get endpoints
             Map<String, String> newEndpoints = this.storage.loadSetup(file.getInputStream());
-            /*for (Map.Entry<String, String> entry : newEndpoints.entrySet()) {
-                System.out.println(entry.getKey() + ":" + entry.getValue().toString());
-            }*/
 
             return newEndpoints;
-            //this.build();
         }
         catch (Exception e)
         {

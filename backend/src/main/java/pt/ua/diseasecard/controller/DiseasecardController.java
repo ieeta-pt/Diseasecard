@@ -191,7 +191,7 @@ public class DiseasecardController {
         dataManagementService.prepareAddResource(title, label, description, comment, resourceOf, extendsResource, order, publisher, regex, query, files);
     }
 
-    @PostMapping(value = "/dcadmin/operations/addResource")
+    @PostMapping(value = "/dcadmin/operations/addOMIMResource")
     public void addOMIMResource(@RequestParam("titleResource") String title,
                             @RequestParam("labelResource") String label,
                             @RequestParam("descriptionResource") String description,
