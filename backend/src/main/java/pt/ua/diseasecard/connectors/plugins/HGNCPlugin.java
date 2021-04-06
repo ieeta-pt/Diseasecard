@@ -1,10 +1,8 @@
 package pt.ua.diseasecard.connectors.plugins;
 
 import au.com.bytecode.opencsv.CSVReader;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import pt.ua.diseasecard.components.data.SparqlAPI;
-import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.domain.HGNC;
 import pt.ua.diseasecard.domain.Resource;

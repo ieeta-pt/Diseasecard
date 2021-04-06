@@ -1,16 +1,11 @@
 package pt.ua.diseasecard.connectors;
 
-import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import pt.ua.diseasecard.components.data.SparqlAPI;
-import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.components.data.Triplify;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
-import pt.ua.diseasecard.connectors.plugins.OMIMPlugin;
 import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.utils.BeanUtil;
 import pt.ua.diseasecard.utils.ItemFactory;
