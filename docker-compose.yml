@@ -58,7 +58,38 @@ services:
         environment:
             - WAIT_HOSTS=mysql:3306
 
-      
+
+    dc_frontend:
+        container_name: dc_frontend
+        stdin_open: true        
+        depends_on:
+            - dc_backend
+        build: 
+            context: ./frontend/
+            target: ${TARGET_FRONTEND}
+        command: ${COMMAND_FRONTEND}
+        ports:
+            - ${FRONTEND_PORT}:3000
+        links:
+            - dc_backend:container_backend
+        networks:
+            - backend
+            
+    dc_admin:
+        container_name: dc_admin
+        stdin_open: true        
+        depends_on:
+            - dc_backend
+        build: 
+            context: ./admin/
+            target: ${TARGET_ADMIN}
+        command: ${COMMAND_ADMIN}
+        ports:
+            - ${ADMIN_PORT}:3000
+        links:
+            - dc_backend:container_backend
+        networks:
+            - backend
 
 
 networks:
