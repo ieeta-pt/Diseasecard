@@ -9,6 +9,7 @@ import { AsyncTypeahead, Token } from 'react-bootstrap-typeahead';
 import { unwrapResult } from "@reduxjs/toolkit";
 import { getDiseaseByOMIM, showFrame } from "../disease/diseaseSlice";
 
+import logo from "../../images/logo.png"
 
 export const SearchForm = () => {
     const [searchInput, setSearchInput] = useState('')
@@ -50,7 +51,7 @@ export const SearchForm = () => {
         <Container id="index">
             <div id="logo">
                 <a href="#about" title="About DiseaseCard" >
-                    <img className="logo img-responsive" width="434" height="59" src={ process.env.PUBLIC_URL + 'logo.png' } alt="" />
+                    <img className="logo img-responsive" width="434" height="59" src={ logo} alt="" />
                 </a>
             </div>
             <Form id="search_form">

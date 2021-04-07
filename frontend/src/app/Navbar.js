@@ -5,12 +5,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBook , faAlignJustify } from '@fortawesome/free-solid-svg-icons'
 import {Link} from "react-router-dom";
 
+import logo from "../images/logo_bw.png"
 
 export const NavbarD = () => {
 
     return (
         <Navbar bg="dark" variant="dark">
-            <Navbar.Brand as={Link} to={'/'}><img alt="" className="d-inline-block align-top" src={ process.env.PUBLIC_URL + 'logo_bw.png'}/> </Navbar.Brand>
+            <Navbar.Brand as={Link} to={'/'}><img alt="" className="d-inline-block align-top" src={logo }/> </Navbar.Brand>
 
             <Nav className="ml-auto">
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Jump to Diseasecard about section</Tooltip>}>

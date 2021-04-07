@@ -13,7 +13,7 @@ class App extends React.Component {
     render() {
         return (
             <div id="app" style={{ position: "relative", width: "100%"}}>
-                <Router basename={'diseasecard'}>
+                <Router basename={'/diseasecard'}>
                     <NavbarD />
                     <Switch style={{ position:"absolute", width: "100%", minHeight:"calc(100vh - 3.5em)"}}>
 
@@ -26,7 +26,7 @@ class App extends React.Component {
                         <Route exact path="/disease/:omim" component={ DiseasePage }/>
                         <Route exact path="/searchResults" component={ SearchResults }/>
                         <Route exact path="/browse" component={ BrowserResults }/>
-                        <Redirect to="/" />
+                        <Redirect exact to="/" />
                     </Switch>
                 </Router>
             </div>

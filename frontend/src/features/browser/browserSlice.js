@@ -27,8 +27,8 @@ const browserSlice = createSlice({
         },
         [getResults.fulfilled]: (state, action) => {
             state.status = 'succeeded'
-            //if (action.payload) state.results = action.payload
-            state.results = action.payload
+            if (action.payload) state.results = action.payload
+            //state.results = action.payload
             state.letter = action.meta.arg
         },
         [getResults.rejected]: (state, action) => {

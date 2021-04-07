@@ -4,14 +4,13 @@
     <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.env" beforeDir="false" afterPath="$PROJECT_DIR$/../.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile.prod" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/template/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../docker-compose.prod.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/Dockerfile.prod" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/images/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/logo_bw.png" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/images/logo_bw.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/app/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/features/browser/browserSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/browser/browserSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/features/search/SearchForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/search/SearchForm.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,6 +128,7 @@
       <workItem from="1617659513701" duration="173000" />
       <workItem from="1617727542728" duration="999000" />
       <workItem from="1617743670081" duration="713000" />
+      <workItem from="1617791378193" duration="1288000" />
     </task>
     <servers />
   </component>
@@ -137,17 +137,5 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="javascript">
-          <url>file://$PROJECT_DIR$/src/template/config.js</url>
-          <line>9</line>
-          <properties lambdaOrdinal="-1" />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
