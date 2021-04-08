@@ -13,7 +13,7 @@ class App extends React.Component {
     render() {
         return (
             <div id="app" style={{ position: "relative", width: "100%"}}>
-                <Router basename={'/diseasecard'}>
+                <Router basename={"/diseasecard"}>
                     <NavbarD />
                     <Switch style={{ position:"absolute", width: "100%", minHeight:"calc(100vh - 3.5em)"}}>
 

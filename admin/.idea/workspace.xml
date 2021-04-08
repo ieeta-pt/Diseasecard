@@ -4,13 +4,18 @@
     <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.env" beforeDir="false" afterPath="$PROJECT_DIR$/../.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.prod.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/public/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/images/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/public/logo_bw.png" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/images/logo_bw.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/nginx/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/template/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/template/layout/AdminLayout/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/layout/AdminLayout/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/utils/SolrLoad.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/utils/SolrLoad.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/nginx/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/nginx/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/app/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/app/Navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/features/browser/browserSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/browser/browserSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/features/search/SearchForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/search/SearchForm.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,6 +134,12 @@
       <workItem from="1617727542728" duration="999000" />
       <workItem from="1617743670081" duration="713000" />
       <workItem from="1617791378193" duration="1288000" />
+      <workItem from="1617865546416" duration="8506000" />
+      <workItem from="1617887302147" duration="1891000" />
+      <workItem from="1617889737239" duration="70000" />
+      <workItem from="1617890779887" duration="38000" />
+      <workItem from="1617899402013" duration="18000" />
+      <workItem from="1617912517585" duration="2648000" />
     </task>
     <servers />
   </component>
