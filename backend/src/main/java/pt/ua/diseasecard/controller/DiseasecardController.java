@@ -26,7 +26,7 @@ import java.util.Objects;
 
 
 @RestController
-@RequestMapping("/diseasecard")
+@RequestMapping("/diseasecard/api")
 public class DiseasecardController {
 
     private SparqlAPI api;

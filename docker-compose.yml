@@ -70,6 +70,7 @@ services:
         links:
             - dc_frontend:container_frontend
             - dc_admin:container_admin
+            - dc_backend:container_backend
         networks:
             - backend
         
@@ -86,7 +87,7 @@ services:
             - ${FRONTEND_PORT}:3000
         links:
             - dc_backend:container_backend
-            - "dc_admin:container_admin"
+            - dc_admin:container_admin
         networks:
             - backend
             
