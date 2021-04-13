@@ -6,12 +6,20 @@ import { faBook , faAlignJustify } from '@fortawesome/free-solid-svg-icons'
 import {Link} from "react-router-dom";
 
 import logo from "../images/logo_bw.png"
+import {showFrame} from "../features/disease/diseaseSlice";
+import {useDispatch} from "react-redux";
 
 export const NavbarD = () => {
 
+    const dispatch = useDispatch();
+
+    const prepare = () => {
+        dispatch(showFrame(false));
+    }
+
     return (
         <Navbar bg="dark" variant="dark">
-            <Navbar.Brand as={Link} to={'/'}><img alt="" className="d-inline-block align-top" src={logo }/> </Navbar.Brand>
+            <Navbar.Brand as={Link} to={'/'}><img alt="" className="d-inline-block align-top" src={logo} onClick={prepare}/> </Navbar.Brand>
 
             <Nav className="ml-auto">
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Jump to Diseasecard about section</Tooltip>}>
@@ -19,7 +27,7 @@ export const NavbarD = () => {
                 </OverlayTrigger>
 
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Jump to Diseasecard rare diseases browsing</Tooltip>}>
-                    <Nav.Link as={Link} to={'/browse'} style={{marginLeft: 10}}><FontAwesomeIcon icon={faAlignJustify}/></Nav.Link>
+                    <Nav.Link as={Link} to={'/browse'} style={{marginLeft: 10}} onClick={prepare}><FontAwesomeIcon icon={faAlignJustify}/></Nav.Link>
                 </OverlayTrigger>
 
             </Nav>

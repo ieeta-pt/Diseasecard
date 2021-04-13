@@ -1,4 +1,5 @@
 package pt.ua.diseasecard.service;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,9 +14,9 @@ import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.connectors.CSVFactory;
 import pt.ua.diseasecard.connectors.PluginFactory;
+import pt.ua.diseasecard.connectors.ResourceFactory;
 import pt.ua.diseasecard.domain.Concept;
 import pt.ua.diseasecard.domain.Resource;
-import pt.ua.diseasecard.connectors.ResourceFactory;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -135,6 +136,8 @@ public class DataManagementService {
                 r.setExtendsConcept((String) info.get("extends"));
                 r.setIsResourceOf(new Concept((String) info.get("resof")));
                 r.setRegex((String) info.get("regex"));
+                r.setExtendsIdentifier((String) info.get("extendsIdentifier"));
+                r.setExtendsIdentifierRegex((String) info.get("extendsIdentifierRegex"));
                 r.setIdentifiers((String) info.get("identifiers"));
                 r.setExtension((String) info.get("extension"));
                 r.setQuery((String) info.get("query"));
@@ -312,7 +315,7 @@ public class DataManagementService {
         try
         {
             JSONParser parser = new JSONParser();
-            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT ?s ?resof ?method ?comment ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built ?query ?regex ?identifiers ?line "
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT ?s ?resof ?method ?comment ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built ?query ?regex ?identifiers ?line ?extendsIdentifier ?extendsIdentifierRegex"
                     + " WHERE { ?s rdf:type coeus:Resource ."
                     + " ?s rdfs:comment ?comment ."
                     + " ?s rdfs:label ?label ."
@@ -327,6 +330,8 @@ public class DataManagementService {
                     + "OPTIONAL { ?s coeus:line ?line} . "
                     + "OPTIONAL { ?s coeus:identifiers ?identifiers} . "
                     + "OPTIONAL { ?s coeus:regex ?regex} . "
+                    + "OPTIONAL { ?s coeus:extendsIdentifier ?extendsIdentifier} . "
+                    + "OPTIONAL { ?s coeus:extendsIdentifierRegex ?extendsIdentifierRegex} . "
                     + "OPTIONAL { ?s coeus:extension ?extension} . "
                     + "OPTIONAL {?s coeus:query ?query}} "
                     + "ORDER BY ?order", "js", false));
@@ -353,6 +358,8 @@ public class DataManagementService {
                 JSONObject built = (JSONObject) binding.get("built");
                 JSONObject query = (JSONObject) binding.get("query");
                 JSONObject regex = (JSONObject) binding.get("regex");
+                JSONObject extendsIdentifier = (JSONObject) binding.get("extendsIdentifier");
+                JSONObject extendsIdentifierRegex = (JSONObject) binding.get("extendsIdentifierRegex");
                 JSONObject identifiers = (JSONObject) binding.get("identifiers");
 
                 if (extension != null) info.put("extension", extension.get("value").toString());
@@ -366,6 +373,12 @@ public class DataManagementService {
 
                 if (regex != null) info.put("regex", regex.get("value").toString());
                 else info.put("regex", "");
+
+                if (extendsIdentifier != null) info.put("extendsIdentifier", extendsIdentifier.get("value").toString());
+                else info.put("extendsIdentifier", "");
+
+                if (extendsIdentifierRegex != null) info.put("extendsIdentifierRegex", extendsIdentifierRegex.get("value").toString());
+                else info.put("extendsIdentifierRegex", "");
 
                 if (identifiers != null) info.put("identifiers", identifiers.get("value").toString());
                 else info.put("identifiers", "");

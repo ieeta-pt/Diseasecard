@@ -102,7 +102,7 @@ public class HGNCPlugin {
                 List<HGNC> relatedHGNC = this.findHGNCByOMIM(omimID);
 
                 if (relatedHGNC.isEmpty())  relatedHGNC = this.findHGNCByApprovedSymbol(geneNames);
-                if (relatedHGNC.isEmpty())  relatedHGNC = this.findHGNCByChromosomalLocation(chromosomalLocation);
+                //if (relatedHGNC.isEmpty())  relatedHGNC = this.findHGNCByChromosomalLocation(chromosomalLocation);
 
                 for(HGNC hgnc : relatedHGNC)
                 {
@@ -114,13 +114,13 @@ public class HGNCPlugin {
                         hgnci = this.itemizeResource(hgnc.getHgncID().split(":")[1], hgnc.getApprovedSymbol(), "hgnc_", "concept_HGNC");
 
                         // Itemize the uniprot value and all the resources that extens uniprof (Enzyme, Ensembl, etc.)
-                        if(!hgnc.getUniprot().equals(""))
+                        /*if(!hgnc.getUniprot().equals(""))
                         {
                             uniproti = this.itemizeResource(hgnc.getUniprot(), hgnc.getUniprot(), "uniprot_", "concept_UniProt" );
                             this.uniprotRes.put(hgnc.getUniprot(), uniproti);
 
                             this.itemizeUniprotExtensions(hgnc, uniproti);
-                        }
+                        }*/
 
                         // Avoids itemize the same resource, over and over again.
                         hgnc.setLoaded(true);
@@ -129,12 +129,12 @@ public class HGNCPlugin {
                     else
                     {
                         hgnci = this.hgncRes.get(hgnc.getHgncID());
-                        if(!hgnc.getUniprot().equals("")) uniproti = this.uniprotRes.get(hgnc.getUniprot());
+                        //if(!hgnc.getUniprot().equals("")) uniproti = this.uniprotRes.get(hgnc.getUniprot());
                     }
 
                     //Begins process of association
                     this.associateItems(hgnci, omim_item);
-                    if(!hgnc.getUniprot().equals(""))  this.associateItems(uniproti, omim_item);
+                    //if(!hgnc.getUniprot().equals(""))  this.associateItems(uniproti, omim_item);
                 }
             }
         }

@@ -54,11 +54,11 @@ export const BrowserResults = ({ match })  => {
         },
         {
             name: 'Progress',
-            selector: 'progress',
+            selector: 'c',
             width:"20%",
             sortable: true,
             //TODO: MUDAR PARA IR BUSCAR O TYPE!
-            cell: row => <ProgressBar style={{width: "100%"}} variant={row.type} now={row.progress} label={row.c}/>
+            cell: row => <ProgressBar style={{width: "100%"}} variant={row.type} now={row.c} label={row.c}/>
         }
     ];
 

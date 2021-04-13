@@ -11,6 +11,7 @@ const initialState = {
 
 export const getResults = createAsyncThunk('browse/getResults', async (letter) => {
     return API.GET("browserResults", "", [letter] ).then(res => {
+        console.log(res.data.aaData)
         return res.data.aaData
     })
 })

@@ -31,7 +31,6 @@ public class DiseaseAPI {
 
     @SuppressWarnings("unchecked")
     public JSONObject load() {
-        long startTime = System.nanoTime();
         try {
             this.map.put("omim", this.omim);
 
@@ -82,11 +81,11 @@ public class DiseaseAPI {
                 this.map.put("location", row.get("chromo").toString());
                 if (!this.list.contains(a1)) {
                     this.list.add(a1);
-                    if (a1.contains("hgnc")) {
+                    /*if (a1.contains("hgnc")) {
                         this.list.add("wave:" + a1.replace("hgnc:", ""));
-                    }
-                    if (a1.contains("uniprot")) {
-                        this.list.add("string:" + a1.replace("uniprot:", ""));
+                    }*/
+                    if (a1.contains("UniProt")) {
+                        this.list.add("String:" + a1.replace("uniprot:", ""));
                     }
                 }
                 if (!a2.contains("omim")) {
@@ -94,6 +93,10 @@ public class DiseaseAPI {
                         this.list.add(a2);
                     }
                 }
+                if (!this.list.contains("String:" + a2.replace("UniProt:", "")) && a2.contains("UniProt")) {
+                    this.list.add("String:" + a2.replace("UniProt:", ""));
+                }
+
                 if (row.contains("p")) {
                     String p = ItemFactory.getTokenFromURI(row.get("p").toString()).replace("_", ":");
                     if (!this.list.contains(p)) {
@@ -113,19 +116,17 @@ public class DiseaseAPI {
                 }
 
             }
-            this.list.add("pubmed:" + description);
+            //this.list.add("pubmed:" + description);
             results.addAll(this.list);
 
             // add meta
             this.map.put("size", this.list.size());
             this.map.put("synonyms", synonyms);
             this.map.put("network", results);
+            System.out.println(this.map);
         } catch (Exception ex) {
             Logger.getLogger(DiseaseAPI.class.getName()).log(Level.SEVERE, null, ex);
         }
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        System.out.println("[Diseasecard][DiseaseAPI][Load] OMIM " + omim + " took " + duration);
         return this.map;
     }
 
@@ -183,7 +184,7 @@ public class DiseaseAPI {
                 }
             }
 
-            this.list.add("wave:" + hgnc);
+            //this.list.add("wave:" + hgnc);
             results.addAll(this.list);
 
             this.map.put("size", this.list.size());

@@ -16,6 +16,7 @@ services:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
         volumes:
             - ${MYSQL_VOLUME}:/docker-entrypoint-initdb.d/
+            - mysql_data:/var/lib/mysql
         networks:
             - backend
       
@@ -26,6 +27,7 @@ services:
             - ${REDIS_PORT}:6379
         volumes:
             - ${REDIS_VOLUME}:/usr/local/etc/redis/redis.conf
+            - redis_data:/data
         networks:
             - backend
   
@@ -36,6 +38,7 @@ services:
             - ${SOLR_PORT}:8983
         volumes:
             - ${SOLR_VOLUME}:/opt/solr/solr/collection1/conf
+            - solr_data:/opt/solr/solr/collection1/data
         networks:
             - backend   
 
@@ -58,7 +61,6 @@ services:
         environment:
             - WAIT_HOSTS=mysql:3306
 
-
     dc_reverseproxy:
         container_name: dc_reverseproxy
         build: ./docker/reverseproxy
@@ -71,7 +73,6 @@ services:
         networks:
             - backend
         
-
     dc_frontend:
         container_name: dc_frontend
         stdin_open: true        
@@ -109,3 +110,8 @@ services:
 networks:
     backend:
         driver: "bridge"
+
+volumes:
+    redis_data:
+    mysql_data:
+    solr_data:

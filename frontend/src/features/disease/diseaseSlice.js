@@ -18,14 +18,20 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
         // Organize data from different sources and concat their values
         let values = {};
         const data = res.data
-        const network = data.network
 
+        console.log(data)
+        const network = data.network
+        network.push("omim:" + data.omim)
         console.log(network)
+
 
         for (const connection in network) {
             const info = network[connection].split(/:(.+)/)
-            if (!(info[0] in values)) values[info[0]] = []
-            values[info[0]].push(info[1].replaceAll(":", "_"))
+            console.log(info)
+            if (info.length > 1) {
+                if (!(info[0] in values)) values[info[0]] = []
+                values[info[0]].push(info[1].replaceAll(":", "_"))
+            }
         }
 
         console.log(values)
@@ -34,17 +40,23 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
         let id = 1
         let listOfIds = ['root']
         let aux = ''
-            for (const [ key, value ] of Object.entries(values)) {
-            let children = []
-            for ( const index in value ) {
-                aux = key + ":" + value[index];
-                listOfIds.push(aux)
-                children.push( { "id": aux , "name" : value[index], "value":1 } )
+        for (const [ key, value ] of Object.entries(values)) {
+            if (value !== "") {
+                let children = []
+                for ( const index in value ) {
+                    aux = key + ":" + value[index];
+                    listOfIds.push(aux)
+                    if (value[index].length >= 8)   children.push( { "id": aux , "fullName": value[index], "name" : value[index].substring(0,7) + "...", "value":1 } )
+                    else                            children.push( { "id": aux , "fullName": value[index], "name" : value[index], "value":1 } )
+
+                }
+                if (key==='omim') results.push( { "id": id.toString(), "fullName":'OMIM', "name": 'OMIM', "children":children } )
+                else results.push( { "id": id.toString(), "fullName":key, "name": key, "children":children } )
+                listOfIds.push(id.toString());
+                id++;
             }
-            results.push( { "id": id.toString(), "name": key, "children":children } )
-            listOfIds.push(id.toString());
-            id++;
         }
+        console.log(results)
         return {data, results, listOfIds};
     })
 })

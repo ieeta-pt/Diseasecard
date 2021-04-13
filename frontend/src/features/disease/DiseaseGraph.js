@@ -62,7 +62,6 @@ export const DiseaseGraph = ({ omim }) => {
                     dispatch(getSourceURL(id))
                     dispatch(showFrame(true))
                 }
-
             }
         })
         return () => { chart.dispose(); }

@@ -32,7 +32,7 @@ public class Browsier {
     }
 
     public void start() {
-        System.out.println("\n[Diseasecard][Browsier] Starting process of browsing");
+        System.out.println("[Diseasecard][Browsier] Starting process of browsing");
 
         // Load Diseases
         toDB();

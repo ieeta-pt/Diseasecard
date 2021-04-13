@@ -115,7 +115,7 @@ export const DiseaseContentTree = () => {
     };
 
     const renderTree = (nodes) => {
-        return <StyledTreeItem key={nodes.id} nodeId={nodes.id} labelText={nodes.name}
+        return <StyledTreeItem key={nodes.id} nodeId={nodes.id} labelText={nodes.fullName}
                         hasChildren={Array.isArray(nodes.children)}>
             {Array.isArray(nodes.children) ? nodes.children.map((node) => renderTree(node)) : null}
         </StyledTreeItem>

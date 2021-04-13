@@ -72,7 +72,8 @@ public class Indexer implements Runnable{
                 JSONArray names = obj.getJSONArray("synonyms");
                 for (int i = 0; i < names.length(); i++) {
                     SolrLoad load = new SolrLoad(omim, "name", server);
-                    load.setValue(names.getString(i));
+                    if (names.getString(i) != null) load.setValue(names.getString(i));
+
                     // TODO: VERIFICAR SE NÃO FALTA AQUI CENS
                     pool.execute(load);
 
@@ -88,7 +89,7 @@ public class Indexer implements Runnable{
                     pool.execute(load);
                 }
             } catch (Exception ex) {
-                Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 

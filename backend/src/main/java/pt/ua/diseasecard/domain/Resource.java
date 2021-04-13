@@ -27,6 +27,8 @@ public class Resource {
     private String extension;
     private String query;
     private String regex;
+    private String extendsIdentifier;
+    private String extendsIdentifierRegex;
     private String identifiers;
 
     private final SparqlAPI sparqlAPI = BeanUtil.getBean(SparqlAPI.class);;
@@ -144,6 +146,20 @@ public class Resource {
         this.identifiers = identifiers;
     }
 
+    public String getExtendsIdentifier() {
+        return extendsIdentifier;
+    }
+    public void setExtendsIdentifier(String extendsIdentifier) {
+        this.extendsIdentifier = extendsIdentifier;
+    }
+
+    public String getExtendsIdentifierRegex() {
+        return extendsIdentifierRegex;
+    }
+    public void setExtendsIdentifierRegex(String extendsIdentifierRegex) {
+        this.extendsIdentifierRegex = extendsIdentifierRegex;
+    }
+
     public String getPublisher() {
         return publisher;
     }
@@ -244,4 +260,6 @@ public class Resource {
             Logger.getLogger(Resource.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+
 }

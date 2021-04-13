@@ -10,16 +10,18 @@ import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.utils.BeanUtil;
 import pt.ua.diseasecard.utils.ItemFactory;
 import pt.ua.diseasecard.utils.Predicate;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CSVFactory implements ResourceFactory {
 
@@ -38,6 +40,8 @@ public class CSVFactory implements ResourceFactory {
 
     private List<String[]> readEndpoint() throws IOException {
         CsvParserSettings settings = new CsvParserSettings();
+        settings.setNullValue("");
+        settings.setEmptyValue("");
         settings.detectFormatAutomatically();
         CsvParser parser = new CsvParser(settings);
         try {
@@ -75,19 +79,24 @@ public class CSVFactory implements ResourceFactory {
                 String item = ItemFactory.getTokenFromItem(itemRaw);
                 for (String[] r : rows)
                 {
-                    if ( r[Integer.parseInt(res.getRegex())].equals(item) )
+                    List<String> extendIdentifiers = this.getIDs(res.getExtendsIdentifier(), res.getExtendsIdentifierRegex(), r);
+                    for (String extendIdentifier : extendIdentifiers)
                     {
-                        rdfizer = new Triplify(res, extensions.get(itemRaw));
-                        String[] tmp = res.getIdentifiers().split("\\|");
-
-                        for (String inside : tmp)
+                        if ( extendIdentifier.equals(item) )
                         {
-                            int col = Integer.parseInt(res.getQuery());
-                            rdfizer.add(inside, r[col]);
-                        }
+                            List<String> resIDs = this.getIDs(res.getQuery(), res.getRegex(), r);
+                            for (String resID : resIDs)
+                            {
+                                rdfizer = new Triplify(res, extensions.get(itemRaw));
 
-                        rdfizer.itemize(r[Integer.parseInt(res.getQuery())]);
-                        break;
+                                if (!res.getIdentifiers().equals(""))
+                                {
+                                    String[] tmp = res.getIdentifiers().split("\\|");
+                                    for (String inside : tmp) rdfizer.add(inside, resID);
+                                }
+                                rdfizer.itemize(resID);
+                            }
+                        }
                     }
                 }
             }
@@ -138,6 +147,23 @@ public class CSVFactory implements ResourceFactory {
                 Logger.getLogger(CSVFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+
+    private List<String> getIDs(String identifier, String regex, String[] row) {
+        List<String> ids = new ArrayList<>();
+
+        if (!regex.isEmpty())
+        {
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(row[Integer.parseInt(identifier)]);
+            while (m.find()) ids.add(m.group());
+        }
+        else
+        {
+            ids.add(row[Integer.parseInt(identifier)]);
+        }
+
+        return ids;
     }
 
 }

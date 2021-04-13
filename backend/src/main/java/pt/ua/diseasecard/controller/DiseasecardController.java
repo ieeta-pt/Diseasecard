@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.DiseaseAPI;
 import pt.ua.diseasecard.components.data.SparqlAPI;
+import pt.ua.diseasecard.components.management.Browsier;
+import pt.ua.diseasecard.components.management.Cashier;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.service.DataManagementService;
 import pt.ua.diseasecard.utils.Finder;
@@ -83,6 +85,9 @@ public class DiseasecardController {
     @ResponseBody
     public String getDiseaseByOMIM(
             @RequestParam(name = "omim", required = true) String omim) {
+
+//        DiseaseAPI d = new DiseaseAPI(this.api, omim);
+//        return d.load().toString();
 
         try {
             return jedis.get("omim:" + omim);
