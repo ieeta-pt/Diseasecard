@@ -17,6 +17,9 @@ export const BrowserResults = ({ match })  => {
     const results = useSelector(selectBrowserResults)
     const history = useHistory();
 
+    console.log("OLLLAAAAA:" + process.env.XIXI)
+    console.log("OLLLAAAAA:" + process.env.REACT_APP_API_URL)
+
     // DataTable Fields
     let content;
 

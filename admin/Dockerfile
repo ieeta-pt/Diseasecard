@@ -3,12 +3,18 @@
 #####################################################################################
 
 FROM node:alpine as build
+
+ARG SERVERNAME
+ARG BACKEND_PORT
+
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
+RUN sed -i "s/TOREPLACE/$SERVERNAME:$BACKEND_PORT/" package.json
 COPY yarn.lock ./
 RUN yarn install
 COPY . ./
+RUN sed -i "s/TOREPLACE/$SERVERNAME:$BACKEND_PORT/" package.json
 RUN yarn build
 
 

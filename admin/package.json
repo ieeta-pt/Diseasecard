@@ -2,7 +2,7 @@
   "name": "dcadmin",
   "version": "0.1.0",
   "private": true,
-  "api_url": "http://localhost:8080/diseasecard/",
+  "api_url": "http://TOREPLACE/diseasecard/api" ,
   "homepage": "http://localhost:3000/diseasecard/admin/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.1.0",
