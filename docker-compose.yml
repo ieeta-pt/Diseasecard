@@ -89,7 +89,7 @@ services:
             target: ${TARGET_FRONTEND}
             args:
                 - SERVERNAME=${SERVERNAME}
-                - REVERSEPROXY_PORT=${REVERSEPROXY_PORT}
+                - OPEN_PORT=${OPEN_PORT}
         command: ${COMMAND_FRONTEND}
         ports:
             - ${FRONTEND_PORT}
@@ -109,7 +109,7 @@ services:
             target: ${TARGET_ADMIN}
             args:
                 - SERVERNAME=${SERVERNAME}
-                - REVERSEPROXY_PORT=${REVERSEPROXY_PORT}
+                - OPEN_PORT=${OPEN_PORT}
         command: ${COMMAND_ADMIN}
         ports:
             - ${ADMIN_PORT}
