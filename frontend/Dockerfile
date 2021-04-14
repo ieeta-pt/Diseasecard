@@ -5,18 +5,16 @@
 FROM node:alpine as build
 
 ARG SERVERNAME
-ARG BACKEND_PORT
+ARG REVERSEPROXY_PORT
 
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
 COPY package.json ./
 COPY package-lock.json ./
-RUN sed -i "s/TOREPLACE/$SERVERNAME:$BACKEND_PORT/" package.json
 RUN npm install --silent
 RUN npm install react-scripts@3.4.1 -g --silent
 COPY . ./
-RUN sed -i "s/TOREPLACE/$SERVERNAME:$BACKEND_PORT/" package.json
-RUN cat package.json
+RUN sed -i "s/TOREPLACE/$SERVERNAME:$REVERSEPROXY_PORT/" package.json
 RUN npm run build
 
 

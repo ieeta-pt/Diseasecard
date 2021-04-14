@@ -80,7 +80,7 @@ public class DataManagementService {
             Path copyLocation = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
             Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
         }
-        Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO, "[COEUS][DataManagementService] AHHHHHHHHHH");
+        //TODO: Adicionar aqui uma thread
         this.build();
     }
 

@@ -54,7 +54,7 @@ services:
             - dc_solr
         build: ./backend
         ports:
-            - ${BACKEND_PORT}:8080
+            - ${BACKEND_PORT}
         links:
             - mysql:container_mysql
             - dc_redis:container_redis
@@ -74,7 +74,7 @@ services:
         links:
             - dc_frontend:container_frontend
             - dc_admin:container_admin
-            - dc_backend:container_backend
+            - dc_backend:containerbackend
         networks:
             - backend
         
@@ -89,12 +89,11 @@ services:
             target: ${TARGET_FRONTEND}
             args:
                 - SERVERNAME=${SERVERNAME}
-                - BACKEND_PORT=${BACKEND_PORT}
+                - REVERSEPROXY_PORT=${REVERSEPROXY_PORT}
         command: ${COMMAND_FRONTEND}
         ports:
             - ${FRONTEND_PORT}
         links:
-            - dc_backend:container_backend
             - dc_admin:container_admin
         networks:
             - backend
@@ -110,7 +109,7 @@ services:
             target: ${TARGET_ADMIN}
             args:
                 - SERVERNAME=${SERVERNAME}
-                - BACKEND_PORT=${BACKEND_PORT}
+                - REVERSEPROXY_PORT=${REVERSEPROXY_PORT}
         command: ${COMMAND_ADMIN}
         ports:
             - ${ADMIN_PORT}
