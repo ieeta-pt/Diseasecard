@@ -89,7 +89,6 @@ services:
             target: ${TARGET_FRONTEND}
             args:
                 - SERVERNAME=${SERVERNAME}
-                - OPEN_PORT=${OPEN_PORT}
         command: ${COMMAND_FRONTEND}
         ports:
             - ${FRONTEND_PORT}

@@ -13,7 +13,7 @@ COPY package.json ./
 COPY yarn.lock ./
 RUN yarn install
 COPY . ./
-RUN sed -i "s/TOREPLACE/$SERVERNAME:$OPEN_PORT/" package.json
+RUN sed -i "s/TOREPLACE/$SERVERNAME/" package.json
 RUN yarn build
 
 
