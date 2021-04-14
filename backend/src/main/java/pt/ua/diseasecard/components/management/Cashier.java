@@ -23,7 +23,7 @@ public class Cashier {
     }
 
     public void start() {
-        System.out.println("\n[Diseasecard][Cashier] Starting process of cache");
+        Logger.getLogger(Cashier.class.getName()).log(Level.INFO,"\n[Diseasecard][Cashier] Starting process of cache");
 
         // cache disease content
         cacheDiseases();
@@ -48,7 +48,7 @@ public class Cashier {
             }
         }
         jedis.save();
-        System.out.println("[Diseasecard][Cashier] Process of caching OMIMs finished");
+        Logger.getLogger(Cashier.class.getName()).log(Level.INFO,"[Diseasecard][Cashier] Process of caching OMIMs finished");
 
     }
 
@@ -68,7 +68,7 @@ public class Cashier {
             }
         }
         jedis.save();
-        System.out.println("[Diseasecard][Cashier] Process of caching HGNC finished");
+        Logger.getLogger(Cashier.class.getName()).log(Level.INFO,"[Diseasecard][Cashier] Process of caching HGNC finished");
     }
 
 }

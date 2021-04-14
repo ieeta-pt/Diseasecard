@@ -1,9 +1,13 @@
 package pt.ua.diseasecard.components.data;
 
+import pt.ua.diseasecard.service.DataManagementService;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DB {
 
@@ -38,7 +42,7 @@ public class DB {
                 statement = connection.createStatement();
             } catch (SQLException e) {
                 count++;
-                System.out.println("[Diseasecard][DB] Unable to connect to " + database);
+                Logger.getLogger(DB.class.getName()).log(Level.INFO, "[Diseasecard][DB] Unable to connect to " + database);
             }
         }
 
@@ -53,7 +57,7 @@ public class DB {
                 connection.close();
             }
         } catch (SQLException e) {
-            System.out.println("[DB] Unable to close " + database + " connection\n\t" + e.toString());
+            Logger.getLogger(DB.class.getName()).log(Level.INFO, "[DB] Unable to close " + database + " connection\n\t" + e.toString());
         }
     }
 

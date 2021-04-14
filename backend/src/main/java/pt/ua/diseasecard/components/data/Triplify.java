@@ -62,7 +62,7 @@ public class Triplify {
         }
         catch (Exception ex)
         {
-            if (this.config.getDebug()) System.out.println("[COEUS][Triplify] Unable to add item to " + resource.getTitle());
+            if (this.config.getDebug()) Logger.getLogger(Triplify.class.getName()).log(Level.INFO,"[COEUS][Triplify] Unable to add item to " + resource.getTitle());
             Logger.getLogger(Triplify.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

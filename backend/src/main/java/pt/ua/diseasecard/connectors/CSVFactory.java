@@ -58,7 +58,7 @@ public class CSVFactory implements ResourceFactory {
             }
         } catch (MalformedURLException ex) {
             //saveError(ex);
-            System.out.println("[COEUS][CSVFactory] Impossible to read the file.");
+            Logger.getLogger(CSVFactory.class.getName()).log(Level.INFO,"[COEUS][CSVFactory] Impossible to read the file.");
             Logger.getLogger(CSVFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -102,7 +102,7 @@ public class CSVFactory implements ResourceFactory {
             }
         } catch (IOException ex) {
             //saveError(ex);
-            System.out.println("[COEUS][CSVFactory] Impossible to read the information.");
+            Logger.getLogger(CSVFactory.class.getName()).log(Level.INFO,"[COEUS][CSVFactory] Impossible to read the information.");
             Logger.getLogger(CSVFactory.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -120,13 +120,13 @@ public class CSVFactory implements ResourceFactory {
                 api.addStatement(resource, Predicate.get("coeus:built"), true);
             }
             if (this.config.getDebug()) {
-                System.out.println("[COEUS][API] Saved resource " + res.getUri());
+                Logger.getLogger(CSVFactory.class.getName()).log(Level.INFO,"[COEUS][API] Saved resource " + res.getUri());
             }
         } catch (Exception ex) {
             if (this.config.getDebug())
             {
                 saveError(ex);
-                System.out.println("[COEUS][API] Unable to save resource " + res.getUri());
+                Logger.getLogger(CSVFactory.class.getName()).log(Level.INFO,"[COEUS][API] Unable to save resource " + res.getUri());
                 Logger.getLogger(CSVFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -140,10 +140,10 @@ public class CSVFactory implements ResourceFactory {
             api.addStatement(statement);
             hasError = true;
 
-            if (this.config.getDebug()) System.out.println("[COEUS][API] Saved error on resource " + res.getUri());
+            if (this.config.getDebug()) Logger.getLogger(CSVFactory.class.getName()).log(Level.INFO,"[COEUS][API] Saved error on resource " + res.getUri());
         } catch (Exception e) {
             if (this.config.getDebug()) {
-                System.out.println("[COEUS][API] Unable to save error on resource " + res.getUri());
+                Logger.getLogger(CSVFactory.class.getName()).log(Level.INFO,"[COEUS][API] Unable to save error on resource " + res.getUri());
                 Logger.getLogger(CSVFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

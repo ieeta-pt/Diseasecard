@@ -46,7 +46,7 @@ public class PluginFactory implements ResourceFactory{
         catch (Exception ex)
         {
             if (this.config.getDebug()) {
-                System.out.println("[COEUS][SPARQLFactory] unable to load data for " + res.getUri());
+                Logger.getLogger(PluginFactory.class.getName()).log(Level.INFO,"[COEUS][SPARQLFactory] unable to load data for " + res.getUri());
                 Logger.getLogger(PluginFactory.class.getName()).log(Level.SEVERE, null, ex);
 
             }
@@ -62,13 +62,13 @@ public class PluginFactory implements ResourceFactory{
             com.hp.hpl.jena.rdf.model.Resource resource = api.getResource(this.res.getUri());
             api.addStatement(resource, Predicate.get("coeus:built"), true);
 
-            if (this.config.getDebug()) System.out.println("[COEUS][API] Saved resource " + res.getUri());
+            if (this.config.getDebug()) Logger.getLogger(PluginFactory.class.getName()).log(Level.INFO,"[COEUS][API] Saved resource " + res.getUri());
         }
         catch (Exception ex)
         {
             if (this.config.getDebug())
             {
-                System.out.println("[COEUS][API] Unable to save resource " + res.getUri());
+                Logger.getLogger(PluginFactory.class.getName()).log(Level.INFO,"[COEUS][API] Unable to save resource " + res.getUri());
                 Logger.getLogger(PluginFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

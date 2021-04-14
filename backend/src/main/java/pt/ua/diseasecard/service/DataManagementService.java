@@ -80,6 +80,7 @@ public class DataManagementService {
             Path copyLocation = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
             Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
         }
+        Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO, "[COEUS][DataManagementService] AHHHHHHHHHH");
         this.build();
     }
 
@@ -96,17 +97,17 @@ public class DataManagementService {
                 {
                     if (r.isBuilt())
                     {
-                        if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Already built resource " + r.getTitle());
+                        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Already built resource " + r.getTitle());
                     }
                     else
                     {
-                        if (this.config.getDebug())  System.out.println("[COEUS][DataManagementService] Reading data for resource " + r.getTitle());
+                        if (this.config.getDebug())  Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Reading data for resource " + r.getTitle());
                         this.readData(r);
                     }
                 }
                 catch (Exception ex)
                 {
-                    if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Unable to read data for " + this.config.getName() + " in resource " + r.getTitle());
+                    if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Unable to read data for " + this.config.getName() + " in resource " + r.getTitle());
                     Logger.getLogger(DataManagementService.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -114,7 +115,7 @@ public class DataManagementService {
         }
         catch (Exception ex)
         {
-            if(this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Unable to build " + this.config.getName());
+            if(this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Unable to build " + this.config.getName());
             Logger.getLogger(DataManagementService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -125,7 +126,7 @@ public class DataManagementService {
      */
     private void readResources() {
         try {
-            if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Reading resources for " + this.config.getName());
+            if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Reading resources for " + this.config.getName());
 
             JSONArray finalR = getAllResources();
 
@@ -145,11 +146,11 @@ public class DataManagementService {
                 r.loadConcept();
                 this.resources.add(r);
             }
-            if (this.config.getDebug())  System.out.println("[COEUS][DataManagementService] Resource information read");
+            if (this.config.getDebug())  Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Resource information read");
         }
         catch (Exception ex)
         {
-            if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Unable to read resource information");
+            if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Unable to read resource information");
             Logger.getLogger(DataManagementService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -183,9 +184,9 @@ public class DataManagementService {
                     factory.save();
                 }
             }
-            if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Data for " + r.getTitle() + " read");
+            if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Data for " + r.getTitle() + " read");
         } catch (Exception ex) {
-            if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Unable to read data for " + r.getTitle());
+            if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Unable to read data for " + r.getTitle());
             Logger.getLogger(DataManagementService.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -195,7 +196,7 @@ public class DataManagementService {
         Description
      */
     public JSONObject getAllEntities() {
-        //if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting all the existing entities on " + this.config.getName());
+        //if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Getting all the existing entities on " + this.config.getName());
         JSONObject finalR = new JSONObject();
         try
         {
@@ -252,7 +253,7 @@ public class DataManagementService {
         Description
      */
     public JSONObject getAllConcepts() {
-        //if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting all the existing concepts on " + this.config.getName());
+        //if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Getting all the existing concepts on " + this.config.getName());
         JSONObject finalR = new JSONObject();
         try
         {
@@ -471,7 +472,7 @@ public class DataManagementService {
         For now, the plugins_labels are going to be hardcoded, since the current ontology is not yet ready.
      */
     public JSONObject getFormLabels(){
-        //if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting labels needed in forms of " + this.config.getName() + "Admin");
+        //if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Getting labels needed in forms of " + this.config.getName() + "Admin");
         JSONObject finalR = new JSONObject();
         try
         {
@@ -516,7 +517,7 @@ public class DataManagementService {
         This map is then used in DiseasecardAdmin platform.
      */
     public JSONObject getOntologyStructure() {
-        //if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Getting Ontology Structure of " + this.config.getName() );
+        //if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Getting Ontology Structure of " + this.config.getName() );
 
         JSONObject entities = this.getAllEntities();
         JSONObject concepts = this.getAllConcepts();
@@ -565,14 +566,14 @@ public class DataManagementService {
 
 
     public void prepareAddEntity(String title, String label, String description, String comment, String entityOf) {
-        if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Add Entity to " + this.config.getName() );
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Add Entity to " + this.config.getName() );
 
         this.storage.addEntity(title, label, description, comment, entityOf);
     }
 
 
     public void prepareAddConcept(String title, String label, String description, String comment, String hasEntity, String hasResource) {
-        if (this.config.getDebug()) System.out.println("[COEUS][DataManagementService] Add Concept to " + this.config.getName() );
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Add Concept to " + this.config.getName() );
 
         this.storage.addConcept(title, label, description, comment, hasEntity, hasResource);
     }
@@ -585,7 +586,7 @@ public class DataManagementService {
 
             this.storage.addResource(title, label, description, comment, resourceOf, extendsResource, order, publisher, regex, query, copyLocation.toString());
         } catch (IOException ex) {
-            System.out.println("[COEUS][DataManagementService] Error while processing endpoint of resource");
+            Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
         }
     }
 
@@ -600,7 +601,7 @@ public class DataManagementService {
 
             this.storage.addResource(title, label, description, comment, resourceOf, extendsResource, order, publisher, regex, query, "omim://full");
         } catch (IOException ex) {
-            System.out.println("[COEUS][DataManagementService] Error while processing endpoint of resource");
+            Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
         }
     }
 }

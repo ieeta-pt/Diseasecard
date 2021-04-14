@@ -123,7 +123,6 @@ public class DiseaseAPI {
             this.map.put("size", this.list.size());
             this.map.put("synonyms", synonyms);
             this.map.put("network", results);
-            System.out.println(this.map);
         } catch (Exception ex) {
             Logger.getLogger(DiseaseAPI.class.getName()).log(Level.SEVERE, null, ex);
         }

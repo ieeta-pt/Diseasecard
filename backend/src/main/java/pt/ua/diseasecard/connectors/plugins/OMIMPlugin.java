@@ -69,7 +69,7 @@ public class OMIMPlugin {
         }
         catch (Exception ex)
         {
-            System.out.println("[COEUS][OMIM] Unable to load genotype information from OMIM");
+            Logger.getLogger(OMIMPlugin.class.getName()).log(Level.INFO,"[COEUS][OMIM] Unable to load genotype information from OMIM");
             Logger.getLogger(OMIMPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return success;
@@ -134,7 +134,7 @@ public class OMIMPlugin {
                 }
                 catch (Exception ex)
                 {
-                    System.out.println("[COEUS][OMIM] Unable to load phenotype information from OMIM for " + disease[0]);
+                    Logger.getLogger(OMIMPlugin.class.getName()).log(Level.INFO,"[COEUS][OMIM] Unable to load phenotype information from OMIM for " + disease[0]);
                     Logger.getLogger(OMIMPlugin.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -142,7 +142,7 @@ public class OMIMPlugin {
         }
         catch (Exception ex)
         {
-            System.out.println("[COEUS][OMIM] Unable to load phenotype information from OMIM");
+            Logger.getLogger(OMIMPlugin.class.getName()).log(Level.INFO,"[COEUS][OMIM] Unable to load phenotype information from OMIM");
             Logger.getLogger(OMIMPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return success;
@@ -212,7 +212,7 @@ public class OMIMPlugin {
                 }
                 catch (Exception ex)
                 {
-                    if (this.config.getDebug()) System.out.println("[COEUS][OMIM] Unable to triplify inmemory data");
+                    if (this.config.getDebug()) Logger.getLogger(OMIMPlugin.class.getName()).log(Level.INFO,"[COEUS][OMIM] Unable to triplify inmemory data");
                     Logger.getLogger(OMIMPlugin.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

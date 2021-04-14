@@ -82,10 +82,10 @@ public class HGNCPlugin {
         }
         catch (IOException ex)
         {
-            if (this.config.getDebug()) System.out.println("[COEUS][HGNC] Unable to load data from HGNC");
+            if (this.config.getDebug()) Logger.getLogger(HGNCPlugin.class.getName()).log(Level.INFO,"[COEUS][HGNC] Unable to load data from HGNC");
             Logger.getLogger(HGNCPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("\tLoading process finished.");
+        Logger.getLogger(HGNCPlugin.class.getName()).log(Level.INFO,"\tLoading process finished.");
         return sucess;
     }
 
@@ -140,7 +140,7 @@ public class HGNCPlugin {
         }
         catch(Exception ex)
         {
-            if (this.config.getDebug()) System.out.println("[COEUS][OMIM] Unable to triplify gene information");
+            if (this.config.getDebug()) Logger.getLogger(HGNCPlugin.class.getName()).log(Level.INFO,"[COEUS][OMIM] Unable to triplify gene information");
             Logger.getLogger(HGNCPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -178,7 +178,7 @@ public class HGNCPlugin {
         }
         catch (Exception ex)
         {
-            if (this.config.getDebug()) System.out.println("[COEUS][HGNC] Unable to triplify gene information");
+            if (this.config.getDebug()) Logger.getLogger(HGNCPlugin.class.getName()).log(Level.INFO,"[COEUS][HGNC] Unable to triplify gene information");
             Logger.getLogger(HGNCPlugin.class.getName()).log(Level.SEVERE, null, ex);
         }
         return item;

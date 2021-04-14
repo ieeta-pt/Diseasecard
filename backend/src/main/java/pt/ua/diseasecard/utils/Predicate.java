@@ -2,6 +2,8 @@ package pt.ua.diseasecard.utils;
 
 import com.hp.hpl.jena.rdf.model.Property;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Predicate {
     public static HashMap<String, Property> predicates = new HashMap<String, Property>();
@@ -34,9 +36,9 @@ public class Predicate {
      *
      */
     public static void list() {
-        System.out.println("[COEUS][Predicate] Listing all known predicates");
+        Logger.getLogger(Predicate.class.getName()).log(Level.INFO,"[COEUS][Predicate] Listing all known predicates");
         for (String s : predicates.keySet()) {
-            System.out.println("\t" + s + " - " + predicates.get(s));
+            Logger.getLogger(Predicate.class.getName()).log(Level.INFO,"\t" + s + " - " + predicates.get(s));
         }
     }
 }

@@ -124,11 +124,11 @@ public class Storage {
             }
 
             if (this.config.getDebug()) {
-                System.out.println("[COEUS][Storage] " + this.config.getName() + " setup loaded");
+                Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] " + this.config.getName() + " setup loaded");
             }
         } catch (Exception ex) {
             if (this.config.getDebug()) {
-                System.out.println("[COEUS][Storage] Unable to load " + this.config.getName() + " setup");
+                Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] Unable to load " + this.config.getName() + " setup");
                 Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -152,7 +152,7 @@ public class Storage {
             RDFReader r = this.model.getReader();
             r.read(this.model, stream, PrefixFactory.getURIForPrefix(this.config.getKeyprefix()));
 
-            if (this.config.getDebug()) System.out.println("[COEUS][Storage] " + this.config.getName() + " default setup loaded");
+            if (this.config.getDebug()) Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] " + this.config.getName() + " default setup loaded");
         }
     }
 
@@ -170,7 +170,7 @@ public class Storage {
             return iter.nextStatement().getSubject().toString();
         }
 
-        if (this.config.getDebug()) System.out.println("[COEUS][Storage] Successfully extracted11 " + this.config.getName() + " default setup loaded");
+        if (this.config.getDebug()) Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] Successfully extracted11 " + this.config.getName() + " default setup loaded");
 
         return null;
     }
@@ -189,12 +189,12 @@ public class Storage {
 
             Property isIncludedInProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isIncludedIn");
             Resource seed = this.model.getResource(this.getSeedURI());
-            System.out.println("URI of the seed: " + this.getSeedURI());
+            Logger.getLogger(Storage.class.getName()).log(Level.INFO,"URI of the seed: " + this.getSeedURI());
 
             newEntity.addProperty(isIncludedInProperty, seed);
 
             if ( !entityOf.equals("") ) {
-                System.out.println("URI of the concept: " + this.config.getPrefixes().get("diseasecard") + entityOf);
+                Logger.getLogger(Storage.class.getName()).log(Level.INFO,"URI of the concept: " + this.config.getPrefixes().get("diseasecard") + entityOf);
 
                 Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
                 Property hasEntityProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
@@ -208,7 +208,7 @@ public class Storage {
             System.out.println(newEntity);
         } catch (IOException ex) {
             if (this.config.getDebug()) {
-                System.out.println("[COEUS][Storage] Error while preparing model");
+                Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] Error while preparing model");
                 Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -245,7 +245,7 @@ public class Storage {
 
         } catch (IOException ex) {
             if (this.config.getDebug()) {
-                System.out.println("[COEUS][Storage] Error while preparing model");
+                Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] Error while preparing model");
                 Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
@@ -258,7 +258,7 @@ public class Storage {
     public void addResource(String title, String label, String description, String comment, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, String location) {
         try {
             this.prepareModel();
-            System.out.println("URI of the new resource: " + this.config.getPrefixes().get("diseasecard") + label);
+            Logger.getLogger(Storage.class.getName()).log(Level.INFO,"URI of the new resource: " + this.config.getPrefixes().get("diseasecard") + label);
 
             Resource newResource = this.model.createResource(this.config.getPrefixes().get("diseasecard") + label);
             this.addCore(newResource, title, label, description, comment, "Resource");
@@ -289,7 +289,7 @@ public class Storage {
 
         } catch (IOException ex) {
             if (this.config.getDebug()) {
-                System.out.println("[COEUS][Storage] Error while preparing model");
+                Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] Error while preparing model");
                 Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

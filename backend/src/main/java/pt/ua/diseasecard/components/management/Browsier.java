@@ -32,7 +32,7 @@ public class Browsier {
     }
 
     public void start() {
-        System.out.println("[Diseasecard][Browsier] Starting process of browsing");
+        Logger.getLogger(Browsier.class.getName()).log(Level.INFO,"[Diseasecard][Browsier] Starting process of browsing");
 
         // Load Diseases
         toDB();
@@ -65,10 +65,10 @@ public class Browsier {
                 p.execute();
                 db.close();
             } catch (Exception e) {
-                System.out.println("[Diseasecard][Browsier] " + e.getMessage());
+                Logger.getLogger(Browsier.class.getName()).log(Level.INFO,"[Diseasecard][Browsier] " + e.getMessage());
             }
         }
-        System.out.println("[Diseasecard][Browsier] Process of load do DB finished");
+        Logger.getLogger(Browsier.class.getName()).log(Level.INFO,"[Diseasecard][Browsier] Process of load do DB finished");
     }
 
     /*
@@ -82,11 +82,11 @@ public class Browsier {
             try {
                 jedis.set("browse:" + start, f.browse(start));
             } catch (Exception ex) {
-                System.out.println("[Diseasecard][Browsier] Unable to cache browsing information.");
+                Logger.getLogger(Browsier.class.getName()).log(Level.INFO,"[Diseasecard][Browsier] Unable to cache browsing information.");
                 Logger.getLogger(Browsier.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         jedis.save();
-        System.out.println("[Diseasecard][Browsier] Process of cashing finished");
+        Logger.getLogger(Browsier.class.getName()).log(Level.INFO,"[Diseasecard][Browsier] Process of cashing finished");
     }
 }

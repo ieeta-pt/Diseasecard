@@ -33,7 +33,7 @@ public class Indexer implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("\n[Diseasecard][Indexer] Starting process of indexing");
+        Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"\n[Diseasecard][Indexer] Starting process of indexing");
         // Load OMIM network from Redis cache
         loadOMIMs();
 
@@ -42,14 +42,14 @@ public class Indexer implements Runnable{
     }
 
     void loadOMIMs() {
-        System.out.println("[Diseasecard][Indexer] Indexer started, loading OMIMs");
+        Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"[Diseasecard][Indexer] Indexer started, loading OMIMs");
 
         ResultSet rs = this.api.selectRS("SELECT ?t WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM . ?u diseasecard:omim ?t  }", false);
         Jedis jedis = Boot.getJedis();
         while (rs.hasNext()) {
             QuerySolution row = rs.next();
             try {
-                //System.out.println("OMIM: " + jedis.get("omim:" + row.get("t").toString()));
+                //Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"OMIM: " + jedis.get("omim:" + row.get("t").toString()));
                 omims.put(row.get("t").toString(), new JSONObject(jedis.get("omim:" + row.get("t").toString())));
             } catch (Exception e) {
                 Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);
@@ -58,7 +58,7 @@ public class Indexer implements Runnable{
     }
 
     void indexer() {
-        System.out.println("[Diseasecard][Indexer] OMIMs loaded, starting Solr import");
+        Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"[Diseasecard][Indexer] OMIMs loaded, starting Solr import");
 
         HttpSolrServer server = new HttpSolrServer(this.solrConnection);
         server.setDefaultMaxConnectionsPerHost(256);

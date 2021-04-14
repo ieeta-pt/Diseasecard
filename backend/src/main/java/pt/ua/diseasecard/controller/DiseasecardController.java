@@ -23,6 +23,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 @RestController
@@ -118,7 +120,7 @@ public class DiseasecardController {
 
             return res;
         } catch (Exception ex) {
-            System.out.println("[Diseasecard][API][getSourceURL] Source not found");
+            Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO,"[Diseasecard][API][getSourceURL] Source not found");
             return null;
         }
     }
@@ -139,7 +141,7 @@ public class DiseasecardController {
 
     @PostMapping("/startup")
     public void startInternalProcess() {
-        System.out.println("[Diseasecard][Controller] Receive alert to start my internal processing");
+        Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO,"[Diseasecard][Controller] Receive alert to start my internal processing");
         this.boot.startInternalProcess();
     }
 

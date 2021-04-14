@@ -83,7 +83,7 @@ public class Finder {
             db.close();
             alldiseases.put("aaData", list);
         } catch (Exception ex) {
-            System.out.println("[COEUS][Diseasecard][Finder] Unable to get diseases info");
+            Logger.getLogger(Finder.class.getName()).log(Level.INFO,"[COEUS][Diseasecard][Finder] Unable to get diseases info");
             Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
         }
         return alldiseases.toString();
@@ -155,7 +155,7 @@ public class Finder {
                 this.result.put("size", size);
                 this.result.put("results", mtp);
             } catch (Exception ex) {
-                System.out.println("[Diseasecard][Finder] Unable to find disease");
+                Logger.getLogger(Finder.class.getName()).log(Level.INFO,"[Diseasecard][Finder] Unable to find disease");
                 Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
 
             }
@@ -163,7 +163,7 @@ public class Finder {
             try {
                 result.put("status", 140);
             } catch (Exception ex) {
-                System.out.println("[Diseasecard][Finder] Unable to find disease");
+                Logger.getLogger(Finder.class.getName()).log(Level.INFO,"[Diseasecard][Finder] Unable to find disease");
                 Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
 
             }
@@ -190,7 +190,7 @@ public class Finder {
             }
             result.put("results", list);
         } catch (Exception ex) {
-            System.out.println("[COEUS][Diseasecard][Finder] Unable to get disease");
+            Logger.getLogger(Finder.class.getName()).log(Level.INFO,"[COEUS][Diseasecard][Finder] Unable to get disease");
             Logger.getLogger(Finder.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list.toString();
