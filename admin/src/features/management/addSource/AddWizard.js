@@ -513,7 +513,7 @@ const AddConcepts = props => {
     const submit = (values) => {
         let formData = new FormData(document.forms.namedItem("addConceptForm"))
         dispatch(addConcept(formData))
-        console.log(values);
+        //console.log(values);
     }
 
     return (
@@ -531,7 +531,7 @@ const AddConcepts = props => {
 const AddResources = props => {
     const dispatch = useDispatch()
     const submit = (values) => {
-        console.log(values);
+        //console.log(values);
         let formData = new FormData(document.forms.namedItem("addResourceForm"))
         formData.append("files", values.files)
         dispatch(addResource(formData))

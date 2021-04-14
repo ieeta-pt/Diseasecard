@@ -43,7 +43,7 @@ const listResourceSlice = createSlice({
             state.error = action.error.message*/
         },
         [getOntologyStructureInfo.fulfilled]: (state, action) => {
-            console.log(action)
+            //console.log(action)
             state.ontologyStructure = action.payload.ontologyStructure
         },
     }

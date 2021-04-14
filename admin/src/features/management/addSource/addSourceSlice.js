@@ -25,7 +25,7 @@ export const uploadOntology = createAsyncThunk('addSource/uploadOntology', async
 
 export const uploadEndpoints = createAsyncThunk('addSource/uploadEndpoints', async (information) => {
     return API.POST("uploadEndpoints", '', information ).then(res => {
-        console.log(res.data)
+        //console.log(res.data)
     })
 })
 
@@ -75,7 +75,7 @@ const addSourceSlice = createSlice({
             state.error = action.error.message*/
         },
         [getFormLabels.fulfilled]: (state, action) => {
-            console.log(action.payload.conceptsLabels)
+            //console.log(action.payload.conceptsLabels)
             state.conceptsLabels = action.payload.conceptsLabels;
             state.entitiesLabels = action.payload.entitiesLabels;
             state.pluginsLabels = action.payload.pluginsLabels;

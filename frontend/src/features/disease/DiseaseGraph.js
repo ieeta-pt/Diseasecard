@@ -31,7 +31,7 @@ export const DiseaseGraph = ({ omim }) => {
         series = chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries())
 
         if (status === 'succeeded') {
-            console.log(network)
+            //console.log(network)
             series.data = [ { "name": "OMIM: " + omim , "children" : network} ]
 
             // Set up data fields
@@ -54,7 +54,7 @@ export const DiseaseGraph = ({ omim }) => {
 
         // When user clicks on a node
         series.nodes.template.events.on("hit", (ev) => {
-            console.log(ev)
+            //console.log(ev)
             const name = ev.target._dataItem._dataContext.name
             if (! name.includes("OMIM") ) {
                 const id = ev.target._dataItem._dataContext.id

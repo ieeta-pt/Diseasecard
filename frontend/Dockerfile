@@ -5,7 +5,6 @@
 FROM node:alpine as build
 
 ARG SERVERNAME
-ARG OPEN_PORT
 
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH

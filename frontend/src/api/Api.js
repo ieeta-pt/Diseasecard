@@ -42,7 +42,6 @@ const buildGETPath = function (globalPath, urlPath, typeParameters, parameters) 
 
     for (let i = 0 ; i < typeParameters.length; i++) path = path + "?" + typeParameters[i] + "=" + parameters[i]
 
-    console.log(path)
     return path;
 };
 

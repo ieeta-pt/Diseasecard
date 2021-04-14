@@ -23,7 +23,7 @@ const templateSlice = createSlice({
             };
         },
         collapse_toggle: (state, action) => {
-            console.log(action)
+            //console.log(action)
             if (action.payload.type === 'sub') {
                 open = state.isOpen;
                 trigger = state.isTrigger;

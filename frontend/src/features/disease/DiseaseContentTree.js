@@ -165,7 +165,7 @@ export const DiseaseContentTree = () => {
     }))(ToggleButtonGroup);
 
     const handleExpansion = (event, info) => {
-        console.log(info)
+        //console.log(info)
         setExpand(info)
         setCheck(!isCheck)
         if (!isCheck)   setExpanded( listOfIds )
@@ -174,7 +174,7 @@ export const DiseaseContentTree = () => {
 
     const handleView = (event, info) => {
         setView(info)
-        console.log(info)
+        //console.log(info)
         dispatch(showFrame(false))
     };
 

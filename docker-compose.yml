@@ -108,7 +108,6 @@ services:
             target: ${TARGET_ADMIN}
             args:
                 - SERVERNAME=${SERVERNAME}
-                - OPEN_PORT=${OPEN_PORT}
         command: ${COMMAND_ADMIN}
         ports:
             - ${ADMIN_PORT}
