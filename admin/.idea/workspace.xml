@@ -2,15 +2,20 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/AddWizard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/AddWizard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/addSourceSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/addSourceSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/listResources/listResourcesSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/listResources/listResourcesSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/template/templateSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/templateSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker/reverseproxy/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/../docker/reverseproxy/nginx.conf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/Api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/features/browser/BrowserResults.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/browser/BrowserResults.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/features/disease/DiseaseContentTree.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/disease/DiseaseContentTree.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/features/disease/DiseaseGraph.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/disease/DiseaseGraph.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/features/disease/diseaseSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/disease/diseaseSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/features/search/searchSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/search/searchSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,6 +145,7 @@
       <workItem from="1618129694213" duration="36000" />
       <workItem from="1618237182307" duration="48000" />
       <workItem from="1618340351174" duration="1868000" />
+      <workItem from="1618425160694" duration="649000" />
     </task>
     <servers />
   </component>

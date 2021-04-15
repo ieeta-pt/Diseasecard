@@ -2,7 +2,7 @@
   "name": "diseasecardapp",
   "version": "0.1.0",
   "private": true,
-  "api_url": "http://TOREPLACE/diseasecard/api" ,
+  "api_url": "https://TOREPLACE/diseasecard/api" ,
   "homepage": "http://localhost:3000/diseasecard/",
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.9",
