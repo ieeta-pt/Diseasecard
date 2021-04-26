@@ -60,6 +60,15 @@ export const useStyles = makeStyles((theme) => ({
             },
         }
     },
+    switch: {
+        borderColor: "#1de9b6",
+        '& .MuiSwitch-colorPrimary.Mui-checked': {
+            color: "#1de9b6",
+        },
+        '& .MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track': {
+            backgroundColor: "#1de9b6",
+        }
+    },
     root: {
         '& .MuiTextField-root': {
             margin: theme.spacing(2),

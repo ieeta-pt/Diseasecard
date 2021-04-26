@@ -4,6 +4,8 @@ import asyncValidate from './asyncValidate'
 import { FormLabel, Grid, MenuItem } from "@material-ui/core";
 import { renderDropzoneInput, FootForm, renderSelectField, renderTextField, useStyles} from "./FormElements";
 import { getConceptsLabels, getPluginsLabels } from "../addSourceSlice";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
 import { useSelector } from "react-redux";
 
 
@@ -80,6 +82,7 @@ const AddResourceForm = props => {
     const pluginLabels = useSelector(getPluginsLabels)
 
     const [publisher, setPublisher] = useState(true);
+    const [endpoint, setEndpoint] = useState(false);
 
     return (
         <div style={{width: "94%"}}>
@@ -107,7 +110,6 @@ const AddResourceForm = props => {
                             labelText="olaaa"
                         />
                     </Grid>
-
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>
                         <Field
                             size="small"
@@ -121,8 +123,6 @@ const AddResourceForm = props => {
                             rows={2}
                         />
                     </Grid>
-
-
                     <Grid item xs={6}  style={{marginTop: "-3.5%"}}>
                         <Field
                             size="small"
@@ -200,6 +200,18 @@ const AddResourceForm = props => {
                         </Field>
                     </Grid>
 
+                    <Grid container spacing={2} justify="flex-end">
+                        <FormControlLabel
+                            control={<Switch color="primary" />}
+                            label="Upload local File"
+                            checked={endpoint}
+                            onChange={e => setEndpoint(e.target.checked)}
+                            className={c.switch}
+                            labelPlacement="start"
+                        />
+                    </Grid>
+
+
                     {publisher==='OMIM' && (
                         <Grid container spacing={2}>
                             <Grid item xs={6} style={{marginLeft: "24px", paddingRight: "16px"}}>
@@ -220,7 +232,20 @@ const AddResourceForm = props => {
                             </Grid>
                         </Grid>
                     )}
-                    {publisher!=='OMIM' && (
+                    {publisher!=='OMIM' && !endpoint && (
+                        <Grid item xs={12}>
+                            <Field
+                                size="small"
+                                variant="outlined"
+                                name="endpointResource"
+                                component={renderTextField}
+                                label="Endpoint's URL"
+                                className={c.field}
+                                labelText="olaaa"
+                            />
+                        </Grid>
+                    )}
+                    {publisher!=='OMIM' && endpoint && (
                         <Grid item xs={12} style={{marginLeft: "16px", marginRight: "-16px"}}>
                             <Field
                                 name="files"
@@ -230,7 +255,6 @@ const AddResourceForm = props => {
                             <FormLabel style={{ fontSize: "12px", marginLeft: "16px", letterSpacing: "0.0333em", marginTop: "12px" }}>Endpoint</FormLabel>
                         </Grid>
                     )}
-
 
                     <Grid item xs={6} style={{marginTop: "0.5%"}} >
                         <Field
