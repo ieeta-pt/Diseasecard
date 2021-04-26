@@ -4,12 +4,9 @@
     <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/addSourceSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/addSourceSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormConcept.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormConcept.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormEntity.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormEntity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormElements.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormElements.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormResource.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormResource.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,6 +143,7 @@
       <workItem from="1619444284335" duration="729000" />
       <workItem from="1619445424609" duration="320000" />
       <workItem from="1619445755461" duration="2654000" />
+      <workItem from="1619464233198" duration="9338000" />
     </task>
     <servers />
   </component>
