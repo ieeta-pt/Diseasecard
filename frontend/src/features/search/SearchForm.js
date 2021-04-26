@@ -78,6 +78,13 @@ export const SearchForm = () => {
 
                 </Form.Group>
             </Form>
+            <div style={{ marginTop: "50px" }}>
+                <p>Welcome to <b style={{fontWeight: "bold"}}>Diseasecard</b>!</p>
+                <p>
+                    We are currently reshaping DiseaseCard, so some features and sources will be gradually updated.<br />
+                    Thank you for your patience.
+                </p>
+            </div>
         </Container>
     );
 }
