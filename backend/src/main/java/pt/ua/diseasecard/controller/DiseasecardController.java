@@ -164,21 +164,19 @@ public class DiseasecardController {
     public void addEntity(@RequestParam("titleEntity") String title,
                           @RequestParam("labelEntity") String label,
                           @RequestParam("descriptionEntity") String description,
-                          @RequestParam("commentEntity") String comment,
                           @RequestParam(name= "isEntityOfEntity", required = false) String entityOf ) throws IOException {
 
-        dataManagementService.prepareAddEntity(title, label, description, comment, entityOf);
+        dataManagementService.prepareAddEntity(title, label, description, entityOf);
     }
 
     @PostMapping(value = "/dcadmin/operations/addConcept")
     public void addConcept(@RequestParam("titleConcept") String title,
                           @RequestParam("labelConcept") String label,
                           @RequestParam("descriptionConcept") String description,
-                          @RequestParam("commentConcept") String comment,
                           @RequestParam("hasEntityConcept") String hasEntity,
                           @RequestParam(name= "hasResourceConcept", required = false) String hasResource ) throws IOException {
 
-        dataManagementService.prepareAddConcept(title, label, description, comment, hasEntity, hasResource);
+        dataManagementService.prepareAddConcept(title, label, description, hasEntity, hasResource);
     }
 
 
@@ -186,7 +184,6 @@ public class DiseasecardController {
     public void addResource(@RequestParam("titleResource") String title,
                           @RequestParam("labelResource") String label,
                           @RequestParam("descriptionResource") String description,
-                          @RequestParam("commentResource") String comment,
                           @RequestParam("resourceOf") String resourceOf,
                           @RequestParam("extendsResource") String extendsResource,
                           @RequestParam("orderResource") String order,
@@ -195,14 +192,13 @@ public class DiseasecardController {
                           @RequestParam("files") MultipartFile files,
                           @RequestParam("queryResource") String query ) throws IOException {
 
-        dataManagementService.prepareAddResource(title, label, description, comment, resourceOf, extendsResource, order, publisher, regex, query, files);
+        dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, files);
     }
 
     @PostMapping(value = "/dcadmin/operations/addOMIMResource")
     public void addOMIMResource(@RequestParam("titleResource") String title,
                             @RequestParam("labelResource") String label,
                             @RequestParam("descriptionResource") String description,
-                            @RequestParam("commentResource") String comment,
                             @RequestParam("resourceOf") String resourceOf,
                             @RequestParam("extendsResource") String extendsResource,
                             @RequestParam("orderResource") String order,
@@ -212,7 +208,7 @@ public class DiseasecardController {
                             @RequestParam("genemap") MultipartFile genemap,
                             @RequestParam("queryResource") String query ) throws IOException {
 
-        dataManagementService.prepareAddOMIMResource(title, label, description, comment, resourceOf, extendsResource, order, publisher, regex, query, morbidmap, genemap);
+        dataManagementService.prepareAddOMIMResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, morbidmap, genemap);
     }
 
 

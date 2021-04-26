@@ -54,7 +54,7 @@ services:
             - dc_solr
         build: ./backend
         ports:
-            - ${BACKEND_PORT}
+            - ${BACKEND_PORT}:${BACKEND_PORT}
         links:
             - mysql:container_mysql
             - dc_redis:container_redis

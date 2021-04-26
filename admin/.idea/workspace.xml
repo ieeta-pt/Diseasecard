@@ -2,20 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/AddWizard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/AddWizard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/management/addSource/addSourceSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/addSourceSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/management/listResources/listResourcesSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/listResources/listResourcesSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/template/templateSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/template/templateSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormConcept.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormConcept.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormEntity.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormEntity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormResource.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormResource.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/api/Api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/features/browser/BrowserResults.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/browser/BrowserResults.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/features/disease/DiseaseContentTree.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/disease/DiseaseContentTree.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/features/disease/DiseaseGraph.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/disease/DiseaseGraph.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/features/disease/diseaseSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/disease/diseaseSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../frontend/src/features/search/searchSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/search/searchSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../out.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +42,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
@@ -77,7 +72,7 @@
         <script value="start" />
       </scripts>
       <node-interpreter value="project" />
-      <package-manager value="npm" />
+      <package-manager value="yarn" />
       <envs />
       <method v="2" />
     </configuration>
@@ -146,6 +141,11 @@
       <workItem from="1618237182307" duration="48000" />
       <workItem from="1618340351174" duration="1868000" />
       <workItem from="1618425160694" duration="649000" />
+      <workItem from="1619370184716" duration="35000" />
+      <workItem from="1619432971870" duration="3647000" />
+      <workItem from="1619444284335" duration="729000" />
+      <workItem from="1619445424609" duration="320000" />
+      <workItem from="1619445755461" duration="2654000" />
     </task>
     <servers />
   </component>

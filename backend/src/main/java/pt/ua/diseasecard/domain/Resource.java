@@ -19,7 +19,6 @@ public class Resource {
     private String uri;
     private String source;
     private String subject;
-    private String method;
     private String publisher;
     private Concept isResourceOf;
     private String extendsConcept;
@@ -37,14 +36,13 @@ public class Resource {
 
     private boolean built = false;
 
-    public Resource(String uri, String title, String label, String description, String publisher, String endpoint, String method) {
+    public Resource(String uri, String title, String label, String description, String publisher, String endpoint) {
         this.uri = uri;
         this.description = description;
         this.label = label;
         this.title = title;
         this.publisher = publisher;
         this.endpoint = endpoint;
-        this.method = method;
     }
 
     public String getDescription() {
@@ -80,20 +78,6 @@ public class Resource {
     }
     public void setSource(String source) {
         this.source = source;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-    public void setMethod(String method) {
-        this.method = method;
     }
 
     public Concept getIsResourceOf() {

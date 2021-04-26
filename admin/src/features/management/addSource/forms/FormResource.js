@@ -13,7 +13,6 @@ const validate = values => {
         'titleResource',
         'labelResource',
         'descriptionResource',
-        'commentResource',
         'resourceOf',
         'extendsResource',
         'orderResource',
@@ -123,19 +122,6 @@ const AddResourceForm = props => {
                         />
                     </Grid>
 
-                    <Grid item xs={12} style={{marginTop: "-3.5%"}}>
-                        <Field
-                            size="small"
-                            variant="outlined"
-                            name="commentResource"
-                            component={renderTextField}
-                            label="Comment"
-                            className={c.field}
-                            labelText="olaaa"
-                            multiline
-                            rows={2}
-                        />
-                    </Grid>
 
                     <Grid item xs={6}  style={{marginTop: "-3.5%"}}>
                         <Field

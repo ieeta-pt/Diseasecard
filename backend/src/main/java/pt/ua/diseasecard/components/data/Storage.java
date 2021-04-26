@@ -180,12 +180,12 @@ public class Storage {
         Description
         TODO: O entity of pode ser um array!! A entity pode ter multiplos "entity of" logo no ínicio..
      */
-    public void addEntity(String title, String label, String description, String comment, String entityOf)  {
+    public void addEntity(String title, String label, String description, String entityOf)  {
         try {
             this.prepareModel();
 
             Resource newEntity = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
-            this.addCore(newEntity, title, label, description, comment, "Entity");
+            this.addCore(newEntity, title, label, description, "Entity");
 
             Property isIncludedInProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isIncludedIn");
             Resource seed = this.model.getResource(this.getSeedURI());
@@ -218,12 +218,12 @@ public class Storage {
     /*
         Description
      */
-    public void addConcept(String title, String label, String description, String comment, String relatedEntity, String relatedResource)  {
+    public void addConcept(String title, String label, String description, String relatedEntity, String relatedResource)  {
         try {
             this.prepareModel();
 
             Resource newConcept = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
-            this.addCore(newConcept, title, label, description, comment, "Concept");
+            this.addCore(newConcept, title, label, description, "Concept");
 
             Property hasEntity = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
             Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
@@ -255,13 +255,13 @@ public class Storage {
     /*
         Description
      */
-    public void addResource(String title, String label, String description, String comment, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, String location) {
+    public void addResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, String location) {
         try {
             this.prepareModel();
             Logger.getLogger(Storage.class.getName()).log(Level.INFO,"URI of the new resource: " + this.config.getPrefixes().get("diseasecard") + label);
 
             Resource newResource = this.model.createResource(this.config.getPrefixes().get("diseasecard") + label);
-            this.addCore(newResource, title, label, description, comment, "Resource");
+            this.addCore(newResource, title, label, description, "Resource");
 
             Property orderProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "order");
             Property publisherProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "publisher");
@@ -299,17 +299,15 @@ public class Storage {
     /*
         Description
      */
-    private void addCore(Resource resource, String title, String label, String description, String comment, String type) {
+    private void addCore(Resource resource, String title, String label, String description, String type) {
         Property labelProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "label");
         Property typeProperty = this.model.getProperty(this.config.getPrefixes().get("rdf") + "type");
-        Property commentProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "comment");
         Property titleProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "title");
         Property descriptionProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "description");
 
         Resource typeR = this.model.getResource(this.config.getPrefixes().get("coeus") + type);
 
         resource.addProperty(labelProperty, label);
-        resource.addProperty(commentProperty, comment);
         resource.addProperty(titleProperty, title);
         resource.addProperty(descriptionProperty, description);
         resource.addProperty(typeProperty, typeR);

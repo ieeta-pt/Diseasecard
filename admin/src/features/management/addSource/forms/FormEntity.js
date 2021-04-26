@@ -1,21 +1,10 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
 import asyncValidate from './asyncValidate'
-import {
-    Button,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Divider,
-    Grid,
-    MenuItem
-} from "@material-ui/core";
-import {Col, Row} from "react-bootstrap";
+import { Grid, MenuItem } from "@material-ui/core";
 import {FootForm, renderSelectField, renderTextField, useStyles} from "./FormElements";
 import {useSelector} from "react-redux";
-import {getConceptsLabels, getEntitiesLabels} from "../addSourceSlice";
+import {getConceptsLabels} from "../addSourceSlice";
 
 
 const validate = values => {
@@ -24,7 +13,6 @@ const validate = values => {
         'titleEntity',
         'labelEntity',
         'descriptionEntity',
-        'commentEntity',
     ]
     requiredFields.forEach(field => {
         if (!values[field]) {
@@ -78,19 +66,6 @@ const AddEntityFrom = props => {
                             name="descriptionEntity"
                             component={renderTextField}
                             label="Description"
-                            className={c.field}
-                            labelText="olaaa"
-                            multiline
-                            rows={2}
-                        />
-                    </Grid>
-                    <Grid item xs={12} style={{marginTop: "-3.5%"}}>
-                        <Field
-                            size="small"
-                            variant="outlined"
-                            name="commentEntity"
-                            component={renderTextField}
-                            label="Comment"
                             className={c.field}
                             labelText="olaaa"
                             multiline
