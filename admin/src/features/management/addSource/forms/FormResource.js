@@ -2,7 +2,14 @@ import React, {useMemo, useState} from 'react'
 import { Field, reduxForm } from 'redux-form'
 import asyncValidate from './asyncValidate'
 import { FormLabel, Grid, MenuItem } from "@material-ui/core";
-import { renderDropzoneInput, FootForm, renderSelectField, renderTextField, useStyles} from "./FormElements";
+import {
+    renderDropzoneInput,
+    FootForm,
+    renderSelectField,
+    renderTextField,
+    useStyles,
+    renderSwitchField
+} from "./FormElements";
 import { getConceptsLabels, getPluginsLabels } from "../addSourceSlice";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
@@ -201,13 +208,14 @@ const AddResourceForm = props => {
                     </Grid>
 
                     <Grid container spacing={2} justify="flex-end">
-                        <FormControlLabel
-                            control={<Switch color="primary" />}
+                        <Field
+                            name="isEndpointFile"
+                            component={renderSwitchField}
                             label="Upload local File"
+                            className={c.switch}
                             checked={endpoint}
                             onChange={e => setEndpoint(e.target.checked)}
-                            className={c.switch}
-                            labelPlacement="start"
+                            labelText="olaaa"
                         />
                     </Grid>
 

@@ -5,6 +5,8 @@ import {makeStyles} from "@material-ui/core/styles";
 import DropZone from "react-dropzone";
 import {Col, Row} from "react-bootstrap";
 import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 
 const renderFromHelper = ({ touched, error, labelText }) => {
@@ -90,6 +92,19 @@ export const renderTextField = ({ label, input, labelText, meta: { touched, inva
         placeholder={label}
         error={touched && invalid}
         helperText={renderFromHelper({ touched, error, labelText })}
+        {...input}
+        {...custom}
+    />
+)
+
+
+export const renderSwitchField = ({ label, checked, input, labelText, meta: { touched, invalid, error },  ...custom }) => (
+    <FormControlLabel
+        control={<Switch color="primary" />}
+        labelPlacement="start"
+        label={label}
+        placeholder={label}
+        checked={checked}
         {...input}
         {...custom}
     />

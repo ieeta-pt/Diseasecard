@@ -531,10 +531,23 @@ const AddConcepts = props => {
 const AddResources = props => {
     const dispatch = useDispatch()
     const submit = (values) => {
-        //console.log(values);
-        let formData = new FormData(document.forms.namedItem("addResourceForm"))
-        formData.append("files", values.files)
-        dispatch(addResource(formData))
+        console.log(values);
+
+        if (values.isEndpointFile)
+        {
+            let formData = new FormData(document.forms.namedItem("addResourceForm"))
+            formData.append("files", values.endpointResource)
+            dispatch(addResource(formData))
+        }
+        else
+        {
+            let formData = new FormData(document.forms.namedItem("addResourceForm"))
+            formData.append("files", values.files)
+            dispatch(addResource(formData))
+        }
+
+        console.log(values.isEndpointFile)
+
     }
 
     return (

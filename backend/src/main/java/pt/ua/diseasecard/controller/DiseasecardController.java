@@ -195,6 +195,21 @@ public class DiseasecardController {
         dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, files);
     }
 
+    @PostMapping(value = "/dcadmin/operations/addResource")
+    public void addResourceWithURLEndpoint(@RequestParam("titleResource") String title,
+                          @RequestParam("labelResource") String label,
+                          @RequestParam("descriptionResource") String description,
+                          @RequestParam("resourceOf") String resourceOf,
+                          @RequestParam("extendsResource") String extendsResource,
+                          @RequestParam("orderResource") String order,
+                          @RequestParam("publisherEndpoint") String publisher,
+                          @RequestParam("regexResource") String regex,
+                          @RequestParam("files") String endpoint,
+                          @RequestParam("queryResource") String query ) throws IOException {
+
+        dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, endpoint);
+    }
+
     @PostMapping(value = "/dcadmin/operations/addOMIMResource")
     public void addOMIMResource(@RequestParam("titleResource") String title,
                             @RequestParam("labelResource") String label,

@@ -582,6 +582,11 @@ public class DataManagementService {
     }
 
 
+    public void prepareAddResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, String endpoint) {
+        this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, endpoint);
+    }
+
+
     public void prepareAddOMIMResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, MultipartFile morbidmap, MultipartFile genemap) {
         try {
             Path copyLocationGenemap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_genemap");
