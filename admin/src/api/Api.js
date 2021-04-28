@@ -22,6 +22,7 @@ const getModuleURL = function (module) {
         case "addEntity":                      return "/dcadmin/operations/addEntity";
         case "addConcept":                     return "/dcadmin/operations/addConcept";
         case "addResource":                    return "/dcadmin/operations/addResource";
+        case "addResourceWithURLEndpoint":     return "/dcadmin/operations/addResourceWithURLEndpoint";
         default:                               return "";
     }
 };

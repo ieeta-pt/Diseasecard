@@ -7,7 +7,7 @@ import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from "react-redux";
 import {
     addConcept,
-    addEntity, addResource,
+    addEntity, addResource, addResourceWithURLEndpoint,
     getFormLabels,
     getInvalidEndpoints,
     uploadEndpoints,
@@ -537,7 +537,7 @@ const AddResources = props => {
         {
             let formData = new FormData(document.forms.namedItem("addResourceForm"))
             formData.append("files", values.endpointResource)
-            dispatch(addResource(formData))
+            dispatch(addResourceWithURLEndpoint(formData))
         }
         else
         {

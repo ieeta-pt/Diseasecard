@@ -195,7 +195,7 @@ public class DiseasecardController {
         dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, files);
     }
 
-    @PostMapping(value = "/dcadmin/operations/addResource")
+    @PostMapping(value = "/dcadmin/operations/addResourceWithURLEndpoint")
     public void addResourceWithURLEndpoint(@RequestParam("titleResource") String title,
                           @RequestParam("labelResource") String label,
                           @RequestParam("descriptionResource") String description,
