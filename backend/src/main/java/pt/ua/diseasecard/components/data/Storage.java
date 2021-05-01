@@ -8,7 +8,6 @@ import com.hp.hpl.jena.sdb.SDBFactory;
 import com.hp.hpl.jena.sdb.Store;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;

@@ -136,14 +136,10 @@ public class DataManagementService {
                 Resource r = new Resource((String) info.get("s"), (String) info.get("title"), (String) info.get("label"), (String) info.get("description"), (String) info.get("publisher"), (String) info.get("endpoint"));
                 r.setExtendsConcept((String) info.get("extends"));
                 r.setIsResourceOf(new Concept((String) info.get("resof")));
-                r.setRegex((String) info.get("regex"));
-                r.setExtendsIdentifier((String) info.get("extendsIdentifier"));
-                r.setExtendsIdentifierRegex((String) info.get("extendsIdentifierRegex"));
                 r.setIdentifiers((String) info.get("identifiers"));
-                r.setExtension((String) info.get("extension"));
-                r.setQuery((String) info.get("query"));
                 r.setBuilt((Boolean) info.get("built"));
                 r.loadConcept();
+                r.loadParser();
                 this.resources.add(r);
             }
             if (this.config.getDebug())  Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Resource information read");
@@ -323,11 +319,6 @@ public class DataManagementService {
                     + "OPTIONAL { ?s coeus:built ?built} . "
                     + "OPTIONAL { ?s coeus:line ?line} . "
                     + "OPTIONAL { ?s coeus:identifiers ?identifiers} . "
-                    + "OPTIONAL { ?s coeus:regex ?regex} . "
-                    + "OPTIONAL { ?s coeus:extendsIdentifier ?extendsIdentifier} . "
-                    + "OPTIONAL { ?s coeus:extendsIdentifierRegex ?extendsIdentifierRegex} . "
-                    + "OPTIONAL { ?s coeus:extension ?extension} . "
-                    + "OPTIONAL {?s coeus:query ?query}} "
                     + "ORDER BY ?order", "js", false));
             JSONObject results = (JSONObject) response.get("results");
             JSONArray bindings = (JSONArray) results.get("bindings");
@@ -347,31 +338,11 @@ public class DataManagementService {
                 info.put("endpoint", ((JSONObject) binding.get("endpoint")).get("value").toString());
                 info.put("order", ((JSONObject) binding.get("order")).get("value").toString());
 
-                JSONObject extension = (JSONObject) binding.get("extension");
                 JSONObject built = (JSONObject) binding.get("built");
-                JSONObject query = (JSONObject) binding.get("query");
-                JSONObject regex = (JSONObject) binding.get("regex");
-                JSONObject extendsIdentifier = (JSONObject) binding.get("extendsIdentifier");
-                JSONObject extendsIdentifierRegex = (JSONObject) binding.get("extendsIdentifierRegex");
                 JSONObject identifiers = (JSONObject) binding.get("identifiers");
-
-                if (extension != null) info.put("extension", extension.get("value").toString());
-                else info.put("extension", "");
 
                 if (built != null) info.put("built", Boolean.parseBoolean(built.get("value").toString()));
                 else info.put("built", false);
-
-                if (query != null) info.put("query", query.get("value").toString());
-                else info.put("query", "");
-
-                if (regex != null) info.put("regex", regex.get("value").toString());
-                else info.put("regex", "");
-
-                if (extendsIdentifier != null) info.put("extendsIdentifier", extendsIdentifier.get("value").toString());
-                else info.put("extendsIdentifier", "");
-
-                if (extendsIdentifierRegex != null) info.put("extendsIdentifierRegex", extendsIdentifierRegex.get("value").toString());
-                else info.put("extendsIdentifierRegex", "");
 
                 if (identifiers != null) info.put("identifiers", identifiers.get("value").toString());
                 else info.put("identifiers", "");
@@ -405,11 +376,8 @@ public class DataManagementService {
                 + " <" + resourceURI + "> coeus:extends ?extends ."
                 + " <" + resourceURI + "> coeus:endpoint ?endpoint ."
                 + " <" + resourceURI + "> coeus:order ?order . "
-                + "OPTIONAL { <" + resourceURI + "> coeus:method ?method} . "
                 + "OPTIONAL { <" + resourceURI + "> coeus:built ?built} . "
-                + "OPTIONAL { <" + resourceURI + "> coeus:identifiers ?identifiers} . "
-                + "OPTIONAL { <" + resourceURI + "> coeus:regex ?regex} . "
-                + "OPTIONAL { <" + resourceURI + "> coeus:query ?query}} ";
+                + "OPTIONAL { <" + resourceURI + "> coeus:identifiers ?identifiers}}";
 
             JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select(queryString, "js", false));
 
@@ -424,27 +392,14 @@ public class DataManagementService {
                 resource.put("publisher", ((JSONObject) a.get("publisher")).get("value").toString());
                 resource.put("resof", ((JSONObject) a.get("resof")).get("value").toString());
                 resource.put("extends", ((JSONObject) a.get("extends")).get("value").toString());
-                resource.put("method", ((JSONObject) a.get("method")).get("value").toString());
                 resource.put("endpoint", ((JSONObject) a.get("endpoint")).get("value").toString());
                 resource.put("order", ((JSONObject) a.get("order")).get("value").toString());
 
                 JSONObject built = (JSONObject) a.get("built");
-                JSONObject query = (JSONObject) a.get("query");
-                JSONObject regex = (JSONObject) a.get("regex");
                 JSONObject identifiers = (JSONObject) a.get("identifiers");
-                JSONObject method = (JSONObject) a.get("method");
 
                 if (built != null) resource.put("built", Boolean.parseBoolean(built.get("value").toString()));
                 else resource.put("built", false);
-
-                if (method != null) resource.put("method", method.get("value").toString());
-                else resource.put("method", "");
-
-                if (query != null) resource.put("query", query.get("value").toString());
-                else resource.put("query", "");
-
-                if (regex != null) resource.put("regex", regex.get("value").toString());
-                else resource.put("regex", "");
 
                 if (identifiers != null) resource.put("identifiers", identifiers.get("value").toString());
                 else resource.put("identifiers", "");

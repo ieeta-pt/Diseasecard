@@ -17,18 +17,12 @@ public class Resource {
     private String label;
     private String title;
     private String uri;
-    private String source;
-    private String subject;
     private String publisher;
-    private Concept isResourceOf;
     private String extendsConcept;
     private String endpoint;
-    private String extension;
-    private String query;
-    private String regex;
-    private String extendsIdentifier;
-    private String extendsIdentifierRegex;
     private String identifiers;
+    private Concept isResourceOf;
+    private Parser hasParser;
 
     private final SparqlAPI sparqlAPI = BeanUtil.getBean(SparqlAPI.class);;
 
@@ -73,13 +67,6 @@ public class Resource {
         this.uri = uri;
     }
 
-    public String getSource() {
-        return source;
-    }
-    public void setSource(String source) {
-        this.source = source;
-    }
-
     public Concept getIsResourceOf() {
         return isResourceOf;
     }
@@ -101,28 +88,6 @@ public class Resource {
         this.endpoint = endpoint;
     }
 
-    public String getExtension() {
-        return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-
-    public String getQuery() {
-        return query;
-    }
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
-    public String getRegex() {
-        return regex;
-    }
-    public void setRegex(String regex) {
-        this.regex = regex;
-    }
-
     public String getIdentifiers() {
         return identifiers;
     }
@@ -130,19 +95,6 @@ public class Resource {
         this.identifiers = identifiers;
     }
 
-    public String getExtendsIdentifier() {
-        return extendsIdentifier;
-    }
-    public void setExtendsIdentifier(String extendsIdentifier) {
-        this.extendsIdentifier = extendsIdentifier;
-    }
-
-    public String getExtendsIdentifierRegex() {
-        return extendsIdentifierRegex;
-    }
-    public void setExtendsIdentifierRegex(String extendsIdentifierRegex) {
-        this.extendsIdentifierRegex = extendsIdentifierRegex;
-    }
 
     public String getPublisher() {
         return publisher;
@@ -156,6 +108,13 @@ public class Resource {
     }
     public void setBuilt(boolean built) {
         this.built = built;
+    }
+
+    public Parser getHasParser() {
+        return hasParser;
+    }
+    public void setHasParser(Parser hasParser) {
+        this.hasParser = hasParser;
     }
 
 
@@ -176,7 +135,6 @@ public class Resource {
                 JSONObject tit = (JSONObject) binding.get("title");
                 extensions.put(tit.get("value").toString(), tit.get("value").toString());
             }
-
         }
         catch (Exception ex)
         {
@@ -187,6 +145,7 @@ public class Resource {
 
         return extensions;
     }
+
 
     public HashMap<String, String> getExtended(String uri) {
         HashMap<String, String> extensions = new HashMap<String, String>();
@@ -218,6 +177,7 @@ public class Resource {
         return extensions;
     }
 
+
     public void loadConcept() {
         try
         {
@@ -245,5 +205,74 @@ public class Resource {
         }
     }
 
+
+    public void loadParser() {
+        try
+        {
+            JSONParser parser = new JSONParser();
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT *" +
+                    " WHERE { " + PrefixFactory.encode(uri) + " coeus:hasParser ?s ."
+                    + " ?s coeus:resourceID ?resourceID . "
+                    + " ?s coeus:externalResourceID ?externalResourceID . "
+                    + " OPTIONAL { ?s coeus:mainNode ?mainNode} . "
+                    + " OPTIONAL { ?s coeus:resourceInfoInAttribute ?resourceInfoInAttribute} . "
+                    + " OPTIONAL { ?s coeus:resourceInfoAttribute ?resourceInfoAttribute} . "
+                    + " OPTIONAL { ?s coeus:resourceRegex ?resourceRegex} . "
+                    + " OPTIONAL { ?s coeus:externalResourceNode ?externalResourceNode} . "
+                    + " OPTIONAL { ?s coeus:externalResourceID ?externalResourceID} . "
+                    + " OPTIONAL { ?s coeus:externalResourceInfoInAttribute ?externalResourceInfoInAttribute} . "
+                    + " OPTIONAL { ?s coeus:externalResourceInfoAttribute ?externalResourceInfoAttribute} . "
+                    + " OPTIONAL { ?s coeus:externalResourceRegex ?externalResourceRegex} . "
+                    + " OPTIONAL { ?s coeus:filterBy ?filterBy} . "
+                    + " OPTIONAL { ?s coeus:filterValue ?filterValue} . "
+                    + " OPTIONAL { ?s coeus:uniqueResource ?uniqueResource} . "
+                    + " OPTIONAL { ?s coeus:uniqueExternalResource ?uniqueExternalResource}}", "js", false));
+
+            JSONObject results = (JSONObject) response.get("results");
+            JSONArray bindings = (JSONArray) results.get("bindings");
+
+            for (Object obj : bindings)
+            {
+                JSONObject binding = (JSONObject) obj;
+                JSONObject mainNode = (JSONObject) binding.get("mainNode");
+                JSONObject resourceID = (JSONObject) binding.get("resourceID");
+                JSONObject resourceInfoInAttribute = (JSONObject) binding.get("resourceInfoInAttribute");
+                JSONObject resourceInfoAttribute = (JSONObject) binding.get("resourceInfoAttribute");
+                JSONObject resourceRegex = (JSONObject) binding.get("resourceRegex");
+
+                JSONObject externalResourceNode = (JSONObject) binding.get("externalResourceNode");
+                JSONObject externalResourceID = (JSONObject) binding.get("externalResourceID");
+                JSONObject externalResourceInfoInAttribute = (JSONObject) binding.get("externalResourceInfoInAttribute");
+                JSONObject externalResourceInfoAttribute = (JSONObject) binding.get("externalResourceInfoAttribute");
+                JSONObject externalResourceRegex = (JSONObject) binding.get("externalResourceRegex");
+                JSONObject filterBy = (JSONObject) binding.get("filterBy");
+                JSONObject filterValue = (JSONObject) binding.get("filterValue");
+                JSONObject uniqueResource = (JSONObject) binding.get("uniqueResource");
+                JSONObject uniqueExternalResource = (JSONObject) binding.get("uniqueExternalResource");
+
+                Parser resourceParser = new Parser(resourceID.get("value").toString(), externalResourceID.get("value").toString());
+                resourceParser.setMainNode(!(mainNode == null) ? mainNode.get("value").toString() : "");
+                resourceParser.setResourceInfoInAttribute(!(resourceInfoInAttribute == null) ? Boolean.parseBoolean(resourceInfoInAttribute.get("value").toString()) : false);
+                resourceParser.setResourceInfoAttribute(!(resourceInfoAttribute == null) ? resourceInfoAttribute.get("value").toString() : "");
+                resourceParser.setResourceRegex(!(resourceRegex == null) ? resourceRegex.get("value").toString() : "");
+
+                resourceParser.setExternalResourceNode(!(externalResourceNode == null) ? externalResourceNode.get("value").toString() : "");
+                resourceParser.setExternalResourceInfoInAttribute(!(externalResourceInfoInAttribute == null) ? Boolean.parseBoolean(externalResourceInfoInAttribute.get("value").toString()) : false);
+                resourceParser.setExternalResourceInfoAttribute(!(externalResourceInfoAttribute == null) ? externalResourceInfoAttribute.get("value").toString() : "");
+                resourceParser.setExternalResourceRegex(!(externalResourceRegex == null) ? externalResourceRegex.get("value").toString() : "");
+                resourceParser.setFilterBy(!(filterBy == null) ? filterBy.get("value").toString() : "");
+                resourceParser.setFilterValue(!(filterValue == null) ? filterValue.get("value").toString() : "");
+                resourceParser.setUniqueResource(!(uniqueResource == null) ? Boolean.parseBoolean(uniqueResource.get("value").toString()) : true);
+                resourceParser.setUniqueExternalResource(!(uniqueExternalResource == null) ? Boolean.parseBoolean(uniqueExternalResource.get("value").toString()) : false);
+
+                this.hasParser = resourceParser;
+            }
+        }
+        catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][Resource] Unable to load resource concept information");
+            Logger.getLogger(Resource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/connectors/XMLFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/AddWizard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/AddWizard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/addSourceSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/addSourceSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" afterDir="false" />
-    </list>
+    <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -146,6 +139,7 @@
       <workItem from="1619445755461" duration="2654000" />
       <workItem from="1619464233198" duration="9963000" />
       <workItem from="1619510034060" duration="5852000" />
+      <workItem from="1619616866886" duration="7000" />
     </task>
     <servers />
   </component>
