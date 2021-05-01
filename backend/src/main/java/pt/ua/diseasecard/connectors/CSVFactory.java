@@ -6,6 +6,7 @@ import com.univocity.parsers.csv.CsvParserSettings;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.components.data.Triplify;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
+import pt.ua.diseasecard.domain.Parser;
 import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.utils.BeanUtil;
 import pt.ua.diseasecard.utils.ItemFactory;
@@ -70,21 +71,20 @@ public class CSVFactory implements ResourceFactory {
         {
             List<String[]> rows = readEndpoint();
 
-            HashMap<String, String> extensions;
-            if (res.getExtension().equals("")) extensions = res.getExtended();
-            else                               extensions = res.getExtended(res.getExtension());
+            HashMap<String, String> extensions = res.getExtended();
 
             for ( String itemRaw : extensions.keySet() )
             {
                 String item = ItemFactory.getTokenFromItem(itemRaw);
                 for (String[] r : rows)
                 {
-                    List<String> extendIdentifiers = this.getIDs(res.getExtendsIdentifier(), res.getExtendsIdentifierRegex(), r);
+                    Parser parser = res.getHasParser();
+                    List<String> extendIdentifiers = this.getIDs(parser.getExternalResourceID(), parser.getExternalResourceRegex(), r);
                     for (String extendIdentifier : extendIdentifiers)
                     {
                         if ( extendIdentifier.equals(item) )
                         {
-                            List<String> resIDs = this.getIDs(res.getQuery(), res.getRegex(), r);
+                            List<String> resIDs = this.getIDs(parser.getResourceID(), parser.getResourceRegex(), r);
                             for (String resID : resIDs)
                             {
                                 rdfizer = new Triplify(res, extensions.get(itemRaw));
