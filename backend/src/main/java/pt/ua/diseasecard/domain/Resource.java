@@ -119,7 +119,7 @@ public class Resource {
 
 
     public HashMap<String, String> getExtended() {
-        HashMap<String, String> extensions = new HashMap<String, String>();
+        HashMap<String, String> extensions = new HashMap<>();
         try
         {
             if (this.config.getDebug()) System.out.println("[COEUS][Resource] " + title + " loading extension data");
@@ -211,10 +211,11 @@ public class Resource {
         {
             JSONParser parser = new JSONParser();
             JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT *" +
-                    " WHERE { " + PrefixFactory.encode(uri) + " coeus:hasParser ?s ."
+                    " WHERE { " + PrefixFactory.encode(this.uri) + " coeus:hasParser ?s ."
                     + " ?s coeus:resourceID ?resourceID . "
-                    + " ?s coeus:externalResourceID ?externalResourceID . "
+                    + " OPTIONAL { ?s coeus:externalResourceID ?externalResourceID} . "
                     + " OPTIONAL { ?s coeus:mainNode ?mainNode} . "
+                    + " OPTIONAL { ?s coeus:methodByReplace ?methodByReplace} . "
                     + " OPTIONAL { ?s coeus:resourceInfoInAttribute ?resourceInfoInAttribute} . "
                     + " OPTIONAL { ?s coeus:resourceInfoAttribute ?resourceInfoAttribute} . "
                     + " OPTIONAL { ?s coeus:resourceRegex ?resourceRegex} . "
@@ -235,6 +236,7 @@ public class Resource {
             {
                 JSONObject binding = (JSONObject) obj;
                 JSONObject mainNode = (JSONObject) binding.get("mainNode");
+                JSONObject methodByReplace = (JSONObject) binding.get("methodByReplace");
                 JSONObject resourceID = (JSONObject) binding.get("resourceID");
                 JSONObject resourceInfoInAttribute = (JSONObject) binding.get("resourceInfoInAttribute");
                 JSONObject resourceInfoAttribute = (JSONObject) binding.get("resourceInfoAttribute");
@@ -250,12 +252,14 @@ public class Resource {
                 JSONObject uniqueResource = (JSONObject) binding.get("uniqueResource");
                 JSONObject uniqueExternalResource = (JSONObject) binding.get("uniqueExternalResource");
 
-                Parser resourceParser = new Parser(resourceID.get("value").toString(), externalResourceID.get("value").toString());
+                Parser resourceParser = new Parser(resourceID.get("value").toString());
                 resourceParser.setMainNode(!(mainNode == null) ? mainNode.get("value").toString() : "");
+                resourceParser.setMethodByReplace(!(methodByReplace == null) ? Boolean.parseBoolean(methodByReplace.get("value").toString()) : false);
                 resourceParser.setResourceInfoInAttribute(!(resourceInfoInAttribute == null) ? Boolean.parseBoolean(resourceInfoInAttribute.get("value").toString()) : false);
                 resourceParser.setResourceInfoAttribute(!(resourceInfoAttribute == null) ? resourceInfoAttribute.get("value").toString() : "");
                 resourceParser.setResourceRegex(!(resourceRegex == null) ? resourceRegex.get("value").toString() : "");
 
+                resourceParser.setExternalResourceID(!(externalResourceID == null) ? externalResourceID.get("value").toString() : "");
                 resourceParser.setExternalResourceNode(!(externalResourceNode == null) ? externalResourceNode.get("value").toString() : "");
                 resourceParser.setExternalResourceInfoInAttribute(!(externalResourceInfoInAttribute == null) ? Boolean.parseBoolean(externalResourceInfoInAttribute.get("value").toString()) : false);
                 resourceParser.setExternalResourceInfoAttribute(!(externalResourceInfoAttribute == null) ? externalResourceInfoAttribute.get("value").toString() : "");
@@ -270,9 +274,27 @@ public class Resource {
         }
         catch (Exception ex)
         {
-            if (this.config.getDebug()) System.out.println("[COEUS][Resource] Unable to load resource concept information");
+            if (this.config.getDebug()) System.out.println("[COEUS][Resource] Unable to load resource parser information");
             Logger.getLogger(Resource.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "description='" + description + '\'' +
+                ", label='" + label + '\'' +
+                ", title='" + title + '\'' +
+                ", uri='" + uri + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", extendsConcept='" + extendsConcept + '\'' +
+                ", endpoint='" + endpoint + '\'' +
+                ", identifiers='" + identifiers + '\'' +
+                ", isResourceOf=" + isResourceOf +
+                ", hasParser=" + hasParser +
+                ", sparqlAPI=" + sparqlAPI +
+                ", config=" + config +
+                ", built=" + built +
+                '}';
+    }
 }

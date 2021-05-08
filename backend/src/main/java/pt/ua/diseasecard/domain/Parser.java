@@ -17,12 +17,13 @@ public class Parser {
     private String filterBy;
     private String filterValue;
 
+    private boolean methodByReplace;
+
     private boolean uniqueResource;
     private boolean uniqueExternalResource;
 
-    public Parser(String resourceID, String externalResourceID) {
+    public Parser(String resourceID) {
         this.resourceID = resourceID;
-        this.externalResourceID = externalResourceID;
     }
 
     public String getMainNode() {
@@ -121,5 +122,33 @@ public class Parser {
     }
     public void setUniqueExternalResource(boolean uniqueExternalResource) {
         this.uniqueExternalResource = uniqueExternalResource;
+    }
+
+    public boolean isMethodByReplace() {
+        return methodByReplace;
+    }
+    public void setMethodByReplace(boolean methodByReplace) {
+        this.methodByReplace = methodByReplace;
+    }
+
+    @Override
+    public String toString() {
+        return "Parser{" +
+                "mainNode='" + mainNode + '\'' +
+                ", resourceID='" + resourceID + '\'' +
+                ", resourceInfoInAttribute=" + resourceInfoInAttribute +
+                ", resourceInfoAttribute='" + resourceInfoAttribute + '\'' +
+                ", resourceRegex='" + resourceRegex + '\'' +
+                ", externalResourceNode='" + externalResourceNode + '\'' +
+                ", externalResourceID='" + externalResourceID + '\'' +
+                ", externalResourceInfoInAttribute=" + externalResourceInfoInAttribute +
+                ", externalResourceInfoAttribute='" + externalResourceInfoAttribute + '\'' +
+                ", externalResourceRegex='" + externalResourceRegex + '\'' +
+                ", filterBy='" + filterBy + '\'' +
+                ", filterValue='" + filterValue + '\'' +
+                ", methodByReplace=" + methodByReplace +
+                ", uniqueResource=" + uniqueResource +
+                ", uniqueExternalResource=" + uniqueExternalResource +
+                '}';
     }
 }

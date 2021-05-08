@@ -187,12 +187,23 @@ public class DiseasecardController {
                           @RequestParam("resourceOf") String resourceOf,
                           @RequestParam("extendsResource") String extendsResource,
                           @RequestParam("orderResource") String order,
-                          @RequestParam("publisherEndpoint") String publisher,
-                          @RequestParam("regexResource") String regex,
                           @RequestParam("files") MultipartFile files,
-                          @RequestParam("queryResource") String query ) throws IOException {
+                          @RequestParam("publisherEndpoint") String publisher ) throws IOException {
 
-        dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, files);
+        dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, files);
+    }
+
+    @PostMapping(value = "/dcadmin/operations/addParser")
+    public void addParser(@RequestParam("titleResource") String title,
+                          @RequestParam("labelResource") String label,
+                          @RequestParam("descriptionResource") String description,
+                          @RequestParam("resourceOf") String resourceOf,
+                          @RequestParam("extendsResource") String extendsResource,
+                          @RequestParam("orderResource") String order,
+                          @RequestParam("publisherEndpoint") String publisher,
+                          @RequestParam("files") MultipartFile files ) throws IOException {
+
+        dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, files);
     }
 
     @PostMapping(value = "/dcadmin/operations/addResourceWithURLEndpoint")
@@ -203,11 +214,9 @@ public class DiseasecardController {
                           @RequestParam("extendsResource") String extendsResource,
                           @RequestParam("orderResource") String order,
                           @RequestParam("publisherEndpoint") String publisher,
-                          @RequestParam("regexResource") String regex,
-                          @RequestParam("files") String endpoint,
-                          @RequestParam("queryResource") String query ) throws IOException {
+                          @RequestParam("files") String endpoint) throws IOException {
 
-        dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, endpoint);
+        dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, endpoint);
     }
 
     @PostMapping(value = "/dcadmin/operations/addOMIMResource")
@@ -218,18 +227,22 @@ public class DiseasecardController {
                             @RequestParam("extendsResource") String extendsResource,
                             @RequestParam("orderResource") String order,
                             @RequestParam("publisherEndpoint") String publisher,
-                            @RequestParam("regexResource") String regex,
                             @RequestParam("morbidmap") MultipartFile morbidmap,
-                            @RequestParam("genemap") MultipartFile genemap,
-                            @RequestParam("queryResource") String query ) throws IOException {
+                            @RequestParam("genemap") MultipartFile genemap ) throws IOException {
 
-        dataManagementService.prepareAddOMIMResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, morbidmap, genemap);
+        dataManagementService.prepareAddOMIMResource(title, label, description, resourceOf, extendsResource, order, publisher, morbidmap, genemap);
     }
 
 
     @GetMapping("/dcadmin/status/labels")
     public JSONObject getFormLabelsInfo() {
         return dataManagementService.getFormLabels();
+    }
+
+
+    @GetMapping("/dcadmin/status/parserFields")
+    public JSONObject getParserFields(@PathVariable String parserType) {
+        return null;
     }
 
 

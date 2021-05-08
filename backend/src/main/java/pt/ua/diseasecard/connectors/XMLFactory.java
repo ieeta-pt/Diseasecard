@@ -1,14 +1,13 @@
 package pt.ua.diseasecard.connectors;
 
 import com.hp.hpl.jena.rdf.model.Statement;
-import com.univocity.parsers.csv.CsvParser;
-import com.univocity.parsers.csv.CsvParserSettings;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.components.data.Triplify;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
+import pt.ua.diseasecard.domain.Parser;
 import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.utils.BeanUtil;
 
@@ -18,6 +17,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import javax.xml.XMLConstants;
 import org.w3c.dom.Document;
+import pt.ua.diseasecard.utils.ItemFactory;
 import pt.ua.diseasecard.utils.Predicate;
 
 import java.io.File;
@@ -28,6 +28,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.net.URLConnection;
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XMLFactory implements ResourceFactory {
 
@@ -45,6 +47,7 @@ public class XMLFactory implements ResourceFactory {
         this.hasError = false;
         this.info = new HashMap<>();
     }
+
 
     private void readEndpoint() throws IOException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -75,25 +78,50 @@ public class XMLFactory implements ResourceFactory {
     }
 
 
+    private void readSpecificEndpoint(String item) {
+
+        this.info = new HashMap<>();
+
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        String uri = this.res.getEndpoint().replace("#REPLACE", item);
+        try {
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+            DocumentBuilder db = dbf.newDocumentBuilder();
+
+            InputStream is = new URL(uri).openConnection().getInputStream();
+            this.getResourceInfo(db.parse(is));
+            is.close();
+        }
+        catch(ParserConfigurationException | SAXException e) {
+            Logger.getLogger(XMLFactory.class.getName()).log(Level.INFO,"[Diseasecard][XMLFactory] Unable to read endpoint " + uri);
+        }
+        catch (Exception e) {
+            Logger.getLogger(XMLFactory.class.getName()).log(Level.INFO,"[Diseasecard][XMLFactory] Unable to read endpoint " + uri);
+            //e.printStackTrace();
+        }
+    }
+
+
     private void getResourceInfo(Document doc) {
+        Parser parser = res.getHasParser();
 
-        String mainNode = "entry";
-        String resourceID = "accession";
-        boolean resourceInfoInAttribute = false;
-        String resourceInfoAttribute = "";
-        boolean uniqueR = true;
+        String resourceID = parser.getResourceID();
+        boolean resourceInfoInAttribute = parser.getResourceInfoInAttribute();
+        String resourceInfoAttribute = parser.getResourceInfoAttribute();
+        boolean uniqueR = parser.getUniqueResource();
 
-        NodeList nodeList = doc.getElementsByTagName(mainNode);
+        NodeList nodeList = doc.getElementsByTagName(parser.getMainNode());
+
         for (int i = 0 ; i < nodeList.getLength() ; i++)
         {
             Node node = nodeList.item(i);
             Element element = (Element) node;
             String id = null;
-            System.out.println(nodeList.getLength());
+
             // TODO: ter em conta o filter by
             if (uniqueR)
             {
-                id = getID(element, resourceInfoInAttribute, resourceInfoAttribute, resourceID);
+                id = getID(element, resourceInfoInAttribute, resourceInfoAttribute, resourceID, parser.getResourceRegex());
                 this.getExternalResourceInfo(id, element);
             }
             else
@@ -103,7 +131,7 @@ public class XMLFactory implements ResourceFactory {
                     Node externalReference = resourcesNodes.item(j);
                     Element e = (Element) externalReference;
 
-                    id = getID(e, resourceInfoInAttribute, resourceInfoAttribute, resourceID);
+                    id = getID(e, resourceInfoInAttribute, resourceInfoAttribute, resourceID, parser.getResourceRegex());
                     this.getExternalResourceInfo(id, e);
                 }
             }
@@ -112,16 +140,18 @@ public class XMLFactory implements ResourceFactory {
 
 
     private void getExternalResourceInfo(String id, Element element) {
+        Parser parser = res.getHasParser();
 
-        String externalResourceNode = "dbReference";
-        String externalResourceID = "";
-        boolean externalResourceInfoInAttribute = true;
-        String externalResourceAttribute = "id";
-        String filterBy = "type";
-        String filterValue = "MIM";
-        boolean uniqueExtR = false;
+        String externalResourceNode = parser.getExternalResourceNode();
+        String externalResourceID = parser.getExternalResourceID();
+        boolean externalResourceInfoInAttribute = parser.getExternalResourceInfoInAttribute();
+        String externalResourceAttribute = parser.getExternalResourceInfoAttribute();
+        String filterBy = parser.getFilterBy();
+        String filterValue = parser.getFilterValue();
+        boolean uniqueExtR = parser.getUniqueExternalResource();
 
         NodeList externalResourcesNodes = element.getElementsByTagName(externalResourceNode);
+
         if (!uniqueExtR)
         {
             for (int j = 0 ; j < externalResourcesNodes.getLength() ; j++) {
@@ -144,12 +174,12 @@ public class XMLFactory implements ResourceFactory {
                         if (type.equals(filterValue)) extRID = e.getElementsByTagName(externalResourceID).item(0).getTextContent();
                     }
                 }
-                else extRID = getID(e, externalResourceInfoInAttribute, externalResourceAttribute, externalResourceID);
+                else extRID = getID(e, externalResourceInfoInAttribute, externalResourceAttribute, externalResourceID, parser.getExternalResourceRegex());
 
 
                 if (extRID != null)
                 {
-                    System.out.println(id + " " + extRID);
+                    // System.out.println(id + " " + extRID);
                     if (!this.info.containsKey(extRID)) {
                         this.info.put(extRID, new HashSet<String>());
                     }
@@ -171,26 +201,55 @@ public class XMLFactory implements ResourceFactory {
     }
 
 
-    private String getID(Element element, boolean resourceInAttribute, String resourceAttribute, String resourceID) {
+    private String getID(Element element, boolean resourceInAttribute, String resourceAttribute, String resourceID, String regex) {
+        String id;
         // If Resource's ID is defined through attribute
-        if (resourceInAttribute) return ((Element) element.getElementsByTagName(resourceID).item(0)).getAttribute(resourceAttribute);
+        if (resourceInAttribute) id = ((Element) element.getElementsByTagName(resourceID).item(0)).getAttribute(resourceAttribute);
             // If Resource's ID is defined in tag context
-        else return element.getElementsByTagName(resourceID).item(0).getTextContent();
+        else id = element.getElementsByTagName(resourceID).item(0).getTextContent();
 
+        if (!regex.equals(""))
+        {
+            Pattern p = Pattern.compile(regex);
+            Matcher m = p.matcher(id);
+            if (m.find()) id = m.group();
+        }
+
+        return id;
     }
 
 
     @Override
     public void read() {
         try {
-            this.readEndpoint();
-            this.info.entrySet().forEach(entry -> {
-                System.out.println(entry.getKey() + " " + entry.getValue());
-            });
+            if (!res.getHasParser().isMethodByReplace()) this.readEndpoint();
+
+            HashMap<String, String> extensions = res.getExtended();
+
+            for (String itemRaw : extensions.keySet() )
+            {
+                String item = ItemFactory.getTokenFromItem(itemRaw);
+
+                if (res.getHasParser().isMethodByReplace()) this.readSpecificEndpoint(item);
+
+                if ( this.info.containsKey(item) )
+                {
+                    rdfizer = new Triplify(res, extensions.get(itemRaw));
+
+                    for (String r : this.info.get(item))
+                    {
+                        if (!res.getIdentifiers().equals(""))
+                        {
+                            String[] tmp = res.getIdentifiers().split("\\|");
+                            for (String inside : tmp ) rdfizer.add(inside, r);
+                        }
+                        rdfizer.itemize(r);
+                    }
+                }
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
 
@@ -205,14 +264,14 @@ public class XMLFactory implements ResourceFactory {
                 api.addStatement(resource, Predicate.get("coeus:built"), true);
             }
             if (this.config.getDebug()) {
-                Logger.getLogger(CSVFactory.class.getName()).log(Level.INFO,"[COEUS][API] Saved resource " + res.getUri());
+                Logger.getLogger(XMLFactory.class.getName()).log(Level.INFO,"[COEUS][API] Saved resource " + res.getUri());
             }
         } catch (Exception ex) {
             if (this.config.getDebug())
             {
                 saveError(ex);
-                Logger.getLogger(CSVFactory.class.getName()).log(Level.INFO,"[COEUS][API] Unable to save resource " + res.getUri());
-                Logger.getLogger(CSVFactory.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(XMLFactory.class.getName()).log(Level.INFO,"[COEUS][API] Unable to save resource " + res.getUri());
+                Logger.getLogger(XMLFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -226,11 +285,11 @@ public class XMLFactory implements ResourceFactory {
             api.addStatement(statement);
             hasError = true;
 
-            if (this.config.getDebug()) Logger.getLogger(CSVFactory.class.getName()).log(Level.INFO,"[COEUS][API] Saved error on resource " + res.getUri());
+            if (this.config.getDebug()) Logger.getLogger(XMLFactory.class.getName()).log(Level.INFO,"[COEUS][API] Saved error on resource " + res.getUri());
         } catch (Exception e) {
             if (this.config.getDebug()) {
-                Logger.getLogger(CSVFactory.class.getName()).log(Level.INFO,"[COEUS][API] Unable to save error on resource " + res.getUri());
-                Logger.getLogger(CSVFactory.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(XMLFactory.class.getName()).log(Level.INFO,"[COEUS][API] Unable to save error on resource " + res.getUri());
+                Logger.getLogger(XMLFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

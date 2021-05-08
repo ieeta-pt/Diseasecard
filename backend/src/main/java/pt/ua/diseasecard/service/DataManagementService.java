@@ -15,6 +15,7 @@ import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.connectors.CSVFactory;
 import pt.ua.diseasecard.connectors.PluginFactory;
 import pt.ua.diseasecard.connectors.ResourceFactory;
+import pt.ua.diseasecard.connectors.XMLFactory;
 import pt.ua.diseasecard.domain.Concept;
 import pt.ua.diseasecard.domain.Resource;
 import java.io.File;
@@ -165,6 +166,9 @@ public class DataManagementService {
                 {
                     case "csv":
                         factory = new CSVFactory(r);
+                        break;
+                    case "xml":
+                        factory = new XMLFactory(r);
                         break;
                     case "plugin":
                         factory = new PluginFactory(r);
@@ -318,7 +322,7 @@ public class DataManagementService {
                     + " ?s coeus:order ?order . "
                     + "OPTIONAL { ?s coeus:built ?built} . "
                     + "OPTIONAL { ?s coeus:line ?line} . "
-                    + "OPTIONAL { ?s coeus:identifiers ?identifiers} . "
+                    + "OPTIONAL { ?s coeus:identifiers ?identifiers}} "
                     + "ORDER BY ?order", "js", false));
             JSONObject results = (JSONObject) response.get("results");
             JSONArray bindings = (JSONArray) results.get("bindings");
@@ -525,24 +529,30 @@ public class DataManagementService {
     }
 
 
-    public void prepareAddResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, MultipartFile file) {
+    public void prepareAddResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, MultipartFile file) {
         try {
             Path copyLocation = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + StringUtils.cleanPath(label));
             Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, copyLocation.toString());
+            Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"blabla");
+            Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"" + file.getInputStream());
+
+            this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, copyLocation.toString());
         } catch (IOException ex) {
             Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
         }
     }
 
 
-    public void prepareAddResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, String endpoint) {
-        this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, endpoint);
+    public void prepareAddResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String endpoint) {
+        Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"blabla");
+        Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"" + endpoint);
+
+        this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, endpoint);
     }
 
 
-    public void prepareAddOMIMResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, MultipartFile morbidmap, MultipartFile genemap) {
+    public void prepareAddOMIMResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, MultipartFile morbidmap, MultipartFile genemap) {
         try {
             Path copyLocationGenemap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_genemap");
             Files.copy(genemap.getInputStream(), copyLocationGenemap, StandardCopyOption.REPLACE_EXISTING);
@@ -550,7 +560,7 @@ public class DataManagementService {
             Path copyLocationMorbidmap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_morbidmap");
             Files.copy(morbidmap.getInputStream(), copyLocationMorbidmap, StandardCopyOption.REPLACE_EXISTING);
 
-            this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, regex, query, "omim://full");
+            this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, "omim://full");
         } catch (IOException ex) {
             Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
         }

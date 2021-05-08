@@ -254,7 +254,7 @@ public class Storage {
     /*
         Description
      */
-    public void addResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String regex, String query, String location) {
+    public void addResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String location) {
         try {
             this.prepareModel();
             Logger.getLogger(Storage.class.getName()).log(Level.INFO,"URI of the new resource: " + this.config.getPrefixes().get("diseasecard") + label);
@@ -264,15 +264,10 @@ public class Storage {
 
             Property orderProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "order");
             Property publisherProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "publisher");
-            Property regexProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "regex");
-            Property queryProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "query");
             Property endpointProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "endpoint");
 
             newResource.addProperty(orderProperty, order);
             newResource.addProperty(publisherProperty, publisher);
-            newResource.addProperty(regexProperty, regex);
-            newResource.addProperty(queryProperty, query);
-
             newResource.addProperty(endpointProperty, location);
 
             Property resourceOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isResourceOf");

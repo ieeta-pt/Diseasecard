@@ -55,6 +55,9 @@ public class DiseaseAPI {
                 String a1 = "";
                 String a2 = "";
                 QuerySolution row = rs.next();
+
+                System.out.println(row);
+
                 if (row.get("a1").toString().contains("malacards")) {
                     a1 = row.get("a1").toString().replace("http://bioinformatics.ua.pt/diseasecard/resource/malacards_", "malacards:");
                 } else {
