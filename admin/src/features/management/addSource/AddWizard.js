@@ -9,7 +9,7 @@ import {
     addConcept,
     addEntity, addOMIMResource, addResource, addResourceWithURLEndpoint,
     getFormLabels,
-    getInvalidEndpoints, getParserFields, storeResource,
+    getInvalidEndpoints, getResource, resourceAdded, storeResource,
     uploadEndpoints,
     uploadOntology
 } from "./addSourceSlice";
@@ -17,7 +17,10 @@ import Dropzone from 'react-dropzone'
 import AddConceptForm from "./forms/FormConcept";
 import AddEntityFrom from "./forms/FormEntity";
 import AddResourceForm from "./forms/FormResource";
-import AddParserForm from "./forms/FormParser";
+import AddParserForm from "./forms/FormParserCSV";
+import AddParserCSVForm from "./forms/FormParserCSV";
+import AddParserXMLForm from "./forms/FormParserXML";
+import {CircularProgress} from "@material-ui/core";
 
 const MethodIcon = styled(animated.div)``;
 
@@ -531,44 +534,17 @@ const AddConcepts = props => {
     Description
  */
 const AddResources = props => {
+    const [permissionToGo, setPermissionToGo] = useState(false);
     const dispatch = useDispatch()
     const submit = (values) => {
-        console.log(values);
-
-        if ( values.publisherEndpoint === 'OMIM' )
-        {
-            let formData = new FormData(document.forms.namedItem("addResourceForm"))
-            formData.append("genemap", values.genemap)
-            formData.append("morbidmap", values.morbidmap)
-            dispatch(addOMIMResource(formData))
-        }
-        else
-        {
-            if (!values.isEndpointFile)
-            {
-                let formData = new FormData(document.forms.namedItem("addResourceForm"))
-                formData.append("files", values.endpointResource)
-                dispatch(addResourceWithURLEndpoint(formData))
-            }
-            else
-            {
-                let formData = new FormData(document.forms.namedItem("addResourceForm"))
-                formData.append("files", values.files)
-                dispatch(addResource(formData))
-            }
-        }
-
-
-
-        dispatch(getParserFields(values.publisherEndpoint))
-
-        console.log(values.isEndpointFile)
+        dispatch(storeResource(values))
+        setPermissionToGo(true)
     }
 
     return (
         <div>
             <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Resource</b></p>
-            <AddResourceForm onSubmit={submit} formDetails={props}/>
+            <AddResourceForm onSubmit={submit} formDetails={props} permissionToGo={permissionToGo}/>
         </div>
     );
 }
@@ -579,14 +555,55 @@ const AddResources = props => {
  */
 const AddParsers = props => {
     const dispatch = useDispatch()
+    const resource = useSelector(getResource)
+    const resourceAdded = useSelector(resourceAdded)
+    const plugin = resource.publisherEndpoint
     const submit = (values) => {
         console.log(values);
+
+        /*if ( resource.publisherEndpoint === 'OMIM' )
+        {
+            let formData = new FormData(document.forms.namedItem("addResourceForm"))
+            formData.append("genemap", resource.genemap)
+            formData.append("morbidmap", resource.morbidmap)
+            dispatch(addOMIMResource(formData))
+        }
+        else
+        {
+            if (!resource.isEndpointFile)
+            {
+                let formData = new FormData(document.forms.namedItem("addResourceForm"))
+                formData.append("files", resource.endpointResource)
+                dispatch(addResourceWithURLEndpoint(formData))
+            }
+            else
+            {
+                let formData = new FormData(document.forms.namedItem("addResourceForm"))
+                formData.append("files", resource.files)
+                dispatch(addResource(formData))
+            }
+        }*/
+
+        if (resourceAdded) console.log("//call add parser")
     }
 
+    let content;
+    if(plugin) {
+        content = (
+            <div>
+                {plugin === "CSV" && <AddParserCSVForm onSubmit={submit} formDetails={props}/> }
+                {plugin === "XML" && <AddParserXMLForm onSubmit={submit} formDetails={props}/> }
+            </div>
+        )
+    }
+    else
+    {
+        content = <CircularProgress color="#1dc4e9" style={{paddingTop: "20px"}}/>
+    }
     return (
-        <div>
+        <div style={{textAlign: "center"}}>
             <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Parser</b></p>
-            <AddParserForm onSubmit={submit} formDetails={props}/>
+            {content}
         </div>
     );
 }

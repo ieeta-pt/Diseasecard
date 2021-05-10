@@ -25,7 +25,7 @@ const validate = values => {
 }
 
 
-const AddParserForm = props => {
+const AddParserXMLForm = props => {
     const { handleSubmit, classes} = props
 
     const c = useStyles();
@@ -68,7 +68,7 @@ const AddParserForm = props => {
 
 
 export default reduxForm({
-    form: 'AddParserForm', // a unique identifier for this form
+    form: 'AddParserXMLForm', // a unique identifier for this form
     validate,
     asyncValidate
-})(AddParserForm)
+})(AddParserXMLForm)

@@ -174,7 +174,7 @@ const AddResourceForm = props => {
                                 Object.keys(conceptLabels).map((key,i) => {
                                     return (<MenuItem key={i} value={key}> {conceptLabels[key]} </MenuItem>)
                                 })
-                            }ya.. 
+                            }
                         </Field>
                     </Grid>
 

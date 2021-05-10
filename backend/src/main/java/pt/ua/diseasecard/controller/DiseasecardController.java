@@ -169,6 +169,7 @@ public class DiseasecardController {
         dataManagementService.prepareAddEntity(title, label, description, entityOf);
     }
 
+
     @PostMapping(value = "/dcadmin/operations/addConcept")
     public void addConcept(@RequestParam("titleConcept") String title,
                           @RequestParam("labelConcept") String label,
@@ -193,6 +194,7 @@ public class DiseasecardController {
         dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, files);
     }
 
+
     @PostMapping(value = "/dcadmin/operations/addParser")
     public void addParser(@RequestParam("titleResource") String title,
                           @RequestParam("labelResource") String label,
@@ -206,6 +208,7 @@ public class DiseasecardController {
         dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, files);
     }
 
+
     @PostMapping(value = "/dcadmin/operations/addResourceWithURLEndpoint")
     public void addResourceWithURLEndpoint(@RequestParam("titleResource") String title,
                           @RequestParam("labelResource") String label,
@@ -218,6 +221,7 @@ public class DiseasecardController {
 
         dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, endpoint);
     }
+
 
     @PostMapping(value = "/dcadmin/operations/addOMIMResource")
     public void addOMIMResource(@RequestParam("titleResource") String title,

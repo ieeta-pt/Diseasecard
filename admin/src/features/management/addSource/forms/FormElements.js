@@ -4,13 +4,21 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import {makeStyles} from "@material-ui/core/styles";
 import DropZone from "react-dropzone";
 import {Col, Row} from "react-bootstrap";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@material-ui/core";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    FormLabel
+} from "@material-ui/core";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 const renderFromHelper = ({ touched, error, labelText }) => {
     if (!(touched && error)) {
-        return <FormHelperText style={{marginLeft: "2px"}} >{labelText}</FormHelperText>
+        return <FormLabel  style={{marginLeft: "2px", fontSize: "0.75rem"}} >{labelText}</FormLabel>
     } else {
         return <FormHelperText>{touched && error}</FormHelperText>
     }
@@ -135,7 +143,7 @@ export const renderDropzoneInput = (field) => {
         <div>
             <DropZone
                 name={field.name}
-                onDrop={( filesToUpload ) => { console.log(field.input); field.input.onChange(filesToUpload[0])}}
+                onDrop={( filesToUpload ) => { field.input.onChange(filesToUpload[0])}}
                 maxFiles={1}>
                 {({getRootProps, getInputProps}) => (
                     <section>

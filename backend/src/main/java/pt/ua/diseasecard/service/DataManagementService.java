@@ -12,6 +12,7 @@ import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
+import pt.ua.diseasecard.configuration.OntologyProperties;
 import pt.ua.diseasecard.connectors.CSVFactory;
 import pt.ua.diseasecard.connectors.PluginFactory;
 import pt.ua.diseasecard.connectors.ResourceFactory;
@@ -36,16 +37,18 @@ public class DataManagementService {
     private String uploadDir;
     private Storage storage;
     private DiseasecardProperties config;
+    private OntologyProperties ontologyProperties;
     private ArrayList<Resource> resources;
     private SparqlAPI sparqlAPI;
 
     private AutowireCapableBeanFactory beanFactory;
     private Boot boot;
 
-    public DataManagementService(Storage storage, DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI, AutowireCapableBeanFactory beanFactory, Boot boot) {
+    public DataManagementService(Storage storage, DiseasecardProperties diseasecardProperties, OntologyProperties ontologyProperties, SparqlAPI sparqlAPI, AutowireCapableBeanFactory beanFactory, Boot boot) {
         this.uploadDir = "submittedFiles";
         this.storage = storage;
         this.config = diseasecardProperties;
+        this.ontologyProperties = ontologyProperties;
         this.resources = new ArrayList<>();
         this.sparqlAPI = sparqlAPI;
         this.beanFactory = beanFactory;
@@ -450,9 +453,7 @@ public class DataManagementService {
 
             // Has to be changed
             JSONArray pluginsLabels = new JSONArray();
-            pluginsLabels.add("OMIM");
-            pluginsLabels.add("CSV");
-            pluginsLabels.add("XML");
+            this.ontologyProperties.getPluginLabels().forEach((element) -> pluginsLabels.add(element));
 
             finalR.put("entitiesLabels", entitiesLabels);
             finalR.put("conceptsLabels", conceptsLabels);

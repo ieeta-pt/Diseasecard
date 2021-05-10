@@ -9,7 +9,8 @@ const initialState = {
     entitiesLabels: [],
     pluginsLabels: [],
     resourcesLabels: [],
-    resource: []
+    resource: [],
+    resourceAdded: false,
 }
 
 
@@ -93,7 +94,12 @@ export const addOMIMResource = createAsyncThunk('addSource/addOMIMResource', asy
 const addSourceSlice = createSlice({
     name: 'addSource',
     initialState,
-    reducers: {},
+    reducers: {
+        storeResource: (state, action) => {
+            console.log(action.payload)
+            state.resource = action.payload
+        }
+    },
     extraReducers: {
         [uploadOntology.pending]: (state, action) => {
            /*state.status = 'loading'*/
@@ -109,21 +115,14 @@ const addSourceSlice = createSlice({
             state.omim = action.meta.arg
             state.error = action.error.message*/
         },
-        [getFormLabels.fulfilled]: (state, action) => {
-            console.log(action.payload.conceptsLabels)
-
-            /*let cl = [];
-            Object.keys(action.payload.conceptsLabels).forEach(function(key) {
-                cl.push(action.payload.conceptsLabels[key]);
-            });
-
-            console.log("aaaaaaa")
-            console.log(cl)*/
-
-            state.conceptsLabels = action.payload.conceptsLabels;
-            state.entitiesLabels = action.payload.entitiesLabels;
-            state.pluginsLabels = action.payload.pluginsLabels;
-            state.resourcesLabels = action.payload.resourcesLabels;
+        [addResource.fulfilled]: (state, action) => {
+            state.resource = true
+        },
+        [addResourceWithURLEndpoint.fulfilled]: (state, action) => {
+            state.resource = true
+        },
+        [addOMIMResource.fulfilled]: (state, action) => {
+            state.resource = true
         },
     }
 })
@@ -134,6 +133,9 @@ export const getConceptsLabels = state => state.addSource.conceptsLabels
 export const getEntitiesLabels = state => state.addSource.entitiesLabels
 export const getPluginsLabels = state => state.addSource.pluginsLabels
 export const getResourcesLabels  = state => state.addSource.resourcesLabels
+export const getResource  = state => state.addSource.resource
+export const resourceAdded  = state => state.addSource.resourceAdded
+
 export const { storeResource } = addSourceSlice.actions
 
 export default addSourceSlice.reducer
