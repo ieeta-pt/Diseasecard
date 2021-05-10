@@ -143,10 +143,8 @@ public class Storage {
      */
     private void prepareModel() throws IOException {
         if (this.model.isEmpty()) {
-
             // Upload Default Ontology
-            File file = resourceLoader.getResource ("classpath:configuration/default_setup.rdf").getFile();
-            InputStream stream = new FileInputStream(file);
+            InputStreamReader stream = new InputStreamReader(resourceLoader.getResource("classpath:configuration/default_setup.rdf").getInputStream());
 
             RDFReader r = this.model.getReader();
             r.read(this.model, stream, PrefixFactory.getURIForPrefix(this.config.getKeyprefix()));
@@ -188,17 +186,14 @@ public class Storage {
 
             Property isIncludedInProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isIncludedIn");
             Resource seed = this.model.getResource(this.getSeedURI());
-            Logger.getLogger(Storage.class.getName()).log(Level.INFO,"URI of the seed: " + this.getSeedURI());
 
             newEntity.addProperty(isIncludedInProperty, seed);
 
             if ( !entityOf.equals("") ) {
-                Logger.getLogger(Storage.class.getName()).log(Level.INFO,"URI of the concept: " + this.config.getPrefixes().get("diseasecard") + entityOf);
-
                 Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
                 Property hasEntityProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
 
-                Resource concept = this.model.getResource(this.config.getPrefixes().get("diseasecard") + entityOf);
+                Resource concept = this.model.getResource(entityOf);
 
                 concept.addProperty(hasEntityProperty, newEntity);
                 newEntity.addProperty(entityOfProperty, concept);
@@ -227,7 +222,7 @@ public class Storage {
             Property hasEntity = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
             Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
 
-            Resource entity = this.model.getResource(this.config.getPrefixes().get("diseasecard") + relatedEntity);
+            Resource entity = this.model.getResource(relatedEntity);
 
             entity.addProperty(entityOfProperty, newConcept);
             newConcept.addProperty(hasEntity, entity);
@@ -236,7 +231,7 @@ public class Storage {
                 Property hasResource = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasResource");
                 Property extendsProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "extends");
 
-                Resource resource = this.model.getResource(this.config.getPrefixes().get("diseasecard") + relatedResource);
+                Resource resource = this.model.getResource(relatedResource);
 
                 resource.addProperty(extendsProperty, newConcept);
                 newConcept.addProperty(hasResource, resource);
@@ -274,8 +269,8 @@ public class Storage {
             Property extendsProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "extends");
             Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasResource");
 
-            Resource conceptResourceOf = this.model.getResource(this.config.getPrefixes().get("diseasecard") + resourceOf);
-            Resource conceptExtends = this.model.getResource(this.config.getPrefixes().get("diseasecard") + extendsResource);
+            Resource conceptResourceOf = this.model.getResource(resourceOf);
+            Resource conceptExtends = this.model.getResource(extendsResource);
 
             newResource.addProperty(resourceOfProperty, conceptResourceOf);
             newResource.addProperty(extendsProperty, conceptExtends);

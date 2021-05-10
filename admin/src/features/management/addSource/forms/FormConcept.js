@@ -86,11 +86,11 @@ const AddConceptForm = props => {
                             labelText="olaaa"
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
-                            {entitiesLabels.map((option) => (
-                                <MenuItem key={option} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))}
+                            {
+                                Object.keys(entitiesLabels).map((key,i) => {
+                                    return (<MenuItem key={i} value={key}> {entitiesLabels[key]} </MenuItem>)
+                                })
+                            }
                         </Field>
                     </Grid>
                     <Grid item xs={6}  style={{marginTop: "-3.5%"}}>
@@ -104,15 +104,15 @@ const AddConceptForm = props => {
                             labelText="olaaa"
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
-                            {resourcesLabels.map((option) => (
-                                <MenuItem key={option} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))}
+                            {
+                                Object.keys(resourcesLabels).map((key,i) => {
+                                    return (<MenuItem key={i} value={key}> {resourcesLabels[key]} </MenuItem>)
+                                })
+                            }
                         </Field>
                     </Grid>
 
-                    {FootForm(props, c)}
+                    {FootForm(props, c, 'Concept')}
 
                     {/*<div style={{ marginTop: '20px', marginBottom: "20px", width: "100%"}}>
                         <Row className="justify-content-md-center">

@@ -8,7 +8,6 @@ import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogT
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-
 const renderFromHelper = ({ touched, error, labelText }) => {
     if (!(touched && error)) {
         return <FormHelperText style={{marginLeft: "2px"}} >{labelText}</FormHelperText>
@@ -131,15 +130,12 @@ export const renderSelectField = ({ input,  label, labelText, meta: { touched, i
 export const renderDropzoneInput = (field) => {
     let f = field.input.value || null;
     const style = field.style
+
     return (
         <div>
             <DropZone
-                onDrop={(filesToUpload) => {
-                    filesToUpload.map((file) => {
-                        f = file
-                    });
-                    field.input.onChange(f);
-                }}
+                name={field.name}
+                onDrop={( filesToUpload ) => { console.log(field.input); field.input.onChange(filesToUpload[0])}}
                 maxFiles={1}>
                 {({getRootProps, getInputProps}) => (
                     <section>
@@ -151,21 +147,21 @@ export const renderDropzoneInput = (field) => {
                     </section>
                 )}
             </DropZone>
-            {field.meta.touched && field.meta.error && <span className="error">{field.meta.error}</span>}
-
         </div>
     );
 }
 
 
-export const FootForm = (props, c) => {
+
+export const FootForm = (props, c, type) => {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
         if (props.valid) setOpen(true);
     };
     const goBack = () => {
-        props.formDetails.goToStep(5);
+        if ( type=== 'Parser' ) props.formDetails.goToStep(8);
+        else                    props.formDetails.goToStep(5);
     };
     const handleClose = () => {
         setOpen(false);

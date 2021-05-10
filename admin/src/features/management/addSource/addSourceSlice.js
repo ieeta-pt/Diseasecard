@@ -8,8 +8,10 @@ const initialState = {
     conceptsLabels: [],
     entitiesLabels: [],
     pluginsLabels: [],
-    resourcesLabels: []
+    resourcesLabels: [],
+    resource: []
 }
+
 
 export const uploadOntology = createAsyncThunk('addSource/uploadOntology', async (file) => {
     return API.POST("uploadOntology", '', file ).then(res => {
@@ -37,6 +39,14 @@ export const getFormLabels = createAsyncThunk('addSource/getFormLabels', async (
 })
 
 
+export const getParserFields = createAsyncThunk('addSource/getParserFields', async (parserType) => {
+    return API.GET("getParserFields", '', [parserType]).then(res => {
+        console.log(res.data)
+        return res.data
+    })
+})
+
+
 export const addEntity = createAsyncThunk('addSource/addEntity', async (form) => {
     return API.POST("addEntity", '', form ).then(res => {
         return res.data
@@ -57,8 +67,24 @@ export const addResource = createAsyncThunk('addSource/addResource', async (form
     })
 })
 
+
+export const addParser = createAsyncThunk('addSource/addParser', async (form) => {
+    return API.POST("addParser", '', form ).then(res => {
+        console.log(res.data)
+        return res.data
+    })
+})
+
+
 export const addResourceWithURLEndpoint = createAsyncThunk('addSource/addResourceWithURLEndpoint', async (form) => {
     return API.POST("addResourceWithURLEndpoint", '', form ).then(res => {
+        return res.data
+    })
+})
+
+
+export const addOMIMResource = createAsyncThunk('addSource/addOMIMResource', async (form) => {
+    return API.POST("addOMIMResource", '', form ).then(res => {
         return res.data
     })
 })
@@ -84,7 +110,16 @@ const addSourceSlice = createSlice({
             state.error = action.error.message*/
         },
         [getFormLabels.fulfilled]: (state, action) => {
-            //console.log(action.payload.conceptsLabels)
+            console.log(action.payload.conceptsLabels)
+
+            /*let cl = [];
+            Object.keys(action.payload.conceptsLabels).forEach(function(key) {
+                cl.push(action.payload.conceptsLabels[key]);
+            });
+
+            console.log("aaaaaaa")
+            console.log(cl)*/
+
             state.conceptsLabels = action.payload.conceptsLabels;
             state.entitiesLabels = action.payload.entitiesLabels;
             state.pluginsLabels = action.payload.pluginsLabels;
@@ -99,9 +134,6 @@ export const getConceptsLabels = state => state.addSource.conceptsLabels
 export const getEntitiesLabels = state => state.addSource.entitiesLabels
 export const getPluginsLabels = state => state.addSource.pluginsLabels
 export const getResourcesLabels  = state => state.addSource.resourcesLabels
-
-/*
-export const selectOMIM = state => state.disease.omim
-*/
+export const { storeResource } = addSourceSlice.actions
 
 export default addSourceSlice.reducer

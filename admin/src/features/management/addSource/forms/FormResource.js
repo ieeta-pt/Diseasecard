@@ -1,7 +1,12 @@
-import React, {useMemo, useState} from 'react'
+import React, {useCallback, useMemo, useState} from 'react'
 import { Field, reduxForm } from 'redux-form'
 import asyncValidate from './asyncValidate'
-import { FormLabel, Grid, MenuItem } from "@material-ui/core";
+import {
+    Button,
+    FormLabel,
+    Grid,
+    MenuItem
+} from "@material-ui/core";
 import {
     renderDropzoneInput,
     FootForm,
@@ -11,9 +16,9 @@ import {
     renderSwitchField
 } from "./FormElements";
 import { getConceptsLabels, getPluginsLabels } from "../addSourceSlice";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
 import { useSelector } from "react-redux";
+import {Col, Row} from "react-bootstrap";
+import {useDropzone} from "react-dropzone";
 
 
 const validate = values => {
@@ -26,8 +31,6 @@ const validate = values => {
         'extendsResource',
         'orderResource',
         'publisherEndpoint',
-        'regexResource',
-        'queryResource'
     ]
     requiredFields.forEach(field => {
         if (!values[field]) {
@@ -88,8 +91,15 @@ const AddResourceForm = props => {
     const conceptLabels = useSelector(getConceptsLabels)
     const pluginLabels = useSelector(getPluginsLabels)
 
-    const [publisher, setPublisher] = useState(true);
+    const [publisher, setPublisher] = useState('');
     const [endpoint, setEndpoint] = useState(false);
+
+    const goBack = () => {
+        props.formDetails.goToStep(5);
+    };
+    const goNext = () => {
+        props.formDetails.goToStep(9);
+    };
 
     return (
         <div style={{width: "94%"}}>
@@ -141,11 +151,11 @@ const AddResourceForm = props => {
                             labelText="olaaa"
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
-                            {conceptLabels.map((option) => (
-                                <MenuItem key={option} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))}
+                            {
+                                Object.keys(conceptLabels).map((key,i) => {
+                                    return (<MenuItem key={i} value={key}> {conceptLabels[key]} </MenuItem>)
+                                })
+                            }
                         </Field>
                     </Grid>
                     <Grid item xs={6}  style={{marginTop: "-3.5%"}}>
@@ -160,11 +170,11 @@ const AddResourceForm = props => {
                             labelText="olaaa"
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
-                            {conceptLabels.map((option) => (
-                                <MenuItem key={option} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))}
+                            {
+                                Object.keys(conceptLabels).map((key,i) => {
+                                    return (<MenuItem key={i} value={key}> {conceptLabels[key]} </MenuItem>)
+                                })
+                            }ya.. 
                         </Field>
                     </Grid>
 
@@ -207,28 +217,16 @@ const AddResourceForm = props => {
                         </Field>
                     </Grid>
 
-                    <Grid container spacing={2} justify="flex-end">
-                        <Field
-                            name="isEndpointFile"
-                            component={renderSwitchField}
-                            label="Upload local File"
-                            className={c.switch}
-                            checked={endpoint}
-                            onChange={e => setEndpoint(e.target.checked)}
-                            labelText="olaaa"
-                        />
-                    </Grid>
-
 
                     {publisher==='OMIM' && (
                         <Grid container spacing={2}>
                             <Grid item xs={6} style={{marginLeft: "24px", paddingRight: "16px"}}>
                                 <Field
-                                    name="genecard"
+                                    name="genemap"
                                     style={style}
                                     component={renderDropzoneInput}
                                 />
-                                <FormLabel style={{ fontSize: "12px", marginLeft: "16px", letterSpacing: "0.0333em", marginTop: "12px" }}>Upload Genecard file</FormLabel>
+                                <FormLabel style={{ fontSize: "12px", marginLeft: "16px", letterSpacing: "0.0333em", marginTop: "12px" }}>Upload Genemap file</FormLabel>
                             </Grid>
                             <Grid item xs={6} style={{marginLeft: "-16px", marginRight: "-8px", paddingLeft: "16px"}}>
                                 <Field
@@ -240,55 +238,70 @@ const AddResourceForm = props => {
                             </Grid>
                         </Grid>
                     )}
-                    {publisher!=='OMIM' && !endpoint && (
-                        <Grid item xs={12}>
-                            <Field
-                                size="small"
-                                variant="outlined"
-                                name="endpointResource"
-                                component={renderTextField}
-                                label="Endpoint's URL"
-                                className={c.field}
-                                labelText="olaaa"
-                            />
+                    {publisher!=='OMIM' && publisher!== '' && !endpoint && (
+                        <Grid container>
+                            <Grid container spacing={2} justify="flex-end">
+                                <Field
+                                    name="isEndpointFile"
+                                    component={renderSwitchField}
+                                    label="Upload local File"
+                                    className={c.switch}
+                                    checked={endpoint}
+                                    onChange={e => setEndpoint(e.target.checked)}
+                                    labelText="olaaa"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Field
+                                    size="small"
+                                    variant="outlined"
+                                    name="endpointResource"
+                                    component={renderTextField}
+                                    label="Endpoint's URL"
+                                    className={c.field}
+                                    labelText="olaaa"
+                                />
+                            </Grid>
                         </Grid>
                     )}
-                    {publisher!=='OMIM' && endpoint && (
-                        <Grid item xs={12} style={{marginLeft: "16px", marginRight: "-16px"}}>
-                            <Field
-                                name="files"
-                                style={style}
-                                component={renderDropzoneInput}
-                            />
-                            <FormLabel style={{ fontSize: "12px", marginLeft: "16px", letterSpacing: "0.0333em", marginTop: "12px" }}>Endpoint</FormLabel>
+                    {publisher!=='OMIM' && publisher!== '' && endpoint && (
+                        <Grid container>
+                            <Grid container spacing={2} justify="flex-end">
+                                <Field
+                                    name="isEndpointFile"
+                                    component={renderSwitchField}
+                                    label="Upload local File"
+                                    className={c.switch}
+                                    checked={endpoint}
+                                    onChange={e => setEndpoint(e.target.checked)}
+                                    labelText="olaaa"
+                                />
+                            </Grid>
+                            <Grid item xs={12} style={{marginLeft: "16px", marginRight: "-16px"}}>
+                                <Field
+                                    name="files"
+                                    style={style}
+                                    component={renderDropzoneInput}
+                                />
+                                <FormLabel style={{ fontSize: "12px", marginLeft: "16px", letterSpacing: "0.0333em", marginTop: "12px" }}>Endpoint</FormLabel>
+                            </Grid>
                         </Grid>
                     )}
 
-                    <Grid item xs={6} style={{marginTop: "0.5%"}} >
-                        <Field
-                            classes={classes}
-                            size="small"
-                            name="regexResource"
-                            component={renderTextField}
-                            label="Column"
-                            variant="outlined"
-                            className={c.field}
-                            labelText="Extended Resource Identifier"
-                        />
-                    </Grid>
-                    <Grid item xs={6} style={{marginTop: "0.5%"}} >
-                        <Field
-                            size="small"
-                            name="queryResource"
-                            component={renderTextField}
-                            label="Column"
-                            variant="outlined"
-                            className={c.field}
-                            labelText="Resource Identifier"
-                        />
-                    </Grid>
-
-                    {FootForm(props, c)}
+                    <div style={{ marginTop: '20px', marginBottom: "20px", width: "100%"}}>
+                        <Row className="justify-content-md-center">
+                            <Col sm="6" className="centerStuff">
+                                <Button variant="outlined" color="primary" className={ c.buttonG } type="button" onClick={goBack}>
+                                    Go Back
+                                </Button>
+                            </Col>
+                            <Col sm="6" className="centerStuff">
+                                <Button variant="outlined" className={ c.buttonG } type="submit" disabled={ props.pristine || props.submitting || props.invalid } onClick={goNext}>
+                                    Next
+                                </Button>
+                            </Col>
+                        </Row>
+                    </div>
                 </Grid>
             </form>
         </div>
@@ -299,5 +312,6 @@ const AddResourceForm = props => {
 export default reduxForm({
     form: 'AddResourceForm', // a unique identifier for this form
     validate,
-    asyncValidate
+    asyncValidate,
+    initialValues: { isEndpointFile: false }
 })(AddResourceForm)

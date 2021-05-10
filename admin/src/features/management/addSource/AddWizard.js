@@ -7,9 +7,9 @@ import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from "react-redux";
 import {
     addConcept,
-    addEntity, addResource, addResourceWithURLEndpoint,
+    addEntity, addOMIMResource, addResource, addResourceWithURLEndpoint,
     getFormLabels,
-    getInvalidEndpoints,
+    getInvalidEndpoints, getParserFields, storeResource,
     uploadEndpoints,
     uploadOntology
 } from "./addSourceSlice";
@@ -17,6 +17,7 @@ import Dropzone from 'react-dropzone'
 import AddConceptForm from "./forms/FormConcept";
 import AddEntityFrom from "./forms/FormEntity";
 import AddResourceForm from "./forms/FormResource";
+import AddParserForm from "./forms/FormParser";
 
 const MethodIcon = styled(animated.div)``;
 
@@ -70,6 +71,7 @@ export const AddWizard = () => {
                         <AddEntities  update={updateForm} form={state.form}/>
                         <AddConcepts  update={updateForm} form={state.form}/>
                         <AddResources  update={updateForm} form={state.form}/>
+                        <AddParsers  update={updateForm} form={state.form}/>
 
                     </StepWizard>
                 </Col>
@@ -77,7 +79,6 @@ export const AddWizard = () => {
         </Container>
     );
 }
-
 
 
 /*
@@ -490,6 +491,7 @@ const AddEntities = props => {
     const dispatch = useDispatch();
 
     const submit = (values) => {
+        console.log(values)
         let formData = new FormData(document.forms.namedItem("addEntityForm"))
         dispatch(addEntity(formData))
     }
@@ -533,21 +535,34 @@ const AddResources = props => {
     const submit = (values) => {
         console.log(values);
 
-        if (values.isEndpointFile)
+        if ( values.publisherEndpoint === 'OMIM' )
         {
             let formData = new FormData(document.forms.namedItem("addResourceForm"))
-            formData.append("files", values.endpointResource)
-            dispatch(addResourceWithURLEndpoint(formData))
+            formData.append("genemap", values.genemap)
+            formData.append("morbidmap", values.morbidmap)
+            dispatch(addOMIMResource(formData))
         }
         else
         {
-            let formData = new FormData(document.forms.namedItem("addResourceForm"))
-            formData.append("files", values.files)
-            dispatch(addResource(formData))
+            if (!values.isEndpointFile)
+            {
+                let formData = new FormData(document.forms.namedItem("addResourceForm"))
+                formData.append("files", values.endpointResource)
+                dispatch(addResourceWithURLEndpoint(formData))
+            }
+            else
+            {
+                let formData = new FormData(document.forms.namedItem("addResourceForm"))
+                formData.append("files", values.files)
+                dispatch(addResource(formData))
+            }
         }
 
-        console.log(values.isEndpointFile)
 
+
+        dispatch(getParserFields(values.publisherEndpoint))
+
+        console.log(values.isEndpointFile)
     }
 
     return (
@@ -558,3 +573,20 @@ const AddResources = props => {
     );
 }
 
+
+/*
+    Description
+ */
+const AddParsers = props => {
+    const dispatch = useDispatch()
+    const submit = (values) => {
+        console.log(values);
+    }
+
+    return (
+        <div>
+            <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Parser</b></p>
+            <AddParserForm onSubmit={submit} formDetails={props}/>
+        </div>
+    );
+}

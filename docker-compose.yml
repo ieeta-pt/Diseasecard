@@ -6,7 +6,7 @@ services:
         restart: unless-stopped
         command: --default-authentication-plugin=mysql_native_password
         ports:
-            - ${MYSQL_PORT}
+            - ${MYSQL_PORT}:${MYSQL_PORT}
         expose:
             - 3306
         environment:
@@ -25,7 +25,7 @@ services:
         restart: unless-stopped
         image: redis:2.6.17
         ports:
-            - ${REDIS_PORT}
+            - ${REDIS_PORT}:${REDIS_PORT}
         volumes:
             - ${REDIS_VOLUME}:/usr/local/etc/redis/redis.conf
             - redis_data:/data
@@ -37,7 +37,7 @@ services:
         restart: unless-stopped
         build: ./docker/solr
         ports:
-            - ${SOLR_PORT}
+            - ${SOLR_PORT}:${SOLR_PORT}
         volumes:
             - ${SOLR_VOLUME}:/opt/solr/solr/collection1/conf
             - solr_data:/opt/solr/solr/collection1/data

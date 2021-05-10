@@ -84,15 +84,16 @@ const AddEntityFrom = props => {
                             labelText="olaaa"
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
-                            {conceptsLabels.map((option) => (
-                                <MenuItem key={option} value={option}>
-                                    {option}
-                                </MenuItem>
-                            ))}
+                            {
+                                Object.keys(conceptsLabels).map((key,i) => {
+                                    return (<MenuItem key={i} value={key}> {conceptsLabels[key]} </MenuItem>)
+                                })
+                            }
+
                         </Field>
                     </Grid>
 
-                    {FootForm(props, c)}
+                    {FootForm(props, c, 'Entity')}
 
                     {/*<div style={{ marginTop: '20px', marginBottom: "20px", width: "100%"}}>
                         <Row className="justify-content-md-center">

@@ -17,12 +17,15 @@ const getModuleURL = function (module) {
         case "uploadEndpoints":                return "/dcadmin/uploadEndpoints";
         case "getAllEntities":                 return "/dcadmin/status/entities";
         case "getFormLabels":                  return "/dcadmin/status/labels";
+        case "getParserFields":                return "/dcadmin/status/parserFields";
         case "getAllEntitiesInfo":             return "/dcadmin/status/allEntities";
         case "getOntologyStructureInfo":       return "/dcadmin/status/ontologyStructure";
         case "addEntity":                      return "/dcadmin/operations/addEntity";
         case "addConcept":                     return "/dcadmin/operations/addConcept";
         case "addResource":                    return "/dcadmin/operations/addResource";
+        case "addParser  ":                    return "/dcadmin/operations/addParser";
         case "addResourceWithURLEndpoint":     return "/dcadmin/operations/addResourceWithURLEndpoint";
+        case "addOMIMResource":                return "/dcadmin/operations/addOMIMResource";
         default:                               return "";
     }
 };
@@ -30,6 +33,7 @@ const getModuleURL = function (module) {
 const getTypeParameters = function (module) {
     switch (module){
         case "searchResults":                  return ["query"];
+        case "getParserFields":                return ["parserType"];
         default:                               return "";
     }
 }

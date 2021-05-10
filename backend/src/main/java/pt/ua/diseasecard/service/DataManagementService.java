@@ -310,7 +310,7 @@ public class DataManagementService {
         try
         {
             JSONParser parser = new JSONParser();
-            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT ?s ?resof ?description ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built ?query ?regex ?identifiers ?line ?extendsIdentifier ?extendsIdentifierRegex"
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT ?s ?resof ?description ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built"
                     + " WHERE { ?s rdf:type coeus:Resource ."
                     + " ?s dc:description ?description ."
                     + " ?s rdfs:label ?label ."
@@ -321,7 +321,6 @@ public class DataManagementService {
                     + " ?s coeus:endpoint ?endpoint ."
                     + " ?s coeus:order ?order . "
                     + "OPTIONAL { ?s coeus:built ?built} . "
-                    + "OPTIONAL { ?s coeus:line ?line} . "
                     + "OPTIONAL { ?s coeus:identifiers ?identifiers}} "
                     + "ORDER BY ?order", "js", false));
             JSONObject results = (JSONObject) response.get("results");
@@ -388,6 +387,8 @@ public class DataManagementService {
             JSONObject results = (JSONObject) response.get("results");
             JSONArray bindings = (JSONArray) results.get("bindings");
 
+            System.out.println("GET RESOURCE of " + resourceURI + " : " + bindings);
+
             try {
                 JSONObject a = (JSONObject) bindings.get(0);
                 resource.put("description", ((JSONObject) a.get("description")).get("value").toString());
@@ -427,30 +428,31 @@ public class DataManagementService {
         try
         {
             JSONArray entities = performSimpleQuery("SELECT ?s ?label WHERE { ?s rdf:type coeus:Entity . ?s rdfs:label ?label }");
-            JSONArray entitiesLabels = new JSONArray();
+            JSONObject entitiesLabels = new JSONObject();
             for (Object o : entities) {
                 JSONObject binding = (JSONObject) o;
-                entitiesLabels.add(((JSONObject) binding.get("label")).get("value").toString());
+                entitiesLabels.put(((JSONObject) binding.get("s")).get("value").toString(), ((JSONObject) binding.get("label")).get("value").toString());
             }
 
             JSONArray concepts = performSimpleQuery("SELECT ?s ?label WHERE { ?s rdf:type coeus:Concept . ?s rdfs:label ?label }");
-            JSONArray conceptsLabels = new JSONArray();
+            JSONObject conceptsLabels = new JSONObject();
             for (Object o : concepts) {
                 JSONObject binding = (JSONObject) o;
-                conceptsLabels.add(((JSONObject) binding.get("label")).get("value").toString());
+                conceptsLabels.put(((JSONObject) binding.get("s")).get("value").toString(), ((JSONObject) binding.get("label")).get("value").toString());
             }
 
             JSONArray resource = performSimpleQuery("SELECT ?s ?label WHERE { ?s rdf:type coeus:Resource . ?s rdfs:label ?label }");
-            JSONArray resourcesLabels = new JSONArray();
+            JSONObject resourcesLabels = new JSONObject();
             for (Object o : resource) {
                 JSONObject binding = (JSONObject) o;
-                resourcesLabels.add(((JSONObject) binding.get("label")).get("value").toString());
+                resourcesLabels.put(((JSONObject) binding.get("s")).get("value").toString(), ((JSONObject) binding.get("label")).get("value").toString());
             }
 
             // Has to be changed
             JSONArray pluginsLabels = new JSONArray();
             pluginsLabels.add("OMIM");
             pluginsLabels.add("CSV");
+            pluginsLabels.add("XML");
 
             finalR.put("entitiesLabels", entitiesLabels);
             finalR.put("conceptsLabels", conceptsLabels);
@@ -482,6 +484,9 @@ public class DataManagementService {
                 {
                     JSONObject conceptValues = (JSONObject) concepts.get(conceptURI);
                     JSONArray resourcesExtending = (JSONArray) conceptValues.get("hasResource");
+
+                    System.out.println("CONCEPT: " + conceptURI + " | RESOURCES EXTENDING: " + resourcesExtending);
+
                     JSONObject auxR = new JSONObject();
 
                     for (Object resourceURI : resourcesExtending) {
@@ -534,9 +539,6 @@ public class DataManagementService {
             Path copyLocation = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + StringUtils.cleanPath(label));
             Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
 
-            Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"blabla");
-            Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"" + file.getInputStream());
-
             this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, copyLocation.toString());
         } catch (IOException ex) {
             Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
@@ -559,6 +561,8 @@ public class DataManagementService {
 
             Path copyLocationMorbidmap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_morbidmap");
             Files.copy(morbidmap.getInputStream(), copyLocationMorbidmap, StandardCopyOption.REPLACE_EXISTING);
+
+            Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"" + morbidmap.getInputStream());
 
             this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, "omim://full");
         } catch (IOException ex) {
