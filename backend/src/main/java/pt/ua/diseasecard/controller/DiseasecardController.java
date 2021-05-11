@@ -195,17 +195,23 @@ public class DiseasecardController {
     }
 
 
-    @PostMapping(value = "/dcadmin/operations/addParser")
-    public void addParser(@RequestParam("titleResource") String title,
-                          @RequestParam("labelResource") String label,
-                          @RequestParam("descriptionResource") String description,
-                          @RequestParam("resourceOf") String resourceOf,
-                          @RequestParam("extendsResource") String extendsResource,
-                          @RequestParam("orderResource") String order,
-                          @RequestParam("publisherEndpoint") String publisher,
-                          @RequestParam("files") MultipartFile files ) throws IOException {
+    @PostMapping(value = "/dcadmin/operations/addCSVParser")
+    public void addCSVParser(@RequestParam("resourceID") String resourceID,
+                          @RequestParam(name="regexResource", required = false) String regexResource,
+                          @RequestParam("externalResourceID") String externalResourceID,
+                          @RequestParam(name="regexExternalResource", required = false) String regexExternalResource) throws IOException {
 
-        dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, files);
+
+    }
+
+
+    @PostMapping(value = "/dcadmin/operations/addXMLParser")
+    public void addXMLParser(@RequestParam("resourceID") String resourceID,
+                             @RequestParam(name="regexResource", required = false) String regexResource,
+                             @RequestParam("externalResourceID") String externalResourceID,
+                             @RequestParam(name="regexExternalResource", required = false) String regexExternalResource) throws IOException {
+
+
     }
 
 

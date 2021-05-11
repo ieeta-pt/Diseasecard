@@ -247,6 +247,7 @@ const AddResourceForm = props => {
                                     label="Upload local File"
                                     className={c.switch}
                                     checked={endpoint}
+                                    labelPlacement="start"
                                     onChange={e => setEndpoint(e.target.checked)}
                                     labelText="olaaa"
                                 />

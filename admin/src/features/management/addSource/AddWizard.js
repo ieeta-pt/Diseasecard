@@ -9,7 +9,7 @@ import {
     addConcept,
     addEntity, addOMIMResource, addResource, addResourceWithURLEndpoint,
     getFormLabels,
-    getInvalidEndpoints, getResource, resourceAdded, storeResource,
+    getInvalidEndpoints, getResource, getResourceAdded, resourceAdded, storeResource,
     uploadEndpoints,
     uploadOntology
 } from "./addSourceSlice";
@@ -556,7 +556,7 @@ const AddResources = props => {
 const AddParsers = props => {
     const dispatch = useDispatch()
     const resource = useSelector(getResource)
-    const resourceAdded = useSelector(resourceAdded)
+    const resourceAdded = useSelector(getResourceAdded)
     const plugin = resource.publisherEndpoint
     const submit = (values) => {
         console.log(values);
@@ -585,6 +585,7 @@ const AddParsers = props => {
         }*/
 
         if (resourceAdded) console.log("//call add parser")
+        // TODO: yey não esquecer de adicionar ao value a label do resource :)
     }
 
     let content;
@@ -598,8 +599,9 @@ const AddParsers = props => {
     }
     else
     {
-        content = <CircularProgress color="#1dc4e9" style={{paddingTop: "20px"}}/>
+        content = <CircularProgress color="primary" style={{paddingTop: "20px"}}/>
     }
+
     return (
         <div style={{textAlign: "center"}}>
             <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Parser</b></p>

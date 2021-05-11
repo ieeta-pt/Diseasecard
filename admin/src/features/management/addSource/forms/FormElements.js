@@ -74,6 +74,7 @@ export const useStyles = makeStyles((theme) => ({
         '& .MuiSwitch-colorPrimary.Mui-checked': {
             color: "#1de9b6",
         },
+
         '& .MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track': {
             backgroundColor: "#1de9b6",
         }
@@ -105,10 +106,10 @@ export const renderTextField = ({ label, input, labelText, meta: { touched, inva
 )
 
 
-export const renderSwitchField = ({ label, checked, input, labelText, meta: { touched, invalid, error },  ...custom }) => (
+export const renderSwitchField = ({ label, checked, input, labelText, labelPlacement, meta: { touched, invalid, error },  ...custom }) => (
     <FormControlLabel
         control={<Switch color="primary" />}
-        labelPlacement="start"
+        labelPlacement={labelPlacement}
         label={label}
         placeholder={label}
         checked={checked}

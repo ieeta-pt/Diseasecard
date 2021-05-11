@@ -115,6 +115,11 @@ const addSourceSlice = createSlice({
             state.omim = action.meta.arg
             state.error = action.error.message*/
         },
+        [getFormLabels.fulfilled]: (state, action) => {
+            state.conceptsLabels = action.payload.conceptsLabels;
+            state.entitiesLabels = action.payload.entitiesLabels;
+            state.pluginsLabels = action.payload.pluginsLabels;
+        },
         [addResource.fulfilled]: (state, action) => {
             state.resource = true
         },
@@ -134,7 +139,7 @@ export const getEntitiesLabels = state => state.addSource.entitiesLabels
 export const getPluginsLabels = state => state.addSource.pluginsLabels
 export const getResourcesLabels  = state => state.addSource.resourcesLabels
 export const getResource  = state => state.addSource.resource
-export const resourceAdded  = state => state.addSource.resourceAdded
+export const getResourceAdded  = state => state.addSource.resourceAdded
 
 export const { storeResource } = addSourceSlice.actions
 
