@@ -94,6 +94,21 @@ export const addResourceWithURLEndpoint = createAsyncThunk('addSource/addResourc
 })
 
 
+export const addOMIMResource = createAsyncThunk('addSource/addOMIMResource', async (forms) => {
+    console.log(forms)
+    let resource = forms.resource
+    let parser = forms.values
+
+    let formData = new FormData()
+    Object.entries(resource).map(item => { formData.append(item[0], item[1]) })
+
+    return API.POST("addOMIMResource", '', formData ).then(res => {
+        //TODO: add parser!
+        return res.data
+    })
+})
+
+
 const addParser = (parser, label, plugin) => {
     let formParser = new FormData()
     Object.entries(parser).map(item => { formParser.append(item[0], item[1]) })
@@ -102,19 +117,13 @@ const addParser = (parser, label, plugin) => {
     let path = ''
     if (plugin === "CSV")       path = "addCSVParser"
     else if (plugin === "XML")  path = "addXMLParser"
+    else if (plugin === "OMIM") path = "addOMIMParser"
 
     return API.POST(path, '', formParser ).then(res => {
         return res.data
     })
 }
 
-
-export const addOMIMResource = createAsyncThunk('addSource/addOMIMResource', async (forms) => {
-    let [formResource, formParser] = forms
-    return API.POST("addOMIMResource", '', formResource ).then(res => {
-        return res.data
-    })
-})
 
 
 const addSourceSlice = createSlice({

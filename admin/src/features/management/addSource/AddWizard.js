@@ -13,6 +13,7 @@ import AddResourceForm from "./forms/FormResource";
 import AddParserCSVForm from "./forms/FormParserCSV";
 import AddParserXMLForm from "./forms/FormParserXML";
 import {CircularProgress} from "@material-ui/core";
+import AddParserOMIMForm from "./forms/FormParserOMIM";
 
 const MethodIcon = styled(animated.div)``;
 
@@ -550,10 +551,11 @@ const AddParsers = props => {
     const plugin = resource.publisherEndpoint
     const submit = (values) => {
         let forms = {resource, values}
+        console.log(forms)
 
         if ( resource.publisherEndpoint === 'OMIM' ) dispatch(addOMIMResource(forms))
         else {
-            if (!resource.isEndpointFile) dispatch(addResourceWithURLEndpoint((forms)))
+            if (!resource.isEndpointFile) dispatch(addResourceWithURLEndpoint(forms))
             else dispatch(addResource(forms))
         }
     }
@@ -562,8 +564,9 @@ const AddParsers = props => {
     if(plugin) {
         content = (
             <div>
-                {plugin === "CSV" && <AddParserCSVForm onSubmit={submit} formDetails={props}/> }
-                {plugin === "XML" && <AddParserXMLForm onSubmit={submit} formDetails={props}/> }
+                {plugin === "CSV"  && <AddParserCSVForm  onSubmit={submit} formDetails={props}/> }
+                {plugin === "XML"  && <AddParserXMLForm  onSubmit={submit} formDetails={props}/> }
+                {plugin === "OMIM" && <AddParserOMIMForm onSubmit={submit} formDetails={props}/> }
             </div>
         )
     }
