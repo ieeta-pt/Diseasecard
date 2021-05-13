@@ -62,30 +62,56 @@ export const addConcept = createAsyncThunk('addSource/addConcept', async (form) 
 })
 
 
-export const addResource = createAsyncThunk('addSource/addResource', async (form) => {
-    return API.POST("addResource", '', form ).then(res => {
-        return res.data
+export const addResource = createAsyncThunk('addSource/addResource', async (forms) => {
+    let resource = forms.resource
+    let parser = forms.values
+
+    let plugin = resource.publisherEndpoint
+    let label = resource.labelResource
+
+    let formData = new FormData()
+    Object.entries(resource).map(item => { formData.append(item[0], item[1]) })
+
+    return API.POST("addResource", '', formData ).then(res => {
+        return addParser(parser, label, plugin)
     })
 })
 
 
-export const addParser = createAsyncThunk('addSource/addParser', async (form) => {
-    return API.POST("addParser", '', form ).then(res => {
-        console.log(res.data)
-        return res.data
+export const addResourceWithURLEndpoint = createAsyncThunk('addSource/addResourceWithURLEndpoint', async (forms) => {
+    let resource = forms.resource
+    let parser = forms.values
+
+    let plugin = resource.publisherEndpoint
+    let label = resource.labelResource
+
+    let formData = new FormData()
+    Object.entries(resource).map(item => { formData.append(item[0], item[1]) })
+
+    return API.POST("addResourceWithURLEndpoint", '', formData ).then(res => {
+        return addParser(parser, label, plugin)
     })
 })
 
 
-export const addResourceWithURLEndpoint = createAsyncThunk('addSource/addResourceWithURLEndpoint', async (form) => {
-    return API.POST("addResourceWithURLEndpoint", '', form ).then(res => {
+const addParser = (parser, label, plugin) => {
+    let formParser = new FormData()
+    Object.entries(parser).map(item => { formParser.append(item[0], item[1]) })
+    formParser.append("resource", label)
+
+    let path = ''
+    if (plugin === "CSV")       path = "addCSVParser"
+    else if (plugin === "XML")  path = "addXMLParser"
+
+    return API.POST(path, '', formParser ).then(res => {
         return res.data
     })
-})
+}
 
 
-export const addOMIMResource = createAsyncThunk('addSource/addOMIMResource', async (form) => {
-    return API.POST("addOMIMResource", '', form ).then(res => {
+export const addOMIMResource = createAsyncThunk('addSource/addOMIMResource', async (forms) => {
+    let [formResource, formParser] = forms
+    return API.POST("addOMIMResource", '', formResource ).then(res => {
         return res.data
     })
 })
@@ -121,13 +147,7 @@ const addSourceSlice = createSlice({
             state.pluginsLabels = action.payload.pluginsLabels;
         },
         [addResource.fulfilled]: (state, action) => {
-            state.resource = true
-        },
-        [addResourceWithURLEndpoint.fulfilled]: (state, action) => {
-            state.resource = true
-        },
-        [addOMIMResource.fulfilled]: (state, action) => {
-            state.resource = true
+            // state.resource = true
         },
     }
 })

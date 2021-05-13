@@ -213,35 +213,25 @@ public class Storage {
         Description
      */
     public void addConcept(String title, String label, String description, String relatedEntity, String relatedResource)  {
-        try {
-            this.prepareModel();
+        Resource newConcept = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
+        this.addCore(newConcept, title, label, description, "Concept");
 
-            Resource newConcept = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
-            this.addCore(newConcept, title, label, description, "Concept");
+        Property hasEntity = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
+        Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
 
-            Property hasEntity = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
-            Property entityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
+        Resource entity = this.model.getResource(relatedEntity);
 
-            Resource entity = this.model.getResource(relatedEntity);
+        entity.addProperty(entityOfProperty, newConcept);
+        newConcept.addProperty(hasEntity, entity);
 
-            entity.addProperty(entityOfProperty, newConcept);
-            newConcept.addProperty(hasEntity, entity);
+        if ( !relatedResource.equals("") ) {
+            Property hasResource = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasResource");
+            Property extendsProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "extends");
 
-            if ( !relatedResource.equals("") ) {
-                Property hasResource = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasResource");
-                Property extendsProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "extends");
+            Resource resource = this.model.getResource(relatedResource);
 
-                Resource resource = this.model.getResource(relatedResource);
-
-                resource.addProperty(extendsProperty, newConcept);
-                newConcept.addProperty(hasResource, resource);
-            }
-
-        } catch (IOException ex) {
-            if (this.config.getDebug()) {
-                Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] Error while preparing model");
-                Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            resource.addProperty(extendsProperty, newConcept);
+            newConcept.addProperty(hasResource, resource);
         }
     }
 
@@ -250,38 +240,85 @@ public class Storage {
         Description
      */
     public void addResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String location) {
-        try {
-            this.prepareModel();
-            Logger.getLogger(Storage.class.getName()).log(Level.INFO,"URI of the new resource: " + this.config.getPrefixes().get("diseasecard") + label);
 
-            Resource newResource = this.model.createResource(this.config.getPrefixes().get("diseasecard") + label);
-            this.addCore(newResource, title, label, description, "Resource");
+        Logger.getLogger(Storage.class.getName()).log(Level.INFO,"URI of the new resource: " + this.config.getPrefixes().get("diseasecard") + label);
 
-            Property orderProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "order");
-            Property publisherProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "publisher");
-            Property endpointProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "endpoint");
+        Resource newResource = this.model.createResource(this.config.getPrefixes().get("diseasecard") + label);
+        this.addCore(newResource, title, label, description, "Resource");
 
-            newResource.addProperty(orderProperty, order);
-            newResource.addProperty(publisherProperty, publisher);
-            newResource.addProperty(endpointProperty, location);
+        Property orderProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "order");
+        Property publisherProperty = this.model.getProperty(this.config.getPrefixes().get("dc") + "publisher");
+        Property endpointProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "endpoint");
 
-            Property resourceOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isResourceOf");
-            Property extendsProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "extends");
-            Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasResource");
+        newResource.addProperty(orderProperty, order);
+        newResource.addProperty(publisherProperty, publisher);
+        newResource.addProperty(endpointProperty, location);
 
-            Resource conceptResourceOf = this.model.getResource(resourceOf);
-            Resource conceptExtends = this.model.getResource(extendsResource);
+        Property resourceOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isResourceOf");
+        Property extendsProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "extends");
+        Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasResource");
 
-            newResource.addProperty(resourceOfProperty, conceptResourceOf);
-            newResource.addProperty(extendsProperty, conceptExtends);
-            conceptResourceOf.addProperty(hasResourceProperty, newResource);
+        Resource conceptResourceOf = this.model.getResource(resourceOf);
+        Resource conceptExtends = this.model.getResource(extendsResource);
 
-        } catch (IOException ex) {
-            if (this.config.getDebug()) {
-                Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] Error while preparing model");
-                Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        newResource.addProperty(resourceOfProperty, conceptResourceOf);
+        newResource.addProperty(extendsProperty, conceptExtends);
+        conceptResourceOf.addProperty(hasResourceProperty, newResource);
+
+
+    }
+
+
+    public void addParserCore(String resourceLabel, boolean resourceInfoInAttribute, String resourceInfo, String regexResource, boolean externalResourceInfoInAttribute, String externalResourceInfo, String regexExternalResource){
+
+        Resource resource = this.model.getResource(this.config.getPrefixes().get("diseasecard") + resourceLabel);
+        Resource parser = this.model.createResource(this.config.getPrefixes().get("diseasecard") + "parser_" + resourceLabel);
+
+        Property hasParserProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasParser");
+        Property isParserOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isParserOf");
+
+        resource.addProperty(hasParserProperty, parser);
+        parser.addProperty(isParserOfProperty, resource);
+
+        Property resourceInfoProperty;
+        if (!resourceInfoInAttribute)   resourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "resourceID");
+        else                            resourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "resourceInfoAttribute");
+        parser.addProperty(resourceInfoProperty, resourceInfo);
+
+
+        Property externalResourceInfoProperty;
+        if (!externalResourceInfoInAttribute)   externalResourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "externalResourceID");
+        else                                    externalResourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "externalResourceAttribute");
+        parser.addProperty(externalResourceInfoProperty, externalResourceInfo);
+
+
+        Property resourceRegexProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "resourceRegex");
+        Property externalResourceRegexProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "externalResourceRegex");
+
+        parser.addProperty(resourceRegexProperty, regexResource);
+        parser.addProperty(externalResourceRegexProperty, regexExternalResource);
+    }
+
+
+    public void addParserExtra(String resourceLabel, String mainNode, String isMethodByReplace, String uniqueResource, String externalResourceNode, String uniqueExternalResource, String filterBy, String filterValue) {
+
+        Resource parser = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "parser_" + resourceLabel);
+
+        Property mainProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "mainNode");
+        Property isMethodByReplaceProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "methodByReplace");
+        Property uniqueResourceProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "uniqueResource");
+        Property externalResourceNodeProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "externalResourceNode");
+        Property uniqueExternalResourceProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "uniqueExternalResource");
+        Property filterByProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "filterBy");
+        Property filterValueProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "filterValue");
+
+        parser.addProperty(mainProperty, mainNode);
+        parser.addProperty(isMethodByReplaceProperty, isMethodByReplace);
+        parser.addProperty(uniqueResourceProperty, uniqueResource);
+        parser.addProperty(externalResourceNodeProperty, externalResourceNode);
+        parser.addProperty(uniqueExternalResourceProperty, uniqueExternalResource);
+        parser.addProperty(filterByProperty, filterBy);
+        parser.addProperty(filterValueProperty, filterValue);
     }
 
 
@@ -323,6 +360,7 @@ public class Storage {
     public void setInfmodel(InfModel infmodel) {
         this.infmodel = infmodel;
     }
+
 
 
 }

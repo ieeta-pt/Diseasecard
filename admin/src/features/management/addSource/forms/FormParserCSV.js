@@ -9,9 +9,7 @@ const validate = values => {
     const errors = {}
     const requiredFields = [
         'resourceID',
-        'resourceRegex',
         'externalResourceID',
-        'externalResourceRegex',
     ]
     requiredFields.forEach(field => {
         if (!values[field]) {
@@ -31,11 +29,12 @@ const AddParserCSVForm = props => {
 
     return (
         <div style={{width: "100%"}}>
-            <form className={c.root} style={{width: "100%", textAlign:"left"}} onSubmit={handleSubmit} name="addConceptForm">
-                <Typography variant="subtitle3" gutterBottom style={{textAlign: "left", width: "100%"}}>
+            <form className={c.root} style={{width: "100%", textAlign:"left"}} onSubmit={handleSubmit} name="addParserCSVForm">
+                <Typography variant="inherit" gutterBottom style={{textAlign: "left", width: "100%"}}>
                     Resource Identification
                 </Typography>
-                <Grid container spacing={2}>
+                <Divider light/>
+                <Grid container spacing={2} style={{marginBottom: "30px"}}>
                     <Grid item xs={6}>
                         <Field
                             size="small"
@@ -59,9 +58,12 @@ const AddParserCSVForm = props => {
                         />
                     </Grid>
                 </Grid>
-                <Typography variant="subtitle3" gutterBottom style={{textAlign: "left", width: "100%"}}>
+
+
+                <Typography variant="inherit" gutterBottom style={{textAlign: "left", width: "100%"}}>
                     External Resource Identification
                 </Typography>
+                <Divider light/>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Field

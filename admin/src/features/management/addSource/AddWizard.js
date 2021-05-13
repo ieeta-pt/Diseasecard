@@ -5,19 +5,11 @@ import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
 import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from "react-redux";
-import {
-    addConcept,
-    addEntity, addOMIMResource, addResource, addResourceWithURLEndpoint,
-    getFormLabels,
-    getInvalidEndpoints, getResource, getResourceAdded, resourceAdded, storeResource,
-    uploadEndpoints,
-    uploadOntology
-} from "./addSourceSlice";
+import { addConcept, addEntity, addOMIMResource, addResource, addResourceWithURLEndpoint, getFormLabels, getInvalidEndpoints, getResource, storeResource, uploadEndpoints, uploadOntology} from "./addSourceSlice";
 import Dropzone from 'react-dropzone'
 import AddConceptForm from "./forms/FormConcept";
 import AddEntityFrom from "./forms/FormEntity";
 import AddResourceForm from "./forms/FormResource";
-import AddParserForm from "./forms/FormParserCSV";
 import AddParserCSVForm from "./forms/FormParserCSV";
 import AddParserXMLForm from "./forms/FormParserXML";
 import {CircularProgress} from "@material-ui/core";
@@ -75,7 +67,6 @@ export const AddWizard = () => {
                         <AddConcepts  update={updateForm} form={state.form}/>
                         <AddResources  update={updateForm} form={state.form}/>
                         <AddParsers  update={updateForm} form={state.form}/>
-
                     </StepWizard>
                 </Col>
             </Row>
@@ -556,36 +547,15 @@ const AddResources = props => {
 const AddParsers = props => {
     const dispatch = useDispatch()
     const resource = useSelector(getResource)
-    const resourceAdded = useSelector(getResourceAdded)
     const plugin = resource.publisherEndpoint
     const submit = (values) => {
-        console.log(values);
+        let forms = {resource, values}
 
-        /*if ( resource.publisherEndpoint === 'OMIM' )
-        {
-            let formData = new FormData(document.forms.namedItem("addResourceForm"))
-            formData.append("genemap", resource.genemap)
-            formData.append("morbidmap", resource.morbidmap)
-            dispatch(addOMIMResource(formData))
+        if ( resource.publisherEndpoint === 'OMIM' ) dispatch(addOMIMResource(forms))
+        else {
+            if (!resource.isEndpointFile) dispatch(addResourceWithURLEndpoint((forms)))
+            else dispatch(addResource(forms))
         }
-        else
-        {
-            if (!resource.isEndpointFile)
-            {
-                let formData = new FormData(document.forms.namedItem("addResourceForm"))
-                formData.append("files", resource.endpointResource)
-                dispatch(addResourceWithURLEndpoint(formData))
-            }
-            else
-            {
-                let formData = new FormData(document.forms.namedItem("addResourceForm"))
-                formData.append("files", resource.files)
-                dispatch(addResource(formData))
-            }
-        }*/
-
-        if (resourceAdded) console.log("//call add parser")
-        // TODO: yey não esquecer de adicionar ao value a label do resource :)
     }
 
     let content;
@@ -597,10 +567,7 @@ const AddParsers = props => {
             </div>
         )
     }
-    else
-    {
-        content = <CircularProgress color="primary" style={{paddingTop: "20px"}}/>
-    }
+    else content = <CircularProgress color="inherit" style={{marginTop: "40px"}}/>
 
     return (
         <div style={{textAlign: "center"}}>

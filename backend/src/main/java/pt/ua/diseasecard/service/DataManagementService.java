@@ -389,9 +389,6 @@ public class DataManagementService {
 
             JSONObject results = (JSONObject) response.get("results");
             JSONArray bindings = (JSONArray) results.get("bindings");
-
-            System.out.println("GET RESOURCE of " + resourceURI + " : " + bindings);
-
             try {
                 JSONObject a = (JSONObject) bindings.get(0);
                 resource.put("description", ((JSONObject) a.get("description")).get("value").toString());
@@ -486,8 +483,6 @@ public class DataManagementService {
                     JSONObject conceptValues = (JSONObject) concepts.get(conceptURI);
                     JSONArray resourcesExtending = (JSONArray) conceptValues.get("hasResource");
 
-                    System.out.println("CONCEPT: " + conceptURI + " | RESOURCES EXTENDING: " + resourcesExtending);
-
                     JSONObject auxR = new JSONObject();
 
                     for (Object resourceURI : resourcesExtending) {
@@ -529,7 +524,7 @@ public class DataManagementService {
 
 
     public void prepareAddConcept(String title, String label, String description, String hasEntity, String hasResource) {
-        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Add Concept to " + this.config.getName() );
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Add Concept to " + this.config.getName() );
 
         this.storage.addConcept(title, label, description, hasEntity, hasResource);
     }
@@ -548,12 +543,24 @@ public class DataManagementService {
 
 
     public void prepareAddResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String endpoint) {
-        Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"blabla");
-        Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"" + endpoint);
-
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Add Resource to " + this.config.getName() );
         this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, endpoint);
     }
 
+
+    public void prepareAddParser(String resource, String resourceID, String regexResource, String externalResourceID, String regexExternalResource) {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Add Parser to " + resource );
+
+        this.storage.addParserCore(resource, false, resourceID, regexResource, false, externalResourceID, regexExternalResource);
+    }
+
+
+    public void prepareAddParser(String resource, String mainNode, String isMethodByReplace, String resourceInfoInAttribute, String resourceInfo, String uniqueResource, String regexResource, String externalResourceInfoInAttribute, String externalResourceInfo, String externalResourceNode, String regexExternalResource, String uniqueExternalResource,String filterBy, String filterValue ) {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Add Parser to " + resource );
+
+        this.storage.addParserCore(resource, Boolean.parseBoolean(resourceInfoInAttribute), resourceInfo, regexResource, Boolean.parseBoolean(externalResourceInfoInAttribute), externalResourceInfo, regexExternalResource);
+        this.storage.addParserExtra(resource, mainNode, isMethodByReplace, uniqueResource, externalResourceNode, uniqueExternalResource, filterBy, filterValue);
+    }
 
     public void prepareAddOMIMResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, MultipartFile morbidmap, MultipartFile genemap) {
         try {

@@ -14,8 +14,7 @@ const validate = values => {
         'resourceID',
         'uniqueResource',
         'externalResourceInfoInAttribute',
-        'externalResourceID',
-        'uniqueExternalResource',
+        'externalResourceNode',
     ]
     requiredFields.forEach(field => {
         if (!values[field]) {
@@ -41,8 +40,8 @@ const AddParserXMLForm = props => {
 
     return (
         <div style={{width: "100%"}}>
-            <form className={c.root} style={{width: "100%", textAlign:"left"}} onSubmit={handleSubmit} name="addConceptForm">
-                <Typography variant="subtitle3" gutterBottom style={{textAlign: "left", width: "100%", color: "rgb(29, 196, 233)"}}>
+            <form className={c.root} style={{width: "100%", textAlign:"left"}} onSubmit={handleSubmit} name="addParserXMLForm">
+                <Typography variant="inherit" gutterBottom style={{textAlign: "left", width: "100%", color: "rgb(29, 196, 233)"}}>
                     Global Information
                 </Typography>
                 <Divider light/>
@@ -73,8 +72,7 @@ const AddParserXMLForm = props => {
                 </Grid>
 
 
-
-                <Typography variant="subtitle3" gutterBottom style={{textAlign: "left", width: "100%", color: "rgb(29, 196, 233)"}}>
+                <Typography variant="inherit" gutterBottom style={{textAlign: "left", width: "100%", color: "rgb(29, 196, 233)"}}>
                     Resource Identification
                 </Typography>
                 <Divider light/>
@@ -128,8 +126,7 @@ const AddParserXMLForm = props => {
                 </Grid>
 
 
-
-                <Typography variant="subtitle3" gutterBottom style={{textAlign: "left", width: "100%", color: "rgb(29, 196, 233)"}}>
+                <Typography variant="inherit" gutterBottom style={{textAlign: "left", width: "100%", color: "rgb(29, 196, 233)"}}>
                     External Resource Identification
                 </Typography>
                 <Divider light/>
@@ -185,7 +182,7 @@ const AddParserXMLForm = props => {
                         <Field
                             size="small"
                             variant="outlined"
-                            name="externalResourceRegex"
+                            name="regexExternalResource"
                             component={renderTextField}
                             label="Regex Expression"
                             className={c.field}
@@ -227,5 +224,16 @@ export default reduxForm({
     form: 'AddParserXMLForm', // a unique identifier for this form
     validate,
     asyncValidate,
-    initialValues: { uniqueResource: false, uniqueExternalResource: false, resourceInfoInAttribute: false, externalResourceInfoInAttribute:false }
+    initialValues: {
+        uniqueResource: false,
+        isMethodByReplace: false,
+        uniqueExternalResource: false,
+        resourceInfoInAttribute: false,
+        externalResourceInfoInAttribute:false,
+        resourceRegex: "",
+        externalResourceNode: "",
+        regexExternalResource: "",
+        filterBy:"",
+        filterValue:""
+    }
 })(AddParserXMLForm)
