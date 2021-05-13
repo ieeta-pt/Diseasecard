@@ -284,19 +284,21 @@ public class Storage {
         if (!resourceInfoInAttribute)   resourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "resourceID");
         else                            resourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "resourceInfoAttribute");
         parser.addProperty(resourceInfoProperty, resourceInfo);
-
+        System.out.println("ResourceInfoProperty: " + resourceInfoProperty);
 
         Property externalResourceInfoProperty;
         if (!externalResourceInfoInAttribute)   externalResourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "externalResourceID");
-        else                                    externalResourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "externalResourceAttribute");
+        else                                    externalResourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "externalResourceInfoAttribute");
         parser.addProperty(externalResourceInfoProperty, externalResourceInfo);
 
 
         Property resourceRegexProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "resourceRegex");
-        Property externalResourceRegexProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "externalResourceRegex");
-
         parser.addProperty(resourceRegexProperty, regexResource);
+
+
+        Property externalResourceRegexProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "externalResourceRegex");
         parser.addProperty(externalResourceRegexProperty, regexExternalResource);
+
     }
 
 

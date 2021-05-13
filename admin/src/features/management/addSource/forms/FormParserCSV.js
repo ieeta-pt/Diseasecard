@@ -99,6 +99,10 @@ const AddParserCSVForm = props => {
 export default reduxForm({
     form: 'AddParserCSVForm', // a unique identifier for this form
     validate,
-    asyncValidate
+    asyncValidate,
+    initialValues: {
+        resourceRegex: "",
+        externalResourceRegex: ""
+    }
 })(AddParserCSVForm)
 

@@ -383,6 +383,7 @@ public class DataManagementService {
                 + " <" + resourceURI + "> coeus:endpoint ?endpoint ."
                 + " <" + resourceURI + "> coeus:order ?order . "
                 + "OPTIONAL { <" + resourceURI + "> coeus:built ?built} . "
+                + "OPTIONAL { <" + resourceURI + "> coeus:hasParser ?hasParser} . "
                 + "OPTIONAL { <" + resourceURI + "> coeus:identifiers ?identifiers}}";
 
             JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select(queryString, "js", false));
@@ -402,12 +403,12 @@ public class DataManagementService {
 
                 JSONObject built = (JSONObject) a.get("built");
                 JSONObject identifiers = (JSONObject) a.get("identifiers");
+                JSONObject hasParser = (JSONObject) a.get("hasParser");
 
-                if (built != null) resource.put("built", Boolean.parseBoolean(built.get("value").toString()));
-                else resource.put("built", false);
+                resource.put("built", built != null ? Boolean.parseBoolean(built.get("value").toString()) : false);
+                resource.put("hasParser", hasParser != null ? hasParser.get("value").toString() : "");
+                resource.put("identifiers", identifiers != null ? identifiers.get("value").toString() : "");
 
-                if (identifiers != null) resource.put("identifiers", identifiers.get("value").toString());
-                else resource.put("identifiers", "");
             } catch (Exception ex) {}
         }
         catch (Exception e)

@@ -9,11 +9,7 @@ const validate = values => {
     const errors = {}
     const requiredFields = [
         'mainNode',
-        'isMethodByReplace',
-        'resourceInfoInAttribute',
         'resourceID',
-        'uniqueResource',
-        'externalResourceInfoInAttribute',
         'externalResourceNode',
     ]
     requiredFields.forEach(field => {

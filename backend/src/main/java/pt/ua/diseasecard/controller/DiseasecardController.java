@@ -198,9 +198,9 @@ public class DiseasecardController {
     @PostMapping(value = "/dcadmin/operations/addCSVParser")
     public void addCSVParser(@RequestParam("resource") String resource,
                           @RequestParam("resourceID") String resourceID,
-                          @RequestParam(name="regexResource", required = false) String regexResource,
+                          @RequestParam(name="regexResource", required = false, defaultValue = "") String regexResource,
                           @RequestParam("externalResourceID") String externalResourceID,
-                          @RequestParam(name="regexExternalResource", required = false) String regexExternalResource) {
+                          @RequestParam(name="regexExternalResource", required = false, defaultValue = "") String regexExternalResource) {
 
         dataManagementService.prepareAddParser(resource, resourceID, regexResource, externalResourceID, regexExternalResource);
     }
@@ -213,14 +213,14 @@ public class DiseasecardController {
                              @RequestParam("resourceInfoInAttribute") String resourceInfoInAttribute,
                              @RequestParam("resourceID") String resourceInfo,
                              @RequestParam("uniqueResource") String uniqueResource,
-                             @RequestParam(name="regexResource", required = false) String regexResource,
+                             @RequestParam(name="regexResource", required = false, defaultValue = "") String regexResource,
                              @RequestParam("externalResourceInfoInAttribute") String externalResourceInfoInAttribute,
-                             @RequestParam("externalResourceID") String externalResourceInfo,
+                             @RequestParam(name="externalResourceID", required = false, defaultValue = "") String externalResourceInfo,
                              @RequestParam("externalResourceNode") String externalResourceNode,
                              @RequestParam("uniqueExternalResource") String uniqueExternalResource,
-                             @RequestParam(name="filterBy", required = false) String filterBy,
-                             @RequestParam(name="filterValue", required = false) String filterValue,
-                             @RequestParam(name="regexExternalResource", required = false) String regexExternalResource)  {
+                             @RequestParam(name="filterBy", required = false, defaultValue = "") String filterBy,
+                             @RequestParam(name="filterValue", required = false, defaultValue = "") String filterValue,
+                             @RequestParam(name="regexExternalResource", required = false, defaultValue = "") String regexExternalResource)  {
 
         dataManagementService.prepareAddParser(resource, mainNode, isMethodByReplace,
                 resourceInfoInAttribute, resourceInfo, uniqueResource, regexResource, externalResourceInfoInAttribute,
