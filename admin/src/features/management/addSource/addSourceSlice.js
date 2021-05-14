@@ -8,6 +8,7 @@ const initialState = {
     conceptsLabels: [],
     entitiesLabels: [],
     pluginsLabels: [],
+    ordersLabels: [],
     resourcesLabels: [],
     resource: [],
     resourceAdded: false,
@@ -125,7 +126,6 @@ const addParser = (parser, label, plugin) => {
 }
 
 
-
 const addSourceSlice = createSlice({
     name: 'addSource',
     initialState,
@@ -151,9 +151,11 @@ const addSourceSlice = createSlice({
             state.error = action.error.message*/
         },
         [getFormLabels.fulfilled]: (state, action) => {
+            console.log(action.payload)
             state.conceptsLabels = action.payload.conceptsLabels;
             state.entitiesLabels = action.payload.entitiesLabels;
             state.pluginsLabels = action.payload.pluginsLabels;
+            state.ordersLabels = action.payload.ordersLabels;
         },
         [addResource.fulfilled]: (state, action) => {
             // state.resource = true
@@ -166,6 +168,7 @@ export const getInvalidEndpoints = state => state.addSource.invalidEndpoints
 export const getConceptsLabels = state => state.addSource.conceptsLabels
 export const getEntitiesLabels = state => state.addSource.entitiesLabels
 export const getPluginsLabels = state => state.addSource.pluginsLabels
+export const getOrdersLabels = state => state.addSource.ordersLabels
 export const getResourcesLabels  = state => state.addSource.resourcesLabels
 export const getResource  = state => state.addSource.resource
 export const getResourceAdded  = state => state.addSource.resourceAdded

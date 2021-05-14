@@ -15,7 +15,7 @@ import {
     useStyles,
     renderSwitchField
 } from "./FormElements";
-import { getConceptsLabels, getPluginsLabels } from "../addSourceSlice";
+import {getConceptsLabels, getOrdersLabels, getPluginsLabels} from "../addSourceSlice";
 import { useSelector } from "react-redux";
 import {Col, Row} from "react-bootstrap";
 import {useDropzone} from "react-dropzone";
@@ -33,6 +33,7 @@ const validate = values => {
         'publisherEndpoint',
     ]
     requiredFields.forEach(field => {
+        console.log(values[field])
         if (!values[field]) {
             errors[field] = 'Required'
         }
@@ -43,25 +44,6 @@ const validate = values => {
     return errors
 }
 
-
-const currencies = [
-    {
-        value: 'USD',
-        label: '$',
-    },
-    {
-        value: 'EUR',
-        label: '€',
-    },
-    {
-        value: 'BTC',
-        label: '฿',
-    },
-    {
-        value: 'JPY',
-        label: '¥',
-    },
-];
 
 
 const AddResourceForm = props => {
@@ -90,6 +72,7 @@ const AddResourceForm = props => {
 
     const conceptLabels = useSelector(getConceptsLabels)
     const pluginLabels = useSelector(getPluginsLabels)
+    const ordersLabels = useSelector(getOrdersLabels)
 
     const [publisher, setPublisher] = useState('');
     const [endpoint, setEndpoint] = useState(false);
@@ -190,9 +173,9 @@ const AddResourceForm = props => {
                             labelText="olaaa"
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
-                            {currencies.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
+                            {ordersLabels.map((option) => (
+                                <MenuItem key={option} value={option+""}>
+                                    {option}
                                 </MenuItem>
                             ))}
                         </Field>

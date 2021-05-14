@@ -28,6 +28,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -449,6 +450,21 @@ public class DataManagementService {
                 resourcesLabels.put(((JSONObject) binding.get("s")).get("value").toString(), ((JSONObject) binding.get("label")).get("value").toString());
             }
 
+            JSONArray orders = performSimpleQuery("SELECT ?s ?order WHERE { ?s coeus:order ?order }");
+            TreeSet<Integer> ordersValues = new TreeSet<>();
+            for (Object o : orders) {
+                JSONObject binding = (JSONObject) o;
+                ordersValues.add(Integer.parseInt(((JSONObject) binding.get("label")).get("value").toString()));
+            }
+
+
+            if ( ordersValues.size() > 0 )
+                for (int i = 0 ; i < ordersValues.last() + 1; i++) {
+                    if (!ordersValues.contains(i)) ordersValues.add(i);
+                }
+            else ordersValues.add(0);
+
+
             // Has to be changed
             JSONArray pluginsLabels = new JSONArray();
             this.ontologyProperties.getPluginLabels().forEach((element) -> pluginsLabels.add(element));
@@ -457,6 +473,7 @@ public class DataManagementService {
             finalR.put("conceptsLabels", conceptsLabels);
             finalR.put("resourcesLabels", resourcesLabels);
             finalR.put("pluginsLabels", pluginsLabels);
+            finalR.put("ordersLabels", ordersValues);
         }
         catch (Exception e)  { e.printStackTrace(); }
         return finalR;
@@ -562,6 +579,7 @@ public class DataManagementService {
         this.storage.addParserCore(resource, Boolean.parseBoolean(resourceInfoInAttribute), resourceInfo, regexResource, Boolean.parseBoolean(externalResourceInfoInAttribute), externalResourceInfo, regexExternalResource);
         this.storage.addParserExtra(resource, mainNode, isMethodByReplace, uniqueResource, externalResourceNode, uniqueExternalResource, filterBy, filterValue);
     }
+
 
     public void prepareAddOMIMResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, MultipartFile morbidmap, MultipartFile genemap) {
         try {
