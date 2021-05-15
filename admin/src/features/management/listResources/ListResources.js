@@ -43,89 +43,220 @@ export const ListResources = () => {
         console.log(row)
     }
 
-
-    const columns = [
+    const columnsEntities = [
         {
             dataField: "title",
-            text: "Entity Title"
+            text: "Entity Title",
+            headerStyle: () => {
+                return { width: "30%" };
+            }
         },
         {
             dataField: "label",
             text: "Entity Label",
-            sort: true
+            sort: true,
+            headerStyle: () => {
+                return { width: "30%" };
+            }
         },
         {
             dataField: "description",
-            text: "Entity Description"
+            text: "Entity Description",
+            headerStyle: () => {
+                return { width: "30%" };
+            }
         },
         {
             text : 'Action',
             dataField : '',
             formatter : GetActionFormat,
-            classes : 'p-1'
+            classes : 'p-1',
+            headerStyle: () => {
+                return { width: "3%" };
+            }
+        }
+    ];
+
+    const columnsConcept = [
+        {
+            dataField: "title",
+            text: "Concept Title",
+            headerStyle: () => {
+                return { width: "28.75%" };
+            }
+        },
+        {
+            dataField: "label",
+            text: "Concept Label",
+            sort: true,
+            headerStyle: () => {
+                return { width: "31.15%" };
+            }
+        },
+        {
+            dataField: "description",
+            text: "Concept Description",
+            headerStyle: () => {
+                return { width: "31%" };
+            }
+        },
+        {
+            text : 'Action',
+            dataField : '',
+            formatter : GetActionFormat,
+            classes : 'p-1',
+            headerStyle: () => {
+                return { width: "3%" };
+            }
         }
     ];
     const expandRowConcept = {
         renderer: row => (
-            <BootstrapTable
-                keyField="uri"
-                data={row.isEntityOf}
-                columns={columns}
-                expandRow={expandRowResource}
-            />
+            <div style={{marginRight: "-12px", marginLeft: "1.45%", marginTop: "-1.05rem", paddingLeft: "-12px"}}>
+                <BootstrapTable
+                    keyField="uri"
+                    data={row.isEntityOf}
+                    columns={columnsConcept}
+                    expandRow={expandRowResource}
+                    hover
+                />
+            </div>
+
         ),
         showExpandColumn: true,
-        nonExpandable: getNonExpandableRows()[0]
+        nonExpandable: getNonExpandableRows()[0],
+        expandColumnRenderer: ({ expanded, rowKey, expandable  }) => {
+            if (expanded) {
+                return ( <i className="feather icon-minus-circle"></i> );
+            }
+            if (expandable) {
+                return ( <i className="feather icon-plus-circle"></i> );
+            }
+        },
+        expandHeaderColumnRenderer: ({ isAnyExpands }) => {
+            if (isAnyExpands) {
+                return <i className="feather icon-minus-square"></i>;
+            }
+            return <i className="feather icon-plus-square"></i>;
+        },
     };
 
     const columnsResource = [
         {
             dataField: "title",
-            text: "Entity Title"
+            text: "Resource Title",
+            headerStyle: () => {
+                return { width: "13.6%" };
+            }
         },
         {
             dataField: "label",
-            text: "Entity Label",
-            sort: true
+            text: "Resource Label",
+            sort: true,
+            headerStyle: () => {
+                return { width: "13.55%" };
+            }
         },
         {
             dataField: "description",
-            text: "Entity Description"
+            text: "Resource Description",
+            headerStyle: () => {
+                return { width: "16.2%" };
+            }
         },
         {
             dataField: "order",
-            text: "Entity Order"
+            text: "Resource Order",
+            headerStyle: () => {
+                return { width: "15.9%" };
+            }
         },
         {
             dataField: "publisher",
-            text: "Entity Publisher"
+            text: "Resource Publisher",
+            headerStyle: () => {
+                return { width: "16%" };
+            }
         },
         {
             dataField: "endpoint",
-            text: "Entity Endpoint"
+            text: "Resource Endpoint",
+            headerStyle: () => {
+                return { width: "16%" };
+            }
+        },
+        {
+            text : 'Action',
+            dataField : '',
+            formatter : GetActionFormat,
+            classes : 'p-1',
+            headerStyle: () => {
+                return { width: "3%" };
+            }
         }
     ];
     const expandRowResource = {
         renderer: row => (
-            <BootstrapTable
-                keyField="label"
-                data={row.hasResource}
-                columns={columnsResource}
-            />
+            <div style={{marginRight: "-12px", marginLeft: "1.45%", marginTop: "-1.05rem", paddingLeft: "-12px"}}>
+                <BootstrapTable
+                    keyField="label"
+                    data={row.hasResource}
+                    columns={columnsResource}
+                    hover
+                    expandRow={expandRowParser}
+                />
+            </div>
         ),
         showExpandColumn: true,
-        nonExpandable: getNonExpandableRows()[1]
+        nonExpandable: getNonExpandableRows()[1],
+        expandColumnRenderer: ({ expanded, rowKey, expandable  }) => {
+            if (expanded) {
+                return ( <i className="feather icon-minus-circle"></i> );
+            }
+            if (expandable) {
+                return ( <i className="feather icon-plus-circle"></i> );
+            }
+        },
+        expandHeaderColumnRenderer: ({ isAnyExpands }) => {
+            if (isAnyExpands) {
+                return <i className="feather icon-minus-square"></i>;
+            }
+            return <i className="feather icon-plus-square"></i>;
+        },
     };
 
+    const expandRowParser = {
+        renderer: row => (
+            <div>
+                <p>You can render anything here, also you can add additional data on every row object</p>
+            </div>
+        ),
+        showExpandColumn: true,
+        expandHeaderColumnRenderer: ({ isAnyExpands }) => {
+            if (isAnyExpands) {
+                return <i className="feather icon-minus-square"></i>;
+            }
+            return <i className="feather icon-plus-square"></i>;
+        },
+        expandColumnRenderer: ({ expanded, rowKey, expandable  }) => {
+            if (expanded) {
+                return ( <i className="feather icon-minus-circle"></i> );
+            }
+            if (expandable) {
+                return ( <i className="feather icon-plus-circle"></i> );
+            }
+        },
+    };
 
     return (
-        // <div><pre>{JSON.stringify(ontologyStructure, null, 2) }</pre></div>
-        <div style={{ padding: "20px" }}>
+        <div style={{margin: "-30px -25px"}}>
             <BootstrapTable
                 keyField="uri"
                 data={ontologyStructure}
-                columns={columns}
+                columns={columnsEntities}
                 expandRow={expandRowConcept}
+                hover
+                headerClasses="header-class"
             />
         </div>
     )

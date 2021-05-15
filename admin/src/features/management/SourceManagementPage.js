@@ -16,7 +16,7 @@ class SourceManagementPage extends Component {
                         <MainCard title='Add Sources' isOption collapseCard={true} >
                             <AddWizard />
                         </MainCard>
-                        <MainCard title='List Of Existent Resources' isOption >
+                        <MainCard title='List Of Existent Resources' isOption>
                             <ListResources />
                         </MainCard>
                     </Col>
