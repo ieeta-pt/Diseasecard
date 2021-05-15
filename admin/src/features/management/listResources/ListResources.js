@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import { getOntologyStructure, getOntologyStructureInfo} from "./listResourcesSlice";
 import BootstrapTable from 'react-bootstrap-table-next';
+import {Button, IconButton} from "@material-ui/core";
 
 
 export const ListResources = () => {
@@ -31,9 +32,16 @@ export const ListResources = () => {
     }
 
     const GetActionFormat = (cell, row) => {
-        return(<div>
-                <button type="button" className="btn btn-outline-primary btn-sm ts-buttom" size="sm" onClick={()=> handleModelEdit(cell, row) }>Edit</button>
-                <button type="button" className="btn btn-outline-danger btn-sm ml-2 ts-buttom" size="sm">Delete</button>
+        return(<div style={{paddingTop: "4%"}}>
+                <IconButton aria-label="upload picture" component="span" title="Build">
+                    <i className="feather icon-settings" style={{fontSize:"14px"}}></i>
+                </IconButton>
+                <IconButton aria-label="upload picture" component="span" title="Edit" onClick={(e)=> {e.stopPropagation(); handleModelEdit(cell, row)} }>
+                    <i className="feather icon-edit" style={{fontSize:"14px"}}></i>
+                </IconButton>
+                <IconButton aria-label="upload picture" component="span" title="Remove">
+                    <i className="feather icon-x-square" style={{fontSize:"14px"}}></i>
+                </IconButton>
             </div>
         )
     }
@@ -48,7 +56,7 @@ export const ListResources = () => {
             dataField: "title",
             text: "Entity Title",
             headerStyle: () => {
-                return { width: "30%" };
+                return { width: "31%" };
             }
         },
         {
@@ -56,14 +64,14 @@ export const ListResources = () => {
             text: "Entity Label",
             sort: true,
             headerStyle: () => {
-                return { width: "30%" };
+                return { width: "31%" };
             }
         },
         {
             dataField: "description",
             text: "Entity Description",
             headerStyle: () => {
-                return { width: "30%" };
+                return { width: "31%" };
             }
         },
         {
@@ -112,7 +120,7 @@ export const ListResources = () => {
     ];
     const expandRowConcept = {
         renderer: row => (
-            <div style={{marginRight: "-12px", marginLeft: "1.45%", marginTop: "-1.05rem", paddingLeft: "-12px"}}>
+            <div style={{marginRight: "-12px", marginLeft: "1.6%", marginTop: "-1.05rem", paddingLeft: "-12px"}}>
                 <BootstrapTable
                     keyField="uri"
                     data={row.isEntityOf}
