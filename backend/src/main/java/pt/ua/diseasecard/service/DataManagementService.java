@@ -425,7 +425,7 @@ public class DataManagementService {
         For now, the plugins_labels are going to be hardcoded, since the current ontology is not yet ready.
      */
     public JSONObject getFormLabels(){
-        //if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Getting labels needed in forms of " + this.config.getName() + "Admin");
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Getting labels needed in forms of " + this.config.getName() + "Admin");
         JSONObject finalR = new JSONObject();
         try
         {
@@ -454,7 +454,8 @@ public class DataManagementService {
             TreeSet<Integer> ordersValues = new TreeSet<>();
             for (Object o : orders) {
                 JSONObject binding = (JSONObject) o;
-                ordersValues.add(Integer.parseInt(((JSONObject) binding.get("label")).get("value").toString()));
+                System.out.println(binding);
+                ordersValues.add(Integer.parseInt(((JSONObject) binding.get("order")).get("value").toString()));
             }
 
 
@@ -484,8 +485,8 @@ public class DataManagementService {
         The idea is to organize all the entities, concepts and resources into a single object, mapping the relations between them.
         This map is then used in DiseasecardAdmin platform.
      */
-    public JSONObject getOntologyStructure() {
-        //if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Getting Ontology Structure of " + this.config.getName() );
+    public JSONArray getOntologyStructure() {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Getting Ontology Structure of " + this.config.getName() );
 
         JSONObject entities = this.getAllEntities();
         JSONObject concepts = this.getAllConcepts();
@@ -494,28 +495,34 @@ public class DataManagementService {
             JSONObject entityValues = (JSONObject) entities.get(key);
 
             JSONArray entityOf = (JSONArray) entityValues.get("isEntityOf");
-            JSONObject auxE = new JSONObject();
+            JSONArray auxE = new JSONArray();
             for (Object conceptURI : entityOf) {
                 try
                 {
                     JSONObject conceptValues = (JSONObject) concepts.get(conceptURI);
                     JSONArray resourcesExtending = (JSONArray) conceptValues.get("hasResource");
 
-                    JSONObject auxR = new JSONObject();
+                    JSONArray auxR = new JSONArray();
 
                     for (Object resourceURI : resourcesExtending) {
                         JSONObject resource = this.getResource(resourceURI.toString());
-                        auxR.put(resourceURI, resource);
+                        auxR.add(resource);
                     }
 
                     ((JSONObject) concepts.get(conceptURI)).replace("hasResource", auxR);
                 } catch (Exception ex) { }
-                auxE.put(conceptURI, concepts.get(conceptURI));
+                auxE.add(concepts.get(conceptURI));
             }
             ((JSONObject) entities.get(key)).replace("isEntityOf", auxE);
         }
 
-        return entities;
+        JSONArray results = new JSONArray();
+
+        entities.forEach( (key,value) -> { results.add(value); } );
+
+        System.out.println(results);
+
+        return results;
     }
 
 

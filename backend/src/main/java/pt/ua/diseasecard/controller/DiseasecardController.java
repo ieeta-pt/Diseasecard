@@ -281,7 +281,7 @@ public class DiseasecardController {
 
 
     @GetMapping("/dcadmin/status/ontologyStructure")
-    public JSONObject getOntologyStructureInfo() {
+    public JSONArray getOntologyStructureInfo() {
         return dataManagementService.getOntologyStructure();
     }
 

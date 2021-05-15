@@ -43,7 +43,6 @@ export const getFormLabels = createAsyncThunk('addSource/getFormLabels', async (
 
 export const getParserFields = createAsyncThunk('addSource/getParserFields', async (parserType) => {
     return API.GET("getParserFields", '', [parserType]).then(res => {
-        console.log(res.data)
         return res.data
     })
 })
@@ -96,7 +95,6 @@ export const addResourceWithURLEndpoint = createAsyncThunk('addSource/addResourc
 
 
 export const addOMIMResource = createAsyncThunk('addSource/addOMIMResource', async (forms) => {
-    console.log(forms)
     let resource = forms.resource
     let parser = forms.values
 
@@ -131,7 +129,6 @@ const addSourceSlice = createSlice({
     initialState,
     reducers: {
         storeResource: (state, action) => {
-            console.log(action.payload)
             state.resource = action.payload
         }
     },
@@ -151,7 +148,6 @@ const addSourceSlice = createSlice({
             state.error = action.error.message*/
         },
         [getFormLabels.fulfilled]: (state, action) => {
-            console.log(action.payload)
             state.conceptsLabels = action.payload.conceptsLabels;
             state.entitiesLabels = action.payload.entitiesLabels;
             state.pluginsLabels = action.payload.pluginsLabels;

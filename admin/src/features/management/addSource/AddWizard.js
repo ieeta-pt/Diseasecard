@@ -486,7 +486,6 @@ const AddEntities = props => {
     const dispatch = useDispatch();
 
     const submit = (values) => {
-        console.log(values)
         let formData = new FormData(document.forms.namedItem("addEntityForm"))
         dispatch(addEntity(formData))
     }
@@ -551,7 +550,6 @@ const AddParsers = props => {
     const plugin = resource.publisherEndpoint
     const submit = (values) => {
         let forms = {resource, values}
-        console.log(forms)
 
         if ( resource.publisherEndpoint === 'OMIM' ) dispatch(addOMIMResource(forms))
         else {

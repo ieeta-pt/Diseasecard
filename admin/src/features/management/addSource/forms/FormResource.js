@@ -33,7 +33,6 @@ const validate = values => {
         'publisherEndpoint',
     ]
     requiredFields.forEach(field => {
-        console.log(values[field])
         if (!values[field]) {
             errors[field] = 'Required'
         }
