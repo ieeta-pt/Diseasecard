@@ -16,18 +16,25 @@ export const ListResources = () => {
     const getNonExpandableRows = () => {
         let nonExpandableEntities = []
         let nonExpandableConcepts = []
-        ontologyStructure.map( (values) => {
-            if(values.isEntityOf.length == 0) {
-                nonExpandableEntities.push(values.uri)
-            }
-            else {
-                values.isEntityOf.map( (conceptsExtended) => {
-                    if (conceptsExtended.hasResource.length == 0) {
-                        nonExpandableConcepts.push(conceptsExtended.uri)
-                    }
-                })
-            }
-        })
+
+        if (ontologyStructure.length !== 0) {
+            ontologyStructure.map( (values) => {
+                if(values.isEntityOf.length === 0) {
+                    nonExpandableEntities.push(values.uri)
+                }
+                else {
+                    values.isEntityOf.map( (conceptsExtended) => {
+                        if (conceptsExtended !== null) {
+                            if (conceptsExtended.hasResource.length === 0) {
+                                nonExpandableConcepts.push(conceptsExtended.uri)
+                            }
+                        }
+
+                    })
+                }
+            })
+        }
+
         return [nonExpandableEntities,nonExpandableConcepts]
     }
 

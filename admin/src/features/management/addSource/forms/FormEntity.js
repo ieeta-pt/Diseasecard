@@ -94,42 +94,6 @@ const AddEntityFrom = props => {
                     </Grid>
 
                     {FootForm(props, c, 'Entity')}
-
-                    {/*<div style={{ marginTop: '20px', marginBottom: "20px", width: "100%"}}>
-                        <Row className="justify-content-md-center">
-                            <Col sm="6" className="centerStuff">
-                                <Button variant="outlined" color="primary" className={ c.buttonG } type="button" onClick={goBack}>
-                                    Go Back
-                                </Button>
-                            </Col>
-                            <Col sm="6" className="centerStuff">
-                                <Button variant="outlined" className={ c.buttonG } type="submit" disabled={ pristine || submitting || invalid } onClick={handleClickOpen}>
-                                    Submit
-                                </Button>
-                                <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-                                    <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
-                                    <DialogContent>
-                                        <DialogContentText id="alert-dialog-description">
-                                            Let Google help apps determine location. This means sending anonymous location data to
-                                            Google, even when no apps are running.
-                                        </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions style={{width: "100%", display: "block"}}>
-                                        <div style={{ marginTop: '20px', marginBottom: "20px"}}>
-                                            <Row className="justify-content-md-center">
-                                                <Col sm="6" className="centerStuff">
-                                                    <a href="#" className='label theme-bg text-white f-14' style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }} onClick={ handleClose }>Add More</a>
-                                                </Col>
-                                                <Col sm="6" className="centerStuff">
-                                                    <a href="#" className={'label theme-bg text-white f-14'} style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }} > Finish </a>
-                                                </Col>
-                                            </Row>
-                                        </div>
-                                    </DialogActions>
-                                </Dialog>
-                            </Col>
-                        </Row>
-                    </div>*/}
                 </Grid>
             </form>
         </div>

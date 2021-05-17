@@ -86,7 +86,7 @@ public class DataManagementService {
             Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
         }
         //TODO: Adicionar aqui uma thread
-        this.build();
+        //this.build();
     }
 
 
