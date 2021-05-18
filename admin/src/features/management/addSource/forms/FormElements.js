@@ -74,10 +74,10 @@ export const useStyles = makeStyles((theme) => ({
         '& .MuiSwitch-colorPrimary.Mui-checked': {
             color: "#1de9b6",
         },
-
         '& .MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track': {
             backgroundColor: "#1de9b6",
-        }
+        },
+        width: "100%"
     },
     root: {
         '& .MuiTextField-root': {
@@ -108,9 +108,9 @@ export const renderTextField = ({ label, input, value, labelText, meta: { touche
 )
 
 
-export const renderSwitchField = ({ label, checked, input, labelText, labelPlacement, meta: { touched, invalid, error },  ...custom }) => (
+export const renderSwitchField = ({ label, size, checked, input, labelText, labelPlacement, meta: { touched, invalid, error },  ...custom }) => (
     <FormControlLabel
-        control={<Switch color="primary" />}
+        control={<Switch color="primary" size={size}/>}
         labelPlacement={labelPlacement}
         label={label}
         placeholder={label}
@@ -121,7 +121,7 @@ export const renderSwitchField = ({ label, checked, input, labelText, labelPlace
 )
 
 
-export const renderSelectField = ({ input,  label, labelText, meta: { touched, invalid, error }, children, ...custom}) => (
+export const renderSelectField = ({ input ,label, labelText, meta: { touched, invalid, error }, children, ...custom}) => (
     <TextField
         id="outlined-select-currency"
         select

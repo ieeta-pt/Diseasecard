@@ -56,13 +56,7 @@ let FormEditConcept = props => {
     const entitiesLabels = useSelector(getEntitiesLabels)
     const resourceLabels = useSelector(getResourcesLabels)
 
-    const [relatedEntityLabel, setRelatedEntityLabel] = React.useState(initialValues.relatedEntityLabel);
     const [relatedResourceLabel, setRelatedResourceLabel] = React.useState(initialValues.relatedResourceLabel);
-
-    const handleChangeRelatedEntity = (event) => {
-        setRelatedEntityLabel(event.target.value);
-        change("relatedEntityLabel", event.target.value);
-    };
 
     const handleChangeRelatedResource = (event) => {
         setRelatedResourceLabel(event.target.value);

@@ -15,6 +15,7 @@ import {Col, Row} from "react-bootstrap";
 import FormEditEntity from "./forms/FormEditEntity";
 import {makeStyles} from "@material-ui/core/styles";
 import FormEditConcept from "./forms/FormEditConcept";
+import FormEditResource from "./forms/FormEditResource";
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -109,6 +110,7 @@ export const ListResources = () => {
 
     const handleModelEdit = (cell, row) => {
         dispatch(storeEditRow(row))
+        console.log(row)
         handleClickOpen();
     }
 
@@ -123,6 +125,7 @@ export const ListResources = () => {
                 <DialogContentText id="alert-dialog-description">
                     {editRow.typeOf === "Entity" && <FormEditEntity onSubmit={submitEdit}/> }
                     {editRow.typeOf === "Concept" && <FormEditConcept onSubmit={submitEdit}/> }
+                    {editRow.typeOf === "Resource" && <FormEditResource onSubmit={submitEdit}/> }
                 </DialogContentText>
             </DialogContent>
             <DialogActions style={{width: "98%", display: "block"}}>
@@ -189,7 +192,7 @@ export const ListResources = () => {
             dataField: "title",
             text: "Concept Title",
             headerStyle: () => {
-                return { width: "26.75%" };
+                return { width: "27.3%" };
             }
         },
         {
@@ -268,7 +271,7 @@ export const ListResources = () => {
             dataField: "description",
             text: "Resource Description",
             headerStyle: () => {
-                return { width: "27%" };
+                return { width: "28.2%" };
             }
         },
         {

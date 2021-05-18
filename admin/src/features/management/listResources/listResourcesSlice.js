@@ -37,8 +37,11 @@ const listResourceSlice = createSlice({
                 let relatedResourceLabel = []
                 action.payload.hasResource.map((key) => { relatedResourceLabel.push(key.label) })
                 state.editRow = Object.assign({relatedResourceLabel: relatedResourceLabel}, action.payload);
-
                 state.editRow = Object.assign({extendedEntityLabel: action.payload.hasEntity.replace("http://bioinformatics.ua.pt/diseasecard/resource/","").toLowerCase()}, state.editRow);
+            }
+            else if (action.payload.typeOf === "Resource") {
+                if (action.payload.publisher === "plugin") { state.editRow = Object.assign({publisherLabel: "OMIM"}, action.payload);}
+                else {                                       state.editRow = Object.assign({publisherLabel: action.payload.publisher.toUpperCase()}, action.payload);}
             }
 
 
