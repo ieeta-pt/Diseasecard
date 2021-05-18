@@ -494,7 +494,7 @@ const AddEntities = props => {
         <div>
             <p className='text-center' style={{color: "#1dc4e9"}}><b>Add an Entity</b></p>
 
-            <AddEntityFrom onSubmit={submit} formDetails={props} />
+            <AddEntityFrom onSubmit={submit} formDetails={props} initialValues={[]}/>
         </div>
     );
 }

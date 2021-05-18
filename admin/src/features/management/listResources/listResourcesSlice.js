@@ -4,7 +4,8 @@ import API from "../../../api/Api";
 const initialState = {
     url: '',
     entities: [],
-    ontologyStructure: []
+    ontologyStructure: [],
+    editRow: []
 }
 
 
@@ -22,11 +23,17 @@ export const getOntologyStructureInfo = createAsyncThunk('listResources/getOntol
 })
 
 
-
 const listResourceSlice = createSlice({
     name: 'listResources',
     initialState,
-    reducers: {},
+    reducers: {
+        storeEditRow: (state, action) => {
+            let isEntityOfLabel = []
+            action.payload.isEntityOf.map((key) => { isEntityOfLabel.push(key.label) })
+
+            state.editRow = Object.assign({isEntityOfLabel: isEntityOfLabel}, action.payload);
+        }
+    },
     extraReducers: {
         [getAllEntities.pending]: (state, action) => {
             /*state.status = 'loading'*/
@@ -49,6 +56,10 @@ const listResourceSlice = createSlice({
     }
 })
 
+
 export const getOntologyStructure = state => state.listResources.ontologyStructure
+export const getEditRow = state => state.listResources.editRow
+
+export const { storeEditRow } = listResourceSlice.actions
 
 export default listResourceSlice.reducer

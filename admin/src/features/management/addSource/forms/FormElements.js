@@ -5,13 +5,13 @@ import {makeStyles} from "@material-ui/core/styles";
 import DropZone from "react-dropzone";
 import {Col, Row} from "react-bootstrap";
 import {
-    Button,
+    Button, Chip,
     Dialog,
     DialogActions,
     DialogContent,
     DialogContentText,
     DialogTitle,
-    FormLabel
+    FormLabel, Input, Select
 } from "@material-ui/core";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
@@ -94,14 +94,16 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 
-export const renderTextField = ({ label, input, labelText, meta: { touched, invalid, error },  ...custom }) => (
+export const renderTextField = ({ label, input, value, labelText, meta: { touched, invalid, error },  ...custom }) => (
     <TextField
         label={label}
         placeholder={label}
         error={touched && invalid}
+        value={value}
         helperText={renderFromHelper({ touched, error, labelText })}
         {...input}
         {...custom}
+        style={{width: "100%"}}
     />
 )
 
@@ -133,6 +135,31 @@ export const renderSelectField = ({ input,  label, labelText, meta: { touched, i
     >
         {children}
     </TextField>
+)
+
+
+export const renderMultipleSelectField = ({ value, onChange, classes, MenuProps, children }) => (
+    <Select
+        labelId="demo-mutiple-chip-label"
+        id="demo-mutiple-chip"
+        multiple
+        value={value}
+        onChange={onChange}
+        input={<Input id="select-multiple-chip" />}
+        MenuProps={MenuProps}
+        rendervalue={(selected) => {
+            console.log(selected)
+            return(
+                <div className={classes.chips}>
+                    {selected.map((value) => (
+                        <Chip key={value} label={value} className={classes.chip}/>
+                    ))}
+                </div>
+            )
+        }}
+    >
+        {children}
+    </Select>
 )
 
 

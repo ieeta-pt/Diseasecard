@@ -492,6 +492,8 @@ public class DataManagementService {
         JSONObject concepts = this.getAllConcepts();
 
         for (Object key : entities.keySet()) {
+            System.out.println(entities.get(key));
+            ((JSONObject) entities.get(key)).put("typeOf", "Entity");
             JSONObject entityValues = (JSONObject) entities.get(key);
 
             JSONArray entityOf = (JSONArray) entityValues.get("isEntityOf");
@@ -506,9 +508,10 @@ public class DataManagementService {
 
                     for (Object resourceURI : resourcesExtending) {
                         JSONObject resource = this.getResource(resourceURI.toString());
+                        resource.put("typeOf", "Resource");
                         auxR.add(resource);
                     }
-
+                    ((JSONObject) concepts.get(conceptURI)).put("typeOf", "Concept");
                     ((JSONObject) concepts.get(conceptURI)).replace("hasResource", auxR);
                 } catch (Exception ex) { }
                 auxE.add(concepts.get(conceptURI));
@@ -519,8 +522,6 @@ public class DataManagementService {
         JSONArray results = new JSONArray();
 
         entities.forEach( (key,value) -> { results.add(value); } );
-
-        System.out.println(results);
 
         return results;
     }

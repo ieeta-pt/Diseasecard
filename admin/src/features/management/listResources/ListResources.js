@@ -1,13 +1,66 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import { getOntologyStructure, getOntologyStructureInfo} from "./listResourcesSlice";
+import {getEditRow, getOntologyStructure, getOntologyStructureInfo, storeEditRow} from "./listResourcesSlice";
 import BootstrapTable from 'react-bootstrap-table-next';
-import {Button, IconButton} from "@material-ui/core";
+import {
+    Button,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    IconButton
+} from "@material-ui/core";
+import {Col, Row} from "react-bootstrap";
+import FormEditEntity from "./forms/FormEditEntity";
+import {makeStyles} from "@material-ui/core/styles";
 
+const useStyles = makeStyles((theme) => ({
+    button: {
+        borderRadius: "15px",
+        boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)",
+        padding: "0.5px 10px 1px 10px",
+        fontSize: "14px",
+        textTransform: "none",
+        borderColor: "#1de9b6",
+        color: "#1de9b6",
+        '&:hover':{
+            borderColor: "#1dc4e9",
+            color: "#1dc4e9"
+        },
+    },
+    buttonG: {
+        borderRadius: "15px",
+        boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)",
+        padding: "0.5px 10px 1px 10px",
+        fontSize: "14px",
+        textTransform: "none",
+        borderColor: "#1de9b6",
+        color: "#fff",
+        '&:hover':{
+            borderColor: "#1de9b6",
+        },
+        background: "linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%)"
+    }
+}));
 
 export const ListResources = () => {
     const dispatch = useDispatch();
     const ontologyStructure = useSelector(getOntologyStructure)
+    const editRow = useSelector(getEditRow)
+    const [open, setOpen] = useState(false);
+
+
+    const classes = useStyles();
+
+    const handleClickOpen = () => {
+        console.log("yey")
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     useEffect(() => {
         dispatch(getOntologyStructureInfo())
@@ -29,7 +82,6 @@ export const ListResources = () => {
                                 nonExpandableConcepts.push(conceptsExtended.uri)
                             }
                         }
-
                     })
                 }
             })
@@ -43,9 +95,13 @@ export const ListResources = () => {
                 <IconButton aria-label="upload picture" component="span" title="Build">
                     <i className="feather icon-settings" style={{fontSize:"14px"}}></i>
                 </IconButton>
-                <IconButton aria-label="upload picture" component="span" title="Edit" onClick={(e)=> {e.stopPropagation(); handleModelEdit(cell, row)} }>
+
+
+                <IconButton aria-label="upload picture" component="span" title="Edit" onClick={(e)=> {e.stopPropagation(); handleModelEdit(cell, row) }}>
                     <i className="feather icon-edit" style={{fontSize:"14px"}}></i>
                 </IconButton>
+
+
                 <IconButton aria-label="upload picture" component="span" title="Remove">
                     <i className="feather icon-x-square" style={{fontSize:"14px"}}></i>
                 </IconButton>
@@ -54,10 +110,47 @@ export const ListResources = () => {
     }
 
     const handleModelEdit = (cell, row) => {
-        console.log("hello");
-        console.log(row)
+        dispatch(storeEditRow(row))
+        handleClickOpen();
     }
 
+    const submitEdit = (values) => {
+        console.log(values)
+    }
+
+    const editModal = (
+        <Dialog open={open}  onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+            <DialogTitle  id="alert-dialog-title">Edit Resource "<i>{editRow.label}</i>"</DialogTitle>
+            <DialogContent >
+                <DialogContentText id="alert-dialog-description">
+                    {editRow.typeOf === "Entity" && <FormEditEntity onSubmit={submitEdit}/> }
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions style={{width: "98%", display: "block"}}>
+                <div style={{ marginTop: '20px', marginBottom: "20px"}}>
+                    <Row className="justify-content-md-center">
+                        <Col sm="6" className="centerStuff">
+                            <Button variant="outlined" color="primary" className={ classes.button } onClick={ handleClose }>
+                                Cancel
+                            </Button>
+                        </Col>
+                        <Col sm="6" className="centerStuff">
+                            <Button variant="outlined" color="primary" className={ classes.buttonG } type="submit" form="editForm">
+                                Submit
+                            </Button>
+                        </Col>
+                    </Row>
+                </div>
+            </DialogActions>
+        </Dialog>
+    )
+
+
+
+
+    /*
+        Table Expanded Rows
+     */
     const columnsEntities = [
         {
             dataField: "title",
@@ -263,6 +356,11 @@ export const ListResources = () => {
         },
     };
 
+
+
+    /*
+        Return of component
+     */
     return (
         <div style={{margin: "-30px -25px"}}>
             <BootstrapTable
@@ -273,6 +371,8 @@ export const ListResources = () => {
                 hover
                 headerClasses="header-class"
             />
+
+            {editModal}
         </div>
     )
 }
