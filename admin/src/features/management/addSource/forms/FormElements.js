@@ -129,6 +129,7 @@ export const renderSelectField = ({ input,  label, labelText, meta: { touched, i
         label={label}
         placeholder={label}
         error={touched && invalid}
+        style={{width: "100%"}}
         helperText={renderFromHelper({ touched, error, labelText })}
         {...input}
         {...custom}

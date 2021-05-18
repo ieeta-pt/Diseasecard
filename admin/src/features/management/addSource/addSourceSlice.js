@@ -149,6 +149,7 @@ const addSourceSlice = createSlice({
         },
         [getFormLabels.fulfilled]: (state, action) => {
             state.conceptsLabels = action.payload.conceptsLabels;
+            state.resourcesLabels = action.payload.resourcesLabels;
             state.entitiesLabels = action.payload.entitiesLabels;
             state.pluginsLabels = action.payload.pluginsLabels;
             state.ordersLabels = action.payload.ordersLabels;

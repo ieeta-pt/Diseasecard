@@ -28,10 +28,20 @@ const listResourceSlice = createSlice({
     initialState,
     reducers: {
         storeEditRow: (state, action) => {
-            let isEntityOfLabel = []
-            action.payload.isEntityOf.map((key) => { isEntityOfLabel.push(key.label) })
+            if (action.payload.typeOf === "Entity") {
+                let isEntityOfLabel = []
+                action.payload.isEntityOf.map((key) => { isEntityOfLabel.push(key.label) })
+                state.editRow = Object.assign({isEntityOfLabel: isEntityOfLabel}, action.payload);
+            }
+            else if (action.payload.typeOf === "Concept") {
+                let relatedResourceLabel = []
+                action.payload.hasResource.map((key) => { relatedResourceLabel.push(key.label) })
+                state.editRow = Object.assign({relatedResourceLabel: relatedResourceLabel}, action.payload);
 
-            state.editRow = Object.assign({isEntityOfLabel: isEntityOfLabel}, action.payload);
+                state.editRow = Object.assign({extendedEntityLabel: action.payload.hasEntity.replace("http://bioinformatics.ua.pt/diseasecard/resource/","").toLowerCase()}, state.editRow);
+            }
+
+
         }
     },
     extraReducers: {

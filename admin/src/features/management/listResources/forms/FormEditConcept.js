@@ -3,7 +3,7 @@ import {connect, useSelector} from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
 import {renderMultipleSelectField, renderSelectField, renderTextField} from "../../addSource/forms/FormElements";
 import {Chip, FormControl, Grid, Input, InputLabel, MenuItem, OutlinedInput, Select} from "@material-ui/core";
-import {getConceptsLabels} from "../../addSource/addSourceSlice";
+import {getConceptsLabels, getEntitiesLabels, getResourcesLabels} from "../../addSource/addSourceSlice";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 
 
@@ -47,19 +47,26 @@ const MenuProps = {
     },
 };
 
-let FormEditEntity = props => {
+let FormEditConcept = props => {
     const { handleSubmit, change, initialValues, load, pristine, reset, submitting } = props
 
     const classes = useStyles();
     const theme = useTheme();
 
-    const conceptsLabels = useSelector(getConceptsLabels)
+    const entitiesLabels = useSelector(getEntitiesLabels)
+    const resourceLabels = useSelector(getResourcesLabels)
 
-    const [isEntityOfLabel, setIsEntityOfLabel] = React.useState(initialValues.isEntityOfLabel);
+    const [relatedEntityLabel, setRelatedEntityLabel] = React.useState(initialValues.relatedEntityLabel);
+    const [relatedResourceLabel, setRelatedResourceLabel] = React.useState(initialValues.relatedResourceLabel);
 
-    const handleChange = (event) => {
-        setIsEntityOfLabel(event.target.value);
-        change("isEntityOfLabel", event.target.value);
+    const handleChangeRelatedEntity = (event) => {
+        setRelatedEntityLabel(event.target.value);
+        change("relatedEntityLabel", event.target.value);
+    };
+
+    const handleChangeRelatedResource = (event) => {
+        setRelatedResourceLabel(event.target.value);
+        change("relatedResourceLabel", event.target.value);
     };
 
     const labelRef = useRef()
@@ -104,19 +111,37 @@ let FormEditEntity = props => {
                 </Grid>
 
                 <Grid item xs={12}>
+                    <Field
+                        size="small"
+                        name="extendedEntityLabel"
+                        component={renderSelectField}
+                        label="Extended Entity"
+                        variant="outlined"
+                        labelText="olaaa"
+                    >
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        {
+                            Object.keys(entitiesLabels).map((key,i) => {
+                                return (<MenuItem key={entitiesLabels[key]} value={entitiesLabels[key]}> {entitiesLabels[key]} </MenuItem>)
+                            })
+                        }
+                    </Field>
+                </Grid>
+
+                <Grid item xs={12}>
                     <FormControl variant="outlined" style={{width: "100%"}}>
-                        <InputLabel id="demo-mutiple-chip-label" ref={labelRef}>Extended Concepts</InputLabel>
+                        <InputLabel id="demo-mutiple-chip-label" ref={labelRef}>Extended Resources</InputLabel>
                         <Select
                             className={classes.select}
                             labelId="demo-mutiple-chip-label"
                             id="demo-mutiple-chip"
                             multiple
-                            value={props?.value ? props.value : isEntityOfLabel}
-                            onChange={handleChange}
+                            value={props?.value ? props.value : relatedResourceLabel}
+                            onChange={handleChangeRelatedResource}
                             variant="outlined"
                             MenuProps={MenuProps}
-                            name="isEntityOfLabel"
-                            input={<OutlinedInput aria-describedby="my-helper-text" labelWidth={labelWidth} name="isEntityOfLabel"  id="select-multiple-chip" />}
+                            name="relatedResourceLabel"
+                            input={<OutlinedInput aria-describedby="my-helper-text" labelWidth={labelWidth} name="relatedResourceLabel"  id="select-multiple-chip" />}
                             renderValue={(selected) => (
                                 <div className={classes.chips}>
                                     {selected.map((value) => (
@@ -125,29 +150,29 @@ let FormEditEntity = props => {
                                 </div>
                             )}
                         >
-                            {Object.keys(conceptsLabels).map((key,i) => (
-                                <MenuItem key={conceptsLabels[key]} value={conceptsLabels[key]} style={getStyles(conceptsLabels[key], isEntityOfLabel, theme)}>
-                                    {conceptsLabels[key]}
+                            {Object.keys(resourceLabels).map((key,i) => (
+                                <MenuItem key={resourceLabels[key]} value={resourceLabels[key]} style={getStyles(resourceLabels[key], relatedResourceLabel, theme)}>
+                                    {resourceLabels[key]}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
                 </Grid>
-
-
             </Grid>
         </form>
     )
 }
 
-FormEditEntity = reduxForm({
-    form: 'initializeFromState'  // a unique identifier for this form
-})(FormEditEntity)
 
-FormEditEntity = connect(
+FormEditConcept = reduxForm({
+    form: 'initializeFromState'  // a unique identifier for this form
+})(FormEditConcept)
+
+
+FormEditConcept = connect(
     state => ({
         initialValues: state.listResources.editRow // pull initial values from account reducer
     }),
-)(FormEditEntity)
+)(FormEditConcept)
 
-export default FormEditEntity
+export default FormEditConcept

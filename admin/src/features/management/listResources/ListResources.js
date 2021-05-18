@@ -14,6 +14,7 @@ import {
 import {Col, Row} from "react-bootstrap";
 import FormEditEntity from "./forms/FormEditEntity";
 import {makeStyles} from "@material-ui/core/styles";
+import FormEditConcept from "./forms/FormEditConcept";
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -54,7 +55,6 @@ export const ListResources = () => {
     const classes = useStyles();
 
     const handleClickOpen = () => {
-        console.log("yey")
         setOpen(true);
     };
 
@@ -96,11 +96,9 @@ export const ListResources = () => {
                     <i className="feather icon-settings" style={{fontSize:"14px"}}></i>
                 </IconButton>
 
-
                 <IconButton aria-label="upload picture" component="span" title="Edit" onClick={(e)=> {e.stopPropagation(); handleModelEdit(cell, row) }}>
                     <i className="feather icon-edit" style={{fontSize:"14px"}}></i>
                 </IconButton>
-
 
                 <IconButton aria-label="upload picture" component="span" title="Remove">
                     <i className="feather icon-x-square" style={{fontSize:"14px"}}></i>
@@ -124,6 +122,7 @@ export const ListResources = () => {
             <DialogContent >
                 <DialogContentText id="alert-dialog-description">
                     {editRow.typeOf === "Entity" && <FormEditEntity onSubmit={submitEdit}/> }
+                    {editRow.typeOf === "Concept" && <FormEditConcept onSubmit={submitEdit}/> }
                 </DialogContentText>
             </DialogContent>
             <DialogActions style={{width: "98%", display: "block"}}>
@@ -156,7 +155,7 @@ export const ListResources = () => {
             dataField: "title",
             text: "Entity Title",
             headerStyle: () => {
-                return { width: "31%" };
+                return { width: "30.6%" };
             }
         },
         {
@@ -164,14 +163,14 @@ export const ListResources = () => {
             text: "Entity Label",
             sort: true,
             headerStyle: () => {
-                return { width: "31%" };
+                return { width: "28.6%" };
             }
         },
         {
             dataField: "description",
             text: "Entity Description",
             headerStyle: () => {
-                return { width: "31%" };
+                return { width: "47%" };
             }
         },
         {
@@ -190,7 +189,7 @@ export const ListResources = () => {
             dataField: "title",
             text: "Concept Title",
             headerStyle: () => {
-                return { width: "28.75%" };
+                return { width: "26.75%" };
             }
         },
         {
@@ -198,14 +197,14 @@ export const ListResources = () => {
             text: "Concept Label",
             sort: true,
             headerStyle: () => {
-                return { width: "31.15%" };
+                return { width: "28%" };
             }
         },
         {
             dataField: "description",
             text: "Concept Description",
             headerStyle: () => {
-                return { width: "31%" };
+                return { width: "42%" };
             }
         },
         {
@@ -220,7 +219,7 @@ export const ListResources = () => {
     ];
     const expandRowConcept = {
         renderer: row => (
-            <div style={{marginRight: "-12px", marginLeft: "1.6%", marginTop: "-1.05rem", paddingLeft: "-12px"}}>
+            <div style={{marginRight: "-12px", marginLeft: "1.7%", marginTop: "-1.05rem", paddingLeft: "-12px"}}>
                 <BootstrapTable
                     keyField="uri"
                     data={row.isEntityOf}
@@ -254,7 +253,7 @@ export const ListResources = () => {
             dataField: "title",
             text: "Resource Title",
             headerStyle: () => {
-                return { width: "13.6%" };
+                return { width: "13.35%" };
             }
         },
         {
@@ -262,35 +261,35 @@ export const ListResources = () => {
             text: "Resource Label",
             sort: true,
             headerStyle: () => {
-                return { width: "13.55%" };
+                return { width: "13.35%" };
             }
         },
         {
             dataField: "description",
             text: "Resource Description",
             headerStyle: () => {
-                return { width: "16.2%" };
+                return { width: "27%" };
             }
         },
         {
             dataField: "order",
-            text: "Resource Order",
+            text: "R. Order",
             headerStyle: () => {
-                return { width: "15.9%" };
+                return { width: "7%" };
             }
         },
         {
             dataField: "publisher",
-            text: "Resource Publisher",
+            text: "R. Plugin",
             headerStyle: () => {
-                return { width: "16%" };
+                return { width: "7%" };
             }
         },
         {
             dataField: "endpoint",
             text: "Resource Endpoint",
             headerStyle: () => {
-                return { width: "16%" };
+                return { width: "40%" };
             }
         },
         {
@@ -305,7 +304,7 @@ export const ListResources = () => {
     ];
     const expandRowResource = {
         renderer: row => (
-            <div style={{marginRight: "-12px", marginLeft: "1.45%", marginTop: "-1.05rem", paddingLeft: "-12px"}}>
+            <div style={{marginRight: "-12px", marginLeft: "1.7%", marginTop: "-1.05rem", paddingLeft: "-12px"}}>
                 <BootstrapTable
                     keyField="label"
                     data={row.hasResource}
