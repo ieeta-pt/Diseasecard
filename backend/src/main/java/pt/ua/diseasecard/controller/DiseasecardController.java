@@ -236,7 +236,7 @@ public class DiseasecardController {
                           @RequestParam("extendsResource") String extendsResource,
                           @RequestParam("orderResource") String order,
                           @RequestParam("publisherEndpoint") String publisher,
-                          @RequestParam("endpointResource") String endpoint) throws IOException {
+                          @RequestParam("endpointResource") String endpoint) {
 
         dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, endpoint);
     }
@@ -251,10 +251,18 @@ public class DiseasecardController {
                             @RequestParam("orderResource") String order,
                             @RequestParam("publisherEndpoint") String publisher,
                             @RequestParam("morbidmap") MultipartFile morbidmap,
-                            @RequestParam("genemap") MultipartFile genemap ) throws IOException {
+                            @RequestParam("genemap") MultipartFile genemap ) {
 
         dataManagementService.prepareAddOMIMResource(title, label, description, resourceOf, extendsResource, order, publisher, morbidmap, genemap);
     }
+
+
+    @PostMapping(value = "/dcadmin/operations/editEntity")
+    @ResponseBody
+    public void editEntity(@RequestParam Map<String,String> allParams ) {
+        dataManagementService.editProperties(allParams);
+    }
+
 
 
     @GetMapping("/dcadmin/status/labels")

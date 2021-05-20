@@ -6,6 +6,7 @@ import org.springframework.context.annotation.PropertySource;
 import pt.ua.diseasecard.utils.PrefixFactory;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,8 @@ public class DiseasecardProperties {
     private Map<String, String> database;
     private Map<String, String> prefixes;
     private Map<String, String> sources;
+
+    private Map<String, ArrayList<String>> properties;
 
     public DiseasecardProperties() {
     }
@@ -172,6 +175,14 @@ public class DiseasecardProperties {
 
     public void setSources(Map<String, String> sources) {
         this.sources = sources;
+    }
+
+    public Map<String, ArrayList<String>> getProperties() {
+        return properties;
+    }
+
+    public void setProperties(Map<String, ArrayList<String>> properties) {
+        this.properties = properties;
     }
 
     @PostConstruct

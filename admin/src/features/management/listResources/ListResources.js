@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getEditRow, getOntologyStructure, getOntologyStructureInfo, storeEditRow} from "./listResourcesSlice";
+import {
+    editEntity,
+    getEditRow,
+    getOntologyStructure,
+    getOntologyStructureInfo,
+    storeEditRow
+} from "./listResourcesSlice";
 import BootstrapTable from 'react-bootstrap-table-next';
 import {
     Button,
@@ -16,6 +22,9 @@ import FormEditEntity from "./forms/FormEditEntity";
 import {makeStyles} from "@material-ui/core/styles";
 import FormEditConcept from "./forms/FormEditConcept";
 import FormEditResource from "./forms/FormEditResource";
+
+
+let diff = require('object-diff');
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -110,12 +119,20 @@ export const ListResources = () => {
 
     const handleModelEdit = (cell, row) => {
         dispatch(storeEditRow(row))
+        console.log("Row:")
         console.log(row)
         handleClickOpen();
     }
 
     const submitEdit = (values) => {
-        console.log(values)
+        let formData = new FormData()
+        formData.append("uri", values.uri)
+        formData.append("typeOf", values.typeOf)
+
+        const d = diff(editRow, values)
+
+        Object.entries(d).forEach(item => {  formData.append(item[0], item[1]); })
+        if (Object.keys(d).length !== 0) dispatch(editEntity(formData))
     }
 
     const editModal = (

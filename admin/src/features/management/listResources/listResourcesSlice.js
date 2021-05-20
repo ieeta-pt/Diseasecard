@@ -23,6 +23,13 @@ export const getOntologyStructureInfo = createAsyncThunk('listResources/getOntol
 })
 
 
+export const editEntity = createAsyncThunk('listResources/editEntity', async (form) => {
+    return API.POST("editEntity", '', form ).then(res => {
+        return res
+    })
+})
+
+
 const listResourceSlice = createSlice({
     name: 'listResources',
     initialState,

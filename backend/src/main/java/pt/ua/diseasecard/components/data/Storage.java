@@ -1,6 +1,8 @@
 package pt.ua.diseasecard.components.data;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.OntResource;
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.ReasonerRegistry;
@@ -13,9 +15,7 @@ import pt.ua.diseasecard.utils.PrefixFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import javax.annotation.PostConstruct;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,6 +28,7 @@ public class Storage {
     private final Reasoner reasoner;
     private InfModel infmodel;
     private ResourceLoader resourceLoader;
+    private OntModel ontModel;
 
     private DiseasecardProperties config;
 
@@ -55,6 +56,7 @@ public class Storage {
 
             this.model = SDBFactory.connectDefaultModel(store);
             this.infmodel = ModelFactory.createInfModel(reasoner, model);
+            this.ontModel = ModelFactory.createOntologyModel();
 
             if (this.config.getDebug()) {
                 System.out.println("[Diseasecard][Storage] Successfully connected to Diseasecard SDB");
@@ -264,8 +266,6 @@ public class Storage {
         newResource.addProperty(resourceOfProperty, conceptResourceOf);
         newResource.addProperty(extendsProperty, conceptExtends);
         conceptResourceOf.addProperty(hasResourceProperty, newResource);
-
-
     }
 
 
@@ -342,6 +342,46 @@ public class Storage {
     }
 
 
+    public void editEntity(String uri, Map<String, String> propertiesToUpdate) {
+        Resource resource = this.model.getResource(uri);
+        System.out.println("URI: " + uri);
+        System.out.println("Resource: " + resource.getURI());
+
+        /*  Useful to remove statements
+
+            OntResource r = this.ontModel.getOntResource(resource);
+        */
+
+
+        /*  Get All Properties
+
+            StmtIterator list = resource.listProperties();
+            System.out.println("LIST: ");
+            while (list.hasNext()) {
+                System.out.println("- " + list.nextStatement().toString());
+            }
+        */
+
+
+        for(Map.Entry<String,String> entry : propertiesToUpdate.entrySet())
+        {
+            String propertyLabel = entry.getKey();
+            Property property = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + propertyLabel);
+            resource.removeAll(property);
+            resource.addProperty(property, entry.getValue());
+        }
+    }
+
+
+    private String getPropertyPrefix(String propertyLabel) {
+        for (Map.Entry<String, ArrayList<String>> entry : this.config.getProperties().entrySet())
+        {
+            for (String label : entry.getValue()) if (label.equals(propertyLabel)) return entry.getKey();
+        }
+        return "coeus";
+    }
+
+
     /*
         Description
      */
@@ -362,7 +402,5 @@ public class Storage {
     public void setInfmodel(InfModel infmodel) {
         this.infmodel = infmodel;
     }
-
-
 
 }

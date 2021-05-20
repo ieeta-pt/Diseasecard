@@ -140,7 +140,7 @@ public class DataManagementService {
 
                 Resource r = new Resource((String) info.get("s"), (String) info.get("title"), (String) info.get("label"), (String) info.get("description"), (String) info.get("publisher"), (String) info.get("endpoint"));
                 r.setExtendsConcept((String) info.get("extends"));
-                r.setIsResourceOf(new Concept((String) info.get("resof")));
+                r.setIsResourceOf(new Concept((String) info.get("isResourceOf")));
                 r.setIdentifiers((String) info.get("identifiers"));
                 r.setBuilt((Boolean) info.get("built"));
                 r.loadConcept();
@@ -314,13 +314,13 @@ public class DataManagementService {
         try
         {
             JSONParser parser = new JSONParser();
-            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT ?s ?resof ?description ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built"
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT ?s ?isResourceOf ?description ?label ?title ?built ?publisher ?extends ?extension ?order ?endpoint ?built"
                     + " WHERE { ?s rdf:type coeus:Resource ."
                     + " ?s dc:description ?description ."
                     + " ?s rdfs:label ?label ."
                     + " ?s dc:title ?title ."
                     + " ?s dc:publisher ?publisher ."
-                    + " ?s coeus:isResourceOf ?resof ."
+                    + " ?s coeus:isResourceOf ?isResourceOf ."
                     + " ?s coeus:extends ?extends ."
                     + " ?s coeus:endpoint ?endpoint ."
                     + " ?s coeus:order ?order . "
@@ -339,7 +339,7 @@ public class DataManagementService {
                 info.put("description", ((JSONObject) binding.get("description")).get("value").toString());
                 info.put("label", ((JSONObject) binding.get("label")).get("value").toString());
                 info.put("title", ((JSONObject) binding.get("title")).get("value").toString());
-                info.put("resof", ((JSONObject) binding.get("resof")).get("value").toString());
+                info.put("isResourceOf", ((JSONObject) binding.get("isResourceOf")).get("value").toString());
                 info.put("publisher", ((JSONObject) binding.get("publisher")).get("value").toString());
                 info.put("extends", ((JSONObject) binding.get("extends")).get("value").toString());
                 info.put("endpoint", ((JSONObject) binding.get("endpoint")).get("value").toString());
@@ -379,7 +379,7 @@ public class DataManagementService {
                 + " <" + resourceURI + "> dc:description ?description ."
                 + " <" + resourceURI + "> rdfs:label ?label ."
                 + " <" + resourceURI + "> dc:publisher ?publisher ."
-                + " <" + resourceURI + "> coeus:isResourceOf ?resof ."
+                + " <" + resourceURI + "> coeus:isResourceOf ?isResourceOf ."
                 + " <" + resourceURI + "> coeus:extends ?extends ."
                 + " <" + resourceURI + "> coeus:endpoint ?endpoint ."
                 + " <" + resourceURI + "> coeus:order ?order . "
@@ -397,7 +397,7 @@ public class DataManagementService {
                 resource.put("label", ((JSONObject) a.get("label")).get("value").toString());
                 resource.put("title", ((JSONObject) a.get("title")).get("value").toString());
                 resource.put("publisher", ((JSONObject) a.get("publisher")).get("value").toString());
-                resource.put("resof", ((JSONObject) a.get("resof")).get("value").toString());
+                resource.put("isResourceOf", ((JSONObject) a.get("isResourceOf")).get("value").toString());
                 resource.put("extends", ((JSONObject) a.get("extends")).get("value").toString());
                 resource.put("endpoint", ((JSONObject) a.get("endpoint")).get("value").toString());
                 resource.put("order", ((JSONObject) a.get("order")).get("value").toString());
@@ -409,7 +409,6 @@ public class DataManagementService {
                 resource.put("built", built != null ? Boolean.parseBoolean(built.get("value").toString()) : false);
                 resource.put("hasParser", hasParser != null ? hasParser.get("value").toString() : "");
                 resource.put("identifiers", identifiers != null ? identifiers.get("value").toString() : "");
-
             } catch (Exception ex) {}
         }
         catch (Exception e)
@@ -602,6 +601,31 @@ public class DataManagementService {
             this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, "omim://full");
         } catch (IOException ex) {
             Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
+        }
+    }
+
+    public void editProperties(Map<String, String> allParams) {
+        String typeOf = allParams.get("typeOf");
+        String uri = allParams.get("uri");
+
+        System.out.println("URI F: " + uri);
+
+        System.out.println("AllParams" + allParams);
+
+        Map<String, String> propertiesToUpdate = allParams;
+        propertiesToUpdate.remove("typeOf");
+        propertiesToUpdate.remove("uri");
+
+        System.out.println("\nPropertiesToUpdate: \n" + propertiesToUpdate.entrySet());
+
+        switch (typeOf) {
+            case "Entity":
+                this.storage.editEntity(uri, propertiesToUpdate);
+                break;
+            case "Concept":
+                break;
+            case "Resource":
+                break;
         }
     }
 }

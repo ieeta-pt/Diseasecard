@@ -149,7 +149,6 @@ export const renderMultipleSelectField = ({ value, onChange, classes, MenuProps,
         input={<Input id="select-multiple-chip" />}
         MenuProps={MenuProps}
         rendervalue={(selected) => {
-            console.log(selected)
             return(
                 <div className={classes.chips}>
                     {selected.map((value) => (

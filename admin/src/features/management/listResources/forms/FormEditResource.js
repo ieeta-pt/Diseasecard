@@ -131,7 +131,7 @@ let FormEditResource = props => {
                 <Grid item xs={6} >
                     <Field
                         size="small"
-                        name="resof"
+                        name="isResourceOf"
                         component={renderSelectField}
                         label="Resource Of"
                         variant="outlined"
@@ -280,12 +280,12 @@ let FormEditResource = props => {
                     </Grid>
                 )}
             </Grid>
-            
+
             <Divider light/>
             <Typography variant="overline" gutterBottom >
                 Please note.
             </Typography>
-
+           
         </form>
     )
 }
