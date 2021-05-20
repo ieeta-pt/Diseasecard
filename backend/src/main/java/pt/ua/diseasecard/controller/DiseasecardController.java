@@ -257,10 +257,10 @@ public class DiseasecardController {
     }
 
 
-    @PostMapping(value = "/dcadmin/operations/editEntity")
+    @PostMapping(value = "/dcadmin/operations/editInstance")
     @ResponseBody
-    public void editEntity(@RequestParam Map<String,String> allParams ) {
-        dataManagementService.editProperties(allParams);
+    public void editInstance(@RequestParam Map<String,String> allParams ) {
+        dataManagementService.editInstance(allParams);
     }
 
 

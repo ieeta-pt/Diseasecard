@@ -613,7 +613,7 @@ public class DataManagementService {
         }
     }
 
-    public void editProperties(Map<String, String> allParams) {
+    public void editInstance(Map<String, String> allParams) {
         String typeOf = allParams.get("typeOf");
         String uri = allParams.get("uri");
 

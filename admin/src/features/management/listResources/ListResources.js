@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    editEntity,
+    editInstance,
     getEditRow,
     getOntologyStructure,
     getOntologyStructureInfo,
@@ -63,6 +63,9 @@ export const ListResources = () => {
 
 
     const classes = useStyles();
+    useEffect(() => {
+        dispatch(getOntologyStructureInfo())
+    }, [])
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -71,10 +74,6 @@ export const ListResources = () => {
     const handleClose = () => {
         setOpen(false);
     };
-
-    useEffect(() => {
-        dispatch(getOntologyStructureInfo())
-    }, [])
 
     const getNonExpandableRows = () => {
         let nonExpandableEntities = []
@@ -132,10 +131,13 @@ export const ListResources = () => {
         const d = diff(editRow, values)
 
         Object.entries(d).forEach(item => {  formData.append(item[0], item[1]); })
-        if (Object.keys(d).length !== 0) dispatch(editEntity(formData))
+        if (Object.keys(d).length !== 0) dispatch(editInstance(formData))
 
         console.log("Diff: ")
         console.log(d)
+
+        dispatch(getOntologyStructureInfo())
+        setOpen(false)
     }
 
     const editModal = (
@@ -166,9 +168,6 @@ export const ListResources = () => {
             </DialogActions>
         </Dialog>
     )
-
-
-
 
     /*
         Table Expanded Rows
