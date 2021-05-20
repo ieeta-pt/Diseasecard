@@ -128,6 +128,9 @@ export const ListResources = () => {
         formData.append("uri", values.uri)
         formData.append("typeOf", values.typeOf)
 
+        console.log("EditRow:")
+        console.log(editRow)
+
         const d = diff(editRow, values)
 
         Object.entries(d).forEach(item => {  formData.append(item[0], item[1]); })

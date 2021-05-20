@@ -46,9 +46,6 @@ public class Storage {
     }
 
 
-    /*
-        Description
-     */
     private void connect()  {
         try {
             //this.store = SDBFactory.connectStore(ResourceUtils.getFile("classpath:configuration/" + this.config.getSdb()).getPath() );
@@ -70,9 +67,6 @@ public class Storage {
     }
 
 
-    /*
-        Description
-     */
     private void loadPredicates() {
         try {
             CSVReader predicatesFile = new CSVReader(new InputStreamReader(resourceLoader.getResource ("classpath:configuration/" + this.config.getPredicates()).getInputStream()));
@@ -94,9 +88,6 @@ public class Storage {
     }
 
 
-    /*
-        Description
-     */
     public Map<String, String> loadSetup(InputStream stream) {
         Map<String, String> newEndpoints = new HashMap<>();
 
@@ -176,7 +167,6 @@ public class Storage {
 
 
     /*
-        Description
         TODO: O entity of pode ser um array!! A entity pode ter multiplos "entity of" logo no ínicio..
      */
     public void addEntity(String title, String label, String description, String entityOf)  {
@@ -211,9 +201,6 @@ public class Storage {
     }
 
 
-    /*
-        Description
-     */
     public void addConcept(String title, String label, String description, String relatedEntity, String relatedResource)  {
         Resource newConcept = this.model.createResource( this.config.getPrefixes().get("diseasecard") + label );
         this.addCore(newConcept, title, label, description, "Concept");
@@ -238,9 +225,6 @@ public class Storage {
     }
 
 
-    /*
-        Description
-     */
     public void addResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String location) {
 
         Logger.getLogger(Storage.class.getName()).log(Level.INFO,"URI of the new resource: " + this.config.getPrefixes().get("diseasecard") + label);
@@ -324,9 +308,59 @@ public class Storage {
     }
 
 
-    /*
-        Description
-     */
+    public void editEntity(String uri, Map<String, String> propertiesToUpdate) {
+        Resource entity = this.model.getResource(uri);
+
+        for(Map.Entry<String,String> entry : propertiesToUpdate.entrySet()) {
+            String propertyLabel = entry.getKey();
+
+            if ( propertyLabel.contains("_replace") ) {
+                Property propertyIsEntityOf  = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
+                Property propertyHasEntity = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
+
+                this.editingCrossProperties(entity, propertyIsEntityOf, entry.getValue(), propertyHasEntity);
+            }
+            else {
+                Property property = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + propertyLabel);
+                entity.removeAll(property);
+                entity.addProperty(property, entry.getValue());
+            }
+        }
+    }
+
+
+    public void editConcept(String uri, Map<String, String> propertiesToUpdate) {
+        Resource concept = this.model.getResource(uri);
+
+        for(Map.Entry<String,String> entry : propertiesToUpdate.entrySet()) {
+            String propertyLabel = entry.getKey();
+
+            if (propertyLabel.equals("hasEntity")) {
+                Property hasEntityProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "hasEntity");
+                Property isEntityOfProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "isEntityOf");
+
+                Resource entity = this.model.getResource(entry.getValue());
+                entity.addProperty(isEntityOfProperty, concept);
+
+                // Note: In this case we're removing all properties of this type, but it's irrelevant since the concept can only have one entity.
+                concept.removeAll(hasEntityProperty);
+                concept.addProperty(hasEntityProperty, entity);
+            }
+            else if (propertyLabel.equals("relatedResourceLabel")) {
+                Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "hasResource");
+                Property isResourceOfProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "isResourceOf");
+
+                this.editingCrossProperties(concept, hasResourceProperty, entry.getValue(), isResourceOfProperty);
+            }
+            else {
+                Property property = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + propertyLabel);
+                concept.removeAll(property);
+                concept.addProperty(property, entry.getValue());
+            }
+        }
+    }
+
+    
     private void addCore(Resource resource, String title, String label, String description, String type) {
         Property labelProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "label");
         Property typeProperty = this.model.getProperty(this.config.getPrefixes().get("rdf") + "type");
@@ -342,65 +376,23 @@ public class Storage {
     }
 
 
-    public void editEntity(String uri, Map<String, String> propertiesToUpdate) {
-        Resource resource = this.model.getResource(uri);
-
-        /*  Useful to remove statements
-
-            OntResource r = this.ontModel.getOntResource(resource);
-        */
-
-        /*  Get All Properties*/
-
-        StmtIterator l = resource.listProperties();
-        System.out.println("\nLIST: ");
-        while (l.hasNext()) {
-            System.out.println("- " + l.nextStatement().toString());
+    private void editingCrossProperties(Resource mainInstance, Property mainInstanceProperty, String values, Property supportInstanceProperty) {
+        // Remove from concept the 'hasEntity' values
+        StmtIterator list = mainInstance.listProperties(mainInstanceProperty);
+        while (list.hasNext()) {
+            String instanceURI = list.nextStatement().getResource().toString();
+            OntResource r = this.ontModel.getOntResource(this.model.getResource(instanceURI));
+            r.removeProperty(supportInstanceProperty, mainInstance);
         }
 
+        // Remove from resource all 'isEntityOf' values
+        mainInstance.removeAll(mainInstanceProperty);
 
-
-        for(Map.Entry<String,String> entry : propertiesToUpdate.entrySet())
-        {
-            String propertyLabel = entry.getKey();
-
-            if ( propertyLabel.contains("_replace") )
-            {
-                Property propertyIsEntityOf  = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
-                Property propertyHasEntity = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
-
-                // Remove from concept the 'hasEntity' values
-                StmtIterator list = resource.listProperties(propertyIsEntityOf);
-                while (list.hasNext()) {
-                    String conceptURI = list.nextStatement().getResource().toString();
-                    OntResource r = this.ontModel.getOntResource(this.model.getResource(conceptURI));
-                    r.removeProperty(propertyHasEntity, resource);
-                }
-
-                // Remove from resource all 'isEntityOf' values
-                resource.removeAll(propertyIsEntityOf);
-
-                // Add to resource and concept the proper properties
-                for (String conceptURI : entry.getValue().split(","))
-                {
-                    Resource concept = this.model.getResource(this.config.getPrefixes().get("diseasecard") + conceptURI);
-                    concept.addProperty(propertyHasEntity, resource);
-                    resource.addProperty(propertyIsEntityOf, concept);
-                }
-            }
-            else
-            {
-                Property property = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + propertyLabel);
-                resource.removeAll(property);
-                resource.addProperty(property, entry.getValue());
-            }
-
-        }
-
-        StmtIterator x = resource.listProperties();
-        System.out.println("\nLIST: ");
-        while (x.hasNext()) {
-            System.out.println("- " + x.nextStatement().toString());
+        // Add to resource and concept the proper properties
+        for (String label : values.split(",")) {
+            Resource instance = this.model.getResource(this.config.getPrefixes().get("diseasecard") + label);
+            instance.addProperty(supportInstanceProperty, mainInstance);
+            mainInstance.addProperty(mainInstanceProperty, instance);
         }
     }
 
@@ -414,9 +406,20 @@ public class Storage {
     }
 
 
-    /*
-        Description
-     */
+    /*  Useful to remove statements
+        OntResource r = this.ontModel.getOntResource(resource);
+    */
+
+    /*  Get All Properties
+
+        StmtIterator l = resource.listProperties();
+        System.out.println("\nLIST: ");
+        while (l.hasNext()) {
+            System.out.println("- " + l.nextStatement().toString());
+        }
+    */
+
+
     public Model getModel() {
         return model;
     }
@@ -425,14 +428,10 @@ public class Storage {
     }
 
 
-    /*
-        Description
-     */
     public InfModel getInfmodel() {
         return infmodel;
     }
     public void setInfmodel(InfModel infmodel) {
         this.infmodel = infmodel;
     }
-
 }

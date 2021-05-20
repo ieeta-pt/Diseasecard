@@ -617,10 +617,6 @@ public class DataManagementService {
         String typeOf = allParams.get("typeOf");
         String uri = allParams.get("uri");
 
-        System.out.println("URI F: " + uri);
-
-        System.out.println("AllParams" + allParams);
-
         Map<String, String> propertiesToUpdate = allParams;
         propertiesToUpdate.remove("typeOf");
         propertiesToUpdate.remove("uri");
@@ -632,6 +628,7 @@ public class DataManagementService {
                 this.storage.editEntity(uri, propertiesToUpdate);
                 break;
             case "Concept":
+                this.storage.editConcept(uri, propertiesToUpdate);
                 break;
             case "Resource":
                 break;
