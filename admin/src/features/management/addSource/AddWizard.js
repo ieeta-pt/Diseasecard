@@ -294,7 +294,7 @@ const ValidateEndpoints = props => {
 
     const items = invalidEndpoints.map((d) =>
         <div style={{borderTop: "2px solid #f1f1f1", marginTop: "40px"}}>
-            {d.resource === "resource_omim" &&
+            {d.resource === "resource_OMIM" &&
                 <div style={{marginTop: "10px"}}>
                     <p>The endpoint of <b>{d.resource}</b> needs two files to properly operate: <b>Genemap</b> and <b>Morbidmap</b>.</p>
                     <Row>
@@ -337,7 +337,7 @@ const ValidateEndpoints = props => {
                     </Row>
                 </div>
             }
-            {d.resource !== "resource_omim" &&
+            {d.resource !== "resource_OMIM" &&
                 <div style={{marginTop: "10px"}}>
                     <p>
                         The endpoint of <b>{d.resource}</b> is invalid. Please upload a correct file.

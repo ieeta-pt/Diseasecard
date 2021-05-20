@@ -55,11 +55,11 @@ let FormEditEntity = props => {
 
     const conceptsLabels = useSelector(getConceptsLabels)
 
-    const [isEntityOfLabel, setIsEntityOfLabel] = React.useState(initialValues.isEntityOfLabel);
+    const [isEntityOf_replace, setIsEntityOf_replace] = React.useState(initialValues.isEntityOf_replace);
 
     const handleChange = (event) => {
-        setIsEntityOfLabel(event.target.value);
-        change("isEntityOfLabel", event.target.value);
+        setIsEntityOf_replace(event.target.value);
+        change("isEntityOf_replace", event.target.value);
     };
 
     const labelRef = useRef()
@@ -111,12 +111,12 @@ let FormEditEntity = props => {
                             labelId="demo-mutiple-chip-label"
                             id="demo-mutiple-chip"
                             multiple
-                            value={props?.value ? props.value : isEntityOfLabel}
+                            value={props?.value ? props.value : isEntityOf_replace}
                             onChange={handleChange}
                             variant="outlined"
                             MenuProps={MenuProps}
-                            name="isEntityOfLabel"
-                            input={<OutlinedInput aria-describedby="my-helper-text" labelWidth={labelWidth} name="isEntityOfLabel"  id="select-multiple-chip" />}
+                            name="isEntityOf_replace"
+                            input={<OutlinedInput aria-describedby="my-helper-text" labelWidth={labelWidth} name="isEntityOf_replace"  id="select-multiple-chip" />}
                             renderValue={(selected) => (
                                 <div className={classes.chips}>
                                     {selected.map((value) => (
@@ -126,15 +126,13 @@ let FormEditEntity = props => {
                             )}
                         >
                             {Object.keys(conceptsLabels).map((key,i) => (
-                                <MenuItem key={conceptsLabels[key]} value={conceptsLabels[key]} style={getStyles(conceptsLabels[key], isEntityOfLabel, theme)}>
+                                <MenuItem key={conceptsLabels[key]} value={conceptsLabels[key]} style={getStyles(conceptsLabels[key], isEntityOf_replace, theme)}>
                                     {conceptsLabels[key]}
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
                 </Grid>
-
-
             </Grid>
         </form>
     )

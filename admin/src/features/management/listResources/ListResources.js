@@ -133,6 +133,9 @@ export const ListResources = () => {
 
         Object.entries(d).forEach(item => {  formData.append(item[0], item[1]); })
         if (Object.keys(d).length !== 0) dispatch(editEntity(formData))
+
+        console.log("Diff: ")
+        console.log(d)
     }
 
     const editModal = (

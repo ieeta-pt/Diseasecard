@@ -453,7 +453,6 @@ public class DataManagementService {
             TreeSet<Integer> ordersValues = new TreeSet<>();
             for (Object o : orders) {
                 JSONObject binding = (JSONObject) o;
-                System.out.println(binding);
                 ordersValues.add(Integer.parseInt(((JSONObject) binding.get("order")).get("value").toString()));
             }
 
@@ -491,7 +490,6 @@ public class DataManagementService {
         JSONObject concepts = this.getAllConcepts();
 
         for (Object key : entities.keySet()) {
-            System.out.println(entities.get(key));
             ((JSONObject) entities.get(key)).put("typeOf", "Entity");
             JSONObject entityValues = (JSONObject) entities.get(key);
 
@@ -554,7 +552,11 @@ public class DataManagementService {
         this.storage.addConcept(title, label, description, hasEntity, hasResource);
     }
 
-
+    /*
+        Prepare info to add a Resource to the model.
+        This method is used when the endpoint to be added is a file.
+        In this method the file is also stored into the uploadDir/endpoints and this location (plus the file name) is then used in the model.
+     */
     public void prepareAddResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, MultipartFile file) {
         try {
             Path copyLocation = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + StringUtils.cleanPath(label));
@@ -567,12 +569,19 @@ public class DataManagementService {
     }
 
 
+    /*
+        Prepare info to add a Resource to the model.
+        This method is used when the endpoint to be added is an URL.
+     */
     public void prepareAddResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, String endpoint) {
         if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Add Resource to " + this.config.getName() );
         this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, endpoint);
     }
 
 
+    /*
+        Prepare info to add a Parser to the model.
+     */
     public void prepareAddParser(String resource, String resourceID, String regexResource, String externalResourceID, String regexExternalResource) {
         if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Add Parser to " + resource );
 

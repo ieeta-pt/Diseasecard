@@ -18,6 +18,8 @@ export const getAllEntities = createAsyncThunk('listResources/getAllEntitiesInfo
 export const getOntologyStructureInfo = createAsyncThunk('listResources/getOntologyStructureInfo', async () => {
     return API.GET("getOntologyStructureInfo", '', [] ).then(res => {
         const ontologyStructure = res.data
+        console.log("Ontology Structure: ")
+        console.log(ontologyStructure)
         return { ontologyStructure }
     })
 })
@@ -36,9 +38,9 @@ const listResourceSlice = createSlice({
     reducers: {
         storeEditRow: (state, action) => {
             if (action.payload.typeOf === "Entity") {
-                let isEntityOfLabel = []
-                action.payload.isEntityOf.map((key) => { isEntityOfLabel.push(key.label) })
-                state.editRow = Object.assign({isEntityOfLabel: isEntityOfLabel}, action.payload);
+                let isEntityOf_replace = []
+                action.payload.isEntityOf.map((key) => { isEntityOf_replace.push(key.label) })
+                state.editRow = Object.assign({isEntityOf_replace: isEntityOf_replace}, action.payload);
             }
             else if (action.payload.typeOf === "Concept") {
                 let relatedResourceLabel = []

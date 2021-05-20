@@ -344,31 +344,63 @@ public class Storage {
 
     public void editEntity(String uri, Map<String, String> propertiesToUpdate) {
         Resource resource = this.model.getResource(uri);
-        System.out.println("URI: " + uri);
-        System.out.println("Resource: " + resource.getURI());
 
         /*  Useful to remove statements
 
             OntResource r = this.ontModel.getOntResource(resource);
         */
 
+        /*  Get All Properties*/
 
-        /*  Get All Properties
+        StmtIterator l = resource.listProperties();
+        System.out.println("\nLIST: ");
+        while (l.hasNext()) {
+            System.out.println("- " + l.nextStatement().toString());
+        }
 
-            StmtIterator list = resource.listProperties();
-            System.out.println("LIST: ");
-            while (list.hasNext()) {
-                System.out.println("- " + list.nextStatement().toString());
-            }
-        */
 
 
         for(Map.Entry<String,String> entry : propertiesToUpdate.entrySet())
         {
             String propertyLabel = entry.getKey();
-            Property property = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + propertyLabel);
-            resource.removeAll(property);
-            resource.addProperty(property, entry.getValue());
+
+            if ( propertyLabel.contains("_replace") )
+            {
+                Property propertyIsEntityOf  = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
+                Property propertyHasEntity = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
+
+                // Remove from concept the 'hasEntity' values
+                StmtIterator list = resource.listProperties(propertyIsEntityOf);
+                while (list.hasNext()) {
+                    String conceptURI = list.nextStatement().getResource().toString();
+                    OntResource r = this.ontModel.getOntResource(this.model.getResource(conceptURI));
+                    r.removeProperty(propertyHasEntity, resource);
+                }
+
+                // Remove from resource all 'isEntityOf' values
+                resource.removeAll(propertyIsEntityOf);
+
+                // Add to resource and concept the proper properties
+                for (String conceptURI : entry.getValue().split(","))
+                {
+                    Resource concept = this.model.getResource(this.config.getPrefixes().get("diseasecard") + conceptURI);
+                    concept.addProperty(propertyHasEntity, resource);
+                    resource.addProperty(propertyIsEntityOf, concept);
+                }
+            }
+            else
+            {
+                Property property = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + propertyLabel);
+                resource.removeAll(property);
+                resource.addProperty(property, entry.getValue());
+            }
+
+        }
+
+        StmtIterator x = resource.listProperties();
+        System.out.println("\nLIST: ");
+        while (x.hasNext()) {
+            System.out.println("- " + x.nextStatement().toString());
         }
     }
 
