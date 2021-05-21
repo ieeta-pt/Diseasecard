@@ -506,6 +506,7 @@ public class DataManagementService {
                     for (Object resourceURI : resourcesExtending) {
                         JSONObject resource = this.getResource(resourceURI.toString());
                         resource.put("typeOf", "Resource");
+                        resource.put("uri", resourceURI);
                         auxR.add(resource);
                     }
                     ((JSONObject) concepts.get(conceptURI)).put("typeOf", "Concept");
@@ -579,6 +580,12 @@ public class DataManagementService {
     }
 
 
+    public void prepareAddOMIMResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, MultipartFile morbidmap, MultipartFile genemap) {
+        this.saveOMIMEndpoints(genemap, morbidmap);
+        this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, "omim://full");
+    }
+
+
     /*
         Prepare info to add a Parser to the model.
      */
@@ -597,42 +604,74 @@ public class DataManagementService {
     }
 
 
-    public void prepareAddOMIMResource(String title, String label, String description, String resourceOf, String extendsResource, String order, String publisher, MultipartFile morbidmap, MultipartFile genemap) {
+    public void prepareEditInstance(Map<String, String> allParams) {
+        String typeOf = allParams.get("typeOf");
+        String uri = allParams.get("uri");
+
+        allParams.remove("typeOf");
+        allParams.remove("uri");
+
+        System.out.println("\nPropertiesToUpdate: \n" + allParams.entrySet());
+
+        switch (typeOf) {
+            case "Entity":
+                this.storage.editEntity(uri, allParams);
+                break;
+            case "Concept":
+                this.storage.editConcept(uri, allParams);
+                break;
+            case "Resource":
+                this.storage.editResource(uri, allParams);
+                break;
+        }
+    }
+
+
+    public void prepareEditResourceSingleEndpoint(Map<String, String> allParams, MultipartFile file) {
+        String label = allParams.get("label");
+        String uri = allParams.get("uri");
+
+        System.out.println("PREPARE EDIT RESOURCE SINGLE ENDPOINT\n" + allParams.entrySet());
+
+        try {
+            Path copyLocation = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + StringUtils.cleanPath(label));
+            Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+
+            allParams.put("endpoint", copyLocation.toString());
+            allParams.remove("typeOf");
+            allParams.remove("uri");
+
+            this.storage.editResource(uri, allParams);
+
+        } catch (IOException ex) {
+            Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
+        }
+    }
+
+
+    public void prepareEditResourceOMIM(Map<String, String> allParams, MultipartFile genemap, MultipartFile morbidmap) {
+        String uri = allParams.get("uri");
+
+        System.out.println("PREPARE EDIT RESOURCE OMIM\n" + allParams.entrySet());
+
+        this.saveOMIMEndpoints(genemap, morbidmap);
+
+        allParams.put("endpoint", "omim://full");
+        allParams.remove("typeOf");
+        allParams.remove("uri");
+        this.storage.editResource(uri, allParams);
+    }
+
+
+    private void saveOMIMEndpoints(MultipartFile genemap, MultipartFile morbidmap) {
         try {
             Path copyLocationGenemap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_genemap");
             Files.copy(genemap.getInputStream(), copyLocationGenemap, StandardCopyOption.REPLACE_EXISTING);
 
             Path copyLocationMorbidmap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_morbidmap");
             Files.copy(morbidmap.getInputStream(), copyLocationMorbidmap, StandardCopyOption.REPLACE_EXISTING);
-
-            Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"" + morbidmap.getInputStream());
-
-            this.storage.addResource(title, label, description, resourceOf, extendsResource, order, publisher, "omim://full");
         } catch (IOException ex) {
             Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
-        }
-    }
-
-    public void editInstance(Map<String, String> allParams) {
-        String typeOf = allParams.get("typeOf");
-        String uri = allParams.get("uri");
-
-        Map<String, String> propertiesToUpdate = allParams;
-        propertiesToUpdate.remove("typeOf");
-        propertiesToUpdate.remove("uri");
-
-        System.out.println("\nPropertiesToUpdate: \n" + propertiesToUpdate.entrySet());
-
-        switch (typeOf) {
-            case "Entity":
-                this.storage.editEntity(uri, propertiesToUpdate);
-                break;
-            case "Concept":
-                this.storage.editConcept(uri, propertiesToUpdate);
-                break;
-            case "Resource":
-                this.storage.editResource(uri, propertiesToUpdate);
-                break;
         }
     }
 }

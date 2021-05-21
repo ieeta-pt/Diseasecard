@@ -86,7 +86,7 @@ let FormEditResource = props => {
     const ordersLabels = useSelector(getOrdersLabels)
     const pluginLabels = useSelector(getPluginsLabels)
 
-    const [publisher, setPublisher] = useState('');
+    const [publisher, setPublisher] = useState(initialValues.publisherLabel);
     const [endpoint, setEndpoint] = useState(false);
 
     return (
@@ -187,7 +187,7 @@ let FormEditResource = props => {
                 <Grid item xs={6} >
                     <Field
                         size="small"
-                        name="publisher"
+                        name="publisherLabel"
                         component={renderSelectField}
                         label="Publisher"
                         onChange={e => setPublisher(e.target.value)}
@@ -244,7 +244,7 @@ let FormEditResource = props => {
                             <Field
                                 size="small"
                                 variant="outlined"
-                                name="endpointResource"
+                                name="endpoint"
                                 component={renderTextField}
                                 label="Endpoint's URL"
                                 className={classes.field}
@@ -268,7 +268,7 @@ let FormEditResource = props => {
                                 labelText="olaaa"
                             />
                         </Grid>
-                        <Grid item xs={12} style={{marginLeft: "16px"}}>
+                        <Grid item xs={12}>
                             <Field
                                 name="files"
                                 style={style}

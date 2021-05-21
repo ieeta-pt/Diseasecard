@@ -32,6 +32,20 @@ export const editInstance = createAsyncThunk('listResources/editInstance', async
 })
 
 
+export const editResourceSingleEndpoint = createAsyncThunk('listResources/editResourceSingleEndpoint', async (form) => {
+    return API.POST("editResourceSingleEndpoint", '', form ).then(res => {
+        return res
+    })
+})
+
+
+export const editResourceOMIMEndpoint = createAsyncThunk('listResources/editResourceOMIMEndpoint', async (form) => {
+    return API.POST("editResourceOMIMEndpoint", '', form ).then(res => {
+        return res
+    })
+})
+
+
 const listResourceSlice = createSlice({
     name: 'listResources',
     initialState,

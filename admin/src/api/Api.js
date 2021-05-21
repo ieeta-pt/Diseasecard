@@ -29,6 +29,8 @@ const getModuleURL = function (module) {
         case "addXMLParser":                   return "/dcadmin/operations/addXMLParser";
         case "addCSVParser":                   return "/dcadmin/operations/addCSVParser";
         case "editInstance":                   return "/dcadmin/operations/editInstance";
+        case "editResourceSingleEndpoint":     return "/dcadmin/operations/editResourceSingleEndpoint";
+        case "editResourceOMIMEndpoint":       return "/dcadmin/operations/editResourceOMIMEndpoint";
         default:                               return "";
     }
 };

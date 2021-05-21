@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    editInstance,
+    editInstance, editResourceOMIMEndpoint, editResourceSingleEndpoint,
     getEditRow,
     getOntologyStructure,
     getOntologyStructureInfo,
@@ -22,7 +22,6 @@ import FormEditEntity from "./forms/FormEditEntity";
 import {makeStyles} from "@material-ui/core/styles";
 import FormEditConcept from "./forms/FormEditConcept";
 import FormEditResource from "./forms/FormEditResource";
-
 
 let diff = require('object-diff');
 
@@ -54,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
         background: "linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%)"
     }
 }));
+
 
 export const ListResources = () => {
     const dispatch = useDispatch();
@@ -132,9 +132,24 @@ export const ListResources = () => {
         console.log(editRow)
 
         const d = diff(editRow, values)
-
         Object.entries(d).forEach(item => {  formData.append(item[0], item[1]); })
-        if (Object.keys(d).length !== 0) dispatch(editInstance(formData))
+
+        if ( 'isEndpointFile' in d ) {
+            if ( values.publisher === "omim" ) {
+                formData.append("genemap", values.genemap)
+                formData.append("morbidmap", values.morbidmap)
+                formData.append("label", values.label)
+                dispatch(editResourceOMIMEndpoint(formData))
+            }
+            else {
+                formData.append("file", values.files)
+                formData.append("label", values.label)
+                dispatch(editResourceSingleEndpoint(formData))
+            }
+        }
+        else if ( Object.keys(d).length !== 0 ) {
+            dispatch(editInstance(formData))
+        }
 
         console.log("Diff: ")
         console.log(d)

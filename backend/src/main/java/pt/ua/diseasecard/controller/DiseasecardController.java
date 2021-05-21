@@ -194,6 +194,36 @@ public class DiseasecardController {
         dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, files);
     }
 
+
+    @PostMapping(value = "/dcadmin/operations/addResourceWithURLEndpoint")
+    public void addResourceWithURLEndpoint(@RequestParam("titleResource") String title,
+                                           @RequestParam("labelResource") String label,
+                                           @RequestParam("descriptionResource") String description,
+                                           @RequestParam("resourceOf") String resourceOf,
+                                           @RequestParam("extendsResource") String extendsResource,
+                                           @RequestParam("orderResource") String order,
+                                           @RequestParam("publisherEndpoint") String publisher,
+                                           @RequestParam("endpointResource") String endpoint) {
+
+        dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, endpoint);
+    }
+
+
+    @PostMapping(value = "/dcadmin/operations/addOMIMResource")
+    public void addOMIMResource(@RequestParam("titleResource") String title,
+                                @RequestParam("labelResource") String label,
+                                @RequestParam("descriptionResource") String description,
+                                @RequestParam("resourceOf") String resourceOf,
+                                @RequestParam("extendsResource") String extendsResource,
+                                @RequestParam("orderResource") String order,
+                                @RequestParam("publisherEndpoint") String publisher,
+                                @RequestParam("morbidmap") MultipartFile morbidmap,
+                                @RequestParam("genemap") MultipartFile genemap ) {
+
+        dataManagementService.prepareAddOMIMResource(title, label, description, resourceOf, extendsResource, order, publisher, morbidmap, genemap);
+    }
+
+
     // TODO: Adicionar o isMethodBYReplace
     @PostMapping(value = "/dcadmin/operations/addCSVParser")
     public void addCSVParser(@RequestParam("resource") String resource,
@@ -228,41 +258,28 @@ public class DiseasecardController {
     }
 
 
-    @PostMapping(value = "/dcadmin/operations/addResourceWithURLEndpoint")
-    public void addResourceWithURLEndpoint(@RequestParam("titleResource") String title,
-                          @RequestParam("labelResource") String label,
-                          @RequestParam("descriptionResource") String description,
-                          @RequestParam("resourceOf") String resourceOf,
-                          @RequestParam("extendsResource") String extendsResource,
-                          @RequestParam("orderResource") String order,
-                          @RequestParam("publisherEndpoint") String publisher,
-                          @RequestParam("endpointResource") String endpoint) {
-
-        dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, endpoint);
-    }
-
-
-    @PostMapping(value = "/dcadmin/operations/addOMIMResource")
-    public void addOMIMResource(@RequestParam("titleResource") String title,
-                            @RequestParam("labelResource") String label,
-                            @RequestParam("descriptionResource") String description,
-                            @RequestParam("resourceOf") String resourceOf,
-                            @RequestParam("extendsResource") String extendsResource,
-                            @RequestParam("orderResource") String order,
-                            @RequestParam("publisherEndpoint") String publisher,
-                            @RequestParam("morbidmap") MultipartFile morbidmap,
-                            @RequestParam("genemap") MultipartFile genemap ) {
-
-        dataManagementService.prepareAddOMIMResource(title, label, description, resourceOf, extendsResource, order, publisher, morbidmap, genemap);
-    }
-
-
     @PostMapping(value = "/dcadmin/operations/editInstance")
     @ResponseBody
     public void editInstance(@RequestParam Map<String,String> allParams ) {
-        dataManagementService.editInstance(allParams);
+        dataManagementService.prepareEditInstance(allParams);
     }
 
+
+    @PostMapping(value = "/dcadmin/operations/editResourceSingleEndpoint")
+    @ResponseBody
+    public void editResourceSingleEndpoint(@RequestParam Map<String,String> allParams,
+                                           @RequestParam("files") MultipartFile file ) {
+        dataManagementService.prepareEditResourceSingleEndpoint(allParams, file);
+    }
+
+
+    @PostMapping(value = "/dcadmin/operations/editResourceOMIMEndpoint")
+    @ResponseBody
+    public void editResourceOMIM(@RequestParam Map<String,String> allParams,
+                                         @RequestParam("morbidmap") MultipartFile morbidmap,
+                                         @RequestParam("genemap") MultipartFile genemap ) {
+        dataManagementService.prepareEditResourceOMIM(allParams, genemap, morbidmap);
+    }
 
 
     @GetMapping("/dcadmin/status/labels")
