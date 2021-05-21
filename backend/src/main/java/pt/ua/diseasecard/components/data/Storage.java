@@ -360,7 +360,29 @@ public class Storage {
         }
     }
 
-    
+
+    public void editResource(String uri, Map<String, String> propertiesToUpdate) {
+        Resource resource = this.model.getResource(uri);
+
+        for(Map.Entry<String,String> entry : propertiesToUpdate.entrySet()) {
+            String propertyLabel = entry.getKey();
+
+            if (propertyLabel.equals("isResourceOf")) {
+                Property isResourceOfProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "isResourceOf");
+                Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "hasResource");
+
+                this.editingCrossProperties(resource, isResourceOfProperty, entry.getValue(), hasResourceProperty);
+            }
+            else {
+                Property property = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + propertyLabel);
+                resource.removeAll(property);
+                resource.addProperty(property, entry.getValue());
+            }
+            // TODO: Fazer a parte do endpoint! 
+        }
+    }
+
+
     private void addCore(Resource resource, String title, String label, String description, String type) {
         Property labelProperty = this.model.getProperty(this.config.getPrefixes().get("rdfs") + "label");
         Property typeProperty = this.model.getProperty(this.config.getPrefixes().get("rdf") + "type");

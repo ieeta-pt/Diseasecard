@@ -631,6 +631,7 @@ public class DataManagementService {
                 this.storage.editConcept(uri, propertiesToUpdate);
                 break;
             case "Resource":
+                this.storage.editResource(uri, propertiesToUpdate);
                 break;
         }
     }

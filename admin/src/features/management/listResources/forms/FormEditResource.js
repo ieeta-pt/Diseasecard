@@ -37,7 +37,6 @@ function getStyles(name, personName, theme) {
                 : theme.typography.fontWeightMedium,
     };
 }
-
 const useStyles = makeStyles((theme) => ({
     select: {
         '& .MuiOutlinedInput-input': {
@@ -188,7 +187,7 @@ let FormEditResource = props => {
                 <Grid item xs={6} >
                     <Field
                         size="small"
-                        name="publisherLabel"
+                        name="publisher"
                         component={renderSelectField}
                         label="Publisher"
                         onChange={e => setPublisher(e.target.value)}
@@ -296,10 +295,8 @@ FormEditResource = reduxForm({
 })(FormEditResource)
 
 
-FormEditResource = connect(
-    state => ({
+FormEditResource = connect( state => ({
         initialValues: state.listResources.editRow // pull initial values from account reducer
-    }),
-)(FormEditResource)
+    }),)(FormEditResource)
 
 export default FormEditResource
