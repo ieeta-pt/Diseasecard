@@ -187,7 +187,7 @@ let FormEditResource = props => {
                 <Grid item xs={6} >
                     <Field
                         size="small"
-                        name="publisherLabel"
+                        name="publisher"
                         component={renderSelectField}
                         label="Publisher"
                         onChange={e => setPublisher(e.target.value)}
@@ -197,7 +197,7 @@ let FormEditResource = props => {
                     >
                         <MenuItem value=""><em>None</em></MenuItem>
                         {pluginLabels.map((option) => (
-                            <MenuItem key={option} value={option}>
+                            <MenuItem key={option} value={option.toLowerCase()}>
                                 {option}
                             </MenuItem>
                         ))}

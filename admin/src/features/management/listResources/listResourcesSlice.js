@@ -63,8 +63,8 @@ const listResourceSlice = createSlice({
                 state.editRow = Object.assign({extendedEntityLabel: action.payload.hasEntity.replace("http://bioinformatics.ua.pt/diseasecard/resource/","")}, state.editRow);
             }
             else if (action.payload.typeOf === "Resource") {
-                if (action.payload.publisher === "plugin") { state.editRow = Object.assign({publisherLabel: "OMIM"}, action.payload);}
-                else {                                       state.editRow = Object.assign({publisherLabel: action.payload.publisher.toUpperCase()}, action.payload);}
+                if (action.payload.publisher === "plugin") { state.editRow = Object.assign({publisher: "OMIM"}, action.payload);}
+                else {                                       state.editRow = Object.assign({publisher: action.payload.publisher.toUpperCase()}, action.payload);}
             }
 
 

@@ -364,14 +364,6 @@ public class Storage {
     public void editResource(String uri, Map<String, String> propertiesToUpdate) {
         Resource resource = this.model.getResource(uri);
 
-        System.out.println("EDITRESOURCE");
-        StmtIterator l = resource.listProperties();
-        System.out.println("LIST: ");
-        while (l.hasNext()) {
-            System.out.println("- " + l.nextStatement().toString());
-        }
-
-
         for(Map.Entry<String,String> entry : propertiesToUpdate.entrySet()) {
             String propertyLabel = entry.getKey();
 
@@ -386,12 +378,6 @@ public class Storage {
                 resource.removeAll(property);
                 resource.addProperty(property, entry.getValue());
             }
-        }
-
-        l = resource.listProperties();
-        System.out.println("LIST: ");
-        while (l.hasNext()) {
-            System.out.println("- " + l.nextStatement().toString());
         }
     }
 

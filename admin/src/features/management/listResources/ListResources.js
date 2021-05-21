@@ -132,7 +132,7 @@ export const ListResources = () => {
         console.log(editRow)
 
         const d = diff(editRow, values)
-        Object.entries(d).forEach(item => {  formData.append(item[0], item[1]); })
+        Object.entries(d).forEach(item => { formData.append(item[0], item[1]); })
 
         if ( 'isEndpointFile' in d ) {
             if ( values.publisher === "omim" ) {

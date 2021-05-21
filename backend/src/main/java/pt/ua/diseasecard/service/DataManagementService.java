@@ -174,9 +174,8 @@ public class DataManagementService {
                     case "xml":
                         factory = new XMLFactory(r);
                         break;
-                    case "plugin":
+                    case "omim":
                         factory = new PluginFactory(r);
-                        //this.beanFactory.autowireBean(factory);
                         break;
                     default:
                         factory = null;
