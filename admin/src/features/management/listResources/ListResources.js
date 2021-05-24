@@ -60,6 +60,7 @@ export const ListResources = () => {
     const ontologyStructure = useSelector(getOntologyStructure)
     const editRow = useSelector(getEditRow)
     const [open, setOpen] = useState(false);
+    const [openRemove, setOpenRemove] = useState(false);
 
 
     const classes = useStyles();
@@ -73,6 +74,14 @@ export const ListResources = () => {
 
     const handleClose = () => {
         setOpen(false);
+    };
+
+    const handleClickOpenRemove = () => {
+        setOpenRemove(true);
+    };
+
+    const handleCloseRemove = () => {
+        setOpenRemove(false);
     };
 
     const getNonExpandableRows = () => {
@@ -118,8 +127,6 @@ export const ListResources = () => {
 
     const handleModelEdit = (cell, row) => {
         dispatch(storeEditRow(row))
-        console.log("Row:")
-        console.log(row)
         handleClickOpen();
     }
 
@@ -127,9 +134,6 @@ export const ListResources = () => {
         let formData = new FormData()
         formData.append("uri", values.uri)
         formData.append("typeOf", values.typeOf)
-
-        console.log("EditRow:")
-        console.log(editRow)
 
         const d = diff(editRow, values)
         Object.entries(d).forEach(item => { formData.append(item[0], item[1]); })
@@ -151,21 +155,23 @@ export const ListResources = () => {
             dispatch(editInstance(formData))
         }
 
-        console.log("Diff: ")
-        console.log(d)
-
         dispatch(getOntologyStructureInfo())
         setOpen(false)
     }
 
     const handleModelRemove = (cell, row) => {
-        console.log("Row:")
-        console.log(row)
+        dispatch(storeEditRow(row))
+        handleClickOpenRemove();
+    }
 
+    const removeInst = () => {
         let formData = new FormData()
-        formData.append("uri", row.uri)
-        formData.append("typeOf", row.typeOf)
+        formData.append("uri", editRow.uri)
+        formData.append("typeOf", editRow.typeOf)
         dispatch(removeInstance(formData))
+        dispatch(getOntologyStructureInfo())
+        console.log(ontologyStructure)
+        setOpenRemove(false)
     }
 
     const editModal = (
@@ -189,6 +195,33 @@ export const ListResources = () => {
                         <Col sm="6" className="centerStuff">
                             <Button variant="outlined" color="primary" className={ classes.buttonG } type="submit" form="editForm">
                                 Submit
+                            </Button>
+                        </Col>
+                    </Row>
+                </div>
+            </DialogActions>
+        </Dialog>
+    )
+
+    const removeModal = (
+        <Dialog open={openRemove}  onClose={handleCloseRemove} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+            <DialogTitle  id="alert-dialog-title">Are you sure you want to delete the instance "<i>{editRow.label}</i>"?</DialogTitle>
+            <DialogContent >
+                <DialogContentText id="alert-dialog-description">
+                    Please note that when you delete an instance, you are removing the instances with which it is related.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions style={{width: "98%", display: "block"}}>
+                <div style={{ marginTop: '20px', marginBottom: "20px"}}>
+                    <Row className="justify-content-md-center">
+                        <Col sm="6" className="centerStuff">
+                            <Button variant="outlined" color="primary" className={ classes.button } onClick={ handleCloseRemove }>
+                                Cancel
+                            </Button>
+                        </Col>
+                        <Col sm="6" className="centerStuff">
+                            <Button variant="outlined" color="primary" className={ classes.buttonG } type="submit" onClick={removeInst}>
+                                Confirm
                             </Button>
                         </Col>
                     </Row>
@@ -422,6 +455,7 @@ export const ListResources = () => {
             />
 
             {editModal}
+            {removeModal}
         </div>
     )
 }

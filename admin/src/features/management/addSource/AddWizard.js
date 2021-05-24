@@ -14,6 +14,7 @@ import AddParserCSVForm from "./forms/FormParserCSV";
 import AddParserXMLForm from "./forms/FormParserXML";
 import {CircularProgress} from "@material-ui/core";
 import AddParserOMIMForm from "./forms/FormParserOMIM";
+import {getOntologyStructureInfo} from "../listResources/listResourcesSlice";
 
 const MethodIcon = styled(animated.div)``;
 
@@ -289,7 +290,8 @@ const ValidateEndpoints = props => {
         dispatch(uploadEndpoints(formData))
 
         props.update('endpointFiles', endpointFiles)
-        props.nextStep()
+        props.goToStep(0)
+        dispatch(getOntologyStructureInfo())
     };
 
     const items = invalidEndpoints.map((d) =>
@@ -488,13 +490,14 @@ const AddEntities = props => {
     const submit = (values) => {
         let formData = new FormData(document.forms.namedItem("addEntityForm"))
         dispatch(addEntity(formData))
+        dispatch(getOntologyStructureInfo())
     }
 
     return (
         <div>
             <p className='text-center' style={{color: "#1dc4e9"}}><b>Add an Entity</b></p>
 
-            <AddEntityFrom onSubmit={submit} formDetails={props} initialValues={[]}/>
+            <AddEntityFrom onSubmit={submit} formDetails={props}/>
         </div>
     );
 }
@@ -509,7 +512,7 @@ const AddConcepts = props => {
     const submit = (values) => {
         let formData = new FormData(document.forms.namedItem("addConceptForm"))
         dispatch(addConcept(formData))
-        //console.log(values);
+        dispatch(getOntologyStructureInfo())
     }
 
     return (
@@ -530,6 +533,7 @@ const AddResources = props => {
     const submit = (values) => {
         dispatch(storeResource(values))
         setPermissionToGo(true)
+        dispatch(getOntologyStructureInfo())
     }
 
     return (
@@ -556,6 +560,8 @@ const AddParsers = props => {
             if (!resource.isEndpointFile) dispatch(addResourceWithURLEndpoint(forms))
             else dispatch(addResource(forms))
         }
+
+        dispatch(getOntologyStructureInfo())
     }
 
     let content;

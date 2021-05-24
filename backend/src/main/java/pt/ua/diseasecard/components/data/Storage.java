@@ -387,8 +387,6 @@ public class Storage {
         if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Remove Entity with " + uri );
 
         Resource entity = this.model.getResource(uri);
-        OntResource r = this.ontModel.getOntResource(entity);
-
         Property isEntityOfProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix("coeus")) + "isEntityOf");
 
         StmtIterator concepts = entity.listProperties(isEntityOfProperty);
@@ -403,13 +401,11 @@ public class Storage {
         if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Remove Concept with " + uri );
 
         Resource concept = this.model.getResource(uri);
-        OntResource r = this.ontModel.getOntResource(concept);
-
         Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix("coeus")) + "hasResource");
 
         StmtIterator resources = concept.listProperties(hasResourceProperty);
         while (resources.hasNext()) this.removeResource(resources.nextStatement().getResource().toString());
-        
+
         this.model.removeAll(concept, null, (RDFNode) null);
         this.model.removeAll(null, null, concept);
     }

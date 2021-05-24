@@ -15,6 +15,8 @@ import {
 } from "@material-ui/core";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
+import {useDispatch} from "react-redux";
+import {getOntologyStructureInfo} from "../../listResources/listResourcesSlice";
 
 const renderFromHelper = ({ touched, error, labelText }) => {
     if (!(touched && error)) {
@@ -191,6 +193,7 @@ export const renderDropzoneInput = (field) => {
 
 export const FootForm = (props, c, type) => {
     const [open, setOpen] = React.useState(false);
+    const dispatch = useDispatch()
 
     const handleClickOpen = () => {
         if (props.valid) setOpen(true);
@@ -202,6 +205,12 @@ export const FootForm = (props, c, type) => {
     const handleClose = () => {
         setOpen(false);
         props.formDetails.goToStep(5);
+        dispatch(getOntologyStructureInfo());
+    };
+    const handleFinish = () => {
+        setOpen(false);
+        props.formDetails.goToStep(1);
+        dispatch(getOntologyStructureInfo());
     };
 
     return (
@@ -231,7 +240,7 @@ export const FootForm = (props, c, type) => {
                                         <a href="#" className='label theme-bg text-white f-14' style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }} onClick={ handleClose }>Add More</a>
                                     </Col>
                                     <Col sm="6" className="centerStuff">
-                                        <a href="#" className={'label theme-bg text-white f-14'} style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }} > Finish </a>
+                                        <a href="#" className={'label theme-bg text-white f-14'} style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }}  onClick={handleFinish}> Finish </a>
                                     </Col>
                                 </Row>
                             </div>
