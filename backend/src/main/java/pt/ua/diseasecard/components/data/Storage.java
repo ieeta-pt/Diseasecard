@@ -10,6 +10,7 @@ import com.hp.hpl.jena.sdb.SDBFactory;
 import com.hp.hpl.jena.sdb.Store;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Component;
+import pt.ua.diseasecard.service.DataManagementService;
 import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
@@ -379,6 +380,48 @@ public class Storage {
                 resource.addProperty(property, entry.getValue());
             }
         }
+    }
+
+
+    public void removeEntity(String uri) {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Remove Entity with " + uri );
+
+        Resource entity = this.model.getResource(uri);
+        OntResource r = this.ontModel.getOntResource(entity);
+
+        Property isEntityOfProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix("coeus")) + "isEntityOf");
+
+        StmtIterator concepts = entity.listProperties(isEntityOfProperty);
+        while (concepts.hasNext()) this.removeConcept(concepts.nextStatement().getResource().toString());
+
+        this.model.removeAll(entity, null, (RDFNode) null);
+        this.model.removeAll(null, null, entity);
+    }
+
+
+    public void removeConcept(String uri) {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Remove Concept with " + uri );
+
+        Resource concept = this.model.getResource(uri);
+        OntResource r = this.ontModel.getOntResource(concept);
+
+        Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix("coeus")) + "hasResource");
+
+        StmtIterator resources = concept.listProperties(hasResourceProperty);
+        while (resources.hasNext()) this.removeResource(resources.nextStatement().getResource().toString());
+        
+        this.model.removeAll(concept, null, (RDFNode) null);
+        this.model.removeAll(null, null, concept);
+    }
+
+
+    public void removeResource(String uri) {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Remove Resource with " + uri );
+
+        Resource resource = this.model.getResource(uri);
+
+        this.model.removeAll(resource, null, (RDFNode) null);
+        this.model.removeAll(null, null, resource);
     }
 
 

@@ -610,8 +610,6 @@ public class DataManagementService {
         allParams.remove("typeOf");
         allParams.remove("uri");
 
-        System.out.println("\nPropertiesToUpdate: \n" + allParams.entrySet());
-
         switch (typeOf) {
             case "Entity":
                 this.storage.editEntity(uri, allParams);
@@ -659,6 +657,23 @@ public class DataManagementService {
         allParams.remove("typeOf");
         allParams.remove("uri");
         this.storage.editResource(uri, allParams);
+    }
+
+
+    public void removeInstance(String typeOf, String uri) {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Remove Instance with " + uri );
+
+        switch (typeOf) {
+            case "Entity":
+                this.storage.removeEntity(uri);
+                break;
+            case "Concept":
+                this.storage.removeConcept(uri);
+                break;
+            case "Resource":
+                this.storage.removeResource(uri);
+                break;
+        }
     }
 
 

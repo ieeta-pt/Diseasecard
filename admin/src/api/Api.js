@@ -31,6 +31,7 @@ const getModuleURL = function (module) {
         case "editInstance":                   return "/dcadmin/operations/editInstance";
         case "editResourceSingleEndpoint":     return "/dcadmin/operations/editResourceSingleEndpoint";
         case "editResourceOMIMEndpoint":       return "/dcadmin/operations/editResourceOMIMEndpoint";
+        case "removeInstance":                 return "/dcadmin/operations/removeInstance";
         default:                               return "";
     }
 };

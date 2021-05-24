@@ -282,6 +282,13 @@ public class DiseasecardController {
     }
 
 
+    @PostMapping(value = "/dcadmin/operations/removeInstance")
+    @ResponseBody
+    public void removeInstance(@RequestParam("uri") String uri , @RequestParam("typeOf") String typeOf) {
+        dataManagementService.removeInstance(typeOf, uri);
+    }
+
+
     @GetMapping("/dcadmin/status/labels")
     public JSONObject getFormLabelsInfo() {
         return dataManagementService.getFormLabels();

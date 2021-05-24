@@ -4,7 +4,7 @@ import {
     editInstance, editResourceOMIMEndpoint, editResourceSingleEndpoint,
     getEditRow,
     getOntologyStructure,
-    getOntologyStructureInfo,
+    getOntologyStructureInfo, removeInstance,
     storeEditRow
 } from "./listResourcesSlice";
 import BootstrapTable from 'react-bootstrap-table-next';
@@ -109,7 +109,7 @@ export const ListResources = () => {
                     <i className="feather icon-edit" style={{fontSize:"14px"}}></i>
                 </IconButton>
 
-                <IconButton aria-label="upload picture" component="span" title="Remove">
+                <IconButton aria-label="upload picture" component="span" title="Remove" onClick={(e)=> {e.stopPropagation(); handleModelRemove(cell, row) }}>
                     <i className="feather icon-x-square" style={{fontSize:"14px"}}></i>
                 </IconButton>
             </div>
@@ -156,6 +156,16 @@ export const ListResources = () => {
 
         dispatch(getOntologyStructureInfo())
         setOpen(false)
+    }
+
+    const handleModelRemove = (cell, row) => {
+        console.log("Row:")
+        console.log(row)
+
+        let formData = new FormData()
+        formData.append("uri", row.uri)
+        formData.append("typeOf", row.typeOf)
+        dispatch(removeInstance(formData))
     }
 
     const editModal = (
