@@ -2,7 +2,6 @@ package pt.ua.diseasecard.components.data;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.hp.hpl.jena.ontology.OntModel;
-import com.hp.hpl.jena.ontology.OntResource;
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.ReasonerRegistry;
@@ -333,19 +332,37 @@ public class Storage {
     public void editConcept(String uri, Map<String, String> propertiesToUpdate) {
         Resource concept = this.model.getResource(uri);
 
+        System.out.println(propertiesToUpdate);
+
         for(Map.Entry<String,String> entry : propertiesToUpdate.entrySet()) {
             String propertyLabel = entry.getKey();
 
-            if (propertyLabel.equals("hasEntity")) {
-                Property hasEntityProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "hasEntity");
-                Property isEntityOfProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "isEntityOf");
+            if (propertyLabel.equals("extendedEntityLabel")) {
+                Property hasEntityProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "hasEntity");
+                Property isEntityOfProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "isEntityOf");
 
-                Resource entity = this.model.getResource(entry.getValue());
+                Resource oldEntity = concept.getPropertyResourceValue(hasEntityProperty);
+                this.model.remove(oldEntity, isEntityOfProperty, concept);
+
+                StmtIterator l = oldEntity.listProperties();
+                System.out.println("\nOLD ENTITY PROPERTIES: ");
+                while (l.hasNext()) {
+                    System.out.println("- " + l.nextStatement().toString());
+                }
+
+
+                Resource entity = this.model.getResource(this.config.getPrefixes().get("diseasecard") + entry.getValue());
                 entity.addProperty(isEntityOfProperty, concept);
 
                 // Note: In this case we're removing all properties of this type, but it's irrelevant since the concept can only have one entity.
                 concept.removeAll(hasEntityProperty);
                 concept.addProperty(hasEntityProperty, entity);
+
+                l = concept.listProperties();
+                System.out.println("\nCONCEPT: ");
+                while (l.hasNext()) {
+                    System.out.println("- " + l.nextStatement().toString());
+                }
             }
             else if (propertyLabel.equals("relatedResourceLabel")) {
                 Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "hasResource");
@@ -372,7 +389,7 @@ public class Storage {
                 Property isResourceOfProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "isResourceOf");
                 Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "hasResource");
 
-                this.editingCrossProperties(resource, isResourceOfProperty, entry.getValue(), hasResourceProperty);
+                this.editingCrossProperties(resource, isResourceOfProperty, entry.getValue().replace("http://bioinformatics.ua.pt/diseasecard/resource/",""), hasResourceProperty);
             }
             else {
                 Property property = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + propertyLabel);
@@ -440,9 +457,8 @@ public class Storage {
         // Remove from concept the 'hasEntity' values
         StmtIterator list = mainInstance.listProperties(mainInstanceProperty);
         while (list.hasNext()) {
-            String instanceURI = list.nextStatement().getResource().toString();
-            OntResource r = this.ontModel.getOntResource(this.model.getResource(instanceURI));
-            r.removeProperty(supportInstanceProperty, mainInstance);
+            Resource r = this.model.getResource(list.nextStatement().getResource().toString());
+            this.model.remove(r, supportInstanceProperty, mainInstance);
         }
 
         // Remove from resource all 'isEntityOf' values
