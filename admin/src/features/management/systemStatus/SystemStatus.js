@@ -1,13 +1,16 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getAllResources, getResources} from "./systemStatusSlice";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Avatar, Chip} from "@material-ui/core";
 import {green, grey, red} from "@material-ui/core/colors";
+import SockJsClient from 'react-stomp';
+import { api_url } from '../../../../package.json';
 
 export const SystemStatus = () => {
     const dispatch = useDispatch();
     const allResources = useSelector(getResources)
+    const [message, setMessage] = useState('You server message here.');
 
     useEffect(() => {
         dispatch(getAllResources())
@@ -67,10 +70,27 @@ export const SystemStatus = () => {
         },
     ]
 
+    let onConnected = () => {
+        console.log("Connected!!")
+    }
+
+    let onMessageReceived = (msg) => {
+        console.log("Message: ")
+        console.log(msg)
+        setMessage(msg);
+        dispatch(getAllResources())
+    }
 
     return (
-
         <div style={{margin: "-30px -25px"}}>
+            <SockJsClient
+                url={api_url}
+                topics={['/topic/message']}
+                onConnect={onConnected}
+                onDisconnect={console.log("Disconnected!")}
+                onMessage={msg => onMessageReceived(msg)}
+                debug={false}
+            />
             <BootstrapTable
                 keyField="uri"
                 data={allResources}
@@ -78,6 +98,7 @@ export const SystemStatus = () => {
                 hover
                 headerClasses="header-class"
             />
+            <div>{message}</div>
         </div>
     )
 }

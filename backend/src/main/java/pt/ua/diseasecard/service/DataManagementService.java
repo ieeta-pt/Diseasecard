@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,11 +42,12 @@ public class DataManagementService {
     private OntologyProperties ontologyProperties;
     private ArrayList<Resource> resources;
     private SparqlAPI sparqlAPI;
+    private SimpMessagingTemplate template;
 
     private AutowireCapableBeanFactory beanFactory;
     private Boot boot;
 
-    public DataManagementService(Storage storage, DiseasecardProperties diseasecardProperties, OntologyProperties ontologyProperties, SparqlAPI sparqlAPI, AutowireCapableBeanFactory beanFactory, Boot boot) {
+    public DataManagementService(Storage storage, DiseasecardProperties diseasecardProperties, OntologyProperties ontologyProperties, SparqlAPI sparqlAPI, AutowireCapableBeanFactory beanFactory, Boot boot, SimpMessagingTemplate template) {
         this.uploadDir = "submittedFiles";
         this.storage = storage;
         this.config = diseasecardProperties;
@@ -54,6 +56,7 @@ public class DataManagementService {
         this.sparqlAPI = sparqlAPI;
         this.beanFactory = beanFactory;
         this.boot = boot;
+        this.template = template;
     }
 
     /*
@@ -185,6 +188,7 @@ public class DataManagementService {
                 {
                     factory.read();
                     factory.save();
+                    template.convertAndSend("/topic/message", "Resource " + r.getLabel() + " was built");
                 }
             }
             if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Data for " + r.getTitle() + " read");

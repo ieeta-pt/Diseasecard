@@ -3,7 +3,12 @@ package pt.ua.diseasecard.controller;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -39,8 +44,9 @@ public class DiseasecardController {
     private List<String> protectedSources;
     private Jedis jedis;
     private Boot boot;
+    private SimpMessagingTemplate template;
 
-    public DiseasecardController(DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI, Boot boot, DataManagementService dataManagementService) {
+    public DiseasecardController(DiseasecardProperties diseasecardProperties, SparqlAPI sparqlAPI, Boot boot, DataManagementService dataManagementService, SimpMessagingTemplate template) {
         Objects.requireNonNull(diseasecardProperties);
         Objects.requireNonNull(sparqlAPI);
         this.api = sparqlAPI;
@@ -51,6 +57,7 @@ public class DiseasecardController {
         this.jedis = boot.getJedis();
         this.boot = boot;
         this.dataManagementService = dataManagementService;
+        this.template = template;
     }
 
 
@@ -97,7 +104,6 @@ public class DiseasecardController {
     }
 
 
-    // TODO: Tornar mais bonito o código
     @GetMapping("/services/linkout/{key}:{value}")
     @ResponseBody
     public JSONObject getSourceURL( @PathVariable String key, @PathVariable String value) {
@@ -323,5 +329,17 @@ public class DiseasecardController {
     @GetMapping("/dcadmin/status/ontologyStructure")
     public JSONArray getOntologyStructureInfo() {
         return dataManagementService.getOntologyStructure();
+    }
+
+
+    @PostMapping("/send")
+    public String sendMessage(@RequestParam("text") String text) {
+        template.convertAndSend("/topic/message", text);
+        return text;
+    }
+
+    @SendTo("/topic/message")
+    public String broadcastMessage(@Payload String textMessageDTO) {
+        return textMessageDTO;
     }
 }
