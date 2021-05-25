@@ -109,11 +109,7 @@ export const ListResources = () => {
     }
 
     const GetActionFormat = (cell, row) => {
-        return(<div style={{paddingTop: "4%"}}>
-                <IconButton aria-label="upload picture" component="span" title="Build">
-                    <i className="feather icon-settings" style={{fontSize:"14px"}}></i>
-                </IconButton>
-
+        return(<div style={{paddingTop: "3%"}}>
                 <IconButton aria-label="upload picture" component="span" title="Edit" onClick={(e)=> {e.stopPropagation(); handleModelEdit(cell, row) }}>
                     <i className="feather icon-edit" style={{fontSize:"14px"}}></i>
                 </IconButton>

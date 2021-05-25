@@ -61,9 +61,7 @@ public class DiseasecardController {
 
 
     @GetMapping("/services/results/{searchType}")
-    public String searchResults(
-            @PathVariable String searchType,
-            @RequestParam(name = "query", required = true) String query) {
+    public String searchResults( @PathVariable String searchType, @RequestParam(name = "query", required = true) String query) {
 
         Finder finder = new Finder(this.api, this.solrIndex, query);
         if (searchType.equals("id"))
@@ -75,8 +73,7 @@ public class DiseasecardController {
 
     @GetMapping("/services/autocomplete")
     @ResponseBody
-    public String autocomplete(
-            @RequestParam(name = "query", required = true) String query) {
+    public String autocomplete( @RequestParam(name = "query", required = true) String query) {
 
         Finder finder = new Finder(this.api, this.solrIndex, query);
         return finder.get("id");
@@ -85,8 +82,7 @@ public class DiseasecardController {
 
     @GetMapping("/services/disease")
     @ResponseBody
-    public String getDiseaseByOMIM(
-            @RequestParam(name = "omim", required = true) String omim) {
+    public String getDiseaseByOMIM( @RequestParam(name = "omim", required = true) String omim) {
 
 //        DiseaseAPI d = new DiseaseAPI(this.api, omim);
 //        return d.load().toString();
@@ -104,9 +100,7 @@ public class DiseasecardController {
     // TODO: Tornar mais bonito o código
     @GetMapping("/services/linkout/{key}:{value}")
     @ResponseBody
-    public JSONObject getSourceURL(
-            @PathVariable String key,
-            @PathVariable String value) {
+    public JSONObject getSourceURL( @PathVariable String key, @PathVariable String value) {
 
         JSONObject res = new JSONObject();
 
@@ -172,10 +166,10 @@ public class DiseasecardController {
 
     @PostMapping(value = "/dcadmin/operations/addConcept")
     public void addConcept(@RequestParam("titleConcept") String title,
-                          @RequestParam("labelConcept") String label,
-                          @RequestParam("descriptionConcept") String description,
-                          @RequestParam("hasEntityConcept") String hasEntity,
-                          @RequestParam(name= "hasResourceConcept", required = false) String hasResource ) throws IOException {
+                           @RequestParam("labelConcept") String label,
+                           @RequestParam("descriptionConcept") String description,
+                           @RequestParam("hasEntityConcept") String hasEntity,
+                           @RequestParam(name= "hasResourceConcept", required = false) String hasResource ) throws IOException {
 
         dataManagementService.prepareAddConcept(title, label, description, hasEntity, hasResource);
     }
@@ -183,13 +177,13 @@ public class DiseasecardController {
 
     @PostMapping(value = "/dcadmin/operations/addResource")
     public void addResource(@RequestParam("titleResource") String title,
-                          @RequestParam("labelResource") String label,
-                          @RequestParam("descriptionResource") String description,
-                          @RequestParam("resourceOf") String resourceOf,
-                          @RequestParam("extendsResource") String extendsResource,
-                          @RequestParam("orderResource") String order,
-                          @RequestParam("files") MultipartFile files,
-                          @RequestParam("publisherEndpoint") String publisher ) throws IOException {
+                            @RequestParam("labelResource") String label,
+                            @RequestParam("descriptionResource") String description,
+                            @RequestParam("resourceOf") String resourceOf,
+                            @RequestParam("extendsResource") String extendsResource,
+                            @RequestParam("orderResource") String order,
+                            @RequestParam("files") MultipartFile files,
+                            @RequestParam("publisherEndpoint") String publisher ) throws IOException {
 
         dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, files);
     }
@@ -227,10 +221,10 @@ public class DiseasecardController {
     // TODO: Adicionar o isMethodBYReplace
     @PostMapping(value = "/dcadmin/operations/addCSVParser")
     public void addCSVParser(@RequestParam("resource") String resource,
-                          @RequestParam("resourceID") String resourceID,
-                          @RequestParam(name="regexResource", required = false, defaultValue = "") String regexResource,
-                          @RequestParam("externalResourceID") String externalResourceID,
-                          @RequestParam(name="regexExternalResource", required = false, defaultValue = "") String regexExternalResource) {
+                             @RequestParam("resourceID") String resourceID,
+                             @RequestParam(name="regexResource", required = false, defaultValue = "") String regexResource,
+                             @RequestParam("externalResourceID") String externalResourceID,
+                             @RequestParam(name="regexExternalResource", required = false, defaultValue = "") String regexExternalResource) {
 
         dataManagementService.prepareAddParser(resource, resourceID, regexResource, externalResourceID, regexExternalResource);
     }
@@ -276,8 +270,8 @@ public class DiseasecardController {
     @PostMapping(value = "/dcadmin/operations/editResourceOMIMEndpoint")
     @ResponseBody
     public void editResourceOMIM(@RequestParam Map<String,String> allParams,
-                                         @RequestParam("morbidmap") MultipartFile morbidmap,
-                                         @RequestParam("genemap") MultipartFile genemap ) {
+                                 @RequestParam("morbidmap") MultipartFile morbidmap,
+                                 @RequestParam("genemap") MultipartFile genemap ) {
         dataManagementService.prepareEditResourceOMIM(allParams, genemap, morbidmap);
     }
 
@@ -286,6 +280,13 @@ public class DiseasecardController {
     @ResponseBody
     public void removeInstance(@RequestParam("uri") String uri , @RequestParam("typeOf") String typeOf) {
         dataManagementService.removeInstance(typeOf, uri);
+    }
+
+
+    @PostMapping(value = "/dcadmin/operations/buildSystem")
+    @ResponseBody
+    public void buildSystem() {
+        dataManagementService.build();
     }
 
 
@@ -306,9 +307,16 @@ public class DiseasecardController {
         return dataManagementService.getAllEntities();
     }
 
+
     @GetMapping("/dcadmin/status/allConcepts")
     public JSONObject getAllConceptsInfo() {
         return dataManagementService.getAllConcepts();
+    }
+
+
+    @GetMapping("/dcadmin/status/allResources")
+    public JSONArray getAllResources() {
+        return dataManagementService.getAllResources();
     }
 
 
@@ -316,6 +324,4 @@ public class DiseasecardController {
     public JSONArray getOntologyStructureInfo() {
         return dataManagementService.getOntologyStructure();
     }
-
-
 }

@@ -93,7 +93,7 @@ public class DataManagementService {
     /*
         Description
      */
-    private void build() {
+    public void build() {
         try {
             this.readResources();
             for(Resource r : this.resources)
@@ -308,7 +308,7 @@ public class DataManagementService {
     /*
         Description
      */
-    private JSONArray getAllResources() {
+    public JSONArray getAllResources() {
         JSONArray finalR = new JSONArray();
         try
         {

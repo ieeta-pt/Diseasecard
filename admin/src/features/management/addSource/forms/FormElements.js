@@ -205,12 +205,10 @@ export const FootForm = (props, c, type) => {
     const handleClose = () => {
         setOpen(false);
         props.formDetails.goToStep(5);
-        dispatch(getOntologyStructureInfo());
     };
     const handleFinish = () => {
         setOpen(false);
         props.formDetails.goToStep(1);
-        dispatch(getOntologyStructureInfo());
     };
 
     return (

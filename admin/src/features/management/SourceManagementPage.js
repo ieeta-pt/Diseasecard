@@ -4,6 +4,7 @@ import Aux from "../../template/aux";
 import MainCard from "../../template/components/MainCard";
 import {AddWizard} from "./addSource/AddWizard";
 import {ListResources} from "./listResources/ListResources";
+import {SystemStatus} from "./systemStatus/SystemStatus";
 
 
 class SourceManagementPage extends Component {
@@ -16,8 +17,11 @@ class SourceManagementPage extends Component {
                         <MainCard title='Add Sources' isOption collapseCard={true} >
                             <AddWizard />
                         </MainCard>
-                        <MainCard title='List Of Existent Resources' isOption>
+                        <MainCard title='List Of Existent Resources' isOption collapseCard={true}>
                             <ListResources />
+                        </MainCard>
+                        <MainCard title='System Status' isOption>
+                            <SystemStatus />
                         </MainCard>
                     </Col>
                 </Row>

@@ -20,6 +20,7 @@ const getModuleURL = function (module) {
         case "getParserFields":                return "/dcadmin/status/parserFields";
         case "getAllEntitiesInfo":             return "/dcadmin/status/allEntities";
         case "getOntologyStructureInfo":       return "/dcadmin/status/ontologyStructure";
+        case "getAllResources":                return "/dcadmin/status/allResources";
         case "addEntity":                      return "/dcadmin/operations/addEntity";
         case "addConcept":                     return "/dcadmin/operations/addConcept";
         case "addResource":                    return "/dcadmin/operations/addResource";
@@ -32,6 +33,7 @@ const getModuleURL = function (module) {
         case "editResourceSingleEndpoint":     return "/dcadmin/operations/editResourceSingleEndpoint";
         case "editResourceOMIMEndpoint":       return "/dcadmin/operations/editResourceOMIMEndpoint";
         case "removeInstance":                 return "/dcadmin/operations/removeInstance";
+        case "buildSystem":                    return "/dcadmin/operations/buildSystem";
         default:                               return "";
     }
 };

@@ -490,7 +490,6 @@ const AddEntities = props => {
     const submit = (values) => {
         let formData = new FormData(document.forms.namedItem("addEntityForm"))
         dispatch(addEntity(formData))
-        dispatch(getOntologyStructureInfo())
     }
 
     return (
@@ -512,7 +511,6 @@ const AddConcepts = props => {
     const submit = (values) => {
         let formData = new FormData(document.forms.namedItem("addConceptForm"))
         dispatch(addConcept(formData))
-        dispatch(getOntologyStructureInfo())
     }
 
     return (
@@ -533,7 +531,6 @@ const AddResources = props => {
     const submit = (values) => {
         dispatch(storeResource(values))
         setPermissionToGo(true)
-        dispatch(getOntologyStructureInfo())
     }
 
     return (
@@ -561,7 +558,6 @@ const AddParsers = props => {
             else dispatch(addResource(forms))
         }
 
-        dispatch(getOntologyStructureInfo())
     }
 
     let content;

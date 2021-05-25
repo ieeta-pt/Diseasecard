@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import API from "../../../api/Api";
+import {getOntologyStructureInfo} from "../listResources/listResourcesSlice";
 
 
 const initialState = {
@@ -50,6 +51,8 @@ export const getParserFields = createAsyncThunk('addSource/getParserFields', asy
 
 export const addEntity = createAsyncThunk('addSource/addEntity', async (form) => {
     return API.POST("addEntity", '', form ).then(res => {
+        getFormLabels()
+        getOntologyStructureInfo()
         return res.data
     })
 })
