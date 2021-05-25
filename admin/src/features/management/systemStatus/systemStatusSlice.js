@@ -15,9 +15,7 @@ export const getAllResources = createAsyncThunk('listResources/getAllResources',
 const systemStatusSlice = createSlice({
     name: 'systemStatus',
     initialState,
-    reducers: {
-
-    },
+    reducers: {},
     extraReducers: {
         [getAllResources.fulfilled]: (state, action) => {
             state.allResources = action.payload.allResources
