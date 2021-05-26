@@ -35,15 +35,15 @@ public class DiseaseAPI {
             this.map.put("omim", this.omim);
 
             // the SPARQL query
-            ResultSet rs = api.selectRS("SELECT * WHERE { diseasecard:omim_" + omim + " diseasecard:chromosomalLocation ?chromo . " +
-                    "diseasecard:omim_" + omim + " dc:description ?d . " +
-                    "diseasecard:omim_" + omim + " coeus:isAssociatedTo ?a1 . " +
+            ResultSet rs = api.selectRS("SELECT * WHERE { diseasecard:OMIM_" + omim + " diseasecard:chromosomalLocation ?chromo . " +
+                    "diseasecard:OMIM_" + omim + " dc:description ?d . " +
+                    "diseasecard:OMIM_" + omim + " coeus:isAssociatedTo ?a1 . " +
                     "?a1 coeus:isAssociatedTo ?a2 . " +
-                    "{ OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasGenotype ?g} . " +
-                    "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasPhenotype ?p }. " +
-                    "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:name ?n } . " +
-                    "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:phenotype ?pheno} . " +
-                    "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:genotype ?geno .}}}", false);
+                    "{ OPTIONAL { diseasecard:OMIM_" + omim + " diseasecard:hasGenotype ?g} . " +
+                    "OPTIONAL { diseasecard:OMIM_" + omim + " diseasecard:hasPhenotype ?p }. " +
+                    "OPTIONAL { diseasecard:OMIM_" + omim + " diseasecard:name ?n } . " +
+                    "OPTIONAL { diseasecard:OMIM_" + omim + " diseasecard:phenotype ?pheno} . " +
+                    "OPTIONAL { diseasecard:OMIM_" + omim + " diseasecard:genotype ?geno .}}}", false);
 
 
             JSONArray synonyms = new JSONArray();
@@ -55,8 +55,6 @@ public class DiseaseAPI {
                 String a1 = "";
                 String a2 = "";
                 QuerySolution row = rs.next();
-
-                System.out.println(row);
 
                 if (row.get("a1").toString().contains("malacards")) {
                     a1 = row.get("a1").toString().replace("http://bioinformatics.ua.pt/diseasecard/resource/malacards_", "malacards:");

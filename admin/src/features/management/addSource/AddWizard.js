@@ -290,7 +290,7 @@ const ValidateEndpoints = props => {
         dispatch(uploadEndpoints(formData))
 
         props.update('endpointFiles', endpointFiles)
-        props.goToStep(0)
+        props.goToStep(1)
         dispatch(getOntologyStructureInfo())
     };
 

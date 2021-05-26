@@ -18,6 +18,7 @@ export const getAllEntities = createAsyncThunk('listResources/getAllEntitiesInfo
 export const getOntologyStructureInfo = createAsyncThunk('listResources/getOntologyStructureInfo', async () => {
     return API.GET("getOntologyStructureInfo", '', [] ).then(res => {
         const ontologyStructure = res.data
+        console.log(ontologyStructure)
         return { ontologyStructure }
     })
 })

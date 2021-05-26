@@ -289,8 +289,7 @@ public class DiseasecardController {
     }
 
 
-    @PostMapping(value = "/dcadmin/operations/buildSystem")
-    @ResponseBody
+    @GetMapping(value = "/dcadmin/operations/buildSystem")
     public void buildSystem() {
         dataManagementService.build();
     }
