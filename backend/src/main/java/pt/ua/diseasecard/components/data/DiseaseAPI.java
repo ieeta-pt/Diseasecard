@@ -35,7 +35,8 @@ public class DiseaseAPI {
             this.map.put("omim", this.omim);
 
             // the SPARQL query
-            ResultSet rs = api.selectRS("SELECT * WHERE { diseasecard:OMIM_" + omim + " diseasecard:chromosomalLocation ?chromo . " +
+            ResultSet rs = api.selectRS("SELECT * WHERE { " +
+                    "diseasecard:OMIM_" + omim + " diseasecard:chromosomalLocation ?chromo . " +
                     "diseasecard:OMIM_" + omim + " dc:description ?d . " +
                     "diseasecard:OMIM_" + omim + " coeus:isAssociatedTo ?a1 . " +
                     "?a1 coeus:isAssociatedTo ?a2 . " +
@@ -89,7 +90,7 @@ public class DiseaseAPI {
                         this.list.add("String:" + a1.replace("uniprot:", ""));
                     }
                 }
-                if (!a2.contains("omim")) {
+                if (!a2.contains("OMIM")) {
                     if (!this.list.contains(a2)) {
                         this.list.add(a2);
                     }
