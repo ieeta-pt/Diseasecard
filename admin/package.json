@@ -2,9 +2,10 @@
   "name": "dcadmin",
   "version": "0.1.0",
   "private": true,
-  "api_url": "http://localhost:8080/diseasecard/api",
+  "api_url": "http://localhost:80/diseasecard/api",
   "homepage": "http://localhost:3000/diseasecard/admin/",
   "dependencies": {
+    "@material-ui/core": "latest",
     "@reduxjs/toolkit": "^1.1.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -13,8 +14,10 @@
     "lodash": "^4.17.21",
     "node-sass": "^5.0.0",
     "nvd3": "1.8.6",
+    "object-diff": "0.0.4",
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.0",
+    "react-bootstrap-table-next": "^4.0.3",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.3.1",
     "react-full-screen": "0.2.4",
@@ -24,7 +27,9 @@
     "react-scripts": "4.0.3",
     "react-spring": "^8.0.27",
     "react-step-wizard": "^5.3.5",
+    "react-stomp": "^5.1.0",
     "react-window-size": "^1.2.2",
+    "sockjs": "^0.3.21",
     "styled-components": "^5.2.1"
   },
   "scripts": {

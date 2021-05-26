@@ -32,6 +32,8 @@ const systemStatusSlice = createSlice({
     }
 })
 
+
 export const getResources = state => state.systemStatus.allResources
+
 
 export default systemStatusSlice.reducer

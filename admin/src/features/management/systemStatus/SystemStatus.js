@@ -119,7 +119,6 @@ export const SystemStatus = () => {
                 hover
                 headerClasses="header-class"
             />
-            <div>{message}</div>
         </div>
     )
 }

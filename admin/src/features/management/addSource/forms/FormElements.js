@@ -96,7 +96,7 @@ export const useStyles = makeStyles((theme) => ({
 }));
 
 
-export const renderTextField = ({ label, input, value, labelText, meta: { touched, invalid, error },  ...custom }) => (
+export const renderTextField = ({ label, input, value, disabled=false, labelText, meta: { touched, invalid, error },  ...custom }) => (
     <TextField
         label={label}
         placeholder={label}
@@ -106,6 +106,7 @@ export const renderTextField = ({ label, input, value, labelText, meta: { touche
         {...input}
         {...custom}
         style={{width: "100%"}}
+        disabled={disabled}
     />
 )
 

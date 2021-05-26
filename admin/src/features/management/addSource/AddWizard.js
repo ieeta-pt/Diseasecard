@@ -15,6 +15,7 @@ import AddParserXMLForm from "./forms/FormParserXML";
 import {CircularProgress} from "@material-ui/core";
 import AddParserOMIMForm from "./forms/FormParserOMIM";
 import {getOntologyStructureInfo} from "../listResources/listResourcesSlice";
+import {getAllResources} from "../systemStatus/systemStatusSlice";
 
 const MethodIcon = styled(animated.div)``;
 
@@ -292,6 +293,7 @@ const ValidateEndpoints = props => {
         props.update('endpointFiles', endpointFiles)
         props.goToStep(1)
         dispatch(getOntologyStructureInfo())
+        dispatch(getAllResources())
     };
 
     const items = invalidEndpoints.map((d) =>

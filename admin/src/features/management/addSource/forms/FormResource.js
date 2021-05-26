@@ -18,8 +18,7 @@ import {
 import {getConceptsLabels, getOrdersLabels, getPluginsLabels} from "../addSourceSlice";
 import { useSelector } from "react-redux";
 import {Col, Row} from "react-bootstrap";
-import {useDropzone} from "react-dropzone";
-
+import { change } from "redux-form";
 
 const validate = values => {
     const errors = {}
@@ -75,6 +74,7 @@ const AddResourceForm = props => {
 
     const [publisher, setPublisher] = useState('');
     const [endpoint, setEndpoint] = useState(false);
+    const [disableTextField, setDisableTextField] = useState(false);
 
     const goBack = () => {
         props.formDetails.goToStep(5);
@@ -82,6 +82,20 @@ const AddResourceForm = props => {
     const goNext = () => {
         props.formDetails.goToStep(9);
     };
+
+    const handlePublisherChoice = (e) => {
+        setPublisher(e.target.value);
+        if (e.target.value === "OMIM") {
+            setDisableTextField(true);
+            props.change('labelResource', "resource_OMIM");
+        }
+        else
+        {
+            setDisableTextField(false);
+            props.change('labelResource', "");
+        }
+    }
+
 
     return (
         <div style={{width: "94%"}}>
@@ -107,6 +121,7 @@ const AddResourceForm = props => {
                             label="Label"
                             className={c.field}
                             labelText="olaaa"
+                            props={{ disabled: disableTextField }}
                         />
                     </Grid>
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>
@@ -185,7 +200,7 @@ const AddResourceForm = props => {
                             name="publisherEndpoint"
                             component={renderSelectField}
                             label="Publisher"
-                            onChange={e => setPublisher(e.target.value)}
+                            onChange={e => handlePublisherChoice(e)}
                             variant="outlined"
                             className={c.field}
                             labelText="olaaa"
