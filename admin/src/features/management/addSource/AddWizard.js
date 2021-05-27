@@ -294,6 +294,7 @@ const ValidateEndpoints = props => {
         props.goToStep(1)
         dispatch(getOntologyStructureInfo())
         dispatch(getAllResources())
+        dispatch(getFormLabels())
     };
 
     const items = invalidEndpoints.map((d) =>
@@ -417,6 +418,7 @@ const SelectBetweenECR = props => {
     const [method, setMethod] = useState('');
     const [permissionToGo, setPermissionToGo] = useState(false);
     const [nextStep, setNextStep] = useState(1)
+    const dispatch = useDispatch()
 
     const update = (e) => {
         if      (e === "E")     setNextStep(6);
@@ -426,6 +428,7 @@ const SelectBetweenECR = props => {
         setMethod(e);
         setPermissionToGo(true);
         props.update('method', e)
+        dispatch(getFormLabels())
     };
 
     const go = () => {
@@ -560,6 +563,7 @@ const AddParsers = props => {
             else dispatch(addResource(forms))
         }
 
+        dispatch(getFormLabels())
     }
 
     let content;

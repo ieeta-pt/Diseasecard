@@ -15,7 +15,7 @@ import {
     useStyles,
     renderSwitchField
 } from "./FormElements";
-import {getConceptsLabels, getOrdersLabels, getPluginsLabels} from "../addSourceSlice";
+import {getConceptsLabels, getOrdersLabels, getPluginsLabels, getResourcesLabels} from "../addSourceSlice";
 import { useSelector } from "react-redux";
 import {Col, Row} from "react-bootstrap";
 import { change } from "redux-form";
@@ -41,7 +41,6 @@ const validate = values => {
     }
     return errors
 }
-
 
 
 const AddResourceForm = props => {
@@ -71,6 +70,8 @@ const AddResourceForm = props => {
     const conceptLabels = useSelector(getConceptsLabels)
     const pluginLabels = useSelector(getPluginsLabels)
     const ordersLabels = useSelector(getOrdersLabels)
+    const resourceLabels = useSelector(getResourcesLabels)
+
 
     const [publisher, setPublisher] = useState('');
     const [endpoint, setEndpoint] = useState(false);
@@ -96,6 +97,11 @@ const AddResourceForm = props => {
         }
     }
 
+    const checkIfLabelExists = (value, allValues, props, name) => {
+        for (let key of Object.keys(resourceLabels)) {
+            if (value && resourceLabels[key].toLowerCase() === value.toLowerCase()) return 'Label already used.'
+        }
+    }
 
     return (
         <div style={{width: "94%"}}>
@@ -122,6 +128,7 @@ const AddResourceForm = props => {
                             className={c.field}
                             labelText="olaaa"
                             props={{ disabled: disableTextField }}
+                            validate={checkIfLabelExists}
                         />
                     </Grid>
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>

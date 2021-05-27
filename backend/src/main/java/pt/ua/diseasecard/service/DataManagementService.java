@@ -454,17 +454,24 @@ public class DataManagementService {
 
             JSONArray orders = performSimpleQuery("SELECT ?s ?order WHERE { ?s coeus:order ?order }");
             TreeSet<Integer> ordersValues = new TreeSet<>();
+            TreeSet<Integer> ordersValuesFinal = new TreeSet<>();
+
             for (Object o : orders) {
                 JSONObject binding = (JSONObject) o;
                 ordersValues.add(Integer.parseInt(((JSONObject) binding.get("order")).get("value").toString()));
             }
 
 
-            if ( ordersValues.size() > 0 )
-                for (int i = 0 ; i < ordersValues.last() + 1; i++) {
-                    if (!ordersValues.contains(i)) ordersValues.add(i);
+            if ( ordersValues.size() > 0 ) {
+                System.out.println("Orders Values: " + ordersValues.last());
+                int finalSize = ordersValues.last() + 1;
+                for (int i = 0 ; i <= finalSize; i++) {
+                    //System.out.println(i);
+                    if (!ordersValues.contains(i)) ordersValuesFinal.add(i);
                 }
-            else ordersValues.add(0);
+            }
+
+            else ordersValuesFinal.add(0);
 
 
             // Has to be changed
@@ -475,7 +482,7 @@ public class DataManagementService {
             finalR.put("conceptsLabels", conceptsLabels);
             finalR.put("resourcesLabels", resourcesLabels);
             finalR.put("pluginsLabels", pluginsLabels);
-            finalR.put("ordersLabels", ordersValues);
+            finalR.put("ordersLabels", ordersValuesFinal);
         }
         catch (Exception e)  { e.printStackTrace(); }
         return finalR;

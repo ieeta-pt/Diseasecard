@@ -4,7 +4,7 @@ import asyncValidate from './asyncValidate'
 import { Grid, MenuItem } from "@material-ui/core";
 import {FootForm, renderSelectField, renderTextField, useStyles} from "./FormElements";
 import {useSelector} from "react-redux";
-import { getEntitiesLabels, getResourcesLabels } from "../addSourceSlice";
+import {getConceptsLabels, getEntitiesLabels, getResourcesLabels} from "../addSourceSlice";
 
 
 const validate = values => {
@@ -33,7 +33,16 @@ const AddConceptForm = props => {
     const c = useStyles();
 
     const resourcesLabels = useSelector(getResourcesLabels)
+    const conceptLabels = useSelector(getConceptsLabels)
     const entitiesLabels = useSelector(getEntitiesLabels)
+
+    const checkIfConceptLabelExists = (value, allValues, props, name) => {
+        for (let key of Object.keys(conceptLabels)) {
+            if (value && conceptLabels[key].toLowerCase() === value.toLowerCase()) {
+                return 'Label already used.'
+            }
+        }
+    }
 
     return (
         <div style={{width: "94%"}}>
@@ -59,6 +68,7 @@ const AddConceptForm = props => {
                             label="Label"
                             className={c.field}
                             labelText="olaaa"
+                            validate={checkIfConceptLabelExists}
                         />
                     </Grid>
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>

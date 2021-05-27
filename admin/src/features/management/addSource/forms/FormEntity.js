@@ -4,7 +4,7 @@ import asyncValidate from './asyncValidate'
 import { Grid, MenuItem } from "@material-ui/core";
 import {FootForm, renderSelectField, renderTextField, useStyles} from "./FormElements";
 import {useSelector} from "react-redux";
-import {getConceptsLabels} from "../addSourceSlice";
+import {getConceptsLabels, getEntitiesLabels} from "../addSourceSlice";
 
 
 const validate = values => {
@@ -32,6 +32,15 @@ const AddEntityFrom = props => {
     const c = useStyles();
 
     const conceptsLabels = useSelector(getConceptsLabels)
+    const entitiesLabels = useSelector(getEntitiesLabels)
+
+    const checkIfEntityLabelExists = (value, allValues, props, name) => {
+        for (let key of Object.keys(entitiesLabels)) {
+            if (value && entitiesLabels[key].toLowerCase() === value.toLowerCase()) {
+                return 'Label already used.'
+            }
+        }
+    }
 
     return (
         <div style={{width: "94%"}}>
@@ -56,7 +65,8 @@ const AddEntityFrom = props => {
                             component={renderTextField}
                             label="Label"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="This field works as the internal ID."
+                            validate={checkIfEntityLabelExists}
                         />
                     </Grid>
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>

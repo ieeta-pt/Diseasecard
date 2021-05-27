@@ -151,6 +151,10 @@ const addSourceSlice = createSlice({
             state.error = action.error.message*/
         },
         [getFormLabels.fulfilled]: (state, action) => {
+
+            console.log("FORM LABELS")
+            console.log(action.payload)
+
             state.conceptsLabels = action.payload.conceptsLabels;
             state.resourcesLabels = action.payload.resourcesLabels;
             state.entitiesLabels = action.payload.entitiesLabels;
