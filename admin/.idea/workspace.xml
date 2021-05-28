@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="" />
+    <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/systemStatus/SystemStatus.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/systemStatus/SystemStatus.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/systemStatus/systemStatusSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/systemStatus/systemStatusSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/features/browser/browserSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/browser/browserSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/features/disease/diseaseSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/features/disease/diseaseSlice.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -17,6 +29,14 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="ProjectId" id="1p4QODFY8yC2TsPHDXipXAjeevB" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -27,17 +47,19 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/features/management" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Language Defaults" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/features/management/listResources/forms" />
+      <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/src/features/management/addSource/forms" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -140,6 +162,27 @@
       <workItem from="1619464233198" duration="9963000" />
       <workItem from="1619510034060" duration="5852000" />
       <workItem from="1619616866886" duration="7000" />
+      <workItem from="1619951744191" duration="1803000" />
+      <workItem from="1620122665675" duration="632000" />
+      <workItem from="1620464530591" duration="6601000" />
+      <workItem from="1620477249043" duration="19429000" />
+      <workItem from="1620634062909" duration="31018000" />
+      <workItem from="1620721590251" duration="13939000" />
+      <workItem from="1620744369112" duration="2086000" />
+      <workItem from="1620893538131" duration="14799000" />
+      <workItem from="1620932560558" duration="18612000" />
+      <workItem from="1621072461136" duration="18743000" />
+      <workItem from="1621240357313" duration="622000" />
+      <workItem from="1621242442734" duration="28207000" />
+      <workItem from="1621332244159" duration="10453000" />
+      <workItem from="1621350869285" duration="21746000" />
+      <workItem from="1621515576431" duration="6374000" />
+      <workItem from="1621586630591" duration="11877000" />
+      <workItem from="1621843961129" duration="7910000" />
+      <workItem from="1621927956500" duration="20141000" />
+      <workItem from="1622031795368" duration="6179000" />
+      <workItem from="1622103445585" duration="3390000" />
+      <workItem from="1622188963633" duration="8459000" />
     </task>
     <servers />
   </component>
@@ -148,5 +191,17 @@
   </component>
   <component name="UnknownFeatures">
     <option featureType="com.intellij.fileTypeFactory" implementationName="*.conf" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

@@ -295,6 +295,12 @@ public class DiseasecardController {
     }
 
 
+    @GetMapping(value = "/dcadmin/operations/unbuildSystem")
+    public void unbuildSystem() {
+        dataManagementService.unbuild();
+    }
+
+
     @GetMapping("/dcadmin/status/labels")
     public JSONObject getFormLabelsInfo() {
         return dataManagementService.getFormLabels();
@@ -328,6 +334,13 @@ public class DiseasecardController {
     @GetMapping("/dcadmin/status/ontologyStructure")
     public JSONArray getOntologyStructureInfo() {
         return dataManagementService.getOntologyStructure();
+    }
+
+
+    @GetMapping("/dcadmin/status/systemBuild")
+    public boolean getSystemBuildStatus() {
+        System.out.println("SYSTEM BUILD STATUS:");
+        return dataManagementService.getSystemStatus();
     }
 
 

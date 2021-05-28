@@ -19,9 +19,12 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
         let values = {};
         const data = res.data
 
+        console.log("NETWORK")
+        console.log(data.network)
+
         //console.log(data)
         const network = data.network
-        network.push("omim:" + data.omim)
+        network.push("OMIM:" + data.omim)
         //console.log(network)
 
 

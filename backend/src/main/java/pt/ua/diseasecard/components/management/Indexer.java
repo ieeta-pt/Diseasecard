@@ -31,6 +31,7 @@ public class Indexer implements Runnable{
         this.solrConnection = diseasecardProperties.getSolr().get("host") + ":" + diseasecardProperties.getSolr().get("port") + "/" + diseasecardProperties.getSolr().get("index");
     }
 
+
     @Override
     public void run() {
         Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"\n[Diseasecard][Indexer] Starting process of indexing");
@@ -41,7 +42,8 @@ public class Indexer implements Runnable{
         indexer();
     }
 
-    void loadOMIMs() {
+
+    private void loadOMIMs() {
         Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"[Diseasecard][Indexer] Indexer started, loading OMIMs");
 
         ResultSet rs = this.api.selectRS("SELECT ?t WHERE { ?u coeus:hasConcept diseasecard:concept_OMIM . ?u diseasecard:omim ?t  }", false);
@@ -57,7 +59,8 @@ public class Indexer implements Runnable{
         }
     }
 
-    void indexer() {
+
+    private void indexer() {
         Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"[Diseasecard][Indexer] OMIMs loaded, starting Solr import");
 
         HttpSolrServer server = new HttpSolrServer(this.solrConnection);
@@ -74,9 +77,7 @@ public class Indexer implements Runnable{
                     SolrLoad load = new SolrLoad(omim, "name", server);
                     if (names.getString(i) != null) load.setValue(names.getString(i));
 
-                    // TODO: VERIFICAR SE NÃO FALTA AQUI CENS
                     pool.execute(load);
-
                 }
             } catch (Exception ex) {
                 Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
@@ -92,6 +93,12 @@ public class Indexer implements Runnable{
                 //Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
 
+
+    public void deleteAllDocuments() {
+//        SolrClient Solr = new HttpSolrClient.Builder(this.solrConnection).build();
+//        client.setDefaultMaxConnectionsPerHost(256);
+//        client.setMaxTotalConnections(256);
     }
 }

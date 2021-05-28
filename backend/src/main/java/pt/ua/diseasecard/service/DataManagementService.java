@@ -129,6 +129,17 @@ public class DataManagementService {
     }
 
 
+    public void unbuild() {
+        /*
+            TODO:
+                - remove triples
+                - change built value
+                - delete redis
+                - delete solr
+         */
+    }
+
+
     /*
         Description
      */
@@ -685,6 +696,24 @@ public class DataManagementService {
                 this.storage.removeResource(uri);
                 break;
         }
+    }
+
+
+    public boolean getSystemStatus() {
+        JSONArray buildResources = performSimpleQuery("SELECT ?s ?built WHERE { ?s rdf:type coeus:Resource . ?s coeus:built ?built }");
+
+        System.out.println("BUILD RESOURCES:");
+        System.out.println(buildResources);
+
+        boolean status = true;
+
+        for (Object o : buildResources) {
+            JSONObject binding = (JSONObject) o;
+            boolean built = Boolean.parseBoolean(((JSONObject) binding.get("built")).get("value").toString());
+            if (!built) status = false;
+        }
+
+        return status;
     }
 
 

@@ -34,6 +34,8 @@ const getModuleURL = function (module) {
         case "editResourceOMIMEndpoint":       return "/dcadmin/operations/editResourceOMIMEndpoint";
         case "removeInstance":                 return "/dcadmin/operations/removeInstance";
         case "startBuildSystem":               return "/dcadmin/operations/buildSystem";
+        case "startUnbuildSystem":             return "/dcadmin/operations/unbuildSystem";
+        case "getSystemBuild":                 return "/dcadmin/status/systemBuild";
         default:                               return "";
     }
 };
