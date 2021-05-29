@@ -9,15 +9,9 @@ import {
     renderTextField
 } from "../../addSource/forms/FormElements";
 import {
-    Chip,
-    Divider,
-    FormControl, FormLabel,
+    Divider,FormLabel,
     Grid,
-    Input,
-    InputLabel,
     MenuItem,
-    OutlinedInput,
-    Select,
     Typography
 } from "@material-ui/core";
 import {
@@ -57,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 let FormEditResource = props => {
-    const { handleSubmit, change, initialValues, load, pristine, reset, submitting } = props
+    const { handleSubmit, labels, initialValues, load, pristine, reset, submitting } = props
 
     const classes = useStyles();
     const theme = useTheme();
@@ -82,9 +76,9 @@ let FormEditResource = props => {
         ...baseStyle,
     }), []);
 
-    const conceptLabels = useSelector(getConceptsLabels)
-    const ordersLabels = useSelector(getOrdersLabels)
-    const pluginLabels = useSelector(getPluginsLabels)
+    const conceptLabels = labels['conceptsLabels']
+    const ordersLabels = labels['ordersLabels']
+    const pluginLabels = labels['pluginsLabels']
 
     const [publisher, setPublisher] = useState(initialValues.publisherLabel);
     const [endpoint, setEndpoint] = useState(false);

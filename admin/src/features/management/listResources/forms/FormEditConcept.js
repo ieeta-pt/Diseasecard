@@ -48,13 +48,13 @@ const MenuProps = {
 };
 
 let FormEditConcept = props => {
-    const { handleSubmit, change, initialValues, load, pristine, reset, submitting } = props
+    const { handleSubmit, change, labels, initialValues, load, pristine, reset, submitting } = props
 
     const classes = useStyles();
     const theme = useTheme();
 
-    const entitiesLabels = useSelector(getEntitiesLabels)
-    const resourceLabels = useSelector(getResourcesLabels)
+    const entitiesLabels = labels['entitiesLabels']
+    const resourceLabels = labels['resourcesLabels']
 
     const [relatedResourceLabel, setRelatedResourceLabel] = React.useState(initialValues.relatedResourceLabel);
 

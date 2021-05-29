@@ -194,7 +194,6 @@ export const renderDropzoneInput = (field) => {
 
 export const FootForm = (props, c, type) => {
     const [open, setOpen] = React.useState(false);
-    const dispatch = useDispatch()
 
     const handleClickOpen = () => {
         if (props.valid) setOpen(true);

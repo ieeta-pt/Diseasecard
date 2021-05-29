@@ -3,8 +3,6 @@ import { Field, reduxForm } from 'redux-form'
 import asyncValidate from './asyncValidate'
 import { Grid, MenuItem } from "@material-ui/core";
 import {FootForm, renderSelectField, renderTextField, useStyles} from "./FormElements";
-import {useSelector} from "react-redux";
-import {getConceptsLabels, getEntitiesLabels, getResourcesLabels} from "../addSourceSlice";
 
 
 const validate = values => {
@@ -23,26 +21,28 @@ const validate = values => {
     if ( values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address'
     }
-    return errors
-}
 
-
-const AddConceptForm = props => {
-    const { handleSubmit, classes} = props
-
-    const c = useStyles();
-
-    const resourcesLabels = useSelector(getResourcesLabels)
-    const conceptLabels = useSelector(getConceptsLabels)
-    const entitiesLabels = useSelector(getEntitiesLabels)
-
-    const checkIfConceptLabelExists = (value, allValues, props, name) => {
+    if (values.labelConcept) {
         for (let key of Object.keys(conceptLabels)) {
-            if (value && conceptLabels[key].toLowerCase() === value.toLowerCase()) {
-                return 'Label already used.'
+            if (conceptLabels[key].toLowerCase() === values.labelConcept.toLowerCase()) {
+                errors.labelConcept = 'Label already used.'
             }
         }
     }
+
+    return errors
+}
+
+let conceptLabels = {}
+
+const AddConceptForm = props => {
+    const { handleSubmit, classes, labels} = props
+
+    const c = useStyles();
+
+    const resourcesLabels = labels['resourcesLabels']
+    conceptLabels = labels['conceptsLabels']
+    const entitiesLabels = labels['entitiesLabels']
 
     return (
         <div style={{width: "94%"}}>
@@ -68,7 +68,6 @@ const AddConceptForm = props => {
                             label="Label"
                             className={c.field}
                             labelText="olaaa"
-                            validate={checkIfConceptLabelExists}
                         />
                     </Grid>
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>
@@ -124,41 +123,6 @@ const AddConceptForm = props => {
 
                     {FootForm(props, c, 'Concept')}
 
-                    {/*<div style={{ marginTop: '20px', marginBottom: "20px", width: "100%"}}>
-                        <Row className="justify-content-md-center">
-                            <Col sm="6" className="centerStuff">
-                                <Button variant="outlined" color="primary" className={ c.buttonG } type="button" onClick={goBack}>
-                                    Go Back
-                                </Button>
-                            </Col>
-                            <Col sm="6" className="centerStuff">
-                                <Button variant="outlined" className={ c.buttonG } type="submit" disabled={ pristine || submitting || invalid } onClick={handleClickOpen}>
-                                    Submit
-                                </Button>
-                                <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
-                                    <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
-                                    <DialogContent>
-                                        <DialogContentText id="alert-dialog-description">
-                                            Let Google help apps determine location. This means sending anonymous location data to
-                                            Google, even when no apps are running.
-                                        </DialogContentText>
-                                    </DialogContent>
-                                    <DialogActions style={{width: "100%", display: "block"}}>
-                                        <div style={{ marginTop: '20px', marginBottom: "20px"}}>
-                                            <Row className="justify-content-md-center">
-                                                <Col sm="6" className="centerStuff">
-                                                    <a href="#" className='label theme-bg text-white f-14' style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }} onClick={ handleClose }>Add More</a>
-                                                </Col>
-                                                <Col sm="6" className="centerStuff">
-                                                    <a href="#" className={'label theme-bg text-white f-14'} style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }} > Finish </a>
-                                                </Col>
-                                            </Row>
-                                        </div>
-                                    </DialogActions>
-                                </Dialog>
-                            </Col>
-                        </Row>
-                    </div>*/}
                 </Grid>
             </form>
         </div>

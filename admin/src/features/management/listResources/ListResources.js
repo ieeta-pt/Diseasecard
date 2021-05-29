@@ -22,6 +22,7 @@ import FormEditEntity from "./forms/FormEditEntity";
 import {makeStyles} from "@material-ui/core/styles";
 import FormEditConcept from "./forms/FormEditConcept";
 import FormEditResource from "./forms/FormEditResource";
+import {getLabels} from "../addSource/addSourceSlice";
 
 let diff = require('object-diff');
 
@@ -59,9 +60,9 @@ export const ListResources = () => {
     const dispatch = useDispatch();
     const ontologyStructure = useSelector(getOntologyStructure)
     const editRow = useSelector(getEditRow)
+    const labels = useSelector(getLabels)
     const [open, setOpen] = useState(false);
     const [openRemove, setOpenRemove] = useState(false);
-
 
     const classes = useStyles();
     useEffect(() => {
@@ -175,9 +176,9 @@ export const ListResources = () => {
             <DialogTitle  id="alert-dialog-title">Edit Resource "<i>{editRow.label}</i>"</DialogTitle>
             <DialogContent >
                 <DialogContentText id="alert-dialog-description">
-                    {editRow.typeOf === "Entity" && <FormEditEntity onSubmit={submitEdit}/> }
-                    {editRow.typeOf === "Concept" && <FormEditConcept onSubmit={submitEdit}/> }
-                    {editRow.typeOf === "Resource" && <FormEditResource onSubmit={submitEdit}/> }
+                    {editRow.typeOf === "Entity" && <FormEditEntity onSubmit={submitEdit} labels={labels}/> }
+                    {editRow.typeOf === "Concept" && <FormEditConcept onSubmit={submitEdit} labels={labels}/> }
+                    {editRow.typeOf === "Resource" && <FormEditResource onSubmit={submitEdit} labels={labels}/> }
                 </DialogContentText>
             </DialogContent>
             <DialogActions style={{width: "98%", display: "block"}}>

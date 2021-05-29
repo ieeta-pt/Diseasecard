@@ -1,6 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {getAllResources, getResources, getSystemBuild, startSystemBuild} from "./systemStatusSlice";
+import {
+    getAllResources,
+    getResources,
+    getSystemBuild,
+    getSystemBuildValue,
+    startSystemBuild
+} from "./systemStatusSlice";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Avatar, Button, Chip} from "@material-ui/core";
 import {green, grey, red} from "@material-ui/core/colors";
@@ -63,13 +69,16 @@ export const SystemStatus = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const allResources = useSelector(getResources)
-    const systemBuild = useSelector(getSystemBuild)
+    const systemBuild = useSelector(getSystemBuildValue)
     const [message, setMessage] = useState('You server message here.');
     const [go, setGo] = useState(false);
 
     useEffect(() => {
         dispatch(getAllResources())
         dispatch(getSystemBuild())
+
+        console.log("systemBuild")
+        console.log(systemBuild)
     }, [])
 
     function colorForStatus(status) {
@@ -145,31 +154,42 @@ export const SystemStatus = () => {
         setGo(true)
     }
 
+    let content ;
+    if (allResources.length === 0)  content = <div style={{ marginTop: "20px", marginLeft: "10px" }}>The system does not contain any resource.</div>
+    else                            content = <div>
+        <Row style={{ width: "100%", marginRight: 0, marginLeft: 0}}>
+            <Col md={10}>
+                { !systemBuild &&
+                <p style={{marginTop: "14px", marginBottom: "14px"}}>...</p>
+                }
+                { systemBuild &&
+                <p style={{marginTop: "14px", marginBottom: "14px"}}>The system is fully built. The Unbuild will result in the removal of the Redis DB and the Solr Index.  </p>
+                }
+            </Col>
+            <Col md={2} className="text-right" style={{ paddingRight: 0 }}>
+                { !systemBuild &&
+                <Button  variant="outlined" size="small" color="primary" className={classes.button} onClick={handleClickStartBuild} style={{marginRight: "10%"}}>
+                    Build
+                </Button>
+                }
+                { systemBuild &&
+                <Button  variant="outlined" size="small" color="primary" className={classes.buttonP} onClick={handleClickStartUnbuild}>
+                    Unbuild
+                </Button>
+                }
+            </Col>
+        </Row>
+        <BootstrapTable
+            keyField="uri"
+            data={allResources}
+            columns={columns}
+            hover
+            headerClasses="header-class"
+        />
+   </div>
+
     return (
         <div style={{margin: "-30px -25px"}}>
-            <Row style={{ width: "100%", marginRight: 0, marginLeft: 0}}>
-                <Col md={10}>
-                    { !systemBuild &&
-                        <p style={{marginTop: "14px", marginBottom: "14px"}}>...</p>
-                    }
-                    { systemBuild &&
-                        <p style={{marginTop: "14px", marginBottom: "14px"}}>The system is fully built. The Unbuild will result in the removal of the Redis DB and the Solr Index.  </p>
-                    }
-                </Col>
-                <Col md={2} className="text-right" style={{ paddingRight: 0 }}>
-                    { !systemBuild &&
-                        <Button  variant="outlined" size="small" color="primary" className={classes.buttonP} onClick={handleClickStartBuild} style={{paddingRight: "1%"}}>
-                            Build
-                        </Button>
-                    }
-                    { systemBuild &&
-                        <Button  variant="outlined" size="small" color="primary" className={classes.buttonP} onClick={handleClickStartUnbuild}>
-                            Unbuild
-                        </Button>
-                    }
-                </Col>
-            </Row>
-
             <SockJsClient
                 url={api_url}
                 topics={['/topic/message']}
@@ -178,13 +198,9 @@ export const SystemStatus = () => {
                 onMessage={msg => onMessageReceived(msg)}
                 debug={false}
             />
-            <BootstrapTable
-                keyField="uri"
-                data={allResources}
-                columns={columns}
-                hover
-                headerClasses="header-class"
-            />
+
+            {content}
+
         </div>
     )
 }

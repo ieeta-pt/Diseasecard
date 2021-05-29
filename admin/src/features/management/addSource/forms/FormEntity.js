@@ -1,10 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Field, reduxForm } from 'redux-form'
 import asyncValidate from './asyncValidate'
 import { Grid, MenuItem } from "@material-ui/core";
 import {FootForm, renderSelectField, renderTextField, useStyles} from "./FormElements";
-import {useSelector} from "react-redux";
-import {getConceptsLabels, getEntitiesLabels} from "../addSourceSlice";
 
 
 const validate = values => {
@@ -22,25 +20,24 @@ const validate = values => {
     if ( values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address'
     }
-    return errors
-}
-
-
-const AddEntityFrom = props => {
-    const { handleSubmit, classes} = props
-
-    const c = useStyles();
-
-    const conceptsLabels = useSelector(getConceptsLabels)
-    const entitiesLabels = useSelector(getEntitiesLabels)
-
-    const checkIfEntityLabelExists = (value, allValues, props, name) => {
+    if ( values.labelEntity ) {
         for (let key of Object.keys(entitiesLabels)) {
-            if (value && entitiesLabels[key].toLowerCase() === value.toLowerCase()) {
-                return 'Label already used.'
+            if (entitiesLabels[key].toLowerCase() === values.labelEntity.toLowerCase()) {
+                errors.labelEntity = 'Label already used.'
             }
         }
     }
+    return errors
+}
+
+let entitiesLabels = {}
+
+const AddEntityFrom = props => {
+    const { handleSubmit, classes, labels} = props
+    const c = useStyles();
+
+    const conceptsLabels = labels['conceptsLabels']
+    entitiesLabels = labels['entitiesLabels']
 
     return (
         <div style={{width: "94%"}}>
@@ -66,7 +63,6 @@ const AddEntityFrom = props => {
                             label="Label"
                             className={c.field}
                             labelText="This field works as the internal ID."
-                            validate={checkIfEntityLabelExists}
                         />
                     </Grid>
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>

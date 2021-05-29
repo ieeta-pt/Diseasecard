@@ -1,9 +1,8 @@
 import React, {useRef} from 'react'
-import {connect, useSelector} from 'react-redux'
+import {connect} from 'react-redux'
 import { Field, reduxForm } from 'redux-form'
-import {renderMultipleSelectField, renderSelectField, renderTextField} from "../../addSource/forms/FormElements";
-import {Chip, FormControl, Grid, Input, InputLabel, MenuItem, OutlinedInput, Select} from "@material-ui/core";
-import {getConceptsLabels} from "../../addSource/addSourceSlice";
+import { renderTextField} from "../../addSource/forms/FormElements";
+import {Chip, FormControl, Grid, InputLabel, MenuItem, OutlinedInput, Select} from "@material-ui/core";
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 
 
@@ -15,8 +14,6 @@ function getStyles(name, personName, theme) {
                 : theme.typography.fontWeightMedium,
     };
 }
-
-
 
 const useStyles = makeStyles((theme) => ({
     select: {
@@ -48,12 +45,12 @@ const MenuProps = {
 };
 
 let FormEditEntity = props => {
-    const { handleSubmit, change, initialValues, load, pristine, reset, submitting } = props
+    const { handleSubmit, change, labels, initialValues, load, pristine, reset, submitting } = props
 
     const classes = useStyles();
     const theme = useTheme();
 
-    const conceptsLabels = useSelector(getConceptsLabels)
+    const conceptsLabels = labels['conceptsLabels']
 
     const [isEntityOf_replace, setIsEntityOf_replace] = React.useState(initialValues.isEntityOf_replace);
 

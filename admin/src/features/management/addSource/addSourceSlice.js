@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import API from "../../../api/Api";
-import {getOntologyStructureInfo} from "../listResources/listResourcesSlice";
 
 
 const initialState = {
@@ -12,6 +11,7 @@ const initialState = {
     ordersLabels: [],
     resourcesLabels: [],
     resource: [],
+    labels: {'conceptsLabels':[], 'resourcesLabels': [], 'entitiesLabels': [], 'ordersLabels': [], 'pluginsLabels': []},
     resourceAdded: false,
 }
 
@@ -51,8 +51,7 @@ export const getParserFields = createAsyncThunk('addSource/getParserFields', asy
 
 export const addEntity = createAsyncThunk('addSource/addEntity', async (form) => {
     return API.POST("addEntity", '', form ).then(res => {
-        getFormLabels()
-        getOntologyStructureInfo()
+        console.log("ADD ENTITY RESPONSE " + res.data)
         return res.data
     })
 })
@@ -60,6 +59,7 @@ export const addEntity = createAsyncThunk('addSource/addEntity', async (form) =>
 
 export const addConcept = createAsyncThunk('addSource/addConcept', async (form) => {
     return API.POST("addConcept", '', form ).then(res => {
+        console.log("CONCEPT ADDED")
         return res.data
     })
 })
@@ -151,19 +151,14 @@ const addSourceSlice = createSlice({
             state.error = action.error.message*/
         },
         [getFormLabels.fulfilled]: (state, action) => {
-
-            console.log("FORM LABELS")
             console.log(action.payload)
 
-            state.conceptsLabels = action.payload.conceptsLabels;
-            state.resourcesLabels = action.payload.resourcesLabels;
-            state.entitiesLabels = action.payload.entitiesLabels;
-            state.pluginsLabels = action.payload.pluginsLabels;
-            state.ordersLabels = action.payload.ordersLabels;
-        },
-        [addResource.fulfilled]: (state, action) => {
-            // state.resource = true
-        },
+            state.labels['conceptsLabels'] = action.payload.conceptsLabels
+            state.labels['resourcesLabels'] = action.payload.resourcesLabels
+            state.labels['entitiesLabels'] = action.payload.entitiesLabels
+            state.labels['ordersLabels'] = action.payload.ordersLabels
+            state.labels['pluginsLabels'] = action.payload.pluginsLabels
+        }
     }
 })
 
@@ -174,6 +169,7 @@ export const getEntitiesLabels = state => state.addSource.entitiesLabels
 export const getPluginsLabels = state => state.addSource.pluginsLabels
 export const getOrdersLabels = state => state.addSource.ordersLabels
 export const getResourcesLabels  = state => state.addSource.resourcesLabels
+export const getLabels = state => state.addSource.labels
 export const getResource  = state => state.addSource.resource
 export const getResourceAdded  = state => state.addSource.resourceAdded
 

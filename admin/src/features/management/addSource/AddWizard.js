@@ -5,7 +5,20 @@ import { useSpring, animated } from 'react-spring';
 import styled from 'styled-components';
 import { useDropzone } from 'react-dropzone'
 import { useDispatch, useSelector } from "react-redux";
-import { addConcept, addEntity, addOMIMResource, addResource, addResourceWithURLEndpoint, getFormLabels, getInvalidEndpoints, getResource, storeResource, uploadEndpoints, uploadOntology} from "./addSourceSlice";
+import {
+    addConcept,
+    addEntity,
+    addOMIMResource,
+    addResource,
+    addResourceWithURLEndpoint,
+    getFormLabels,
+    getInvalidEndpoints,
+    getLabels,
+    getResource,
+    storeResource,
+    uploadEndpoints,
+    uploadOntology
+} from "./addSourceSlice";
 import Dropzone from 'react-dropzone'
 import AddConceptForm from "./forms/FormConcept";
 import AddEntityFrom from "./forms/FormEntity";
@@ -27,11 +40,6 @@ export const AddWizard = () => {
     const [state, updateState] = useState( {
         form: {}
     } )
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getFormLabels())
-    }, [])
 
     const updateForm = (key, value) => {
         const { form } = state;
@@ -136,7 +144,7 @@ const SelectMethod = props => {
 
         setMethod(e);
         setPermissionToGo(true);
-        props.update('method', e)
+        //props.update('method', e)
     };
 
     const go = () => {
@@ -418,7 +426,8 @@ const SelectBetweenECR = props => {
     const [method, setMethod] = useState('');
     const [permissionToGo, setPermissionToGo] = useState(false);
     const [nextStep, setNextStep] = useState(1)
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+
 
     const update = (e) => {
         if      (e === "E")     setNextStep(6);
@@ -427,12 +436,12 @@ const SelectBetweenECR = props => {
 
         setMethod(e);
         setPermissionToGo(true);
-        props.update('method', e)
-        dispatch(getFormLabels())
+        //props.update('method', e)
     };
 
     const go = () => {
         props.goToStep(nextStep)
+        dispatch(getFormLabels())
     }
 
     const methodIconAnimationR = useSpring({
@@ -453,7 +462,7 @@ const SelectBetweenECR = props => {
 
     return (
         <div>
-            <h6 className='text-center'>What do you desire to add?</h6>
+            <h6 className='text-center'>What do you want to add?</h6>
             <Row className="justify-content-md-center" style={{marginTop: "40px"}}>
                 <Col sm="4" className="centerStuff">
                     <div className="centerStuff">
@@ -491,8 +500,9 @@ const SelectBetweenECR = props => {
  */
 const AddEntities = props => {
     const dispatch = useDispatch();
+    const labels = useSelector(getLabels);
 
-    const submit = (values) => {
+    const submit = async (values) => {
         let formData = new FormData(document.forms.namedItem("addEntityForm"))
         dispatch(addEntity(formData))
     }
@@ -501,7 +511,7 @@ const AddEntities = props => {
         <div>
             <p className='text-center' style={{color: "#1dc4e9"}}><b>Add an Entity</b></p>
 
-            <AddEntityFrom onSubmit={submit} formDetails={props}/>
+            <AddEntityFrom onSubmit={submit} formDetails={props} labels={labels}/>
         </div>
     );
 }
@@ -512,6 +522,7 @@ const AddEntities = props => {
  */
 const AddConcepts = props => {
     const dispatch = useDispatch();
+    const labels = useSelector(getLabels);
 
     const submit = (values) => {
         let formData = new FormData(document.forms.namedItem("addConceptForm"))
@@ -521,7 +532,7 @@ const AddConcepts = props => {
     return (
         <div>
             <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Concept</b></p>
-            <AddConceptForm onSubmit={submit} formDetails={props}/>
+            <AddConceptForm onSubmit={submit} formDetails={props} labels={labels}/>
         </div>
     );
 }
@@ -532,6 +543,8 @@ const AddConcepts = props => {
  */
 const AddResources = props => {
     const [permissionToGo, setPermissionToGo] = useState(false);
+    const labels = useSelector(getLabels);
+
     const dispatch = useDispatch()
     const submit = (values) => {
         dispatch(storeResource(values))
@@ -541,7 +554,7 @@ const AddResources = props => {
     return (
         <div>
             <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Resource</b></p>
-            <AddResourceForm onSubmit={submit} formDetails={props} permissionToGo={permissionToGo}/>
+            <AddResourceForm onSubmit={submit} formDetails={props} permissionToGo={permissionToGo} labels={labels}/>
         </div>
     );
 }
@@ -554,6 +567,7 @@ const AddParsers = props => {
     const dispatch = useDispatch()
     const resource = useSelector(getResource)
     const plugin = resource.publisherEndpoint
+
     const submit = (values) => {
         let forms = {resource, values}
 
@@ -562,8 +576,6 @@ const AddParsers = props => {
             if (!resource.isEndpointFile) dispatch(addResourceWithURLEndpoint(forms))
             else dispatch(addResource(forms))
         }
-
-        dispatch(getFormLabels())
     }
 
     let content;

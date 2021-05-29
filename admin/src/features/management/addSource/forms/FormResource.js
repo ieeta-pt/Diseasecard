@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from 'react'
+import React, { useMemo, useState} from 'react'
 import { Field, reduxForm } from 'redux-form'
 import asyncValidate from './asyncValidate'
 import {
@@ -15,10 +15,9 @@ import {
     useStyles,
     renderSwitchField
 } from "./FormElements";
-import {getConceptsLabels, getOrdersLabels, getPluginsLabels, getResourcesLabels} from "../addSourceSlice";
+import {getConceptsLabels, getLabels, getOrdersLabels, getPluginsLabels, getResourcesLabels} from "../addSourceSlice";
 import { useSelector } from "react-redux";
 import {Col, Row} from "react-bootstrap";
-import { change } from "redux-form";
 
 const validate = values => {
     const errors = {}
@@ -39,12 +38,20 @@ const validate = values => {
     if ( values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         errors.email = 'Invalid email address'
     }
+    if ( values.labelResource ) {
+        for (let key of Object.keys(resourceLabels)) {
+            if (resourceLabels[key].toLowerCase() === values.labelResource.toLowerCase()) {
+                errors.labelResource = 'Label already used.'
+            }
+        }
+    }
     return errors
 }
 
+let resourceLabels = {}
 
 const AddResourceForm = props => {
-    const { handleSubmit, classes } = props
+    const { handleSubmit, classes, labels } = props
     const c = useStyles();
 
     const baseStyle = {
@@ -67,11 +74,10 @@ const AddResourceForm = props => {
         ...baseStyle,
     }), []);
 
-    const conceptLabels = useSelector(getConceptsLabels)
-    const pluginLabels = useSelector(getPluginsLabels)
-    const ordersLabels = useSelector(getOrdersLabels)
-    const resourceLabels = useSelector(getResourcesLabels)
-
+    const conceptLabels = labels['conceptsLabels']
+    const pluginLabels = labels['pluginsLabels']
+    const ordersLabels = labels['ordersLabels']
+    resourceLabels = labels['resourcesLabels']
 
     const [publisher, setPublisher] = useState('');
     const [endpoint, setEndpoint] = useState(false);
@@ -94,12 +100,6 @@ const AddResourceForm = props => {
         {
             setDisableTextField(false);
             props.change('labelResource', "");
-        }
-    }
-
-    const checkIfLabelExists = (value, allValues, props, name) => {
-        for (let key of Object.keys(resourceLabels)) {
-            if (value && resourceLabels[key].toLowerCase() === value.toLowerCase()) return 'Label already used.'
         }
     }
 
@@ -128,7 +128,6 @@ const AddResourceForm = props => {
                             className={c.field}
                             labelText="olaaa"
                             props={{ disabled: disableTextField }}
-                            validate={checkIfLabelExists}
                         />
                     </Grid>
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>
