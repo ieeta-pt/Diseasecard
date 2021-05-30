@@ -279,6 +279,62 @@ public class Resource {
         }
     }
 
+
+    public void loadOMIMParser() {
+        try
+        {
+            JSONParser parser = new JSONParser();
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT *" +
+                    " WHERE { " + PrefixFactory.encode(this.uri) + " coeus:hasParser ?s ."
+                    + " ?s coeus:resourceID ?resourceID . "
+                    + " ?s coeus:genemap_cName ?genemap_cName . "
+                    + " ?s coeus:genemap_cOMIM ?genemap_cOMIM . "
+                    + " ?s coeus:genemap_cLocation ?genemap_cLocation . "
+                    + " ?s coeus:genemap_cGenes ?genemap_cGenes . "
+                    + " ?s coeus:morbidmap_cName ?morbidmap_cName . "
+                    + " ?s coeus:morbidmap_cOMIM ?morbidmap_cOMIM . "
+                    + " ?s coeus:morbidmap_cLocation ?morbidmap_cLocation . "
+                    + " ?s coeus:morbidmap_cGenes ?morbidmap_cGenes}", "js", false));
+
+            JSONObject results = (JSONObject) response.get("results");
+            JSONArray bindings = (JSONArray) results.get("bindings");
+
+            for (Object obj : bindings)
+            {
+                JSONObject binding = (JSONObject) obj;
+                JSONObject resourceID = (JSONObject) binding.get("resourceID");
+
+                JSONObject genemap_cName = (JSONObject) binding.get("genemap_cName");
+                JSONObject genemap_cOMIM = (JSONObject) binding.get("genemap_cOMIM");
+                JSONObject genemap_cLocation = (JSONObject) binding.get("genemap_cLocation");
+                JSONObject genemap_cGenes = (JSONObject) binding.get("genemap_cGenes");
+                JSONObject morbidmap_cName = (JSONObject) binding.get("morbidmap_cName");
+                JSONObject morbidmap_cOMIM = (JSONObject) binding.get("morbidmap_cOMIM");
+                JSONObject morbidmap_cLocation = (JSONObject) binding.get("morbidmap_cLocation");
+                JSONObject morbidmap_cGenes = (JSONObject) binding.get("morbidmap_cGenes");
+
+                Parser resourceParser = new Parser(resourceID.get("value").toString());
+
+                resourceParser.setGenecardName(Integer.parseInt(genemap_cName.get("value").toString()));
+                resourceParser.setGenecardOMIM(Integer.parseInt(genemap_cOMIM.get("value").toString()));
+                resourceParser.setGenecardLocation(Integer.parseInt(genemap_cLocation.get("value").toString()));
+                resourceParser.setGenecardGenes(Integer.parseInt(genemap_cGenes.get("value").toString()));
+                resourceParser.setMorbidmapName(Integer.parseInt(morbidmap_cName.get("value").toString()));
+                resourceParser.setMorbidmapOMIM(Integer.parseInt(morbidmap_cOMIM.get("value").toString()));
+                resourceParser.setMorbidmapLocation(Integer.parseInt(morbidmap_cLocation.get("value").toString()));
+                resourceParser.setMorbidmapGene(Integer.parseInt(morbidmap_cGenes.get("value").toString()));
+
+                this.hasParser = resourceParser;
+            }
+        }
+        catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][Resource] Unable to load resource parser information");
+            Logger.getLogger(Resource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
     @Override
     public String toString() {
         return "Resource{" +

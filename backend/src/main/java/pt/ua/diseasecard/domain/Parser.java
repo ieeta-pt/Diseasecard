@@ -22,6 +22,17 @@ public class Parser {
     private boolean uniqueResource;
     private boolean uniqueExternalResource;
 
+
+    // OMIM's Properties
+    private int genecardName;
+    private int genecardOMIM;
+    private int genecardLocation;
+    private int genecardGenes;
+    private int morbidmapName;
+    private int morbidmapOMIM;
+    private int morbidmapLocation;
+    private int morbidmapGene;
+
     public Parser(String resourceID) {
         this.resourceID = resourceID;
     }
@@ -131,6 +142,62 @@ public class Parser {
         this.methodByReplace = methodByReplace;
     }
 
+    public int getGenecardName() {
+        return genecardName;
+    }
+    public void setGenecardName(int genecardName) {
+        this.genecardName = genecardName;
+    }
+
+    public int getGenecardOMIM() {
+        return genecardOMIM;
+    }
+    public void setGenecardOMIM(int genecardOMIM) {
+        this.genecardOMIM = genecardOMIM;
+    }
+
+    public int getGenecardLocation() {
+        return genecardLocation;
+    }
+    public void setGenecardLocation(int genecardLocation) {
+        this.genecardLocation = genecardLocation;
+    }
+
+    public int getGenecardGenes() {
+        return genecardGenes;
+    }
+    public void setGenecardGenes(int genecardGenes) {
+        this.genecardGenes = genecardGenes;
+    }
+
+    public int getMorbidmapName() {
+        return morbidmapName;
+    }
+    public void setMorbidmapName(int morbidmapName) {
+        this.morbidmapName = morbidmapName;
+    }
+
+    public int getMorbidmapOMIM() {
+        return morbidmapOMIM;
+    }
+    public void setMorbidmapOMIM(int morbidmapOMIM) {
+        this.morbidmapOMIM = morbidmapOMIM;
+    }
+
+    public int getMorbidmapLocation() {
+        return morbidmapLocation;
+    }
+    public void setMorbidmapLocation(int morbidmapLocation) {
+        this.morbidmapLocation = morbidmapLocation;
+    }
+
+    public int getMorbidmapGene() {
+        return morbidmapGene;
+    }
+    public void setMorbidmapGene(int morbidmapGene) {
+        this.morbidmapGene = morbidmapGene;
+    }
+
     @Override
     public String toString() {
         return "Parser{" +
@@ -149,6 +216,19 @@ public class Parser {
                 ", methodByReplace=" + methodByReplace +
                 ", uniqueResource=" + uniqueResource +
                 ", uniqueExternalResource=" + uniqueExternalResource +
+                '}';
+    }
+
+    public String parserOMIMToString() {
+        return "Parser{" +
+                "genecardName=" + genecardName +
+                ", genecardOMIM=" + genecardOMIM +
+                ", genecardLocation=" + genecardLocation +
+                ", genecardGenes=" + genecardGenes +
+                ", morbidmapName=" + morbidmapName +
+                ", morbidmapOMIM=" + morbidmapOMIM +
+                ", morbidmapLocation=" + morbidmapLocation +
+                ", morbidmapGene=" + morbidmapGene +
                 '}';
     }
 }

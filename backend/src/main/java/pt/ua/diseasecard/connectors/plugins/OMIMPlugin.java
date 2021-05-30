@@ -1,6 +1,7 @@
 package pt.ua.diseasecard.connectors.plugins;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.hp.hpl.jena.rdf.model.Statement;
 import org.springframework.beans.factory.annotation.Configurable;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
@@ -40,8 +41,18 @@ public class OMIMPlugin {
         omims = new HashMap<>();
     }
 
-    public HashMap<String, String[]> itemize() {
+    public HashMap<String, String[]> itemize() throws Exception {
+
+        System.out.println("OMIM PARSER: ");
+        System.out.println(this.res.getHasParser().parserOMIMToString());
+
         if (loadGenotype() && loadPhenotype()) triplify();
+
+        com.hp.hpl.jena.rdf.model.Resource resource = api.getResource(this.config.getPrefixes().get("diseasecard") + "resource_OMIM");
+        Statement statementToRemove = api.getModel().createLiteralStatement(resource, Predicate.get("coeus:built"), false);
+        api.removeStatement(statementToRemove);
+        api.addStatement(resource, Predicate.get("coeus:built"), true);
+
         return omims;
     }
 
