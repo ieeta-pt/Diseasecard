@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.DB;
 import pt.ua.diseasecard.components.data.SparqlAPI;
+import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.utils.Finder;
 import pt.ua.diseasecard.utils.ItemFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
@@ -22,14 +23,17 @@ public class Browsier {
     private final SparqlAPI api;
     private final DB db;
     private final String connectionString;
+    private Storage storage;
 
-    public Browsier(SparqlAPI api, DiseasecardProperties diseasecardProperties) {
+    public Browsier(SparqlAPI api, DiseasecardProperties diseasecardProperties, Storage storage) {
         Objects.requireNonNull(api);
         Objects.requireNonNull(diseasecardProperties);
         this.api = api;
         this.connectionString = diseasecardProperties.getDatabase().get("url") + "?user=" + diseasecardProperties.getDatabase().get("username") + "&password=" + diseasecardProperties.getDatabase().get("password");
         this.db = new DB("DC4", this.connectionString);
+        this.storage = storage;
     }
+
 
     public void start() {
         Logger.getLogger(Browsier.class.getName()).log(Level.INFO,"[Diseasecard][Browsier] Starting process of browsing");
@@ -41,7 +45,8 @@ public class Browsier {
         toCache();
     }
 
-    /**
+
+    /*
      * Load entry list summary into temporary database.
      */
     private void toDB() {
@@ -71,10 +76,13 @@ public class Browsier {
         Logger.getLogger(Browsier.class.getName()).log(Level.INFO,"[Diseasecard][Browsier] Process of load do DB finished");
     }
 
+
     /*
      * Cache disease list for each starting character in Redis
      */
     private void toCache() {
+        this.storage.setBuildPhase("Building_Browsier");
+
         String[] list = {"#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
         Finder f = new Finder(this.connectionString);
         Jedis jedis = Boot.getJedis();
@@ -88,5 +96,12 @@ public class Browsier {
         }
         jedis.save();
         Logger.getLogger(Browsier.class.getName()).log(Level.INFO,"[Diseasecard][Browsier] Process of cashing finished");
+    }
+
+
+    public void deleteBrowser() {
+        Logger.getLogger(Browsier.class.getName()).log(Level.INFO,"[Diseasecard][Browsier] Removing Browser");
+        Jedis jedis = Boot.getJedis();
+        jedis.flushDB();
     }
 }

@@ -161,23 +161,25 @@ public class DiseasecardController {
 
 
     @PostMapping(value = "/dcadmin/operations/addEntity")
-    public void addEntity(@RequestParam("titleEntity") String title,
+    public ResponseEntity<String> addEntity(@RequestParam("titleEntity") String title,
                           @RequestParam("labelEntity") String label,
                           @RequestParam("descriptionEntity") String description,
                           @RequestParam(name= "isEntityOfEntity", required = false) String entityOf ) throws IOException {
 
         dataManagementService.prepareAddEntity(title, label, description, entityOf);
+        return new ResponseEntity<>("Add Entity", HttpStatus.OK);
     }
 
 
     @PostMapping(value = "/dcadmin/operations/addConcept")
-    public void addConcept(@RequestParam("titleConcept") String title,
+    public ResponseEntity<String> addConcept(@RequestParam("titleConcept") String title,
                            @RequestParam("labelConcept") String label,
                            @RequestParam("descriptionConcept") String description,
                            @RequestParam("hasEntityConcept") String hasEntity,
                            @RequestParam(name= "hasResourceConcept", required = false) String hasResource ) throws IOException {
 
         dataManagementService.prepareAddConcept(title, label, description, hasEntity, hasResource);
+        return new ResponseEntity<>("Add Concept", HttpStatus.OK);
     }
 
 
@@ -228,9 +230,9 @@ public class DiseasecardController {
     @PostMapping(value = "/dcadmin/operations/addCSVParser")
     public void addCSVParser(@RequestParam("resource") String resource,
                              @RequestParam("resourceID") String resourceID,
-                             @RequestParam(name="regexResource", required = false, defaultValue = "") String regexResource,
+                             @RequestParam(name="resourceRegex", required = false, defaultValue = "") String regexResource,
                              @RequestParam("externalResourceID") String externalResourceID,
-                             @RequestParam(name="regexExternalResource", required = false, defaultValue = "") String regexExternalResource) {
+                             @RequestParam(name="externalResourceRegex", required = false, defaultValue = "") String regexExternalResource) {
 
         dataManagementService.prepareAddParser(resource, resourceID, regexResource, externalResourceID, regexExternalResource);
     }
@@ -256,6 +258,23 @@ public class DiseasecardController {
                 resourceInfoInAttribute, resourceInfo, uniqueResource, regexResource, externalResourceInfoInAttribute,
                 externalResourceInfo, externalResourceNode, regexExternalResource,uniqueExternalResource, filterBy, filterValue);
     }
+
+
+    @PostMapping(value = "/dcadmin/operations/addOMIMParser")
+    public void addOMIMParser(@RequestParam("resource") String resource,
+                              @RequestParam("genecardName") String genecardName,
+                              @RequestParam("genecardOMIM") String genecardOMIM,
+                              @RequestParam("genecardLocation") String genecardLocation,
+                              @RequestParam("genecardGenes") String genecardGenes,
+                              @RequestParam("morbidmapName") String morbidmapName,
+                              @RequestParam("morbidmapGene") String morbidmapGene,
+                              @RequestParam("morbidmapOMIM") String morbidmapOMIM,
+                              @RequestParam("morbidmapLocation") String morbidmapLocation)  {
+
+        // TODO
+        dataManagementService.prepareAddOMIMParser(resource, genecardName, genecardOMIM, genecardLocation, genecardGenes, morbidmapName, morbidmapGene, morbidmapOMIM, morbidmapLocation);
+    }
+
 
 
     @PostMapping(value = "/dcadmin/operations/editInstance")
@@ -338,8 +357,7 @@ public class DiseasecardController {
 
 
     @GetMapping("/dcadmin/status/systemBuild")
-    public boolean getSystemBuildStatus() {
-        System.out.println("SYSTEM BUILD STATUS:");
+    public String getSystemBuildStatus() {
         return dataManagementService.getSystemStatus();
     }
 

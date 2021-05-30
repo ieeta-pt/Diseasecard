@@ -136,7 +136,7 @@ public class DiseaseAPI {
         this.map.put("hgnc", hgnc);
 
         try {
-            ResultSet rs = this.api.selectRS("SELECT DISTINCT ?a1 ?a2 ?a3 WHERE { diseasecard:hgnc_" + hgnc + " coeus:isAssociatedTo ?a1 . ?a1 coeus:isAssociatedTo ?a2 . ?a2 coeus:isAssociatedTo ?a3}", false);
+            ResultSet rs = this.api.selectRS("SELECT DISTINCT ?a1 ?a2 ?a3 WHERE { diseasecard:HGNC_" + hgnc + " coeus:isAssociatedTo ?a1 . ?a1 coeus:isAssociatedTo ?a2 . ?a2 coeus:isAssociatedTo ?a3}", false);
 
             JSONArray results = new JSONArray();
 

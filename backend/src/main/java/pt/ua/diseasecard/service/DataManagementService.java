@@ -4,7 +4,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -12,6 +11,9 @@ import org.springframework.web.multipart.MultipartFile;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.components.data.Storage;
+import pt.ua.diseasecard.components.management.Browsier;
+import pt.ua.diseasecard.components.management.Cashier;
+import pt.ua.diseasecard.components.management.Indexer;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.configuration.OntologyProperties;
 import pt.ua.diseasecard.connectors.CSVFactory;
@@ -44,19 +46,24 @@ public class DataManagementService {
     private SparqlAPI sparqlAPI;
     private SimpMessagingTemplate template;
 
-    private AutowireCapableBeanFactory beanFactory;
     private Boot boot;
 
-    public DataManagementService(Storage storage, DiseasecardProperties diseasecardProperties, OntologyProperties ontologyProperties, SparqlAPI sparqlAPI, AutowireCapableBeanFactory beanFactory, Boot boot, SimpMessagingTemplate template) {
+    private Indexer indexer;
+    private Cashier cashier;
+    private Browsier browsier;
+
+    public DataManagementService(Storage storage, DiseasecardProperties diseasecardProperties, OntologyProperties ontologyProperties, SparqlAPI sparqlAPI,  Boot boot, SimpMessagingTemplate template, Indexer indexer, Cashier cashier, Browsier browsier) {
         this.uploadDir = "submittedFiles";
         this.storage = storage;
         this.config = diseasecardProperties;
         this.ontologyProperties = ontologyProperties;
         this.resources = new ArrayList<>();
         this.sparqlAPI = sparqlAPI;
-        this.beanFactory = beanFactory;
         this.boot = boot;
         this.template = template;
+        this.indexer = indexer;
+        this.cashier = cashier;
+        this.browsier = browsier;
     }
 
     /*
@@ -98,6 +105,8 @@ public class DataManagementService {
      */
     public void build() {
         try {
+            this.storage.setBuildPhase("Building_Initial");
+
             this.readResources();
             for(Resource r : this.resources)
             {
@@ -130,13 +139,11 @@ public class DataManagementService {
 
 
     public void unbuild() {
-        /*
-            TODO:
-                - remove triples
-                - change built value
-                - delete redis
-                - delete solr
-         */
+        this.storage.setBuildPhase("Building_Removal");
+        this.storage.removeBuild();
+        this.cashier.deleteCache();
+        this.browsier.deleteBrowser();
+        this.indexer.deleteAllDocuments();
     }
 
 
@@ -158,7 +165,10 @@ public class DataManagementService {
                 r.setIdentifiers((String) info.get("identifiers"));
                 r.setBuilt((Boolean) info.get("built"));
                 r.loadConcept();
-                r.loadParser();
+
+                if (((String) info.get("publisher")).equals("OMIM")) r.loadOMIMParser();
+                else                                                 r.loadParser();
+
                 this.resources.add(r);
             }
             if (this.config.getDebug())  Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Resource information read");
@@ -625,6 +635,13 @@ public class DataManagementService {
     }
 
 
+    public void prepareAddOMIMParser(String resource, String genecardName, String genecardOMIM, String genecardLocation, String genecardGenes, String morbidmapName, String morbidmapGene, String morbidmapOMIM, String morbidmapLocation) {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Add Parser to " + resource );
+
+        this.storage.addOMIMParser(resource,genecardName,genecardOMIM,genecardLocation,genecardGenes,morbidmapName,morbidmapGene,morbidmapOMIM,morbidmapLocation);
+    }
+
+
     public void prepareEditInstance(Map<String, String> allParams) {
         String typeOf = allParams.get("typeOf");
         String uri = allParams.get("uri");
@@ -699,21 +716,16 @@ public class DataManagementService {
     }
 
 
-    public boolean getSystemStatus() {
-        JSONArray buildResources = performSimpleQuery("SELECT ?s ?built WHERE { ?s rdf:type coeus:Resource . ?s coeus:built ?built }");
+    public String getSystemStatus() {
+        JSONArray phase = performSimpleQuery("SELECT ?phase WHERE { diseasecard:builtStatus coeus:systemBuiltPhase ?phase }");
+        String p = null;
 
-        System.out.println("BUILD RESOURCES:");
-        System.out.println(buildResources);
-
-        boolean status = true;
-
-        for (Object o : buildResources) {
+        for (Object o : phase) {
             JSONObject binding = (JSONObject) o;
-            boolean built = Boolean.parseBoolean(((JSONObject) binding.get("built")).get("value").toString());
-            if (!built) status = false;
+            p = ((JSONObject) binding.get("phase")).get("value").toString();
         }
 
-        return status;
+        return p;
     }
 
 

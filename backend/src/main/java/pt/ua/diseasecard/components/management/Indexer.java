@@ -2,15 +2,20 @@ package pt.ua.diseasecard.components.management;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.SparqlAPI;
+import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.utils.SolrLoad;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import redis.clients.jedis.Jedis;
+
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -19,16 +24,19 @@ import java.util.logging.Logger;
 
 
 @Service
-public class Indexer implements Runnable{
+public class Indexer implements Runnable {
 
     private SparqlAPI api;
     private HashMap<String, JSONObject> omims;
     private String solrConnection;
+    private Storage storage;
 
-    public Indexer(SparqlAPI api, DiseasecardProperties diseasecardProperties) {
+
+    public Indexer(SparqlAPI api, DiseasecardProperties diseasecardProperties, Storage storage) {
         this.api = api;
         this.omims = new HashMap<>();
         this.solrConnection = diseasecardProperties.getSolr().get("host") + ":" + diseasecardProperties.getSolr().get("port") + "/" + diseasecardProperties.getSolr().get("index");
+        this.storage = storage;
     }
 
 
@@ -61,6 +69,8 @@ public class Indexer implements Runnable{
 
 
     private void indexer() {
+        this.storage.setBuildPhase("Building_Indexer");
+
         Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"[Diseasecard][Indexer] OMIMs loaded, starting Solr import");
 
         HttpSolrServer server = new HttpSolrServer(this.solrConnection);
@@ -80,7 +90,7 @@ public class Indexer implements Runnable{
                     pool.execute(load);
                 }
             } catch (Exception ex) {
-                Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
             }
             try {
                 JSONArray network = obj.getJSONArray("network");
@@ -93,12 +103,21 @@ public class Indexer implements Runnable{
                 //Logger.getLogger(Indexer.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+        this.storage.setBuildPhase("Finished");
     }
 
 
     public void deleteAllDocuments() {
-//        SolrClient Solr = new HttpSolrClient.Builder(this.solrConnection).build();
-//        client.setDefaultMaxConnectionsPerHost(256);
-//        client.setMaxTotalConnections(256);
+        Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"[Diseasecard][Indexer] Removing Index");
+        try
+        {
+            SolrServer s = new HttpSolrServer(this.solrConnection);
+            s.deleteByQuery("*:*");
+            s.commit();
+        } catch (SolrServerException | IOException e) {
+            e.printStackTrace();
+        }
+        this.storage.setBuildPhase("BuildReady");
     }
 }

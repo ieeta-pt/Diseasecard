@@ -1,5 +1,6 @@
 package pt.ua.diseasecard.components.data;
 
+import com.hp.hpl.jena.rdf.model.Statement;
 import au.com.bytecode.opencsv.CSVReader;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.*;
@@ -8,12 +9,14 @@ import com.hp.hpl.jena.reasoner.ReasonerRegistry;
 import com.hp.hpl.jena.sdb.SDBFactory;
 import com.hp.hpl.jena.sdb.Store;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import pt.ua.diseasecard.service.DataManagementService;
 import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import javax.annotation.PostConstruct;
+import javax.swing.plaf.nimbus.State;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -31,12 +34,16 @@ public class Storage {
     private OntModel ontModel;
 
     private DiseasecardProperties config;
+    private SimpMessagingTemplate template;
+    private SparqlAPI api;
 
-    public Storage(DiseasecardProperties diseasecardProperties, ResourceLoader resourceLoader) {
+    public Storage(DiseasecardProperties diseasecardProperties, ResourceLoader resourceLoader, SimpMessagingTemplate template, SparqlAPI api) {
         Objects.requireNonNull(diseasecardProperties);
         this.config = diseasecardProperties;
         this.reasoner = ReasonerRegistry.getTransitiveReasoner();
         this.resourceLoader = resourceLoader;
+        this.template = template;
+        this.api = api;
     }
 
     @PostConstruct()
@@ -54,6 +61,9 @@ public class Storage {
             this.model = SDBFactory.connectDefaultModel(store);
             this.infmodel = ModelFactory.createInfModel(reasoner, model);
             this.ontModel = ModelFactory.createOntologyModel();
+
+            this.api.setInferredModel(infmodel);
+            this.api.setModel(model);
 
             if (this.config.getDebug()) {
                 System.out.println("[Diseasecard][Storage] Successfully connected to Diseasecard SDB");
@@ -115,6 +125,8 @@ public class Storage {
                 }
             }
 
+            this.createBuiltStatus();
+
             if (this.config.getDebug()) {
                 Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] " + this.config.getName() + " setup loaded");
             }
@@ -124,6 +136,7 @@ public class Storage {
                 Logger.getLogger(Storage.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        this.setBuildPhase("BuildReady");
         return newEndpoints;
     }
 
@@ -142,7 +155,23 @@ public class Storage {
             RDFReader r = this.model.getReader();
             r.read(this.model, stream, PrefixFactory.getURIForPrefix(this.config.getKeyprefix()));
 
+            this.createBuiltStatus();
+
             if (this.config.getDebug()) Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] " + this.config.getName() + " default setup loaded");
+        }
+    }
+
+
+    private void createBuiltStatus() {
+        Resource resource = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "builtStatus");
+
+        System.out.println("RESOURCE: " + resource);
+
+        if (!this.model.containsResource(resource))
+        {
+            resource = this.model.createResource(this.config.getPrefixes().get("diseasecard") + "builtStatus");
+            this.setBuildPhase("BuildReady");
+            System.out.println("NEW BUILT STATUS: " + resource);
         }
     }
 
@@ -250,6 +279,14 @@ public class Storage {
         newResource.addProperty(resourceOfProperty, conceptResourceOf);
         newResource.addProperty(extendsProperty, conceptExtends);
         conceptResourceOf.addProperty(hasResourceProperty, newResource);
+
+        try {
+            api.addStatement(newResource, Predicate.get("coeus:built"), false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        this.checkBuildConsistence();
     }
 
 
@@ -305,6 +342,24 @@ public class Storage {
         parser.addProperty(uniqueExternalResourceProperty, uniqueExternalResource);
         parser.addProperty(filterByProperty, filterBy);
         parser.addProperty(filterValueProperty, filterValue);
+    }
+
+
+    public void addOMIMParser(String resourceLabel, String genecardName, String genecardOMIM, String genecardLocation, String genecardGenes, String morbidmapName, String morbidmapGene, String morbidmapOMIM, String morbidmapLocation) {
+        Resource resource = this.model.getResource(this.config.getPrefixes().get("diseasecard") + resourceLabel);
+        Resource parser = this.model.createResource(this.config.getPrefixes().get("diseasecard") + "parser_" + resourceLabel);
+
+        resource.addProperty(Predicate.get("coeus:hasParser"), parser);
+        parser.addProperty(Predicate.get("coeus:isParserOf"), resource);
+
+        parser.addProperty(Predicate.get("coeus:genemap_cName"), genecardName);
+        parser.addProperty(Predicate.get("coeus:genemap_cOMIM"), genecardOMIM);
+        parser.addProperty(Predicate.get("coeus:genemap_cLocation"), genecardLocation);
+        parser.addProperty(Predicate.get("coeus:genemap_cGenes"), genecardGenes);
+        parser.addProperty(Predicate.get("coeus:morbidmap_cName"), morbidmapName);
+        parser.addProperty(Predicate.get("coeus:morbidmap_cOMIM"), morbidmapOMIM);
+        parser.addProperty(Predicate.get("coeus:morbidmap_cLocation"), morbidmapLocation);
+        parser.addProperty(Predicate.get("coeus:morbidmap_cGenes"), morbidmapGene);
     }
 
 
@@ -397,6 +452,7 @@ public class Storage {
                 resource.addProperty(property, entry.getValue());
             }
         }
+        this.setBuildPhase("Inconsistent");
     }
 
 
@@ -429,12 +485,78 @@ public class Storage {
 
 
     public void removeResource(String uri) {
-        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Remove Resource with " + uri );
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Remove Resource with " + uri );
 
         Resource resource = this.model.getResource(uri);
 
         this.model.removeAll(resource, null, (RDFNode) null);
         this.model.removeAll(null, null, resource);
+
+        this.checkBuildConsistence();
+    }
+
+
+    private void removeItem(String uri) {
+        Resource resource = this.model.getResource(uri);
+
+        this.model.removeAll(resource, null, (RDFNode) null);
+        this.model.removeAll(null, null, resource);
+    }
+
+
+    public void removeBuild() {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Starting system unbuild " );
+
+        Resource item = this.model.getResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + "Item");
+
+        StmtIterator iter = this.model.listStatements(null, Predicate.get("rdf:type"), item);
+        while (iter.hasNext()) {
+            String resource = iter.nextStatement().getSubject().toString();
+            try { this.removeItem(resource); }
+            catch (Exception e) { System.out.println(e); }
+        }
+
+        this.removeBuiltFlag();
+    }
+
+
+    public void setBuildPhase(String phase) {
+        Resource type = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "builtStatus");
+
+        StmtIterator iter = type.listProperties(Predicate.get("coeus:systemBuiltPhase"));
+        String value = "";
+        while (iter.hasNext()) {
+            Statement statement = iter.nextStatement();
+            value = statement.getObject().toString();
+        }
+
+        if (!value.equals(phase)) {
+            type.removeAll(Predicate.get("coeus:systemBuiltPhase"));
+            type.addProperty(Predicate.get("coeus:systemBuiltPhase"), phase);
+
+            template.convertAndSend("/topic/message", phase);
+        }
+    }
+
+
+    private void removeBuiltFlag()  {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Updating Build property " );
+
+        Resource resourceType = this.model.getResource(this.config.getPrefixes().get("coeus") + "Resource");
+        StmtIterator iter = this.model.listStatements(null, Predicate.get("rdf:type"), resourceType);
+
+        while (iter.hasNext()) {
+            Statement statement = iter.nextStatement();
+
+            try {
+                Resource resource = this.model.getResource(statement.getSubject().toString());
+                Statement statementToRemove = api.getModel().createLiteralStatement(resource, Predicate.get("coeus:built"), true);
+                api.removeStatement(statementToRemove);
+                api.addStatement(resource, Predicate.get("coeus:built"), false);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 
@@ -482,17 +604,21 @@ public class Storage {
     }
 
 
-    /*  Useful to remove statements
-        OntResource r = this.ontModel.getOntResource(resource);
-    */
-    /*  Get All Properties
+    private void checkBuildConsistence() {
+        Resource resourceType = this.model.getResource(this.config.getPrefixes().get("coeus") + "Resource");
+        StmtIterator iter = this.model.listStatements(null, Predicate.get("rdf:type"), resourceType);
+        Property builtProperty = Predicate.get("coeus:built");
 
-        StmtIterator l = resource.listProperties();
-        System.out.println("\nLIST: ");
-        while (l.hasNext()) {
-            System.out.println("- " + l.nextStatement().toString());
+        Set<Boolean> flags = new HashSet<>();
+
+        while (iter.hasNext()) {
+            Statement statement = iter.nextStatement();
+            Resource resource = statement.getSubject();
+            flags.add(Boolean.parseBoolean(resource.getProperty(builtProperty).getObject().toString()));
         }
-    */
+        System.out.println("flags: " + flags);
+        if (flags.size() > 1) this.setBuildPhase("Inconsistent");
+    }
 
 
     public Model getModel() {
@@ -503,10 +629,4 @@ public class Storage {
     }
 
 
-    public InfModel getInfmodel() {
-        return infmodel;
-    }
-    public void setInfmodel(InfModel infmodel) {
-        this.infmodel = infmodel;
-    }
 }

@@ -17,10 +17,12 @@ public class Cashier {
 
     private SparqlAPI api;
 
+
     public Cashier(SparqlAPI api) {
         Objects.requireNonNull(api);
         this.api = api;
     }
+
 
     public void start() {
         Logger.getLogger(Cashier.class.getName()).log(Level.INFO,"\n[Diseasecard][Cashier] Starting process of cache");
@@ -71,4 +73,10 @@ public class Cashier {
         Logger.getLogger(Cashier.class.getName()).log(Level.INFO,"[Diseasecard][Cashier] Process of caching HGNC finished");
     }
 
+
+    public void deleteCache() {
+        Logger.getLogger(Cashier.class.getName()).log(Level.INFO,"[Diseasecard][Cashier] Removing Cache");
+        Jedis jedis = Boot.getJedis();
+        jedis.flushDB();
+    }
 }
