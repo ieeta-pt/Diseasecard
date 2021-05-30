@@ -15,8 +15,6 @@ import {
 } from "@material-ui/core";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import {useDispatch} from "react-redux";
-import {getOntologyStructureInfo} from "../../listResources/listResourcesSlice";
 
 const renderFromHelper = ({ touched, error, labelText }) => {
     if (!(touched && error)) {
@@ -53,6 +51,21 @@ export const useStyles = makeStyles((theme) => ({
             borderColor: "#1de9b6",
         },
         background: "linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%)"
+    },
+    buttonP: {
+        borderRadius: "15px",
+        boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)",
+        padding: "0.5px 10px 1px 10px",
+        marginTop: "10px",
+        marginRight: "5%",
+        fontSize: "14px",
+        textTransform: "none",
+        borderColor: "#A389D4",
+        color: "#fff",
+        '&:hover':{
+            borderColor: "#A389D4",
+        },
+        background: "linear-gradient(-135deg, #899FD4 0%, #A389D4 100%)"
     },
     field: {
         borderColor: "#1dc4e9",

@@ -3,7 +3,8 @@ import API from "../../../api/Api";
 
 const initialState = {
     allResources: [],
-    systemBuild: false
+    systemBuild: false,
+    btnBuild: false
 }
 
 
@@ -42,13 +43,25 @@ export const getSystemBuild = createAsyncThunk('listResources/getSystemBuild', a
 const systemStatusSlice = createSlice({
     name: 'systemStatus',
     initialState,
-    reducers: {},
+    reducers: {
+        updateBtnBuild: (state, action) => {
+            state.btnBuild = action.payload
+        }
+    },
     extraReducers: {
         [getAllResources.fulfilled]: (state, action) => {
             state.allResources = action.payload.allResources
         },
         [getSystemBuild.fulfilled]: (state, action) => {
-            state.systemBuild = action.payload.build
+            const status = action.payload.build
+
+            let finalStatus = true
+
+            if (status === 'Finished' || status === 'Inconsistent' || status === 'Building_Removal') finalStatus = false
+            if (status.includes("Building_") ) state.btnBuild = true
+            if (status.includes("Finished") || status.includes("BuildReady")) state.btnBuild = false
+
+            state.systemBuild = finalStatus
         },
     }
 })
@@ -56,6 +69,8 @@ const systemStatusSlice = createSlice({
 
 export const getResources = state => state.systemStatus.allResources
 export const getSystemBuildValue = state => state.systemStatus.systemBuild
+export const getBtnBuild = state => state.systemStatus.btnBuild
 
+export const { updateBtnBuild } = systemStatusSlice.actions
 
 export default systemStatusSlice.reducer

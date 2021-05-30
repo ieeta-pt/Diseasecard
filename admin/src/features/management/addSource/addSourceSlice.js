@@ -136,22 +136,10 @@ const addSourceSlice = createSlice({
         }
     },
     extraReducers: {
-        [uploadOntology.pending]: (state, action) => {
-           /*state.status = 'loading'*/
-        },
         [uploadOntology.fulfilled]: (state, action) => {
             state.invalidEndpoints = action.payload.invalidEndpoints
-            /*state.url = action.payload.url
-            state.protection = action.payload.protection
-            state.status = 'succeeded'*/
-        },
-        [uploadOntology.rejected]: (state, action) => {
-            /*state.status = 'failed'
-            state.omim = action.meta.arg
-            state.error = action.error.message*/
         },
         [getFormLabels.fulfilled]: (state, action) => {
-            console.log(action.payload)
 
             state.labels['conceptsLabels'] = action.payload.conceptsLabels
             state.labels['resourcesLabels'] = action.payload.resourcesLabels
