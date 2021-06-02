@@ -2,10 +2,11 @@
   "name": "dcadmin",
   "version": "0.1.0",
   "private": true,
-  "api_url": "http://TOREPLACE/diseasecard/api",
+  "api_url": "http://localhost/diseasecard/api",
   "homepage": "http://localhost:3000/diseasecard/admin/",
   "dependencies": {
     "@material-ui/core": "latest",
+    "@material-ui/lab": "^4.0.0-alpha.58",
     "@reduxjs/toolkit": "^1.1.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -55,6 +56,7 @@
   },
   "devDependencies": {
     "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
     "axios": "^0.21.1",
     "jquery": "^3.5.1",
     "react-perfect-scrollbar": "^1.5.8",

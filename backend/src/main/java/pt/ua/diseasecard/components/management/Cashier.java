@@ -46,12 +46,12 @@ public class Cashier {
             try {
                 jedis.set("omim:" + omim, disease.load().toJSONString());
             } catch (Exception e) {
-                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(Cashier.class.getName()).log(Level.INFO,"\n[Diseasecard][Cashier] ERROR: " + e.getMessage());
             }
         }
         jedis.save();
+        jedis.close();
         Logger.getLogger(Cashier.class.getName()).log(Level.INFO,"[Diseasecard][Cashier] Process of caching OMIMs finished");
-
     }
 
 
@@ -70,6 +70,7 @@ public class Cashier {
             }
         }
         jedis.save();
+        jedis.close();
         Logger.getLogger(Cashier.class.getName()).log(Level.INFO,"[Diseasecard][Cashier] Process of caching HGNC finished");
     }
 
@@ -78,5 +79,6 @@ public class Cashier {
         Logger.getLogger(Cashier.class.getName()).log(Level.INFO,"[Diseasecard][Cashier] Removing Cache");
         Jedis jedis = Boot.getJedis();
         jedis.flushDB();
+        jedis.close();
     }
 }

@@ -51,7 +51,7 @@ const AddEntityFrom = props => {
                             component={renderTextField}
                             label="Title"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Entity Title."
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -62,7 +62,7 @@ const AddEntityFrom = props => {
                             component={renderTextField}
                             label="Label"
                             className={c.field}
-                            labelText="This field works as the internal ID."
+                            labelText="This field works as the internal ID. Follow the recommendation in last steps. "
                         />
                     </Grid>
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>
@@ -73,7 +73,7 @@ const AddEntityFrom = props => {
                             component={renderTextField}
                             label="Description"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Entity Description."
                             multiline
                             rows={2}
                         />
@@ -87,7 +87,7 @@ const AddEntityFrom = props => {
                             label="Entity Of"
                             variant="outlined"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="List of Concepts that are related to this Entity."
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
                             {

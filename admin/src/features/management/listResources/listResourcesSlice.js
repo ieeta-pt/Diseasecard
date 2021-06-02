@@ -47,7 +47,7 @@ export const editResourceOMIMEndpoint = createAsyncThunk('listResources/editReso
 
 export const removeInstance = createAsyncThunk('listResources/removeInstance', async (form) => {
     return API.POST("removeInstance", '', form ).then(res => {
-        return res
+        return res.data
     })
 })
 

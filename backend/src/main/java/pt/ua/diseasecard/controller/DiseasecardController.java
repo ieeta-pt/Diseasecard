@@ -372,4 +372,9 @@ public class DiseasecardController {
     public String broadcastMessage(@Payload String textMessageDTO) {
         return textMessageDTO;
     }
+
+    @GetMapping("/queryJenaModel")
+    public JSONArray queryJenaModel(@RequestBody String query) {
+        return dataManagementService.queryJenaModel(query);
+    }
 }

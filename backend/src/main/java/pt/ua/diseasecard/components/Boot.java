@@ -52,7 +52,16 @@ public class Boot {
 
 
     public static Jedis getJedis() {
-        return jedis_pool.getResource();
+
+        Jedis jedis = null;
+
+        try {
+            jedis = jedis_pool.getResource();
+        } catch (Exception e) {
+            System.out.println("Error getting jedis resource: " + e.getMessage());
+        }
+
+        return jedis;
     }
 
 

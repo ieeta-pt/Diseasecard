@@ -2,7 +2,6 @@ package pt.ua.diseasecard.components.management;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
 import org.json.JSONArray;
@@ -19,6 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,9 +62,10 @@ public class Indexer implements Runnable {
                 //Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"OMIM: " + jedis.get("omim:" + row.get("t").toString()));
                 omims.put(row.get("t").toString(), new JSONObject(jedis.get("omim:" + row.get("t").toString())));
             } catch (Exception e) {
-                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(Cashier.class.getName()).log(Level.SEVERE, "[Diseasecard][Indexer] Error while loading index: ", e.getMessage());
             }
         }
+        jedis.close();
     }
 
 
@@ -104,7 +105,16 @@ public class Indexer implements Runnable {
             }
         }
 
-        this.storage.setBuildPhase("Finished");
+        try {
+            pool.shutdown();
+            pool.awaitTermination(1, TimeUnit.DAYS);
+            Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"[Diseasecard][Indexer] Process of indexing finished");
+            this.storage.setBuildPhase("Finished");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 
@@ -112,11 +122,12 @@ public class Indexer implements Runnable {
         Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"[Diseasecard][Indexer] Removing Index");
         try
         {
-            SolrServer s = new HttpSolrServer(this.solrConnection);
+            HttpSolrServer s = new HttpSolrServer(this.solrConnection);
             s.deleteByQuery("*:*");
             s.commit();
+            s.shutdown();
         } catch (SolrServerException | IOException e) {
-            e.printStackTrace();
+            Logger.getLogger(Indexer.class.getName()).log(Level.INFO,"[Diseasecard][Indexer] Error While Indexing \n" + e.getMessage());
         }
         this.storage.setBuildPhase("BuildReady");
     }

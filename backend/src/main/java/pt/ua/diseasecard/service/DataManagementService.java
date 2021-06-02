@@ -139,8 +139,10 @@ public class DataManagementService {
 
 
     public void unbuild() {
+        this.resources = new ArrayList<>();
         this.storage.setBuildPhase("Building_Removal");
         this.storage.removeBuild();
+        this.browsier.deleteDiseases();
         this.cashier.deleteCache();
         this.browsier.deleteBrowser();
         this.indexer.deleteAllDocuments();
@@ -156,6 +158,9 @@ public class DataManagementService {
 
             JSONArray finalR = getAllResources();
 
+            System.out.println("ALL RESOURCES: ");
+            System.out.println(finalR);
+
             for (Object o : finalR) {
                 JSONObject info = (JSONObject) o;
 
@@ -166,7 +171,9 @@ public class DataManagementService {
                 r.setBuilt((Boolean) info.get("built"));
                 r.loadConcept();
 
-                if (((String) info.get("publisher")).equals("OMIM")) r.loadOMIMParser();
+                if (( info.get("publisher")).equals("OMIM") || ( info.get("publisher")).equals("omim") ) {
+                    r.loadOMIMParser();
+                }
                 else                                                 r.loadParser();
 
                 this.resources.add(r);
@@ -356,7 +363,6 @@ public class DataManagementService {
 
             for (Object o : bindings) {
                 JSONObject info = new JSONObject();
-
                 JSONObject binding = (JSONObject) o;
 
                 info.put("s", ((JSONObject) binding.get("s")).get("value").toString());
@@ -368,12 +374,9 @@ public class DataManagementService {
                 info.put("extends", ((JSONObject) binding.get("extends")).get("value").toString());
                 info.put("endpoint", ((JSONObject) binding.get("endpoint")).get("value").toString());
                 info.put("order", ((JSONObject) binding.get("order")).get("value").toString());
+                info.put("built", Boolean.parseBoolean(((JSONObject) binding.get("built")).get("value").toString()));
 
-                JSONObject built = (JSONObject) binding.get("built");
                 JSONObject identifiers = (JSONObject) binding.get("identifiers");
-
-                if (built != null) info.put("built", Boolean.parseBoolean(built.get("value").toString()));
-                else info.put("built", false);
 
                 if (identifiers != null) info.put("identifiers", identifiers.get("value").toString());
                 else info.put("identifiers", "");
@@ -482,12 +485,9 @@ public class DataManagementService {
                 ordersValues.add(Integer.parseInt(((JSONObject) binding.get("order")).get("value").toString()));
             }
 
-
             if ( ordersValues.size() > 0 ) {
-                System.out.println("Orders Values: " + ordersValues.last());
                 int finalSize = ordersValues.last() + 1;
                 for (int i = 0 ; i <= finalSize; i++) {
-                    //System.out.println(i);
                     if (!ordersValues.contains(i)) ordersValuesFinal.add(i);
                 }
             }
@@ -739,5 +739,20 @@ public class DataManagementService {
         } catch (IOException ex) {
             Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
         }
+    }
+
+    public JSONArray queryJenaModel(String query) {
+
+        JSONParser parser = new JSONParser();
+        JSONObject response = null;
+        try {
+            response = (JSONObject) parser.parse(this.sparqlAPI.select( query , "js", false));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject results = (JSONObject) response.get("results");
+        return (JSONArray) results.get("bindings");
+
     }
 }

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    getAlert,
     getAllResources, getBtnBuild,
     getResources,
     getSystemBuild,
@@ -14,6 +15,7 @@ import SockJsClient from 'react-stomp';
 import { api_url } from '../../../../package.json';
 import {makeStyles} from "@material-ui/core/styles";
 import {Col, Row} from "react-bootstrap";
+import Alert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
     margin: {
@@ -103,7 +105,11 @@ export const SystemStatus = () => {
     const allResources = useSelector(getResources)
     const btnBuild = useSelector(getBtnBuild)
     const systemBuild = useSelector(getSystemBuildValue)
+    const alert = useSelector(getAlert)
     const [message, setMessage] = useState('You server message here.');
+
+    console.log("Alert in System Status:")
+    console.log(alert)
 
     useEffect(() => {
         dispatch(getAllResources())
@@ -168,24 +174,27 @@ export const SystemStatus = () => {
         console.log("Connected!!")
     }
 
-    let onMessageReceived = (msg) => {
+    let onMessageReceived = async (msg) => {
         console.log("Message: ")
         console.log(msg)
         setMessage(msg);
 
+        await dispatch(getSystemBuild())
         dispatch(getAllResources())
-        dispatch(getSystemBuild())
     }
 
     let handleClickStartBuild = () => {
+        console.log("AQUIIIIIII")
+
         dispatch(updateBtnBuild(true))
         dispatch(startSystemBuild())
-
+        dispatch(getSystemBuild())
     }
 
     let handleClickStartUnbuild = () => {
         dispatch(updateBtnBuild(true))
         dispatch(startUnbuildSystem())
+        dispatch(getSystemBuild())
     }
 
     let content ;
@@ -197,7 +206,18 @@ export const SystemStatus = () => {
                 <p style={{marginTop: "14px", marginBottom: "14px"}}>The system is not built.</p>
                 }
                 { !systemBuild &&
-                <p style={{marginTop: "14px", marginBottom: "14px"}}>The system is built. The Unbuild will result in the removal of all the information in the system, including the Redis DB and the Solr Index.  </p>
+                    <div>
+                        { alert &&
+                            <Alert variant="filled" severity="warning" style={{paddingTop: "1px", paddingBottom: "1px", marginTop: "8px", marginBottom: "8px", maxWidth: "850px"}}>
+                                The system status is inconsistent. You made changes to the ontology structure that are not reflected in the system.
+                            </Alert>
+                        }
+                        { !alert &&
+                        <p style={{marginTop: "14px", marginBottom: "14px"}}>
+                            The system is built. The Unbuild will result in the removal of all the information in the system, including the Redis DB and the Solr Index.
+                        </p>
+                        }
+                    </div>
                 }
             </Col>
             <Col sm={2} className="text-right" style={{ paddingRight: 0 }}>

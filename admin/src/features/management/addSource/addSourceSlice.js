@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import API from "../../../api/Api";
+import {getOntologyStructureInfo} from "../listResources/listResourcesSlice";
 
 
 const initialState = {
@@ -101,12 +102,15 @@ export const addOMIMResource = createAsyncThunk('addSource/addOMIMResource', asy
     let resource = forms.resource
     let parser = forms.values
 
+    let plugin = resource.publisherEndpoint
+    let label = resource.labelResource
+
     let formData = new FormData()
     Object.entries(resource).map(item => { formData.append(item[0], item[1]) })
 
     return API.POST("addOMIMResource", '', formData ).then(res => {
         //TODO: add parser!
-        return res.data
+        return addParser(parser, label, plugin)
     })
 })
 
@@ -122,7 +126,7 @@ const addParser = (parser, label, plugin) => {
     else if (plugin === "OMIM") path = "addOMIMParser"
 
     return API.POST(path, '', formParser ).then(res => {
-        return res.data
+        return getOntologyStructureInfo()
     })
 }
 

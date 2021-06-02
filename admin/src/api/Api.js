@@ -29,6 +29,7 @@ const getModuleURL = function (module) {
         case "addOMIMResource":                return "/dcadmin/operations/addOMIMResource";
         case "addXMLParser":                   return "/dcadmin/operations/addXMLParser";
         case "addCSVParser":                   return "/dcadmin/operations/addCSVParser";
+        case "addOMIMParser":                  return "/dcadmin/operations/addOMIMParser";
         case "editInstance":                   return "/dcadmin/operations/editInstance";
         case "editResourceSingleEndpoint":     return "/dcadmin/operations/editResourceSingleEndpoint";
         case "editResourceOMIMEndpoint":       return "/dcadmin/operations/editResourceOMIMEndpoint";

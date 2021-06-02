@@ -37,6 +37,10 @@ public class Parser {
         this.resourceID = resourceID;
     }
 
+    public Parser() {
+
+    }
+
     public String getMainNode() {
         return mainNode;
     }

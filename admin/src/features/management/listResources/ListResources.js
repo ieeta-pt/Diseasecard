@@ -15,14 +15,16 @@ import {
     DialogContent,
     DialogContentText,
     DialogTitle,
-    IconButton
+    IconButton, Snackbar
 } from "@material-ui/core";
-import {Col, Row} from "react-bootstrap";
+import { Col, Row} from "react-bootstrap";
 import FormEditEntity from "./forms/FormEditEntity";
 import {makeStyles} from "@material-ui/core/styles";
 import FormEditConcept from "./forms/FormEditConcept";
 import FormEditResource from "./forms/FormEditResource";
 import {getLabels} from "../addSource/addSourceSlice";
+import {getAllResources, getBtnBuild, getSystemBuild} from "../systemStatus/systemStatusSlice";
+import MuiAlert from '@material-ui/lab/Alert';
 
 let diff = require('object-diff');
 
@@ -61,8 +63,14 @@ export const ListResources = () => {
     const ontologyStructure = useSelector(getOntologyStructure)
     const editRow = useSelector(getEditRow)
     const labels = useSelector(getLabels)
+    const btnBuild = useSelector(getBtnBuild)
     const [open, setOpen] = useState(false);
+    const [openDisable, setOpenDisable] = useState(false);
     const [openRemove, setOpenRemove] = useState(false);
+
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
 
     const classes = useStyles();
     useEffect(() => {
@@ -123,8 +131,16 @@ export const ListResources = () => {
     }
 
     const handleModelEdit = (cell, row) => {
-        dispatch(storeEditRow(row))
-        handleClickOpen();
+
+        if (btnBuild) {
+            setOpenDisable(true);
+        }
+        else {
+            dispatch(storeEditRow(row))
+            handleClickOpen();
+        }
+
+
     }
 
     const submitEdit = (values) => {
@@ -157,18 +173,34 @@ export const ListResources = () => {
     }
 
     const handleModelRemove = (cell, row) => {
-        dispatch(storeEditRow(row))
-        handleClickOpenRemove();
+        console.log("BTN BUILD" + btnBuild)
+        if (btnBuild) {
+            setOpenDisable(true);
+        }
+        else {
+            dispatch(storeEditRow(row))
+            handleClickOpenRemove();
+        }
     }
 
-    const removeInst = () => {
+    const removeInst = async () => {
         let formData = new FormData()
         formData.append("uri", editRow.uri)
         formData.append("typeOf", editRow.typeOf)
-        dispatch(removeInstance(formData))
-        dispatch(getOntologyStructureInfo())
-        console.log(ontologyStructure)
         setOpenRemove(false)
+        await dispatch(removeInstance(formData))
+        console.log("removed")
+        dispatch(getOntologyStructureInfo())
+        dispatch(getAllResources())
+        dispatch(getSystemBuild())
+    }
+
+    const handleCloseDisable = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpenDisable(false);
     }
 
     const editModal = (
@@ -225,6 +257,14 @@ export const ListResources = () => {
                 </div>
             </DialogActions>
         </Dialog>
+    )
+
+    const operationsDisable = (
+        <Snackbar open={openDisable} autoHideDuration={6000} onClose={handleCloseDisable}>
+            <Alert onClose={handleCloseDisable} severity="error">
+                You can't change ontology structure while the system is building or unbuilding.
+            </Alert>
+        </Snackbar>
     )
 
     /*
@@ -453,6 +493,7 @@ export const ListResources = () => {
 
             {editModal}
             {removeModal}
+            {operationsDisable}
         </div>
     )
 }

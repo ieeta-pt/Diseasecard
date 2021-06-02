@@ -115,7 +115,7 @@ const AddResourceForm = props => {
                             component={renderTextField}
                             label="Title"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Resource Title."
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -126,7 +126,7 @@ const AddResourceForm = props => {
                             component={renderTextField}
                             label="Label"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="This field works as the internal ID. Follow the recommendation in last steps."
                             props={{ disabled: disableTextField }}
                         />
                     </Grid>
@@ -138,7 +138,7 @@ const AddResourceForm = props => {
                             component={renderTextField}
                             label="Description"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Resource Description."
                             multiline
                             rows={2}
                         />
@@ -151,7 +151,7 @@ const AddResourceForm = props => {
                             label="Resource Of"
                             variant="outlined"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Choose the concept of this new Resource."
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
                             {
@@ -170,7 +170,7 @@ const AddResourceForm = props => {
                             label="Extends"
                             variant="outlined"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Choose the concept that this Resource extends."
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
                             {
@@ -190,7 +190,7 @@ const AddResourceForm = props => {
                             label="Order"
                             variant="outlined"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Order of upload."
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
                             {ordersLabels.map((option) => (
@@ -209,7 +209,7 @@ const AddResourceForm = props => {
                             onChange={e => handlePublisherChoice(e)}
                             variant="outlined"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Resource Publisher."
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
                             {pluginLabels.map((option) => (
@@ -277,6 +277,7 @@ const AddResourceForm = props => {
                                     label="Upload local File"
                                     className={c.switch}
                                     checked={endpoint}
+                                    labelPlacement="start"
                                     onChange={e => setEndpoint(e.target.checked)}
                                     labelText="olaaa"
                                 />

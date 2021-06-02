@@ -286,7 +286,6 @@ public class Resource {
             JSONParser parser = new JSONParser();
             JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT *" +
                     " WHERE { " + PrefixFactory.encode(this.uri) + " coeus:hasParser ?s ."
-                    + " ?s coeus:resourceID ?resourceID . "
                     + " ?s coeus:genemap_cName ?genemap_cName . "
                     + " ?s coeus:genemap_cOMIM ?genemap_cOMIM . "
                     + " ?s coeus:genemap_cLocation ?genemap_cLocation . "
@@ -302,7 +301,6 @@ public class Resource {
             for (Object obj : bindings)
             {
                 JSONObject binding = (JSONObject) obj;
-                JSONObject resourceID = (JSONObject) binding.get("resourceID");
 
                 JSONObject genemap_cName = (JSONObject) binding.get("genemap_cName");
                 JSONObject genemap_cOMIM = (JSONObject) binding.get("genemap_cOMIM");
@@ -313,7 +311,7 @@ public class Resource {
                 JSONObject morbidmap_cLocation = (JSONObject) binding.get("morbidmap_cLocation");
                 JSONObject morbidmap_cGenes = (JSONObject) binding.get("morbidmap_cGenes");
 
-                Parser resourceParser = new Parser(resourceID.get("value").toString());
+                Parser resourceParser = new Parser();
 
                 resourceParser.setGenecardName(Integer.parseInt(genemap_cName.get("value").toString()));
                 resourceParser.setGenecardOMIM(Integer.parseInt(genemap_cOMIM.get("value").toString()));

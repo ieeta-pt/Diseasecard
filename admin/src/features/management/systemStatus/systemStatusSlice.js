@@ -4,7 +4,8 @@ import API from "../../../api/Api";
 const initialState = {
     allResources: [],
     systemBuild: false,
-    btnBuild: false
+    btnBuild: false,
+    alert: false
 }
 
 
@@ -56,12 +57,15 @@ const systemStatusSlice = createSlice({
             const status = action.payload.build
 
             let finalStatus = true
+            let alert = false;
 
             if (status === 'Finished' || status === 'Inconsistent' || status === 'Building_Removal') finalStatus = false
             if (status.includes("Building_") ) state.btnBuild = true
             if (status.includes("Finished") || status.includes("BuildReady")) state.btnBuild = false
+            if (status === 'Inconsistent') alert = true;
 
             state.systemBuild = finalStatus
+            state.alert = alert
         },
     }
 })
@@ -70,6 +74,7 @@ const systemStatusSlice = createSlice({
 export const getResources = state => state.systemStatus.allResources
 export const getSystemBuildValue = state => state.systemStatus.systemBuild
 export const getBtnBuild = state => state.systemStatus.btnBuild
+export const getAlert = state => state.systemStatus.alert
 
 export const { updateBtnBuild } = systemStatusSlice.actions
 

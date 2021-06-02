@@ -1,4 +1,4 @@
-import React, {useState, useMemo, useCallback, useEffect} from 'react';
+import React, {useState, useMemo, useCallback } from 'react';
 import StepWizard from 'react-step-wizard';
 import {Col, Container, Row} from "react-bootstrap";
 import { useSpring, animated } from 'react-spring';
@@ -25,10 +25,21 @@ import AddEntityFrom from "./forms/FormEntity";
 import AddResourceForm from "./forms/FormResource";
 import AddParserCSVForm from "./forms/FormParserCSV";
 import AddParserXMLForm from "./forms/FormParserXML";
-import {CircularProgress} from "@material-ui/core";
+import {
+    Button,
+    CircularProgress,
+    Dialog,
+    DialogActions,
+    DialogContent, DialogContentText,
+    DialogTitle,
+    IconButton,
+    Typography
+} from "@material-ui/core";
 import AddParserOMIMForm from "./forms/FormParserOMIM";
 import {getOntologyStructureInfo} from "../listResources/listResourcesSlice";
 import {getAllResources} from "../systemStatus/systemStatusSlice";
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import {useStyles} from "./forms/FormElements";
 
 const MethodIcon = styled(animated.div)``;
 
@@ -164,7 +175,7 @@ const SelectMethod = props => {
 
     return (
         <div>
-            <h6 className='text-center'>Please, start by choosing one of the available methods:</h6>
+            <h6 className='text-center'>Please start by choosing one of the available methods:</h6>
             <Row className="justify-content-md-center" style={{marginTop: "40px"}}>
                 <Col sm="6" className="centerStuff">
                     <div className="centerStuff">
@@ -180,7 +191,7 @@ const SelectMethod = props => {
                             <i className={method === 'M' ? 'iconB feather icon-layers' : 'feather icon-layers'} style={{fontSize: "60px"}}/>
                         </MethodIcon>
                     </div>
-                    <p style={{marginTop: "10px"}}>Add Manually a Source.</p>
+                    <p style={{marginTop: "10px"}}>Add a Source Manually.</p>
                 </Col>
             </Row>
             <Stats step={1} {...props} permissionToGo={permissionToGo} nextStep={go}/>
@@ -404,12 +415,25 @@ const Instructions = props => {
         <div>
             <p className='text-center' style={{color: "#1dc4e9"}}><b>Brief Contextualization</b></p>
             <p align="justify">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                The Diseasecard platform is based on an ontology, organized according to four instances: <i>Entities</i>,
+                <i>Concepts</i>, <i>Resources</i> and <i>Parsers</i>.
+                <br />In this structure is important to highlight that Entities have
+                Concepts, Concepts have Resources and Resources have Parsers. The role of this last instance is to allow
+                the user to specify how the Resource's Endpoint must be analysed by the system.
+                <br />Another relevant aspect about Diseasecard is that OMIM data is the foundation of this system, meaning
+                that all the Resources must be, in some way, related to OMIM data.
+
+                <br /><br />
+                <b style={{paddingTop: "10px"}}>The system has some basic rules that
+                must be followed to assure the correct build of the system:</b>
             </p>
+            <ul style={{textAlign: "justify", paddingLeft: "15px"}}>
+                <li>The labels of each instance works as an internal ID, so they must be unique;</li>
+                <li>The Concept label associated to OMIM Resource must be 'concept_OMIM';</li>
+                <li>It's recommented that the labels of each instance contain the name of the instance followed by an
+                    underscore and then the name of the instance (for example the Entity Disease label should be 'entity_Disease');</li>
+            </ul>
+
             <Stats step={4} {...props} permissionToGo={permissionToGo} previousStep={previousStep}/>
         </div>
     );
@@ -567,15 +591,28 @@ const AddParsers = props => {
     const dispatch = useDispatch()
     const resource = useSelector(getResource)
     const plugin = resource.publisherEndpoint
+    const [open, setOpen] = React.useState(false);
 
-    const submit = (values) => {
+    const classes = useStyles();
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const submit = async (values) => {
         let forms = {resource, values}
 
-        if ( resource.publisherEndpoint === 'OMIM' ) dispatch(addOMIMResource(forms))
+        if (resource.publisherEndpoint === 'OMIM') await dispatch(addOMIMResource(forms))
         else {
-            if (!resource.isEndpointFile) dispatch(addResourceWithURLEndpoint(forms))
-            else dispatch(addResource(forms))
+            if (!resource.isEndpointFile) await dispatch(addResourceWithURLEndpoint(forms))
+            else await dispatch(addResource(forms))
         }
+
+        dispatch(getOntologyStructureInfo())
+        dispatch(getAllResources())
     }
 
     let content;
@@ -590,10 +627,40 @@ const AddParsers = props => {
     }
     else content = <CircularProgress color="inherit" style={{marginTop: "40px"}}/>
 
+
+    const dialog = <Dialog open={open} onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+        <DialogTitle id="alert-dialog-title">{"Help"}</DialogTitle>
+        <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+                Let Google help apps determine location. This means sending anonymous location data to
+                Google, even when no apps are running.
+            </DialogContentText>
+        </DialogContent>
+        <DialogActions style={{width: "100%", display: "block", paddingRight: "40px", paddingBottom: "25px"}} className='text-right'>
+            <Button variant="outlined" color="primary" className={ classes.buttonG } type="submit" onClick={handleClose}>
+                Close
+            </Button>
+        </DialogActions>
+    </Dialog>
+
+
+
+
     return (
         <div style={{textAlign: "center"}}>
-            <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Parser</b></p>
+            <Row className="justify-content-end">
+                <Col sm="8">
+                    <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Parser</b></p>
+                </Col>
+                <Col sm="2" className="text-right">
+                    <IconButton  aria-label="delete" size="small" onClick={handleClickOpen}>
+                        <HelpOutlineIcon fontSize="inherit" />
+                    </IconButton>
+                </Col>
+            </Row>
+
             {content}
+            {dialog}
         </div>
     );
 }

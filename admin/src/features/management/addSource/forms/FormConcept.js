@@ -56,7 +56,7 @@ const AddConceptForm = props => {
                             component={renderTextField}
                             label="Title"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Concept Title."
                         />
                     </Grid>
                     <Grid item xs={6}>
@@ -67,7 +67,7 @@ const AddConceptForm = props => {
                             component={renderTextField}
                             label="Label"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="This field works as the internal ID. Follow the recommendation in last steps."
                         />
                     </Grid>
                     <Grid item xs={12} style={{marginTop: "-3.5%"}}>
@@ -78,7 +78,7 @@ const AddConceptForm = props => {
                             component={renderTextField}
                             label="Description"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Concept Description."
                             multiline
                             rows={2}
                         />
@@ -92,7 +92,7 @@ const AddConceptForm = props => {
                             label="Related Entity"
                             variant="outlined"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="Related Entity of this new Concept."
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
                             {
@@ -110,7 +110,7 @@ const AddConceptForm = props => {
                             label="Related Resource"
                             variant="outlined"
                             className={c.field}
-                            labelText="olaaa"
+                            labelText="List of Resources that are related to this Concept."
                         >
                             <MenuItem value=""><em>None</em></MenuItem>
                             {

@@ -33,7 +33,17 @@ public class DB {
         Method to connect to DB. It tries 10 times until gives up.
      */
     public void connect() {
-        this.connection = null;
+
+        if (this.connection != null) {
+            try {
+                this.connection.close();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } finally {
+                this.connection = null;
+            }
+        }
+
         int count = 0;
         while (this.connection == null && count < 10)
         {

@@ -14,10 +14,10 @@ class SourceManagementPage extends Component {
             <Aux>
                 <Row>
                     <Col>
-                        <MainCard title='Add Sources' isOption collapseCard={true} >
+                        <MainCard title='Add Instances' isOption collapseCard={true} >
                             <AddWizard />
                         </MainCard>
-                        <MainCard title='List Of Existent Resources' isOption collapseCard={true}>
+                        <MainCard title='Ontology Structure' isOption collapseCard={true}>
                             <ListResources />
                         </MainCard>
                         <MainCard title='System Status' isOption>

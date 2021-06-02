@@ -493,6 +493,7 @@ public class Storage {
         this.model.removeAll(null, null, resource);
 
         this.checkBuildConsistence();
+        //this.setBuildPhase("Inconsistent");
     }
 
 
@@ -614,7 +615,7 @@ public class Storage {
         while (iter.hasNext()) {
             Statement statement = iter.nextStatement();
             Resource resource = statement.getSubject();
-            flags.add(Boolean.parseBoolean(resource.getProperty(builtProperty).getObject().toString()));
+            flags.add(resource.getProperty(builtProperty).getObject().asLiteral().getBoolean());
         }
         System.out.println("flags: " + flags);
         if (flags.size() > 1) this.setBuildPhase("Inconsistent");
