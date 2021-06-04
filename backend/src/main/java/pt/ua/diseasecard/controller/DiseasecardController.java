@@ -68,7 +68,7 @@ public class DiseasecardController {
 
 
     @GetMapping("/services/results/{searchType}")
-    public String searchResults( @PathVariable String searchType, @RequestParam(name = "query", required = true) String query) {
+    public String searchResults(@PathVariable String searchType, @RequestParam(name = "query", required = true) String query) {
 
         Finder finder = new Finder(this.api, this.solrIndex, query);
         if (searchType.equals("id"))
@@ -80,7 +80,7 @@ public class DiseasecardController {
 
     @GetMapping("/services/autocomplete")
     @ResponseBody
-    public String autocomplete( @RequestParam(name = "query", required = true) String query) {
+    public String autocomplete(@RequestParam(name = "query", required = true) String query) {
 
         Finder finder = new Finder(this.api, this.solrIndex, query);
         return finder.get("id");
@@ -89,7 +89,7 @@ public class DiseasecardController {
 
     @GetMapping("/services/disease")
     @ResponseBody
-    public String getDiseaseByOMIM( @RequestParam(name = "omim", required = true) String omim) {
+    public String getDiseaseByOMIM(@RequestParam(name = "omim", required = true) String omim) {
 
 //        DiseaseAPI d = new DiseaseAPI(this.api, omim);
 //        return d.load().toString();
@@ -106,7 +106,7 @@ public class DiseasecardController {
 
     @GetMapping("/services/linkout/{key}:{value}")
     @ResponseBody
-    public JSONObject getSourceURL( @PathVariable String key, @PathVariable String value) {
+    public JSONObject getSourceURL(@PathVariable String key, @PathVariable String value) {
 
         JSONObject res = new JSONObject();
 
@@ -120,7 +120,7 @@ public class DiseasecardController {
 
             return res;
         } catch (Exception ex) {
-            Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO,"[Diseasecard][API][getSourceURL] Source not found");
+            Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO, "[Diseasecard][API][getSourceURL] Source not found");
             return null;
         }
     }
@@ -128,7 +128,7 @@ public class DiseasecardController {
 
     @GetMapping("/services/browse")
     @ResponseBody
-    public String getBrowserResultsByLetter( @RequestParam(name = "letter", required = true) String letter) {
+    public String getBrowserResultsByLetter(@RequestParam(name = "letter", required = true) String letter) {
 
         try {
             return jedis.get("browse:" + letter);
@@ -141,7 +141,7 @@ public class DiseasecardController {
 
     @PostMapping("/startup")
     public void startInternalProcess() {
-        Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO,"[Diseasecard][Controller] Receive alert to start my internal processing");
+        Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO, "[Diseasecard][Controller] Receive alert to start my internal processing");
         this.boot.startInternalProcess();
     }
 
@@ -154,7 +154,7 @@ public class DiseasecardController {
     }
 
 
-    @PostMapping(value = "/dcadmin/uploadEndpoints", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+    @PostMapping(value = "/dcadmin/uploadEndpoints", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public void uploadEndpoints(@RequestParam("information[]") List<MultipartFile> information) throws IOException {
         dataManagementService.uploadEndpoints(information);
     }
@@ -162,9 +162,9 @@ public class DiseasecardController {
 
     @PostMapping(value = "/dcadmin/operations/addEntity")
     public ResponseEntity<String> addEntity(@RequestParam("titleEntity") String title,
-                          @RequestParam("labelEntity") String label,
-                          @RequestParam("descriptionEntity") String description,
-                          @RequestParam(name= "isEntityOfEntity", required = false) String entityOf ) throws IOException {
+                                            @RequestParam("labelEntity") String label,
+                                            @RequestParam("descriptionEntity") String description,
+                                            @RequestParam(name = "isEntityOfEntity", required = false) String entityOf) throws IOException {
 
         dataManagementService.prepareAddEntity(title, label, description, entityOf);
         return new ResponseEntity<>("Add Entity", HttpStatus.OK);
@@ -173,10 +173,10 @@ public class DiseasecardController {
 
     @PostMapping(value = "/dcadmin/operations/addConcept")
     public ResponseEntity<String> addConcept(@RequestParam("titleConcept") String title,
-                           @RequestParam("labelConcept") String label,
-                           @RequestParam("descriptionConcept") String description,
-                           @RequestParam("hasEntityConcept") String hasEntity,
-                           @RequestParam(name= "hasResourceConcept", required = false) String hasResource ) throws IOException {
+                                             @RequestParam("labelConcept") String label,
+                                             @RequestParam("descriptionConcept") String description,
+                                             @RequestParam("hasEntityConcept") String hasEntity,
+                                             @RequestParam(name = "hasResourceConcept", required = false) String hasResource) throws IOException {
 
         dataManagementService.prepareAddConcept(title, label, description, hasEntity, hasResource);
         return new ResponseEntity<>("Add Concept", HttpStatus.OK);
@@ -191,7 +191,7 @@ public class DiseasecardController {
                             @RequestParam("extendsResource") String extendsResource,
                             @RequestParam("orderResource") String order,
                             @RequestParam("files") MultipartFile files,
-                            @RequestParam("publisherEndpoint") String publisher ) throws IOException {
+                            @RequestParam("publisherEndpoint") String publisher) throws IOException {
 
         dataManagementService.prepareAddResource(title, label, description, resourceOf, extendsResource, order, publisher, files);
     }
@@ -220,7 +220,7 @@ public class DiseasecardController {
                                 @RequestParam("orderResource") String order,
                                 @RequestParam("publisherEndpoint") String publisher,
                                 @RequestParam("morbidmap") MultipartFile morbidmap,
-                                @RequestParam("genemap") MultipartFile genemap ) {
+                                @RequestParam("genemap") MultipartFile genemap) {
 
         dataManagementService.prepareAddOMIMResource(title, label, description, resourceOf, extendsResource, order, publisher, morbidmap, genemap);
     }
@@ -230,9 +230,9 @@ public class DiseasecardController {
     @PostMapping(value = "/dcadmin/operations/addCSVParser")
     public void addCSVParser(@RequestParam("resource") String resource,
                              @RequestParam("resourceID") String resourceID,
-                             @RequestParam(name="resourceRegex", required = false, defaultValue = "") String regexResource,
+                             @RequestParam(name = "resourceRegex", required = false, defaultValue = "") String regexResource,
                              @RequestParam("externalResourceID") String externalResourceID,
-                             @RequestParam(name="externalResourceRegex", required = false, defaultValue = "") String regexExternalResource) {
+                             @RequestParam(name = "externalResourceRegex", required = false, defaultValue = "") String regexExternalResource) {
 
         dataManagementService.prepareAddParser(resource, resourceID, regexResource, externalResourceID, regexExternalResource);
     }
@@ -245,18 +245,18 @@ public class DiseasecardController {
                              @RequestParam("resourceInfoInAttribute") String resourceInfoInAttribute,
                              @RequestParam("resourceID") String resourceInfo,
                              @RequestParam("uniqueResource") String uniqueResource,
-                             @RequestParam(name="regexResource", required = false, defaultValue = "") String regexResource,
+                             @RequestParam(name = "regexResource", required = false, defaultValue = "") String regexResource,
                              @RequestParam("externalResourceInfoInAttribute") String externalResourceInfoInAttribute,
-                             @RequestParam(name="externalResourceID", required = false, defaultValue = "") String externalResourceInfo,
+                             @RequestParam(name = "externalResourceID", required = false, defaultValue = "") String externalResourceInfo,
                              @RequestParam("externalResourceNode") String externalResourceNode,
                              @RequestParam("uniqueExternalResource") String uniqueExternalResource,
-                             @RequestParam(name="filterBy", required = false, defaultValue = "") String filterBy,
-                             @RequestParam(name="filterValue", required = false, defaultValue = "") String filterValue,
-                             @RequestParam(name="regexExternalResource", required = false, defaultValue = "") String regexExternalResource)  {
+                             @RequestParam(name = "filterBy", required = false, defaultValue = "") String filterBy,
+                             @RequestParam(name = "filterValue", required = false, defaultValue = "") String filterValue,
+                             @RequestParam(name = "regexExternalResource", required = false, defaultValue = "") String regexExternalResource) {
 
         dataManagementService.prepareAddParser(resource, mainNode, isMethodByReplace,
                 resourceInfoInAttribute, resourceInfo, uniqueResource, regexResource, externalResourceInfoInAttribute,
-                externalResourceInfo, externalResourceNode, regexExternalResource,uniqueExternalResource, filterBy, filterValue);
+                externalResourceInfo, externalResourceNode, regexExternalResource, uniqueExternalResource, filterBy, filterValue);
     }
 
 
@@ -269,41 +269,40 @@ public class DiseasecardController {
                               @RequestParam("morbidmapName") String morbidmapName,
                               @RequestParam("morbidmapGene") String morbidmapGene,
                               @RequestParam("morbidmapOMIM") String morbidmapOMIM,
-                              @RequestParam("morbidmapLocation") String morbidmapLocation)  {
+                              @RequestParam("morbidmapLocation") String morbidmapLocation) {
 
         // TODO
         dataManagementService.prepareAddOMIMParser(resource, genecardName, genecardOMIM, genecardLocation, genecardGenes, morbidmapName, morbidmapGene, morbidmapOMIM, morbidmapLocation);
     }
 
 
-
     @PostMapping(value = "/dcadmin/operations/editInstance")
     @ResponseBody
-    public void editInstance(@RequestParam Map<String,String> allParams ) {
+    public void editInstance(@RequestParam Map<String, String> allParams) {
         dataManagementService.prepareEditInstance(allParams);
     }
 
 
     @PostMapping(value = "/dcadmin/operations/editResourceSingleEndpoint")
     @ResponseBody
-    public void editResourceSingleEndpoint(@RequestParam Map<String,String> allParams,
-                                           @RequestParam("files") MultipartFile file ) {
+    public void editResourceSingleEndpoint(@RequestParam Map<String, String> allParams,
+                                           @RequestParam("files") MultipartFile file) {
         dataManagementService.prepareEditResourceSingleEndpoint(allParams, file);
     }
 
 
     @PostMapping(value = "/dcadmin/operations/editResourceOMIMEndpoint")
     @ResponseBody
-    public void editResourceOMIM(@RequestParam Map<String,String> allParams,
+    public void editResourceOMIM(@RequestParam Map<String, String> allParams,
                                  @RequestParam("morbidmap") MultipartFile morbidmap,
-                                 @RequestParam("genemap") MultipartFile genemap ) {
+                                 @RequestParam("genemap") MultipartFile genemap) {
         dataManagementService.prepareEditResourceOMIM(allParams, genemap, morbidmap);
     }
 
 
     @PostMapping(value = "/dcadmin/operations/removeInstance")
     @ResponseBody
-    public void removeInstance(@RequestParam("uri") String uri , @RequestParam("typeOf") String typeOf) {
+    public void removeInstance(@RequestParam("uri") String uri, @RequestParam("typeOf") String typeOf) {
         dataManagementService.removeInstance(typeOf, uri);
     }
 
@@ -368,13 +367,30 @@ public class DiseasecardController {
         return text;
     }
 
+
     @SendTo("/topic/message")
     public String broadcastMessage(@Payload String textMessageDTO) {
         return textMessageDTO;
     }
 
-    @GetMapping("/queryJenaModel")
-    public JSONArray queryJenaModel(@RequestBody String query) {
-        return dataManagementService.queryJenaModel(query);
+
+    @GetMapping("/dcadmin/utils/queryJenaModel")
+    @ResponseBody
+    public ResponseEntity<Object> queryJenaModel(@RequestParam(name = "query", required = true) String query) {
+        System.out.println(query);
+        try {
+            return  ResponseEntity.ok(dataManagementService.queryJenaModel(query));
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+
+        //return dataManagementService.queryJenaModel(query);
+    }
+
+
+    @GetMapping("/dcadmin/utils/getPrefixes")
+    @ResponseBody
+    public JSONArray getPrefixes() {
+        return dataManagementService.getPrefixes();
     }
 }

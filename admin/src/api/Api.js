@@ -37,6 +37,8 @@ const getModuleURL = function (module) {
         case "startBuildSystem":               return "/dcadmin/operations/buildSystem";
         case "startUnbuildSystem":             return "/dcadmin/operations/unbuildSystem";
         case "getSystemBuild":                 return "/dcadmin/status/systemBuild";
+        case "sendQuery":                      return "/dcadmin/utils/queryJenaModel";
+        case "getPrefixes":                    return "/dcadmin/utils/getPrefixes";
         default:                               return "";
     }
 };
@@ -45,6 +47,7 @@ const getTypeParameters = function (module) {
     switch (module){
         case "searchResults":                  return ["query"];
         case "getParserFields":                return ["parserType"];
+        case "sendQuery":                      return ["query"];
         default:                               return "";
     }
 }

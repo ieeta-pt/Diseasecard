@@ -59,6 +59,8 @@ services:
             - mysql:container_mysql
             - dc_redis:container_redis
             - dc_solr:container_solr
+        volumes:
+            - backend_data:/submittedFiles
         networks:
             - backend
         environment:
@@ -125,3 +127,4 @@ volumes:
     redis_data:
     mysql_data:
     solr_data:
+    backend_data:

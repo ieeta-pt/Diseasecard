@@ -729,6 +729,30 @@ public class DataManagementService {
     }
 
 
+    public JSONArray queryJenaModel(String query) throws ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select( query , "js", false));
+        JSONObject results = (JSONObject) response.get("results");
+        return (JSONArray) results.get("bindings");
+    }
+
+
+    public JSONArray getPrefixes() {
+        Map<String, String> prefixes = ontologyProperties.getPrefixes();
+        JSONArray results = new JSONArray();
+
+
+        for (Map.Entry<String,String> entry : prefixes.entrySet()) {
+            JSONObject o = new JSONObject();
+            o.put("prefix", entry.getKey());
+            o.put("uri", entry.getValue());
+            results.add(o);
+        }
+
+        return results;
+    }
+
+
     private void saveOMIMEndpoints(MultipartFile genemap, MultipartFile morbidmap) {
         try {
             Path copyLocationGenemap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_genemap");
@@ -739,20 +763,5 @@ public class DataManagementService {
         } catch (IOException ex) {
             Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
         }
-    }
-
-    public JSONArray queryJenaModel(String query) {
-
-        JSONParser parser = new JSONParser();
-        JSONObject response = null;
-        try {
-            response = (JSONObject) parser.parse(this.sparqlAPI.select( query , "js", false));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        JSONObject results = (JSONObject) response.get("results");
-        return (JSONArray) results.get("bindings");
-
     }
 }

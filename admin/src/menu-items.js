@@ -31,7 +31,7 @@ export default {
             ]
         },
         {
-            id: 'ui-element',
+            id: 'utils',
             title: 'Utils',
             type: 'group',
             icon: 'icon-ui',
