@@ -31,6 +31,21 @@ export default {
             ]
         },
         {
+            id: 'ui-element',
+            title: 'Utils',
+            type: 'group',
+            icon: 'icon-ui',
+            children: [
+                {
+                    id: 'sparql',
+                    title: 'SPARQL Endpoint',
+                    type: 'item',
+                    url: '/utils/sparql',
+                    icon: 'feather icon-crosshair'
+                }
+            ]
+        },
+        {
             id: 'ui-forms',
             title: 'Source Management',
             type: 'group',
@@ -58,6 +73,6 @@ export default {
                     url: '/sources/map'
                 }
             ]
-        },
+        }
     ]
 }
