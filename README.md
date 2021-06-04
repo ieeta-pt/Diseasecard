@@ -17,9 +17,17 @@ For local installation, you can just copy the `.env.example` content to a new fi
 
 2.  The system runs at 'SERVERNAME:REVERSEPROXY_PORT/diseasecard'. If you need to change the domain you can edit the '.env' file variable 'SERVERNAME'. If you need to change the used port you can edit the '.env' file variable 'REVERSEPROXY_PORT'. If you chose to not edit the '.env' file, the system will run at 'http://localhost:80/diseasecard'.
 
-3.  After all changes are complete, the system needs to be built. From your project directory, build the system by running 'docker-compose build'. This step can take a couple of minutes until the image is built. It might take some time if it is the first time you are building the images. If it is not, it will use as much cached information as possible and the building process will be faster. When it is finished building, you will be notified in the terminal with a "Build Complete" message.
+3.  After all changes are complete, the system needs to be built. From your project directory, build the system by running:
 
-4.  The image is built and now it is time to run the application. For that, simply run the command 'docker-compose up --remove-orphans'. This process will take some time until the application is up and running. You can check the state of the application by reading the container logs: 
+        $ docker-compose build
+        
+    This step can take a couple of minutes until the image is built. It might take some time if it is the first time you are building the images. If it is not, it will use as much cached information as possible and the building process will be faster. When it is finished building, you will be notified in the terminal with a "Build Complete" message.
+
+4.  The image is built and now it is time to run the application. For that, simply run the command:
+
+        $ docker-compose up --remove-orphans
+    
+    This process will take some time until the application is up and running. You can check the state of the application by reading the container logs: 
         
         $ docker logs  dc_backend
 
