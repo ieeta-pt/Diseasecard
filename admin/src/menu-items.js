@@ -17,7 +17,7 @@ export default {
         },
         {
             id: 'ui-element',
-            title: 'Endpoints endpointManagement',
+            title: 'Endpoints Management',
             type: 'group',
             icon: 'icon-ui',
             children: [
@@ -30,10 +30,10 @@ export default {
                 },
                 {
                     id: 'endpointAlertBox',
-                    title: 'Endpoint Management',
+                    title: 'Management',
                     type: 'item',
                     url: '/endpoint/management',
-                    icon: 'feather icon-feather'
+                    icon: 'feather icon-server'
                 }
             ]
         },
@@ -54,7 +54,7 @@ export default {
         },
         {
             id: 'ui-forms',
-            title: 'Source endpointManagement',
+            title: 'Source Management',
             type: 'group',
             icon: 'icon-group',
             children: [

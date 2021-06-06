@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/features/endpointManagement/listSourcesURLS/ListSourcesURLS.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/endpointManagement/listSourcesURLS/listSourcesURLS.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/features/endpointManagement/addSourceBaseURL/AddSourceBaseURL.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/store.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/features/endpointManagement/EndpointManagementPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/endpointManagement/EndpointManagementPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/sparqlEndpoint/listPrefixes/listPrefixesSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/sparqlEndpoint/listPrefixes/listPrefixesSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/endpointManagement/listSourcesURLS/ListSourcesURLS.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/endpointManagement/listSourcesURLS/ListSourcesURLS.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/sourcesManagement/listResources/ListResources.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/sourcesManagement/listResources/ListResources.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/menu-items.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/menu-items.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -122,11 +122,10 @@ export const ListResources = () => {
                 <IconButton aria-label="upload picture" component="span" title="Edit" onClick={(e)=> {e.stopPropagation(); handleModelEdit(cell, row) }}>
                     <i className="feather icon-edit" style={{fontSize:"14px"}}></i>
                 </IconButton>
-
                 <IconButton aria-label="upload picture" component="span" title="Remove" onClick={(e)=> {e.stopPropagation(); handleModelRemove(cell, row) }}>
                     <i className="feather icon-x-square" style={{fontSize:"14px"}}></i>
                 </IconButton>
-            </div>
+               </div>
         )
     }
 

@@ -3,6 +3,8 @@ import {Row, Col} from 'react-bootstrap';
 import Aux from "../../template/aux";
 import MainCard from "../../template/components/MainCard";
 import {ListSourcesURLS} from "./listSourcesURLS/ListSourcesURLS";
+import {AddWizard} from "../sourcesManagement/addSource/AddWizard";
+import {AddSourceBaseURL} from "./addSourceBaseURL/AddSourceBaseURL";
 
 
 class EndpointManagementPage extends Component {
@@ -11,7 +13,10 @@ class EndpointManagementPage extends Component {
             <Aux>
                 <Row>
                     <Col>
-                        <MainCard title='TODO'>
+                        <MainCard title='Add Source Base URL' collapseCard={true} >
+                            <AddSourceBaseURL/>
+                        </MainCard>
+                        <MainCard title='Sources Base URLs'>
                             <ListSourcesURLS />
                         </MainCard>
                     </Col>
