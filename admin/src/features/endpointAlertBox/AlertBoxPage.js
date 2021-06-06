@@ -4,13 +4,13 @@ import Aux from "../../template/aux";
 import MainCard from "../../template/components/MainCard";
 
 
-class AlertPage extends Component {
+class AlertBoxPage extends Component {
     render() {
         return (
             <Aux>
                 <Row>
                     <Col>
-                        <MainCard title='TODO' isOption>
+                        <MainCard title='TODO'>
                             <p>
                                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
@@ -25,4 +25,4 @@ class AlertPage extends Component {
     }
 }
 
-export default AlertPage;
+export default AlertBoxPage;

@@ -368,12 +368,6 @@ public class DiseasecardController {
     }
 
 
-    @SendTo("/topic/message")
-    public String broadcastMessage(@Payload String textMessageDTO) {
-        return textMessageDTO;
-    }
-
-
     @PostMapping("/dcadmin/utils/queryJenaModel")
     @ResponseBody
     public ResponseEntity<Object> queryJenaModel(@RequestParam(name = "query", required = true) String query) {
@@ -383,8 +377,6 @@ public class DiseasecardController {
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
-
-        //return dataManagementService.queryJenaModel(query);
     }
 
 
@@ -392,5 +384,11 @@ public class DiseasecardController {
     @ResponseBody
     public JSONArray getPrefixes() {
         return dataManagementService.getPrefixes();
+    }
+
+    @GetMapping("/dcadmin/utils/getSourcesURLS")
+    @ResponseBody
+    public JSONArray getSourcesURLS() {
+        return dataManagementService.getSources();
     }
 }

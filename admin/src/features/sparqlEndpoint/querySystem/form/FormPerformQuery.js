@@ -1,8 +1,8 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
-import asyncValidate from '../../../management/addSource/forms/asyncValidate'
+import asyncValidate from '../../../sourcesManagement/addSource/forms/asyncValidate'
 import {Button, Grid} from "@material-ui/core";
-import { renderTextField, useStyles} from "../../../management/addSource/forms/FormElements";
+import { renderTextField, useStyles} from "../../../sourcesManagement/addSource/forms/FormElements";
 import {Col} from "react-bootstrap";
 
 

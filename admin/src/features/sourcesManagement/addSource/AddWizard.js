@@ -202,7 +202,7 @@ const SelectMethod = props => {
 
 /*
     It corresponds to the second step of the wizard in case the user had selected "Submit an Ontology".
-    The file submitted by the user is send to Diseasecard backend, to be pre-processed to identify the endpoints.
+    The file submitted by the user is send to Diseasecard backend, to be pre-processed to identify the endpointAlertBox.
  */
 const UploadOntology = props => {
     const [permissionToGo, setPermissionToGo] = useState(false);

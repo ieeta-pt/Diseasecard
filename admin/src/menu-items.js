@@ -17,16 +17,23 @@ export default {
         },
         {
             id: 'ui-element',
-            title: 'AlertBox',
+            title: 'Endpoints endpointManagement',
             type: 'group',
             icon: 'icon-ui',
             children: [
                 {
                     id: 'basic',
-                    title: 'Alerts',
+                    title: 'AlertBox',
                     type: 'item',
-                    url: '/alerts',
+                    url: '/endpoint/alertbox',
                     icon: 'feather icon-box'
+                },
+                {
+                    id: 'endpointAlertBox',
+                    title: 'Endpoint Management',
+                    type: 'item',
+                    url: '/endpoint/management',
+                    icon: 'feather icon-feather'
                 }
             ]
         },
@@ -47,7 +54,7 @@ export default {
         },
         {
             id: 'ui-forms',
-            title: 'Source Management',
+            title: 'Source endpointManagement',
             type: 'group',
             icon: 'icon-group',
             children: [

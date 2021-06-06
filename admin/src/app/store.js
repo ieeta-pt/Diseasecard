@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
 import templateReducer from '../template/templateSlice';
-import addSourceSlice from '../features/management/addSource/addSourceSlice';
+import addSourceSlice from '../features/sourcesManagement/addSource/addSourceSlice';
 import querySystemSlice from '../features/sparqlEndpoint/querySystem/querySystemSlice';
-import listResourceSlice from '../features/management/listResources/listResourcesSlice';
-import systemStatusSlice from "../features/management/systemStatus/systemStatusSlice";
+import listResourceSlice from '../features/sourcesManagement/listResources/listResourcesSlice';
+import systemStatusSlice from "../features/sourcesManagement/systemStatus/systemStatusSlice";
 import listPrefixesSlice from "../features/sparqlEndpoint/listPrefixes/listPrefixesSlice";
 import { getDefaultMiddleware } from '@reduxjs/toolkit'
 

@@ -738,9 +738,23 @@ public class DataManagementService {
 
 
     public JSONArray getPrefixes() {
-        Map<String, String> prefixes = ontologyProperties.getPrefixes();
+        Map<String, String> prefixes = this.ontologyProperties.getPrefixes();
         JSONArray results = new JSONArray();
 
+        for (Map.Entry<String,String> entry : prefixes.entrySet()) {
+            JSONObject o = new JSONObject();
+            o.put("prefix", entry.getKey());
+            o.put("uri", entry.getValue());
+            results.add(o);
+        }
+
+        return results;
+    }
+
+
+    public JSONArray getSources() {
+        Map<String, String> prefixes = this.config.getSources();
+        JSONArray results = new JSONArray();
 
         for (Map.Entry<String,String> entry : prefixes.entrySet()) {
             JSONObject o = new JSONObject();
