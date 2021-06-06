@@ -2,24 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/features/sparqlEndpoint/listPrefixes/ListPrefixes.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/sparqlEndpoint/listPrefixes/listPrefixesSlice.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/sparqlEndpoint/querySystem/QuerySystem.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/sparqlEndpoint/querySystem/form/FormPerformQuery.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/features/sparqlEndpoint/querySystem/querySystemSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/sparqlEndpoint/SPARQLEndpoint.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/sparqlEndpoint/SPARQLEndpoint.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/menu-items.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/menu-items.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/configuration/OntologyProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/configuration/OntologyProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormConcept.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormConcept.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormEntity.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormEntity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormParserCSV.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormParserCSV.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormParserOMIM.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormParserOMIM.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormParserXML.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormParserXML.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/management/addSource/forms/FormResource.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/management/addSource/forms/FormResource.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/sparqlEndpoint/querySystem/QuerySystem.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/sparqlEndpoint/querySystem/QuerySystem.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/sparqlEndpoint/querySystem/form/FormPerformQuery.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/sparqlEndpoint/querySystem/form/FormPerformQuery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/sparqlEndpoint/querySystem/querySystemSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/sparqlEndpoint/querySystem/querySystemSlice.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/configuration/ontology.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/resources/configuration/ontology.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -194,6 +187,7 @@
       <workItem from="1622365287705" duration="13618000" />
       <workItem from="1622446716153" duration="22422000" />
       <workItem from="1622749007992" duration="1546000" />
+      <workItem from="1622969781284" duration="3708000" />
     </task>
     <servers />
   </component>

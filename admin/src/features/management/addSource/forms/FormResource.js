@@ -317,6 +317,5 @@ const AddResourceForm = props => {
 export default reduxForm({
     form: 'AddResourceForm', // a unique identifier for this form
     validate,
-    asyncValidate,
     initialValues: { isEndpointFile: false }
 })(AddResourceForm)

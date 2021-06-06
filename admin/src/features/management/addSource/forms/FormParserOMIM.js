@@ -149,7 +149,6 @@ const AddParserOMIMForm = props => {
 export default reduxForm({
     form: 'AddParserOMIMForm', // a unique identifier for this form
     validate,
-    asyncValidate,
     initialValues: {
         resourceRegex: "",
         externalResourceRegex: ""

@@ -13,13 +13,14 @@ export const QuerySystem = (props) => {
     const dispatch = useDispatch();
     let content;
 
-    const submit = (value) => {
+    const submit = async (value) => {
+        console.log("a")
         dispatch(updateStatus("loading"))
 
         const formData = new FormData()
         formData.append("query", value.query)
 
-        dispatch(sendQuery(formData))
+        await dispatch(sendQuery(formData))
     }
 
 

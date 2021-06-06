@@ -219,7 +219,6 @@ const AddParserXMLForm = props => {
 export default reduxForm({
     form: 'AddParserXMLForm', // a unique identifier for this form
     validate,
-    asyncValidate,
     initialValues: {
         uniqueResource: false,
         isMethodByReplace: false,

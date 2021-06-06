@@ -374,7 +374,7 @@ public class DiseasecardController {
     }
 
 
-    @GetMapping("/dcadmin/utils/queryJenaModel")
+    @PostMapping("/dcadmin/utils/queryJenaModel")
     @ResponseBody
     public ResponseEntity<Object> queryJenaModel(@RequestParam(name = "query", required = true) String query) {
         System.out.println(query);

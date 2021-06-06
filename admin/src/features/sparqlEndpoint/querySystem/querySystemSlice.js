@@ -9,7 +9,7 @@ const initialState = {
 }
 
 export const sendQuery = createAsyncThunk('querySystem/sendQuery', async (form) => {
-    return API.GET("sendQuery", '', form ).then(res => {
+    return API.POST("sendQuery", '', form ).then(res => {
         const results = res.data
         return {results}
     })

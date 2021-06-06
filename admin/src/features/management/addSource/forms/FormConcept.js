@@ -132,6 +132,5 @@ const AddConceptForm = props => {
 
 export default reduxForm({
     form: 'AddConceptForm', // a unique identifier for this form
-    validate,
-    asyncValidate
+    validate
 })(AddConceptForm)

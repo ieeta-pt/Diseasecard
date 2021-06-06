@@ -53,6 +53,5 @@ const PerformQueryForm = props => {
 
 export default reduxForm({
     form: 'PerformQueryForm', // a unique identifier for this form
-    validate,
-    asyncValidate
+    validate
 })(PerformQueryForm)

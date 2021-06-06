@@ -109,6 +109,5 @@ const AddEntityFrom = props => {
 
 export default reduxForm({
     form: 'AddEntityFrom', // a unique identifier for this form
-    validate,
-    asyncValidate
+    validate
 })(AddEntityFrom)
