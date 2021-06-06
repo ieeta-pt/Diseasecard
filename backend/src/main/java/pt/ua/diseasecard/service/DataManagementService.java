@@ -758,8 +758,8 @@ public class DataManagementService {
 
         for (Map.Entry<String,String> entry : prefixes.entrySet()) {
             JSONObject o = new JSONObject();
-            o.put("prefix", entry.getKey());
-            o.put("uri", entry.getValue());
+            o.put("source", entry.getKey());
+            o.put("url", entry.getValue());
             results.add(o);
         }
 

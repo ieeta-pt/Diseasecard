@@ -10,8 +10,6 @@ const initialState = {
 export const getPrefixes = createAsyncThunk('querySystem/getPrefixes', async () => {
     return API.GET("getPrefixes", '', [] ).then(res => {
         const results = res.data
-        console.log("oi")
-        console.log(results)
         return {results}
     })
 })

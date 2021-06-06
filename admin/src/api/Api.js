@@ -39,6 +39,7 @@ const getModuleURL = function (module) {
         case "getSystemBuild":                 return "/dcadmin/status/systemBuild";
         case "sendQuery":                      return "/dcadmin/utils/queryJenaModel";
         case "getPrefixes":                    return "/dcadmin/utils/getPrefixes";
+        case "getSourcesURLS":                 return "/dcadmin/utils/getSourcesURLS";
         default:                               return "";
     }
 };
