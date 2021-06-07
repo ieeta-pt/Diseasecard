@@ -619,7 +619,7 @@ public class DataManagementService {
 
 
     public void prepareAddSourceBaseURL(String resourceLabel, String baseURL) {
-        this.storage.addSourceBaseURL(resourceLabel.split("_")[1], baseURL);
+        this.storage.addSourceBaseURL(resourceLabel.split("_")[1].toLowerCase(), baseURL);
     }
 
 
