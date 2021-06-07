@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import FormAddSourceBaseURL from "./forms/FormAddSourceBaseURL";
 import {useDispatch, useSelector} from "react-redux";
-import {addSourceURL, getLabelsBaseURLS, getResourcesWithoutBaseURL} from "../endpointManagementSlice";
+import {addSourceURL, getLabelsBaseURLS, getResourcesWithoutBaseURL, getSourcesURLS} from "../endpointManagementSlice";
+import {reset} from "redux-form";
 
 export const AddSourceBaseURL = () => {
     const dispatch = useDispatch();
@@ -11,9 +12,12 @@ export const AddSourceBaseURL = () => {
         dispatch(getResourcesWithoutBaseURL())
     }, [])
 
-    const submit = (values) => {
+    const submit = async (values) => {
         let formData = new FormData(document.forms.namedItem("addSourceBaseURLForm"))
-        dispatch(addSourceURL(formData))
+        dispatch(reset("AddSourceBaseURLForm"));
+        await dispatch(addSourceURL(formData))
+        dispatch(getResourcesWithoutBaseURL())
+        dispatch(getSourcesURLS())
     }
 
     return (

@@ -45,7 +45,7 @@ const AddSourceBaseURLForm = props => {
                             <MenuItem value=""><em>None</em></MenuItem>
                             {
                                 Object.keys(resourcesLabels).map((key,i) => {
-                                    return (<MenuItem key={i} value={key}> {resourcesLabels[key]} </MenuItem>)
+                                    return (<MenuItem key={i} value={resourcesLabels[key]}> {resourcesLabels[key]} </MenuItem>)
                                 })
                             }
                         </Field>

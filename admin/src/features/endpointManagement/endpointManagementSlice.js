@@ -18,7 +18,7 @@ export const getSourcesURLS = createAsyncThunk('endpointManagement/getSourcesURL
 
 
 export const addSourceURL = createAsyncThunk('endpointManagement/addSourceBaseURL', async (form) => {
-    return API.GET("addSourceBaseURL", '', form ).then(res => {
+    return API.POST("addSourceBaseURL", '', form ).then(res => {
         const results = res.data
         return {results}
     })
@@ -26,7 +26,7 @@ export const addSourceURL = createAsyncThunk('endpointManagement/addSourceBaseUR
 
 
 export const editSourceURL = createAsyncThunk('endpointManagement/editSourceBaseURL', async (form) => {
-    return API.GET("editSourceBaseURL", '', form ).then(res => {
+    return API.POST("editSourceBaseURL", '', form ).then(res => {
         const results = res.data
         return {results}
     })
@@ -34,7 +34,7 @@ export const editSourceURL = createAsyncThunk('endpointManagement/editSourceBase
 
 
 export const removeSourceURL = createAsyncThunk('endpointManagement/removeSourceBaseURL', async (form) => {
-    return API.GET("removeSourceBaseURL", '', form ).then(res => {
+    return API.POST("removeSourceBaseURL", '', form ).then(res => {
         const results = res.data
         return {results}
     })

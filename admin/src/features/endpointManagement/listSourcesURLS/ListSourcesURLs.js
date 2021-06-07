@@ -4,7 +4,7 @@ import BootstrapTable from 'react-bootstrap-table-next';
 import {
     editSourceURL, getEditRow,
     getLabelsBaseURLS,
-    getListSourcesURLS,
+    getListSourcesURLS, getResourcesWithoutBaseURL,
     getSourcesURLS, removeSourceURL,
     storeEditRow
 } from "../endpointManagementSlice";
@@ -77,21 +77,26 @@ export const ListSourcesURLs = () => {
     };
 
 
-    const submitEdit = (values) => {
+    const submitEdit = async (values) => {
         let formData = new FormData()
-        formData.append("resourceLabel", values.resourceLabel)
-        formData.append("baseURL", values.baseURL)
+        formData.append("resourceLabel", values.source)
+        formData.append("baseURL", values.url)
+        handleClose()
 
-        dispatch(editSourceURL(formData))
+        await dispatch(editSourceURL(formData))
+        dispatch(getResourcesWithoutBaseURL())
+        dispatch(getSourcesURLS())
     }
 
 
-    const removeSourceBaseURL = () => {
+    const removeSourceBaseURL = async () => {
         let formData = new FormData()
-        formData.append("resourceLabel", editRow.resourceLabel)
-        formData.append("baseURL", editRow.baseURL)
+        formData.append("resourceLabel", editRow.source)
+        handleCloseRemove()
 
-        dispatch(removeSourceURL(formData))
+        await dispatch(removeSourceURL(formData))
+        dispatch(getResourcesWithoutBaseURL())
+        dispatch(getSourcesURLS())
     }
 
 
@@ -112,7 +117,7 @@ export const ListSourcesURLs = () => {
                             </Button>
                         </Col>
                         <Col sm="6" className="centerStuff">
-                            <Button variant="outlined" color="primary" className={ classes.buttonG } type="submit" form="editForm">
+                            <Button variant="outlined" color="primary" className={ classes.buttonG } type="submit" form="editSourceBaseURL">
                                 Submit
                             </Button>
                         </Col>
