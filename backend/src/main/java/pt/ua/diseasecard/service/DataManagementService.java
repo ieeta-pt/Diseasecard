@@ -727,6 +727,11 @@ public class DataManagementService {
     }
 
 
+    public void prepareRemoveSourceBaseURL(String resourceLabel) {
+        this.storage.removeSourceBaseURL(resourceLabel);
+    }
+
+
     public String getSystemStatus() {
         JSONArray phase = performSimpleQuery("SELECT ?phase WHERE { diseasecard:builtStatus coeus:systemBuiltPhase ?phase }");
         String p = null;
@@ -796,6 +801,41 @@ public class DataManagementService {
     }
 
 
+    public JSONArray getResourcesWithoutBaseURL() {
+        JSONArray finalR = new JSONArray();
+        try
+        {
+            /*
+                SELECT *
+                WHERE { ?s rdf:type coeus:Resource .
+                OPTIONAL { ?s coeus:hasBaseURL ?source . }
+                FILTER( !bound(?source))
+                }
+             */
+
+            JSONParser parser = new JSONParser();
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT *"
+                    + " WHERE { ?s rdf:type coeus:Resource ."
+                    + " ?s rdfs:label ?label ."
+                    + " OPTIONAL { ?s coeus:hasBaseURL ?source . }"
+                    + " FILTER( !bound(?source)) }", "js", false));
+
+            JSONObject results = (JSONObject) response.get("results");
+            JSONArray bindings = (JSONArray) results.get("bindings");
+
+            for (Object o : bindings) {
+                JSONObject binding = (JSONObject) o;
+                finalR.add(((JSONObject) binding.get("label")).get("value").toString());
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return finalR;
+    }
+
     private void saveOMIMEndpoints(MultipartFile genemap, MultipartFile morbidmap) {
         try {
             Path copyLocationGenemap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_genemap");
@@ -807,4 +847,6 @@ public class DataManagementService {
             Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
         }
     }
+
+
 }

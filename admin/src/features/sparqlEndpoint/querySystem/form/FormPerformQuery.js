@@ -35,7 +35,7 @@ const PerformQueryForm = props => {
                             className={c.field}
                             labelText="Insert SPARQL Query. You can use the prefixes present on the 'List Prefixes' card."
                             multiline
-                            rows={10}
+                            rows={8}
                         />
                     </Grid>
                 </Grid>

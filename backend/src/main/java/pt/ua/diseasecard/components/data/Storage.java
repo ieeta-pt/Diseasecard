@@ -366,7 +366,7 @@ public class Storage {
     public void addSourceBaseURL(String s, String baseURL) {
         if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Add Source Base URL with " + s );
 
-        Resource newSourceBaseURL = this.model.createResource(this.config.getPrefixes().get("diseasecard") + s);
+        Resource newSourceBaseURL = this.model.createResource(this.config.getPrefixes().get("diseasecard")  + "baseURL_" +  s);
         Resource type = this.model.getResource(this.config.getPrefixes().get("coeus") + "SourceBaseURL");
         newSourceBaseURL.addProperty(Predicate.get("rdf:type"), type);
         newSourceBaseURL.addProperty(Predicate.get("coeus:baseURL"), baseURL);
@@ -468,7 +468,7 @@ public class Storage {
 
 
     public void editSourceBaseURL(String s, String baseURL) {
-        Resource sourceBaseURL = this.model.getResource(this.config.getPrefixes().get("diseasecard") + s);
+        Resource sourceBaseURL = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "baseURL_" + s);
         sourceBaseURL.removeAll(Predicate.get("coeus:baseURL"));
         sourceBaseURL.addProperty(Predicate.get("coeus:baseURL"), baseURL);
     }
@@ -512,6 +512,19 @@ public class Storage {
 
         this.checkBuildConsistence();
         //this.setBuildPhase("Inconsistent");
+    }
+
+
+    public void removeSourceBaseURL(String resourceLabel) {
+        Resource sourceBaseURL = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "baseURL_" +  resourceLabel);
+
+        StmtIterator resources = sourceBaseURL.listProperties(Predicate.get("coeus:hasResource"));
+        while (resources.hasNext()) {
+            Resource resource = this.model.getResource(resources.nextStatement().getResource().toString());
+            resource.removeAll(Predicate.get("coeus:hasBaseURL"));
+        }
+        this.model.removeAll(sourceBaseURL, null, (RDFNode) null);
+        this.model.removeAll(null, null, sourceBaseURL);
     }
 
 
@@ -646,4 +659,6 @@ public class Storage {
     public void setModel(Model model) {
         this.model = model;
     }
+
+
 }

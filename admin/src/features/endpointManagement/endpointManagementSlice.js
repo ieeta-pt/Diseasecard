@@ -3,7 +3,9 @@ import API from "../../api/Api";
 
 
 const initialState = {
-    sources: []
+    sources: [],
+    labels: [],
+    editRow: []
 }
 
 
@@ -31,19 +33,46 @@ export const editSourceURL = createAsyncThunk('endpointManagement/editSourceBase
 })
 
 
+export const removeSourceURL = createAsyncThunk('endpointManagement/removeSourceBaseURL', async (form) => {
+    return API.GET("removeSourceBaseURL", '', form ).then(res => {
+        const results = res.data
+        return {results}
+    })
+})
+
+
+export const getResourcesWithoutBaseURL = createAsyncThunk('endpointManagement/getResourcesWithoutBaseURL', async (form) => {
+    return API.GET("getResourcesWithoutBaseURL", '', form ).then(res => {
+        const results = res.data
+        return {results}
+    })
+})
+
+
 const endpointManagementSlice = createSlice({
-    name: 'endpointManagementURL',
+    name: 'endpointManagement',
     initialState,
-    reducers: {},
+    reducers: {
+        storeEditRow: (state, action) => {
+            console.log(action.payload)
+            state.editRow = action.payload
+        }
+    },
     extraReducers: {
         [getSourcesURLS.fulfilled]: (state, action) => {
             state.sources = action.payload.results
+        },
+        [getResourcesWithoutBaseURL.fulfilled]: (state, action) => {
+            state.labels = action.payload.results
         },
     }
 })
 
 
-export const getListSourcesURLS = state => state.endpointManagementURL.sources
+export const getListSourcesURLS = state => state.endpointManagement.sources
+export const getLabelsBaseURLS = state => state.endpointManagement.labels
+export const getEditRow = state => state.endpointManagement.editRow
 
+export const { storeEditRow } = endpointManagementSlice.actions
 
 export default endpointManagementSlice.reducer

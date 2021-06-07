@@ -112,4 +112,6 @@ http://bioinformatics.ua.pt/coeus/resource/morbidmap_cName
 http://bioinformatics.ua.pt/coeus/resource/morbidmap_cOMIM
 http://bioinformatics.ua.pt/coeus/resource/morbidmap_cLocation
 http://bioinformatics.ua.pt/coeus/resource/morbidmap_cGenes
+http://bioinformatics.ua.pt/coeus/resource/hasBaseURL
+http://bioinformatics.ua.pt/coeus/resource/baseURL
 http://bioinformatics.ua.pt/diseasecard/resource/chromosomalLocation

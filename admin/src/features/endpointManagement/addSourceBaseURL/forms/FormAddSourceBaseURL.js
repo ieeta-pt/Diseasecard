@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react'
 import { Field, reduxForm } from 'redux-form'
-import { Grid, MenuItem } from "@material-ui/core";
+import {Button, Grid, MenuItem} from "@material-ui/core";
 import { renderSelectField, renderTextField, useStyles} from "../../../sourcesManagement/addSource/forms/FormElements";
+import {Col} from "react-bootstrap";
 
 
 const validate = values => {
@@ -25,10 +26,10 @@ const AddSourceBaseURLForm = props => {
     const { handleSubmit, classes, labels} = props
     const c = useStyles();
 
-    const resourcesLabels = []
+    const resourcesLabels = labels
 
     return (
-        <div style={{width: "94%"}}>
+        <div style={{width: "97.5%"}}>
             <form className={c.root} style={{width: "100%"}} onSubmit={handleSubmit} name="addSourceBaseURLForm">
                 <Grid container spacing={2}>
                     <Grid item xs={3}>
@@ -62,6 +63,11 @@ const AddSourceBaseURLForm = props => {
                         />
                     </Grid>
                 </Grid>
+                <Col sm={12} className="text-right" style={{paddingRight: "0", paddingBottom: "30px"}}>
+                    <Button variant="outlined" className={ c.buttonG } type="submit" disabled={ props.pristine || props.submitting || props.invalid }>
+                        Submit
+                    </Button>
+                </Col>
             </form>
         </div>
     )

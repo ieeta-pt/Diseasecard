@@ -23,7 +23,7 @@ export default configureStore({
     systemStatus: systemStatusSlice,
     form: formReducer,
     listPrefixes:listPrefixesSlice,
-    endpointManagementURL:endpointManagementSlice,
+    endpointManagement:endpointManagementSlice,
   },
   middleware: customizedMiddleware
 });

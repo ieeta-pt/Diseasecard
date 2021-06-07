@@ -3,7 +3,6 @@ import {Row, Col} from 'react-bootstrap';
 import Aux from "../../template/aux";
 import MainCard from "../../template/components/MainCard";
 import {ListSourcesURLs} from "./listSourcesURLS/ListSourcesURLs";
-import {AddWizard} from "../sourcesManagement/addSource/AddWizard";
 import {AddSourceBaseURL} from "./addSourceBaseURL/AddSourceBaseURL";
 
 

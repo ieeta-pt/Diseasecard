@@ -102,6 +102,7 @@
 
         <owl:AnnotationProperty rdf:about="&dc;systemBuiltPhase"/>
         <owl:AnnotationProperty rdf:about="&dc;baseURL"/>
+        <owl:AnnotationProperty rdf:about="&dc;hasBaseURL"/>
 
 
 
@@ -156,6 +157,18 @@
 
 
 
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Source Base URL
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <owl:NamedIndividual rdf:about="&diseasecard;baseURL_string">
+        <rdf:type rdf:resource="&coeus;SourceBaseURL"/>
+        <rdfs:label rdf:datatype="&xsd;string">string</rdfs:label>
+        <baseURL rdf:datatype="&xsd;string">https://string-db.org/newstring_cgi/show_network_section.pl?identifier=#replace#</baseURL>
+    </owl:NamedIndividual>
 
     <!--
     ///////////////////////////////////////////////////////////////////////////////////////

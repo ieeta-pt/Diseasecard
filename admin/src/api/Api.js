@@ -42,6 +42,8 @@ const getModuleURL = function (module) {
         case "getSourcesURLS":                 return "/dcadmin/endpointManagement/getSourcesURLS";
         case "addSourceBaseURL":               return "/dcadmin/endpointManagement/addSourceBaseURL";
         case "editSourceBaseURL":              return "/dcadmin/endpointManagement/editSourceBaseURL";
+        case "removeSourceBaseURL":            return "/dcadmin/endpointManagement/removeSourceBaseURL";
+        case "getResourcesWithoutBaseURL":     return "/dcadmin/endpointManagement/getResourcesWithoutBaseURL";
         default:                               return "";
     }
 };

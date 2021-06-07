@@ -392,6 +392,13 @@ public class DiseasecardController {
     }
 
 
+    @GetMapping("/dcadmin/endpointManagement/getResourcesWithoutBaseURL")
+    @ResponseBody
+    public JSONArray getResourcesWithoutBaseURL() {
+        return dataManagementService.getResourcesWithoutBaseURL();
+    }
+
+
     @PostMapping("/dcadmin/endpointManagement/addSourceBaseURL")
     @ResponseBody
     public void addSourceBaseURL(@RequestParam("resourceLabel") String resourceLabel,
@@ -405,5 +412,12 @@ public class DiseasecardController {
     public void editSourceBaseURL(@RequestParam("resourceLabel") String resourceLabel,
                                   @RequestParam("baseURL") String baseURL) {
         dataManagementService.prepareEditSourceBaseURL(resourceLabel, baseURL);
+    }
+
+
+    @PostMapping("/dcadmin/endpointManagement/removeSourceBaseURL")
+    @ResponseBody
+    public void removeSourceBaseURL(@RequestParam("resourceLabel") String resourceLabel) {
+        dataManagementService.prepareRemoveSourceBaseURL(resourceLabel);
     }
 }
