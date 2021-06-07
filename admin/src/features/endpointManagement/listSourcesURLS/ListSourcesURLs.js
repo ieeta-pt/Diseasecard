@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import BootstrapTable from 'react-bootstrap-table-next';
-import {getListSourcesURLS, getSourcesURLS} from "./listSourcesURLS";
+import {getListSourcesURLS, getSourcesURLS} from "../endpointManagementSlice";
 import {IconButton} from "@material-ui/core";
 
-export const ListSourcesURLS = () => {
+export const ListSourcesURLs = () => {
     const dispatch = useDispatch()
     const sourcesURLs = useSelector(getListSourcesURLS)
 

@@ -101,6 +101,7 @@
         <owl:AnnotationProperty rdf:about="&dc;morbidmap_cGenes"/>
 
         <owl:AnnotationProperty rdf:about="&dc;systemBuiltPhase"/>
+        <owl:AnnotationProperty rdf:about="&dc;baseURL"/>
 
 
 
@@ -130,7 +131,7 @@
     <owl:Class rdf:about="&coeus;Seed"/>
     <owl:Class rdf:about="&coeus;XML"/>
     <owl:Class rdf:about="&coeus;BuiltStatus"/>
-
+    <owl:Class rdf:about="&coeus;SourceBaseURL"/>
 
 
 

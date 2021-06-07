@@ -5,7 +5,7 @@ import querySystemSlice from '../features/sparqlEndpoint/querySystem/querySystem
 import listResourceSlice from '../features/sourcesManagement/listResources/listResourcesSlice';
 import systemStatusSlice from "../features/sourcesManagement/systemStatus/systemStatusSlice";
 import listPrefixesSlice from "../features/sparqlEndpoint/listPrefixes/listPrefixesSlice";
-import endpointManagementSlice from "../features/endpointManagement/listSourcesURLS/listSourcesURLS";
+import endpointManagementSlice from "../features/endpointManagement/endpointManagementSlice";
 import { getDefaultMiddleware } from '@reduxjs/toolkit'
 import { reducer as formReducer } from 'redux-form';
 
@@ -23,7 +23,7 @@ export default configureStore({
     systemStatus: systemStatusSlice,
     form: formReducer,
     listPrefixes:listPrefixesSlice,
-    endpointManagement:endpointManagementSlice,
+    endpointManagementURL:endpointManagementSlice,
   },
   middleware: customizedMiddleware
 });

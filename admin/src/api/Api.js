@@ -39,7 +39,9 @@ const getModuleURL = function (module) {
         case "getSystemBuild":                 return "/dcadmin/status/systemBuild";
         case "sendQuery":                      return "/dcadmin/utils/queryJenaModel";
         case "getPrefixes":                    return "/dcadmin/utils/getPrefixes";
-        case "getSourcesURLS":                 return "/dcadmin/utils/getSourcesURLS";
+        case "getSourcesURLS":                 return "/dcadmin/endpointManagement/getSourcesURLS";
+        case "addSourceBaseURL":               return "/dcadmin/endpointManagement/addSourceBaseURL";
+        case "editSourceBaseURL":              return "/dcadmin/endpointManagement/editSourceBaseURL";
         default:                               return "";
     }
 };

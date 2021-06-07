@@ -617,6 +617,12 @@ public class DataManagementService {
     }
 
 
+
+    public void prepareAddSourceBaseURL(String resourceLabel, String baseURL) {
+        this.storage.addSourceBaseURL(resourceLabel.split("_")[1], baseURL);
+    }
+
+
     /*
         Prepare info to add a Parser to the model.
      */
@@ -699,6 +705,11 @@ public class DataManagementService {
     }
 
 
+    public void prepareEditSourceBaseURL(String label, String baseURL) {
+        this.storage.editSourceBaseURL(label, baseURL);
+    }
+
+
     public void removeInstance(String typeOf, String uri) {
         if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Remove Instance with " + uri );
 
@@ -753,17 +764,35 @@ public class DataManagementService {
 
 
     public JSONArray getSources() {
-        Map<String, String> prefixes = this.config.getSources();
-        JSONArray results = new JSONArray();
 
-        for (Map.Entry<String,String> entry : prefixes.entrySet()) {
-            JSONObject o = new JSONObject();
-            o.put("source", entry.getKey());
-            o.put("url", entry.getValue());
-            results.add(o);
+        JSONArray finalR = new JSONArray();
+        try
+        {
+            JSONParser parser = new JSONParser();
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT *"
+                    + " WHERE { ?s rdf:type coeus:SourceBaseURL ."
+                    + " ?s rdfs:label ?source ."
+                    + " ?s coeus:baseURL ?url } ", "js", false));
+
+            JSONObject results = (JSONObject) response.get("results");
+            JSONArray bindings = (JSONArray) results.get("bindings");
+
+            for (Object o : bindings) {
+                JSONObject info = new JSONObject();
+                JSONObject binding = (JSONObject) o;
+
+                info.put("source", ((JSONObject) binding.get("source")).get("value").toString());
+                info.put("url", ((JSONObject) binding.get("url")).get("value").toString());
+
+                finalR.add(info);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
 
-        return results;
+        return finalR;
     }
 
 

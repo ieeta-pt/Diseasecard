@@ -270,8 +270,6 @@ public class DiseasecardController {
                               @RequestParam("morbidmapGene") String morbidmapGene,
                               @RequestParam("morbidmapOMIM") String morbidmapOMIM,
                               @RequestParam("morbidmapLocation") String morbidmapLocation) {
-
-        // TODO
         dataManagementService.prepareAddOMIMParser(resource, genecardName, genecardOMIM, genecardLocation, genecardGenes, morbidmapName, morbidmapGene, morbidmapOMIM, morbidmapLocation);
     }
 
@@ -386,9 +384,26 @@ public class DiseasecardController {
         return dataManagementService.getPrefixes();
     }
 
-    @GetMapping("/dcadmin/utils/getSourcesURLS")
+
+    @GetMapping("/dcadmin/endpointManagement/getSourcesURLS")
     @ResponseBody
     public JSONArray getSourcesURLS() {
         return dataManagementService.getSources();
+    }
+
+
+    @PostMapping("/dcadmin/endpointManagement/addSourceBaseURL")
+    @ResponseBody
+    public void addSourceBaseURL(@RequestParam("resourceLabel") String resourceLabel,
+                                      @RequestParam("baseURL") String baseURL) {
+        dataManagementService.prepareAddSourceBaseURL(resourceLabel, baseURL);
+    }
+
+
+    @PostMapping("/dcadmin/endpointManagement/editSourceBaseURL")
+    @ResponseBody
+    public void editSourceBaseURL(@RequestParam("resourceLabel") String resourceLabel,
+                                  @RequestParam("baseURL") String baseURL) {
+        dataManagementService.prepareEditSourceBaseURL(resourceLabel, baseURL);
     }
 }
