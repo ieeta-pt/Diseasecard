@@ -104,6 +104,11 @@
         <owl:AnnotationProperty rdf:about="&dc;baseURL"/>
         <owl:AnnotationProperty rdf:about="&dc;hasBaseURL"/>
 
+        <owl:AnnotationProperty rdf:about="&dc;error"/>
+        <owl:AnnotationProperty rdf:about="&dc;source"/>
+        <owl:AnnotationProperty rdf:about="&dc;url"/>
+        <owl:AnnotationProperty rdf:about="&dc;lastValidationDate"/>
+
 
 
     <!--
@@ -133,6 +138,7 @@
     <owl:Class rdf:about="&coeus;XML"/>
     <owl:Class rdf:about="&coeus;BuiltStatus"/>
     <owl:Class rdf:about="&coeus;SourceBaseURL"/>
+    <owl:Class rdf:about="&coeus;SourceBaseURLError"/>
 
 
 

@@ -8,6 +8,9 @@ import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.ReasonerRegistry;
 import com.hp.hpl.jena.sdb.SDBFactory;
 import com.hp.hpl.jena.sdb.Store;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
@@ -164,14 +167,16 @@ public class Storage {
 
     private void createBuiltStatus() {
         Resource resource = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "builtStatus");
-
-        System.out.println("RESOURCE: " + resource);
-
         if (!this.model.containsResource(resource))
         {
             resource = this.model.createResource(this.config.getPrefixes().get("diseasecard") + "builtStatus");
             this.setBuildPhase("BuildReady");
-            System.out.println("NEW BUILT STATUS: " + resource);
+        }
+
+        Resource lastValidation = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
+        if (!this.model.containsResource(resource))
+        {
+            resource = this.model.createResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
         }
     }
 
@@ -528,14 +533,6 @@ public class Storage {
     }
 
 
-    private void removeItem(String uri) {
-        Resource resource = this.model.getResource(uri);
-
-        this.model.removeAll(resource, null, (RDFNode) null);
-        this.model.removeAll(null, null, resource);
-    }
-
-
     public void removeBuild() {
         if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Starting system unbuild " );
 
@@ -568,6 +565,51 @@ public class Storage {
 
             template.convertAndSend("/topic/message", phase);
         }
+    }
+
+
+    public void saveSourceBaseURLsError(String source, String id,  String url, String error) {
+
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][Storage] Adding Base URL Error to " + source + "_" + id + "with " + error);
+
+        Resource instance = this.model.createResource( this.config.getPrefixes().get("diseasecard") + source + "_" + id);
+        Resource type = this.model.getResource(this.config.getPrefixes().get("coeus") + "SourceBaseURLError");
+
+        instance.addProperty(Predicate.get("rdf:type"), type);
+        instance.addProperty(Predicate.get("coeus:source"), source);
+        instance.addProperty(Predicate.get("coeus:url"), url);
+        instance.addProperty(Predicate.get("coeus:error"), error);
+    }
+
+
+    public void removeSourceBaseURLsErrors() {
+        Resource item = this.model.getResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + "SourceBaseURLError");
+
+        StmtIterator iter = this.model.listStatements(null, Predicate.get("rdf:type"), item);
+        while (iter.hasNext()) {
+            String resource = iter.nextStatement().getSubject().toString();
+            this.removeItem(resource);
+        }
+    }
+
+
+    public void updateDateOfLastValidation() {
+        DateTime jodaTime = new DateTime();
+
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss");
+
+        Resource instance = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
+
+        instance.removeAll(Predicate.get("coeus:lastValidationDate"));
+        instance.addProperty(Predicate.get("coeus:lastValidationDate"), formatter.print(jodaTime));
+    }
+
+
+    private void removeItem(String uri) {
+        Resource resource = this.model.getResource(uri);
+
+        this.model.removeAll(resource, null, (RDFNode) null);
+        this.model.removeAll(null, null, resource);
     }
 
 
@@ -659,6 +701,7 @@ public class Storage {
     public void setModel(Model model) {
         this.model = model;
     }
+
 
 
 }

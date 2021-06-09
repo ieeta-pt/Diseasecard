@@ -49,20 +49,12 @@ public class AlertBoxSchedule {
     }
 
 
-    /*
-        TODO:
-            - removing previous "Invalid Item" list;
-            - iterate over all Items;
-            - get source base url for each one of them;
-            - make an http request;
-            - validate response;
-            - if response != 200 save Item in "Invalid Item" (including the code error);
-            - update date of 'Last Validation';
-     */
     @Scheduled(fixedRate = 500000 )
     public void searchInvalidItems() throws IOException {
         log.info("Searching Invalid Items at {}", dateFormat.format(new Date()));
+        this.storage.removeSourceBaseURLsErrors();
         this.getSourcesBaseURLs();
+
 
         Resource itemCategory = this.model.getResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + "Item");
         StmtIterator iter = this.model.listStatements(null, Predicate.get("rdf:type"), itemCategory);
@@ -74,8 +66,6 @@ public class AlertBoxSchedule {
 
             String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
 
-            System.out.println(finalURL);
-
             URL url = new URL(finalURL);
 
             HttpURLConnection huc = (HttpURLConnection) url.openConnection();
@@ -86,10 +76,13 @@ public class AlertBoxSchedule {
 
             if (responseCode != 200) {
                 System.out.println("Bad: " + url + " | Error: " + responseCode);
+                this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, responseCode+"");
             }
         }
 
+        this.storage.updateDateOfLastValidation();
     }
+
 
     private void getSourcesBaseURLs() {
         this.sourceBaseURLs = new HashMap<>();
