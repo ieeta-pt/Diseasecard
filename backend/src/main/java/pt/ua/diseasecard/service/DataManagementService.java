@@ -836,6 +836,7 @@ public class DataManagementService {
         return finalR;
     }
 
+
     private void saveOMIMEndpoints(MultipartFile genemap, MultipartFile morbidmap) {
         try {
             Path copyLocationGenemap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_genemap");
@@ -847,6 +848,4 @@ public class DataManagementService {
             Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
         }
     }
-
-
 }
