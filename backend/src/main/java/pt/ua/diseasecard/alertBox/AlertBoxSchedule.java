@@ -48,9 +48,15 @@ public class AlertBoxSchedule {
         this.config = config;
     }
 
+    /*
+        With the specified cron we are telling the program to execute this method at 0am of the 15º and last day of each month.
+        The cron annotation follows this structure:
+            - second, minute, hour, day, month, weekday
+     */
 
-    @Scheduled(fixedRate = 500000 )
-    public void searchInvalidItems() throws IOException {
+    //@Scheduled(cron = "0 0 0 15,L * ?" )
+    @Scheduled(fixedRate = 500000000 )
+    public void searchInvalidItems()  {
         log.info("Searching Invalid Items at {}", dateFormat.format(new Date()));
         this.storage.removeSourceBaseURLsErrors();
         this.getSourcesBaseURLs();
@@ -66,17 +72,24 @@ public class AlertBoxSchedule {
 
             String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
 
-            URL url = new URL(finalURL);
+            try
+            {
+                URL url = new URL(finalURL);
 
-            HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-            huc.setRequestProperty("User-Agent", "Mozilla/5.0 AppleWebKit/537.36 Chrome/65.0.3325.181 Safari/537.36");
-            huc.setRequestMethod("HEAD");
-            huc.setRequestProperty("Accept", "*/*");
-            int responseCode = huc.getResponseCode();
+                HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+                huc.setRequestProperty("User-Agent", "Mozilla/5.0 AppleWebKit/537.36 Chrome/65.0.3325.181 Safari/537.36");
+                huc.setRequestMethod("HEAD");
+                huc.setRequestProperty("Accept", "*/*");
+                int responseCode = huc.getResponseCode();
 
-            if (responseCode != 200) {
-                System.out.println("Bad: " + url + " | Error: " + responseCode);
-                this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, responseCode+"");
+                if (responseCode != 200) {
+                    System.out.println("Bad: " + url + " | Error: " + responseCode);
+                    this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, responseCode+"");
+                }
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
             }
         }
 

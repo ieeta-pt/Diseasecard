@@ -837,6 +837,41 @@ public class DataManagementService {
     }
 
 
+    /*
+        SELECT *
+        WHERE {
+            ?s rdf:type coeus:SourceBaseURLError .
+            ?s coeus:url ?url .
+            ?s coeus:error ?error .
+            ?s coeus:source ?source .
+        }
+     */
+    public JSONObject getAlertBoxResults() {
+
+        JSONObject finalResults = new JSONObject();
+        JSONArray results = new JSONArray();
+
+        JSONArray queryResults = performSimpleQuery("SELECT * WHERE { ?s rdf:type coeus:SourceBaseURLError . ?s coeus:url ?url . ?s coeus:error ?error . ?s coeus:source ?source . }");
+
+        for (Object o : queryResults) {
+            JSONObject binding = (JSONObject) o;
+            JSONObject info = new JSONObject();
+
+            info.put("source", ((JSONObject) binding.get("source")).get("value").toString());
+            info.put("url", ((JSONObject) binding.get("url")).get("value").toString());
+            info.put("error", ((JSONObject) binding.get("error")).get("value").toString());
+
+            results.add(info);
+        }
+
+        finalResults.put("list", results);
+
+        finalResults.put("lastValidation", this.storage.getValidationDetails());
+
+        return finalResults;
+    }
+
+
     private void saveOMIMEndpoints(MultipartFile genemap, MultipartFile morbidmap) {
         try {
             Path copyLocationGenemap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_genemap");

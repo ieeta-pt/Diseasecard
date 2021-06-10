@@ -570,7 +570,7 @@ public class Storage {
 
     public void saveSourceBaseURLsError(String source, String id,  String url, String error) {
 
-        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][Storage] Adding Base URL Error to " + source + "_" + id + "with " + error);
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][Storage] Adding Base URL Error to " + source + "_" + id + " with " + error);
 
         Resource instance = this.model.createResource( this.config.getPrefixes().get("diseasecard") + source + "_" + id);
         Resource type = this.model.getResource(this.config.getPrefixes().get("coeus") + "SourceBaseURLError");
@@ -602,6 +602,22 @@ public class Storage {
 
         instance.removeAll(Predicate.get("coeus:lastValidationDate"));
         instance.addProperty(Predicate.get("coeus:lastValidationDate"), formatter.print(jodaTime));
+    }
+
+
+    public String getValidationDetails() {
+        Resource instance = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
+
+        System.out.println(instance.getProperty(Predicate.get("coeus:lastValidationDate")));
+        String value = null;
+
+        StmtIterator resources = instance.listProperties(Predicate.get("coeus:lastValidationDate"));
+        while (resources.hasNext()) {
+            Statement statement = resources.nextStatement();
+            value = statement.getObject().toString();
+            System.out.println("Last Validation: " + value);
+        }
+        return value;
     }
 
 
