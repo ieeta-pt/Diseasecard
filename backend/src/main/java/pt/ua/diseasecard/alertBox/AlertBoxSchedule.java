@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
+import pt.ua.diseasecard.service.DataManagementService;
 import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
 
@@ -27,12 +28,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.logging.Level;
 
 
 @Component
 public class AlertBoxSchedule {
 
-    private static final Logger log = LoggerFactory.getLogger(AlertBoxSchedule.class);
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
     private SparqlAPI sparqlAPI;
@@ -57,7 +58,8 @@ public class AlertBoxSchedule {
     //@Scheduled(cron = "0 0 0 15,L * ?" )
     @Scheduled(fixedRate = 500000000 )
     public void searchInvalidItems()  {
-        log.info("Searching Invalid Items at {}", dateFormat.format(new Date()));
+        if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxSchedule.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );
+
         this.storage.removeSourceBaseURLsErrors();
         this.getSourcesBaseURLs();
 
@@ -89,9 +91,13 @@ public class AlertBoxSchedule {
             }
             catch (Exception e)
             {
-                e.printStackTrace();
+                System.out.println("Error with URL " + finalURL);
+                this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, e.getClass().getSimpleName());
+                System.out.println(e.getMessage());
             }
         }
+
+        if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxSchedule.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Finished Items Validation Process at " + dateFormat.format(new Date()) );
 
         this.storage.updateDateOfLastValidation();
     }

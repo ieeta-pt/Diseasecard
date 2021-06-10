@@ -44,6 +44,7 @@ const getModuleURL = function (module) {
         case "editSourceBaseURL":              return "/dcadmin/endpointManagement/editSourceBaseURL";
         case "removeSourceBaseURL":            return "/dcadmin/endpointManagement/removeSourceBaseURL";
         case "getResourcesWithoutBaseURL":     return "/dcadmin/endpointManagement/getResourcesWithoutBaseURL";
+        case "getAlertBoxResults":             return "/dcadmin/endpointManagement/getAlertBoxResults";
         default:                               return "";
     }
 };

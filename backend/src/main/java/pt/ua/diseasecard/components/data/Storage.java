@@ -608,7 +608,6 @@ public class Storage {
     public String getValidationDetails() {
         Resource instance = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
 
-        System.out.println(instance.getProperty(Predicate.get("coeus:lastValidationDate")));
         String value = null;
 
         StmtIterator resources = instance.listProperties(Predicate.get("coeus:lastValidationDate"));

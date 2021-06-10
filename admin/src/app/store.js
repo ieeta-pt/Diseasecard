@@ -6,6 +6,7 @@ import listResourceSlice from '../features/sourcesManagement/listResources/listR
 import systemStatusSlice from "../features/sourcesManagement/systemStatus/systemStatusSlice";
 import listPrefixesSlice from "../features/sparqlEndpoint/listPrefixes/listPrefixesSlice";
 import endpointManagementSlice from "../features/endpointManagement/endpointManagementSlice";
+import alertBoxSlice from "../features/endpointAlertBox/alertBoxSlice";
 import { getDefaultMiddleware } from '@reduxjs/toolkit'
 import { reducer as formReducer } from 'redux-form';
 
@@ -24,6 +25,7 @@ export default configureStore({
     form: formReducer,
     listPrefixes:listPrefixesSlice,
     endpointManagement:endpointManagementSlice,
+    alertBox:alertBoxSlice,
   },
   middleware: customizedMiddleware
 });

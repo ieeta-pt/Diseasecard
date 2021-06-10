@@ -399,6 +399,13 @@ public class DiseasecardController {
     }
 
 
+    @GetMapping("/dcadmin/endpointManagement/getAlertBoxResults")
+    @ResponseBody
+    public JSONObject getAlertBoxResults() {
+        return dataManagementService.getAlertBoxResults();
+    }
+
+
     @PostMapping("/dcadmin/endpointManagement/addSourceBaseURL")
     @ResponseBody
     public void addSourceBaseURL(@RequestParam("resourceLabel") String resourceLabel,
