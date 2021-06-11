@@ -61,8 +61,8 @@ public class AlertBoxSchedule {
         if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxSchedule.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );
 
         this.storage.removeSourceBaseURLsErrors();
+        this.storage.updateDateOfBeginValidation();
         this.getSourcesBaseURLs();
-
 
         Resource itemCategory = this.model.getResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + "Item");
         StmtIterator iter = this.model.listStatements(null, Predicate.get("rdf:type"), itemCategory);
@@ -93,7 +93,7 @@ public class AlertBoxSchedule {
             {
                 System.out.println("Error with URL " + finalURL);
                 this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, e.getClass().getSimpleName());
-                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
 

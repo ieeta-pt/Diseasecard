@@ -9,8 +9,10 @@ import com.hp.hpl.jena.reasoner.ReasonerRegistry;
 import com.hp.hpl.jena.sdb.SDBFactory;
 import com.hp.hpl.jena.sdb.Store;
 import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.json.simple.JSONObject;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
@@ -174,9 +176,15 @@ public class Storage {
         }
 
         Resource lastValidation = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
-        if (!this.model.containsResource(resource))
+        if (!this.model.containsResource(lastValidation))
         {
-            resource = this.model.createResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
+            this.model.createResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
+        }
+
+        Resource beginValidation = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "beginValidation");
+        if (!this.model.containsResource(beginValidation))
+        {
+            this.model.createResource(this.config.getPrefixes().get("diseasecard") + "beginValidation");
         }
     }
 
@@ -544,7 +552,7 @@ public class Storage {
             try { this.removeItem(resource); }
             catch (Exception e) { System.out.println(e); }
         }
-
+        this.removeSourceBaseURLsErrors();
         this.removeBuiltFlag();
     }
 
@@ -583,11 +591,12 @@ public class Storage {
 
 
     public void removeSourceBaseURLsErrors() {
-        Resource item = this.model.getResource(PrefixFactory.getURIForPrefix(this.config.getKeyprefix()) + "SourceBaseURLError");
+        Resource item = this.model.getResource(this.config.getPrefixes().get("coeus") + "SourceBaseURLError");
 
         StmtIterator iter = this.model.listStatements(null, Predicate.get("rdf:type"), item);
         while (iter.hasNext()) {
             String resource = iter.nextStatement().getSubject().toString();
+            System.out.println("Source Base URL to delete: " + resource);
             this.removeItem(resource);
         }
     }
@@ -595,7 +604,6 @@ public class Storage {
 
     public void updateDateOfLastValidation() {
         DateTime jodaTime = new DateTime();
-
         DateTimeFormatter formatter = DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss");
 
         Resource instance = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
@@ -605,18 +613,49 @@ public class Storage {
     }
 
 
-    public String getValidationDetails() {
-        Resource instance = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
+    public void updateDateOfBeginValidation() {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][Storage] Saving begin validation");
 
-        String value = null;
+        DateTime jodaTime = new DateTime();
+        DateTimeFormatter formatter = DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss");
 
-        StmtIterator resources = instance.listProperties(Predicate.get("coeus:lastValidationDate"));
-        while (resources.hasNext()) {
-            Statement statement = resources.nextStatement();
-            value = statement.getObject().toString();
-            System.out.println("Last Validation: " + value);
+        Resource instance = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "beginValidation");
+
+        instance.removeAll(Predicate.get("coeus:beginValidationDate"));
+        instance.addProperty(Predicate.get("coeus:beginValidationDate"), formatter.print(jodaTime));
+    }
+
+
+    public JSONObject getValidationDetails() {
+        JSONObject results = new JSONObject();
+
+        String start = null;
+        String last = null;
+
+        Resource lastValidation = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
+        StmtIterator lastValidationResources = lastValidation.listProperties(Predicate.get("coeus:lastValidationDate"));
+        while (lastValidationResources.hasNext()) {
+            last = lastValidationResources.nextStatement().getObject().toString();
+            results.put("lastValidation", last);
         }
-        return value;
+
+
+        Resource beginValidation = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "beginValidation");
+        StmtIterator beginValidationResources = beginValidation.listProperties(Predicate.get("coeus:beginValidationDate"));
+        while (beginValidationResources.hasNext()) {
+            start = beginValidationResources.nextStatement().getObject().toString();
+            results.put("beginValidation", start);
+        }
+
+        DateTimeFormatter f = DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss");
+
+        LocalDateTime startDate = LocalDateTime.parse( start , f ) ;
+        LocalDateTime stopDate = LocalDateTime.parse( last , f ) ;
+
+        // if true system is validating
+        results.put("isValidating", stopDate.isBefore( startDate ));
+
+        return results;
     }
 
 

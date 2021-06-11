@@ -37,7 +37,7 @@ services:
         restart: unless-stopped
         build: ./docker/solr
         ports:
-            - ${SOLR_PORT}
+            - ${SOLR_PORT}:${SOLR_PORT}
         volumes:
             - ${SOLR_VOLUME}:/opt/solr/solr/collection1/conf
             - solr_data:/opt/solr/solr/collection1/data

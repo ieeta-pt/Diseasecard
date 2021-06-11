@@ -866,7 +866,7 @@ public class DataManagementService {
 
         finalResults.put("list", results);
 
-        finalResults.put("lastValidation", this.storage.getValidationDetails());
+        finalResults.put("status", this.storage.getValidationDetails());
 
         return finalResults;
     }

@@ -4,7 +4,7 @@ import API from "../../api/Api";
 
 const initialState = {
     alerts: [],
-    lastValidationData: ""
+    status: {}
 }
 
 
@@ -28,13 +28,14 @@ const alertBoxSlice = createSlice({
             console.log("Alert Box Results: ")
             console.log(action.payload.results)
             state.alerts = action.payload.results.list
-            state.lastValidationData = action.payload.results.lastValidation
+            state.status = action.payload.results.status
         }
     }
 })
 
 
 export const getListAlertBoxResults = state => state.alertBox.alerts
+export const getAlertBoxStatus = state => state.alertBox.status
 
 export const { storeEditRow } = alertBoxSlice.actions
 

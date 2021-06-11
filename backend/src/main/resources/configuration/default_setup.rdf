@@ -108,6 +108,7 @@
         <owl:AnnotationProperty rdf:about="&dc;source"/>
         <owl:AnnotationProperty rdf:about="&dc;url"/>
         <owl:AnnotationProperty rdf:about="&dc;lastValidationDate"/>
+        <owl:AnnotationProperty rdf:about="&dc;beginValidationDate"/>
 
 
 
