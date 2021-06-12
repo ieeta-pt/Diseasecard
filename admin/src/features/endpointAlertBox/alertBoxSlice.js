@@ -20,6 +20,13 @@ export const getAlertBoxResults = createAsyncThunk('alertBox/getAlertBoxResults'
     })
 })
 
+export const forceValidateEndpoints = createAsyncThunk('alertBox/forceValidateEndpoints', async () => {
+    return API.GET("forceValidateEndpoints", '', [] ).then(res => {
+        const results = res.data
+        return {results}
+    })
+})
+
 
 
 const alertBoxSlice = createSlice({

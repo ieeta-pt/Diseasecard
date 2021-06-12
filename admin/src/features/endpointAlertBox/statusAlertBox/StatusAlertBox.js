@@ -1,6 +1,7 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
+    forceValidateEndpoints,
     getAlertBoxResults,
     getAlertBoxStatus,
     getGraphData,
@@ -9,10 +10,25 @@ import {
     getTotalErrors
 } from "../alertBoxSlice";
 import {Col, Row} from "react-bootstrap";
-import {Chip, CircularProgress, Divider} from "@material-ui/core";
+import {
+    Button,
+    Chip,
+    CircularProgress,
+    Dialog, DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Divider
+} from "@material-ui/core";
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Doughnut } from 'react-chartjs-2';
 import {Alert} from "@material-ui/lab";
+import {useStyles} from "../../sourcesManagement/addSource/forms/FormElements";
+import {
+    getResourcesWithoutBaseURL,
+    getSourcesURLS,
+    removeSourceURL
+} from "../../endpointManagement/endpointManagementSlice";
 
 export const StatusAlertBox = () => {
     const dispatch = useDispatch()
@@ -21,7 +37,7 @@ export const StatusAlertBox = () => {
     const graphData = useSelector(getGraphData)
     const graphLabels = useSelector(getGraphLabel)
     const totalErrors = useSelector(getTotalErrors)
-
+    const [open, setOpen] = useState(false);
     let content;
 
     useEffect(async () => {
@@ -41,6 +57,7 @@ export const StatusAlertBox = () => {
             }
         },
     });
+    const classes = useStyles();
 
     const data = {
         labels: graphLabels,
@@ -68,6 +85,45 @@ export const StatusAlertBox = () => {
             },
         ],
     };
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const forceValidation = async () => {
+        handleClose()
+        dispatch(forceValidateEndpoints())
+    }
+
+    const forceEndpointValidationModel = (
+        <Dialog open={open}  onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+            <DialogTitle  id="alert-dialog-title">Are you sure you want to force system endpoints validation?</DialogTitle>
+            <DialogContent >
+                <DialogContentText id="alert-dialog-description">
+                    Please note that this process can take several hours, depending on the number of items you have on the system.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions style={{width: "98%", display: "block"}}>
+                <div style={{ marginTop: '20px', marginBottom: "20px"}}>
+                    <Row className="justify-content-md-center">
+                        <Col sm="6" className="centerStuff">
+                            <Button variant="outlined" color="primary" className={ classes.button } onClick={ handleClose }>
+                                Cancel
+                            </Button>
+                        </Col>
+                        <Col sm="6" className="centerStuff">
+                            <Button variant="outlined" color="primary" className={ classes.buttonG } type="submit" onClick={forceValidation}>
+                                Confirm
+                            </Button>
+                        </Col>
+                    </Row>
+                </div>
+            </DialogActions>
+        </Dialog>
+    )
 
     if (request === 'loading') {
         content = (
@@ -111,16 +167,16 @@ export const StatusAlertBox = () => {
                         <Col sm={5}> {totalErrors} </Col>
                     </Row>
                     <Divider />
-                    {/*{status.isValidating === false &&*/}
-                    <Row style={{marginTop: "30px"}}>
-                        <Col sm={9}>As system endpoint validation is a process that only takes place twice a month, on specific schedules, you may need to force a system endpoint validation now. If yes, left click to start the process.</Col>
-                        <Col sm={3} className="text-right" style={{paddingRight: "50px"}} >
-                            <ThemeProvider theme={theme}>
-                                <Chip color="secondary" label="Force Endpoints Validation" style={{color: "#fff"}} />
-                            </ThemeProvider>
-                        </Col>
-                    </Row>
-                    {/*}*/}
+                    {status.isValidating === false &&
+                        <Row style={{marginTop: "30px"}}>
+                            <Col sm={9}>As system endpoint validation is a process that only takes place twice a month, on specific schedules, you may need to force a system endpoint validation now. If yes, left click to start the process.</Col>
+                            <Col sm={3} className="text-right" style={{paddingRight: "50px"}} >
+                                <ThemeProvider theme={theme}>
+                                    <Chip color="secondary" label="Force Endpoints Validation" style={{color: "#fff"}} onClick={handleOpen}/>
+                                </ThemeProvider>
+                            </Col>
+                        </Row>
+                    }
                 </Col>
                 <Col sm={3}>
                     <Doughnut data={data} />
@@ -132,6 +188,7 @@ export const StatusAlertBox = () => {
     return (
         <div>
             {content}
+            {forceEndpointValidationModel}
         </div>
     )
 }
