@@ -580,7 +580,7 @@ public class Storage {
 
         if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][Storage] Adding Base URL Error to " + source + "_" + id + " with " + error);
 
-        Resource instance = this.model.createResource( this.config.getPrefixes().get("diseasecard") + source + "_" + id);
+        Resource instance = this.model.createResource( this.config.getPrefixes().get("diseasecard") + source + "ERROR_" + id);
         Resource type = this.model.getResource(this.config.getPrefixes().get("coeus") + "SourceBaseURLError");
 
         instance.addProperty(Predicate.get("rdf:type"), type);

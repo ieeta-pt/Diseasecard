@@ -853,19 +853,47 @@ public class DataManagementService {
 
         JSONArray queryResults = performSimpleQuery("SELECT * WHERE { ?s rdf:type coeus:SourceBaseURLError . ?s coeus:url ?url . ?s coeus:error ?error . ?s coeus:source ?source . }");
 
+        int totalErrors = 0;
+
+        JSONObject data = new JSONObject();
+
         for (Object o : queryResults) {
             JSONObject binding = (JSONObject) o;
             JSONObject info = new JSONObject();
 
-            info.put("source", ((JSONObject) binding.get("source")).get("value").toString());
+            String source = ((JSONObject) binding.get("source")).get("value").toString();
+
             info.put("url", ((JSONObject) binding.get("url")).get("value").toString());
             info.put("error", ((JSONObject) binding.get("error")).get("value").toString());
 
-            results.add(info);
+            //results.add(info);
+
+            if (!data.containsKey(source)) data.put(source, new JSONArray());
+            ((JSONArray) data.get(source)).add(info);
+            totalErrors++ ;
         }
 
-        finalResults.put("list", results);
+        JSONArray graphLabels = new JSONArray();
+        JSONArray graphData = new JSONArray();
 
+        data.forEach( (key, value) -> {
+
+            JSONObject aux = new JSONObject();
+
+            aux.put("source", key);
+            aux.put("numberOfErrors", ((JSONArray) value).size());
+            aux.put("info", value);
+
+            graphData.add(((JSONArray) value).size());
+            graphLabels.add(key);
+
+            results.add(aux);
+        });
+
+        finalResults.put("list", results);
+        finalResults.put("totalErrors", totalErrors);
+        finalResults.put("graphData", graphData);
+        finalResults.put("graphLabels", graphLabels);
         finalResults.put("status", this.storage.getValidationDetails());
 
         return finalResults;

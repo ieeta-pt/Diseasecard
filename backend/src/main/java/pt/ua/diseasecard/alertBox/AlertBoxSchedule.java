@@ -55,8 +55,9 @@ public class AlertBoxSchedule {
             - second, minute, hour, day, month, weekday
      */
 
-    //@Scheduled(cron = "0 0 0 15,L * ?" )
+    //@Scheduled(cron = "0 0 0 1,15 * ?" )
     @Scheduled(fixedRate = 500000000 )
+
     public void searchInvalidItems()  {
         if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxSchedule.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );
 
@@ -72,10 +73,13 @@ public class AlertBoxSchedule {
 
             String[] info = itemUri.substring(itemUri.lastIndexOf("/")).replace("/", "").split("_", 2);
 
+            //if (info[0].equalsIgnoreCase("omim")) continue;
+
             String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
 
             try
             {
+                System.out.println("URL: " + finalURL);
                 URL url = new URL(finalURL);
 
                 HttpURLConnection huc = (HttpURLConnection) url.openConnection();
