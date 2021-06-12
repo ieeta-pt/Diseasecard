@@ -14,20 +14,13 @@ import org.springframework.stereotype.Component;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
-import pt.ua.diseasecard.service.DataManagementService;
 import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
-
-import javax.net.ssl.HttpsURLConnection;
-import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.logging.Level;
 
 

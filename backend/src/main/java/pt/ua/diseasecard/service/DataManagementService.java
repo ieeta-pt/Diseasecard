@@ -8,6 +8,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import pt.ua.diseasecard.alertBox.AlertBoxSchedule;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.components.data.Storage;
@@ -45,6 +46,7 @@ public class DataManagementService {
     private ArrayList<Resource> resources;
     private SparqlAPI sparqlAPI;
     private SimpMessagingTemplate template;
+    private AlertBoxSchedule alertBoxSchedule;
 
     private Boot boot;
 
@@ -52,7 +54,7 @@ public class DataManagementService {
     private Cashier cashier;
     private Browsier browsier;
 
-    public DataManagementService(Storage storage, DiseasecardProperties diseasecardProperties, OntologyProperties ontologyProperties, SparqlAPI sparqlAPI,  Boot boot, SimpMessagingTemplate template, Indexer indexer, Cashier cashier, Browsier browsier) {
+    public DataManagementService(Storage storage, DiseasecardProperties diseasecardProperties, OntologyProperties ontologyProperties, SparqlAPI sparqlAPI,  Boot boot, SimpMessagingTemplate template, Indexer indexer, Cashier cashier, Browsier browsier, AlertBoxSchedule alertBoxSchedule) {
         this.uploadDir = "submittedFiles";
         this.storage = storage;
         this.config = diseasecardProperties;
@@ -64,6 +66,7 @@ public class DataManagementService {
         this.indexer = indexer;
         this.cashier = cashier;
         this.browsier = browsier;
+        this.alertBoxSchedule = alertBoxSchedule;
     }
 
     /*
@@ -910,5 +913,10 @@ public class DataManagementService {
         } catch (IOException ex) {
             Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[COEUS][DataManagementService] Error while processing endpoint of resource");
         }
+    }
+
+
+    public void validateEndpoints() {
+        this.alertBoxSchedule.searchInvalidItems();
     }
 }

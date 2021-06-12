@@ -317,6 +317,12 @@ public class DiseasecardController {
     }
 
 
+    @GetMapping(value = "/dcadmin/operations/validateEndpoints")
+    public void validateEndpoints() {
+        dataManagementService.validateEndpoints();
+    }
+
+
     @GetMapping("/dcadmin/status/labels")
     public JSONObject getFormLabelsInfo() {
         return dataManagementService.getFormLabels();
