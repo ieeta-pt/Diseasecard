@@ -96,6 +96,7 @@ export const StatusAlertBox = () => {
     const forceValidation = async () => {
         handleClose()
         dispatch(forceValidateEndpoints())
+        dispatch(getAlertBoxResults())
     }
 
     const forceEndpointValidationModel = (
@@ -139,7 +140,7 @@ export const StatusAlertBox = () => {
     else if (request === 'succeeded') {
         content = (
             <Row>
-                <Col sm={9}>
+                <Col sm={ graphLabels.length > 0 ? 9 : 12 }>
                     <Alert severity="info" style={{marginBottom: "30px"}}>The system will perform an automatic validation on the 1st and 15th of each month.</Alert>
                     { status.isValidating &&
                     <Row>
@@ -178,9 +179,13 @@ export const StatusAlertBox = () => {
                         </Row>
                     }
                 </Col>
-                <Col sm={3}>
-                    <Doughnut data={data} />
-                </Col>
+
+                { graphLabels.length > 0 &&
+                    <Col sm={3}>
+                        <Doughnut data={data} />
+                    </Col>
+                }
+
             </Row>
         )
     }

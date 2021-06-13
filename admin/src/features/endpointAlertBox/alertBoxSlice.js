@@ -9,7 +9,8 @@ const initialState = {
     graphLabels: [],
     graphData:[],
     totalErrors: 0,
-    request:''
+    request:'',
+    open: false
 }
 
 
@@ -32,7 +33,11 @@ export const forceValidateEndpoints = createAsyncThunk('alertBox/forceValidateEn
 const alertBoxSlice = createSlice({
     name: 'alertBox',
     initialState,
-    reducers: {},
+    reducers: {
+        setOpen: (state, action) => {
+            state.open = action.payload
+        }
+    },
     extraReducers: {
         [getAlertBoxResults.pending]: (state, action) => {
             state.request = 'loading'
@@ -57,7 +62,8 @@ export const getGraphLabel = state => state.alertBox.graphLabels
 export const getGraphData = state => state.alertBox.graphData
 export const getTotalErrors = state => state.alertBox.totalErrors
 export const getRequest = state => state.alertBox.request
+export const getOpen = state => state.alertBox.open
 
-export const { storeEditRow } = alertBoxSlice.actions
+export const { setOpen } = alertBoxSlice.actions
 
 export default alertBoxSlice.reducer

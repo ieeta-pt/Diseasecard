@@ -161,9 +161,6 @@ public class DataManagementService {
 
             JSONArray finalR = getAllResources();
 
-            System.out.println("ALL RESOURCES: ");
-            System.out.println(finalR);
-
             for (Object o : finalR) {
                 JSONObject info = (JSONObject) o;
 
