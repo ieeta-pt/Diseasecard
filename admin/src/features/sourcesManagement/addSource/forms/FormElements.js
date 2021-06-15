@@ -240,8 +240,7 @@ export const FootForm = (props, c, type) => {
                         <DialogTitle id="alert-dialog-title">{"Use Google's location service?"}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Let Google help apps determine location. This means sending anonymous location data to
-                                Google, even when no apps are running.
+                                //TODO add text
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions style={{width: "100%", display: "block"}}>

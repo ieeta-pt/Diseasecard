@@ -9,6 +9,7 @@ import com.hp.hpl.jena.reasoner.ReasonerRegistry;
 import com.hp.hpl.jena.sdb.SDBFactory;
 import com.hp.hpl.jena.sdb.Store;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -603,7 +604,8 @@ public class Storage {
 
 
     public void updateDateOfLastValidation() {
-        DateTime jodaTime = new DateTime();
+        DateTimeZone zone = DateTimeZone.forID( "Europe/Lisbon" );
+        DateTime jodaTime = new DateTime(zone);
         DateTimeFormatter formatter = DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss");
 
         Resource instance = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "lastValidation");
@@ -616,7 +618,8 @@ public class Storage {
     public void updateDateOfBeginValidation() {
         if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][Storage] Saving begin validation");
 
-        DateTime jodaTime = new DateTime();
+        DateTimeZone zone = DateTimeZone.forID( "Europe/Lisbon" );
+        DateTime jodaTime = new DateTime(zone);
         DateTimeFormatter formatter = DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss");
 
         Resource instance = this.model.getResource(this.config.getPrefixes().get("diseasecard") + "beginValidation");

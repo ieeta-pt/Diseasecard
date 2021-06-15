@@ -12,6 +12,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import pt.ua.diseasecard.alertBox.AlertBoxSchedule;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.DiseaseAPI;
 import pt.ua.diseasecard.components.data.SparqlAPI;
@@ -24,10 +25,7 @@ import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -318,8 +316,11 @@ public class DiseasecardController {
 
 
     @GetMapping(value = "/dcadmin/operations/validateEndpoints")
-    public void validateEndpoints() {
-        dataManagementService.validateEndpoints();
+    public ResponseEntity validateEndpoints() throws InterruptedException {
+        Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO, "[Diseasecard][Controller] Forcing validation");
+        new Thread(() -> dataManagementService.validateEndpoints()).start();
+        Thread.sleep(1000);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
 

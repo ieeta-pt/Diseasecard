@@ -52,7 +52,7 @@ public class AlertBoxSchedule {
 
     //@Scheduled(cron = "0 0 0 1,15 * ?" )
     @Scheduled(fixedRate = 500000000 )
-    public void searchInvalidItems()  {
+    public void searchInvalidItems() {
         if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxSchedule.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );
 
         this.storage.removeSourceBaseURLsErrors();
@@ -63,6 +63,12 @@ public class AlertBoxSchedule {
         StmtIterator iter = this.model.listStatements(null, Predicate.get("rdf:type"), itemCategory);
 
         ExecutorService executorService = Executors.newFixedThreadPool(64);
+
+//        try {
+//            Thread.sleep(1000*60);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
 
         while(iter.hasNext()) {
             String itemUri = iter.nextStatement().getSubject().toString();
@@ -105,6 +111,11 @@ public class AlertBoxSchedule {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+//        if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxSchedule.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Finished Items Validation Process at " + dateFormat.format(new Date()) );
+//
+//        this.storage.updateDateOfLastValidation();
+
     }
 
 

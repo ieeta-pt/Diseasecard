@@ -17,15 +17,13 @@ const initialState = {
 export const getAlertBoxResults = createAsyncThunk('alertBox/getAlertBoxResults', async () => {
     return API.GET("getAlertBoxResults", '', [] ).then(res => {
         const results = res.data
+        console.log("getAlertBoxResults")
         return {results}
     })
 })
 
 export const forceValidateEndpoints = createAsyncThunk('alertBox/forceValidateEndpoints', async () => {
-    return API.GET("forceValidateEndpoints", '', [] ).then(res => {
-        const results = res.data
-        return {results}
-    })
+    return API.GET("forceValidateEndpoints", '', [] )
 })
 
 
@@ -62,7 +60,6 @@ export const getGraphLabel = state => state.alertBox.graphLabels
 export const getGraphData = state => state.alertBox.graphData
 export const getTotalErrors = state => state.alertBox.totalErrors
 export const getRequest = state => state.alertBox.request
-export const getOpen = state => state.alertBox.open
 
 export const { setOpen } = alertBoxSlice.actions
 

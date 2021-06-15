@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {
     forceValidateEndpoints,
@@ -38,6 +38,7 @@ export const StatusAlertBox = () => {
     const graphLabels = useSelector(getGraphLabel)
     const totalErrors = useSelector(getTotalErrors)
     const [open, setOpen] = useState(false);
+    const [disable, setDisable] = useState(false);
     let content;
 
     useEffect(async () => {
@@ -94,9 +95,10 @@ export const StatusAlertBox = () => {
     };
 
     const forceValidation = async () => {
+        setDisable(true)
+        await dispatch(forceValidateEndpoints())
+        await dispatch(getAlertBoxResults())
         handleClose()
-        dispatch(forceValidateEndpoints())
-        dispatch(getAlertBoxResults())
     }
 
     const forceEndpointValidationModel = (
@@ -116,9 +118,7 @@ export const StatusAlertBox = () => {
                             </Button>
                         </Col>
                         <Col sm="6" className="centerStuff">
-                            <Button variant="outlined" color="primary" className={ classes.buttonG } type="submit" onClick={forceValidation}>
-                                Confirm
-                            </Button>
+                            <a href="#" className={!disable ? 'label theme-bg text-white f-14' : 'label theme-wait text-white f-14'} style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }} onClick={ !disable ? forceValidation : null}>Confirm</a>
                         </Col>
                     </Row>
                 </div>
