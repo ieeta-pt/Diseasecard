@@ -2,19 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/features/endpointManagement/addSourceBaseURL/forms/FormAddSourceBaseURL.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/endpointManagement/EndpointManagementPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/endpointManagement/EndpointManagementPage.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/endpointManagement/addSourceBaseURL/AddSourceBaseURL.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/endpointManagement/addSourceBaseURL/AddSourceBaseURL.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/endpointManagement/listSourcesURLS/ListSourcesURLS.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/endpointManagement/listSourcesURLS/ListSourcesURLs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/endpointManagement/listSourcesURLS/listSourcesURLS.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/endpointManagement/endpointManagementSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/components/data/Storage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/components/data/Storage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/resources/configuration/default_setup.rdf" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/resources/configuration/default_setup.rdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +38,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -194,6 +183,13 @@
       <workItem from="1622446716153" duration="22422000" />
       <workItem from="1622749007992" duration="1546000" />
       <workItem from="1622969781284" duration="3708000" />
+      <workItem from="1623088466498" duration="738000" />
+      <workItem from="1623319442122" duration="2422000" />
+      <workItem from="1623351109524" duration="2163000" />
+      <workItem from="1623401236053" duration="9114000" />
+      <workItem from="1623489711347" duration="8303000" />
+      <workItem from="1623576504122" duration="841000" />
+      <workItem from="1623678366947" duration="6080000" />
     </task>
     <servers />
   </component>
