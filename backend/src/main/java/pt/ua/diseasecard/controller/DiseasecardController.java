@@ -2,28 +2,20 @@ package pt.ua.diseasecard.controller;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import pt.ua.diseasecard.alertBox.AlertBoxSchedule;
 import pt.ua.diseasecard.components.Boot;
 import pt.ua.diseasecard.components.data.DiseaseAPI;
 import pt.ua.diseasecard.components.data.SparqlAPI;
-import pt.ua.diseasecard.components.management.Browsier;
-import pt.ua.diseasecard.components.management.Cashier;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.service.DataManagementService;
 import pt.ua.diseasecard.utils.Finder;
 import redis.clients.jedis.Jedis;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;

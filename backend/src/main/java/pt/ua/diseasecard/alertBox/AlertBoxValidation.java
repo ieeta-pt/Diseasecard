@@ -10,7 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.components.data.Storage;
-import pt.ua.diseasecard.components.management.Indexer;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
@@ -23,11 +22,10 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 @Component
-public class AlertBoxSchedule {
+public class AlertBoxValidation {
 
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 
@@ -37,23 +35,16 @@ public class AlertBoxSchedule {
     private Model model;
     private DiseasecardProperties config;
 
-    public AlertBoxSchedule(SparqlAPI sparqlAPI, Storage storage, DiseasecardProperties config) {
+    public AlertBoxValidation(SparqlAPI sparqlAPI, Storage storage, DiseasecardProperties config) {
         this.sparqlAPI = sparqlAPI;
         this.storage = storage;
         this.model = storage.getModel();
         this.config = config;
     }
 
-    /*
-        With the specified cron we are telling the program to execute this method at 0am of the 15º and last day of each month.
-        The cron annotation follows this structure:
-            - second, minute, hour, day, month, weekday
-     */
 
-    //@Scheduled(cron = "0 0 0 1,15 * ?" )
-    @Scheduled(fixedRate = 500000000 )
     public void searchInvalidItems() {
-        if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxSchedule.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );
+        if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );
 
         this.storage.removeSourceBaseURLsErrors();
         this.storage.updateDateOfBeginValidation();
@@ -64,12 +55,6 @@ public class AlertBoxSchedule {
 
         ExecutorService executorService = Executors.newFixedThreadPool(64);
 
-//        try {
-//            Thread.sleep(1000*60);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-
         while(iter.hasNext()) {
             String itemUri = iter.nextStatement().getSubject().toString();
 
@@ -77,7 +62,7 @@ public class AlertBoxSchedule {
 
             String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
 
-            if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxSchedule.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Testing URL: " + finalURL);
+            if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Testing URL: " + finalURL);
 
             executorService.submit(() -> {
                 try
@@ -106,15 +91,43 @@ public class AlertBoxSchedule {
         try {
             executorService.shutdown();
             executorService.awaitTermination(1, TimeUnit.DAYS);
-            if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxSchedule.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Finished Items Validation Process at " + dateFormat.format(new Date()) );
+            if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Finished Items Validation Process at " + dateFormat.format(new Date()) );
             this.storage.updateDateOfLastValidation();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-//        if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxSchedule.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Finished Items Validation Process at " + dateFormat.format(new Date()) );
-//
-//        this.storage.updateDateOfLastValidation();
+    }
+
+
+    /*
+        With the specified cron we are telling the program to execute this method at 0am of the 15º and last day of each month.
+        The cron annotation follows this structure:
+            - second, minute, hour, day, month, weekday
+     */
+
+    //@Scheduled(cron = "0 0 0 1,15 * ?" )
+    @Scheduled(fixedRate = 500000000 )
+    public void lightSearch() {
+
+        /*
+            TODO:
+                - Select 10/15 items per resource;
+                - Test the endpoints;
+                - Save errors, if any;
+         */
+
+    }
+
+
+    public void diseaseRealTimeValidation() {
+
+        /*
+            TODO:
+                - Iterate over the items associated to the disease;
+                - Remove the ones that are invalid;
+                - Resend disease;
+         */
 
     }
 
