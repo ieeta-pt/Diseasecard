@@ -35,6 +35,7 @@ public class AlertBoxValidation {
     private Model model;
     private DiseasecardProperties config;
 
+
     public AlertBoxValidation(SparqlAPI sparqlAPI, Storage storage, DiseasecardProperties config) {
         this.sparqlAPI = sparqlAPI;
         this.storage = storage;
@@ -65,25 +66,10 @@ public class AlertBoxValidation {
             if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Testing URL: " + finalURL);
 
             executorService.submit(() -> {
-                try
-                {
-                    URL url = new URL(finalURL);
+                int responseCode = this.validateEndpoint(finalURL, info);
 
-                    HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-                    huc.setRequestProperty("User-Agent", "Mozilla/5.0 AppleWebKit/537.36 Chrome/65.0.3325.181 Safari/537.36");
-                    huc.setRequestMethod("HEAD");
-                    huc.setRequestProperty("Accept", "*/*");
-                    int responseCode = huc.getResponseCode();
-
-                    if (responseCode != 200) {
-                        this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, responseCode+"");
-                    }
-                }
-                catch (Exception e)
-                {
-                    System.out.println("Error with URL " + finalURL);
-                    this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, e.getClass().getSimpleName());
-                    e.printStackTrace();
+                if (responseCode != 200) {
+                    this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, responseCode+"");
                 }
             });
         }
@@ -120,15 +106,87 @@ public class AlertBoxValidation {
     }
 
 
-    public void diseaseRealTimeValidation() {
+    public JSONObject diseaseRealTimeValidation(JSONObject disease) {
+
+        System.out.println(disease);
 
         /*
             TODO:
-                - Iterate over the items associated to the disease;
+                - Iterate over the items associated to the disease - network;
                 - Remove the ones that are invalid;
                 - Resend disease;
+
+            Disease Structure:
+                {
+                    "phenotype": "true",
+                    "size": 2,
+                    "omim": "123730",
+                    "synonyms": [
+                        "Cataract, progressive polymorphic cortical (3)  "
+                    ],
+                    "description": "Crystallin, gamma S",
+                    "location": "3q27",
+                    "genotype": "true",
+                    "network": [
+                        "HGNC:2417",
+                        "OMIM:123730"
+                    ]
+                }
          */
 
+        JSONArray network = (JSONArray) disease.get("network");
+
+        ExecutorService executorService = Executors.newFixedThreadPool(64);
+
+        network.forEach( value -> {
+            String[] info = value.toString().split(":");
+            String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
+
+            executorService.submit(() -> {
+                int responseCode = this.validateEndpoint(finalURL, info);
+
+                if (responseCode != 200) {
+                    //TODO: remove from network
+                }
+            });
+        });
+
+        try {
+            executorService.shutdown();
+            executorService.awaitTermination(1, TimeUnit.DAYS);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+
+        return disease;
+    }
+
+
+    private int validateEndpoint(String finalURL, String[] info) {
+
+        int responseCode = 0;
+
+        try
+        {
+            URL url = new URL(finalURL);
+
+            HttpURLConnection huc = (HttpURLConnection) url.openConnection();
+            huc.setRequestProperty("User-Agent", "Mozilla/5.0 AppleWebKit/537.36 Chrome/65.0.3325.181 Safari/537.36");
+            huc.setRequestMethod("HEAD");
+            huc.setRequestProperty("Accept", "*/*");
+            responseCode = huc.getResponseCode();
+
+        }
+        catch (Exception e)
+        {
+            System.out.println("Error with URL " + finalURL);
+            this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, e.getClass().getSimpleName());
+            e.printStackTrace();
+        }
+
+        return responseCode;
     }
 
 

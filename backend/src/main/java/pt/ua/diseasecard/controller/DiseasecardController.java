@@ -79,18 +79,21 @@ public class DiseasecardController {
 
     @GetMapping("/services/disease")
     @ResponseBody
-    public String getDiseaseByOMIM(@RequestParam(name = "omim", required = true) String omim) {
+    public JSONObject getDiseaseByOMIM(@RequestParam(name = "omim", required = true) String omim) {
 
 //        DiseaseAPI d = new DiseaseAPI(this.api, omim);
 //        return d.load().toString();
 
+        String disease;
+
         try {
-            return jedis.get("omim:" + omim);
+            disease = jedis.get("omim:" + omim);
         } catch (Exception ex) {
             DiseaseAPI d = new DiseaseAPI(this.api, omim);
-            return d.load().toString();
+            disease = d.load().toString();
         }
 
+        return this.dataManagementService.validateDiseaseEndpoints(disease);
     }
 
 

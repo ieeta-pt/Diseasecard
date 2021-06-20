@@ -900,6 +900,21 @@ public class DataManagementService {
     }
 
 
+    public JSONObject validateDiseaseEndpoints(String d)  {
+
+        try {
+            JSONParser parser = new JSONParser();
+            JSONObject json = (JSONObject) parser.parse(d);
+
+            return this.alertBoxSchedule.diseaseRealTimeValidation(json);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+
     private void saveOMIMEndpoints(MultipartFile genemap, MultipartFile morbidmap) {
         try {
             Path copyLocationGenemap = Paths.get(uploadDir + File.separator + "endpoints" + File.separator + "omim_genemap");
