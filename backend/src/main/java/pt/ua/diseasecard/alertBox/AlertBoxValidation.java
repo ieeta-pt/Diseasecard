@@ -18,6 +18,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -107,49 +108,28 @@ public class AlertBoxValidation {
 
 
     public JSONObject diseaseRealTimeValidation(JSONObject disease) {
-
+        this.getSourcesBaseURLs();
         System.out.println(disease);
 
-        /*
-            TODO:
-                - Iterate over the items associated to the disease - network;
-                - Remove the ones that are invalid;
-                - Resend disease;
-
-            Disease Structure:
-                {
-                    "phenotype": "true",
-                    "size": 2,
-                    "omim": "123730",
-                    "synonyms": [
-                        "Cataract, progressive polymorphic cortical (3)  "
-                    ],
-                    "description": "Crystallin, gamma S",
-                    "location": "3q27",
-                    "genotype": "true",
-                    "network": [
-                        "HGNC:2417",
-                        "OMIM:123730"
-                    ]
-                }
-         */
-
         JSONArray network = (JSONArray) disease.get("network");
-
         ExecutorService executorService = Executors.newFixedThreadPool(64);
-
-        network.forEach( value -> {
-            String[] info = value.toString().split(":");
+        Iterator<String> iter = network.iterator();
+        while (iter.hasNext()) {
+            String value = iter.next();
+            String[] info = value.split(":");
             String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
 
             executorService.submit(() -> {
                 int responseCode = this.validateEndpoint(finalURL, info);
 
                 if (responseCode != 200) {
-                    //TODO: remove from network
+                    System.out.println("Removing disease entry: " + value +"( "+finalURL+" )");
+                    network.remove(value);
                 }
             });
-        });
+        }
+
+        disease.put("network", network);
 
         try {
             executorService.shutdown();
@@ -157,9 +137,7 @@ public class AlertBoxValidation {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
-
+        
         return disease;
     }
 
