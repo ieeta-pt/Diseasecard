@@ -1,7 +1,5 @@
 package pt.ua.diseasecard.components.data;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.utils.BeanUtil;

@@ -22,7 +22,6 @@ import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import javax.annotation.PostConstruct;
-import javax.swing.plaf.nimbus.State;
 import java.io.*;
 import java.util.*;
 import java.util.logging.Level;
@@ -751,6 +750,42 @@ public class Storage {
         if (flags.size() > 1) this.setBuildPhase("Inconsistent");
     }
 
+
+    public Map<String, String> getResourcesLabels() {
+        Map<String, String> labels = new HashMap<>();
+
+        Resource resources = this.model.getResource(this.config.getPrefixes().get("coeus") + "Resource");
+        StmtIterator iter = this.model.listStatements(null, Predicate.get("rdf:type"), resources);
+
+        Property labelProperty = Predicate.get("rdfs:label");
+
+        while(iter.hasNext()) {
+            Resource r = iter.nextStatement().getSubject();
+            labels.put(r.getProperty(labelProperty).getLiteral().getString(), r.toString());
+        }
+
+        return labels;
+    }
+
+
+    public List<Resource> getItemsFromResource(String uri, int numberOfItems) {
+
+        List<Resource> results = new ArrayList<>();
+
+        Resource resource = this.model.getResource(uri);
+        Resource concept = resource.getProperty(Predicate.get("coeus:isResourceOf")).getObject().asResource();
+
+        StmtIterator iter = this.model.listStatements(null, Predicate.get("coeus:hasConcept"), concept);
+        int count = 0;
+
+        while (count < 10 && iter.hasNext()) {
+            Resource item = iter.nextStatement().getSubject();
+            results.add(item);
+            count ++;
+        }
+
+        return results;
+    }
 
     public Model getModel() {
         return model;

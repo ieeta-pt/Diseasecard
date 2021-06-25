@@ -16,9 +16,7 @@ import pt.ua.diseasecard.utils.PrefixFactory;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -64,8 +62,6 @@ public class AlertBoxValidation {
 
             String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
 
-            if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Testing URL: " + finalURL);
-
             executorService.submit(() -> {
                 int responseCode = this.validateEndpoint(finalURL, info);
 
@@ -94,8 +90,15 @@ public class AlertBoxValidation {
      */
 
     //@Scheduled(cron = "0 0 0 1,15 * ?" )
-    @Scheduled(fixedRate = 500000000 )
+    @Scheduled(fixedRate = 5000000 )
     public void lightSearch() {
+        if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );
+
+        this.storage.removeSourceBaseURLsErrors();
+        this.storage.updateDateOfBeginValidation();
+        this.getSourcesBaseURLs();
+
+        Map<String, String> labels = this.storage.getResourcesLabels();
 
         /*
             TODO:
@@ -104,6 +107,51 @@ public class AlertBoxValidation {
                 - Save errors, if any;
          */
 
+        ExecutorService executorService = Executors.newFixedThreadPool(4);
+
+        List<Resource> items = new ArrayList<>();
+        
+        for (Map.Entry<String,String> entry : labels.entrySet()) {
+            items.addAll( this.storage.getItemsFromResource(entry.getValue(), 10));
+        }
+
+        Collections.shuffle(items);
+        
+        for (Resource item : items) {
+            System.out.println(item);
+            String itemUri = item.getURI();
+            String[] info = itemUri.substring(itemUri.lastIndexOf("/")).replace("/", "").split("_", 2);
+
+            String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
+
+            System.out.print(finalURL);
+
+            Random random = new Random();
+            executorService.submit(() -> {
+                try {
+                    int timeToSleep = random.nextInt(45 - 10) + 10;
+                    Thread.sleep(timeToSleep * 1000);
+
+                    int responseCode = this.validateEndpoint(finalURL, info);
+                    
+                    if (responseCode != 200) {
+                        this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, responseCode+"");
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        
+
+        try {
+            executorService.shutdown();
+            executorService.awaitTermination(1, TimeUnit.DAYS);
+            if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Finished Items Validation Process at " + dateFormat.format(new Date()) );
+            this.storage.updateDateOfLastValidation();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
 
