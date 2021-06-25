@@ -310,6 +310,14 @@ public class DiseasecardController {
     }
 
 
+    @GetMapping(value = "/dcadmin/operations/validateAllEndpoints")
+    public ResponseEntity validateAllEndpoints() throws InterruptedException {
+        Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO, "[Diseasecard][Controller] Forcing validation");
+        new Thread(() -> dataManagementService.validateAllEndpoints()).start();
+        Thread.sleep(1000);
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+    }
+
     @GetMapping(value = "/dcadmin/operations/validateEndpoints")
     public ResponseEntity validateEndpoints() throws InterruptedException {
         Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO, "[Diseasecard][Controller] Forcing validation");

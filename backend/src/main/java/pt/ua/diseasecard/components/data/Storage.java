@@ -778,7 +778,7 @@ public class Storage {
         StmtIterator iter = this.model.listStatements(null, Predicate.get("coeus:hasConcept"), concept);
         int count = 0;
 
-        while (count < 10 && iter.hasNext()) {
+        while (count < numberOfItems && iter.hasNext()) {
             Resource item = iter.nextStatement().getSubject();
             results.add(item);
             count ++;

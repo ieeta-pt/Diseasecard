@@ -27,6 +27,11 @@ export const forceValidateEndpoints = createAsyncThunk('alertBox/forceValidateEn
 })
 
 
+export const validateEndpoints = createAsyncThunk('alertBox/validateEndpoints', async () => {
+    return API.GET("validateEndpoints", '', [] )
+})
+
+
 
 const alertBoxSlice = createSlice({
     name: 'alertBox',

@@ -7,7 +7,7 @@ import {
     getGraphData,
     getGraphLabel,
     getRequest,
-    getTotalErrors
+    getTotalErrors, validateEndpoints
 } from "../alertBoxSlice";
 import {Col, Row} from "react-bootstrap";
 import {
@@ -38,6 +38,7 @@ export const StatusAlertBox = () => {
     const graphLabels = useSelector(getGraphLabel)
     const totalErrors = useSelector(getTotalErrors)
     const [open, setOpen] = useState(false);
+    const [openLight, setOpenLight] = useState(false);
     const [disable, setDisable] = useState(false);
     let content;
 
@@ -48,10 +49,13 @@ export const StatusAlertBox = () => {
     const theme = createMuiTheme({
         palette: {
             primary: {
-                main: '#a5d6a7'
+                main: '#ef9a9a'
             },
             secondary: {
                 main: '#81d4fa'
+            },
+            full: {
+                main: '#ef9a9a'
             },
             base: {
                 main: '#eeeeee'
@@ -94,6 +98,15 @@ export const StatusAlertBox = () => {
         setOpen(true);
     };
 
+
+    const handleCloseLight = () => {
+        setOpenLight(false);
+    }
+    const handleOpenLight = () => {
+        setOpenLight(true);
+    };
+
+
     const forceValidation = async () => {
         setDisable(true)
         await dispatch(forceValidateEndpoints())
@@ -101,7 +114,14 @@ export const StatusAlertBox = () => {
         handleClose()
     }
 
-    const forceEndpointValidationModel = (
+    const forceLightValidation = async () => {
+        setDisable(true)
+        await dispatch(validateEndpoints())
+        await dispatch(getAlertBoxResults())
+        handleCloseLight()
+    }
+
+    const forceFullEndpointValidationModel = (
         <Dialog open={open}  onClose={handleClose} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
             <DialogTitle  id="alert-dialog-title">Are you sure you want to force system endpoints validation?</DialogTitle>
             <DialogContent >
@@ -125,6 +145,34 @@ export const StatusAlertBox = () => {
             </DialogActions>
         </Dialog>
     )
+
+
+    const forceLightEndpointValidationModel = (
+        <Dialog open={openLight}  onClose={handleCloseLight} aria-labelledby="alert-dialog-title" aria-describedby="alert-dialog-description">
+            <DialogTitle  id="alert-dialog-title">Are you sure you want to perform a light endpoints validation?</DialogTitle>
+            <DialogContent >
+                <DialogContentText id="alert-dialog-description">
+                    Please note that this process can take several hours, depending on the number of items you have on the system.
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions style={{width: "98%", display: "block"}}>
+                <div style={{ marginTop: '20px', marginBottom: "20px"}}>
+                    <Row className="justify-content-md-center">
+                        <Col sm="6" className="centerStuff">
+                            <Button variant="outlined" color="primary" className={ classes.button } onClick={ handleClose }>
+                                Cancel
+                            </Button>
+                        </Col>
+                        <Col sm="6" className="centerStuff">
+                            <a href="#" className={!disable ? 'label theme-bg text-white f-14' : 'label theme-wait text-white f-14'} style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }} onClick={ !disable ? forceLightValidation : null}>Confirm</a>
+                        </Col>
+                    </Row>
+                </div>
+            </DialogActions>
+        </Dialog>
+    )
+
+
 
     if (request === 'loading') {
         content = (
@@ -169,14 +217,24 @@ export const StatusAlertBox = () => {
                     </Row>
                     <Divider />
                     {status.isValidating === false &&
-                        <Row style={{marginTop: "30px"}}>
-                            <Col sm={9}>As system endpoint validation is a process that only takes place twice a month, on specific schedules, you may need to force a system endpoint validation now. If yes, left click to start the process.</Col>
-                            <Col sm={3} className="text-right" style={{paddingRight: "50px"}} >
-                                <ThemeProvider theme={theme}>
-                                    <Chip color="secondary" label="Force Endpoints Validation" style={{color: "#fff"}} onClick={handleOpen}/>
-                                </ThemeProvider>
-                            </Col>
-                        </Row>
+                        <div>
+                            <Row style={{marginTop: "30px"}}>
+                                <Col sm={9}>As system endpoint validation is a process that only takes place twice a month, on specific schedules, you may need to force a system endpoint validation now. If yes, left click to start the process.</Col>
+                                <Col sm={3} className="text-right" style={{paddingRight: "50px"}} >
+                                    <ThemeProvider theme={theme}>
+                                        <Chip color="secondary" label="Start Light Endpoint Validation" style={{color: "#fff"}} onClick={handleOpenLight}/>
+                                    </ThemeProvider>
+                                </Col>
+                            </Row>
+                            <Row style={{marginTop: "30px"}}>
+                                <Col sm={9}>Left click to start the full endpoints validation. Please note that this process can take several minutes.</Col>
+                                <Col sm={3} className="text-right" style={{paddingRight: "50px"}} >
+                                    <ThemeProvider theme={theme}>
+                                        <Chip color="primary" label="Force Full Endpoints Validation" style={{color: "#fff"}} onClick={handleOpen}/>
+                                    </ThemeProvider>
+                                </Col>
+                            </Row>
+                        </div>
                     }
                 </Col>
 
@@ -193,7 +251,8 @@ export const StatusAlertBox = () => {
     return (
         <div>
             {content}
-            {forceEndpointValidationModel}
+            {forceFullEndpointValidationModel}
+            {forceLightEndpointValidationModel}
         </div>
     )
 }

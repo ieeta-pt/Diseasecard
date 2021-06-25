@@ -928,7 +928,11 @@ public class DataManagementService {
     }
 
 
-    public void validateEndpoints() {
+    public void validateAllEndpoints() {
         this.alertBoxSchedule.searchInvalidItems();
+    }
+
+    public void validateEndpoints() {
+        this.alertBoxSchedule.lightValidation();
     }
 }

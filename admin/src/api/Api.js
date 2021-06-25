@@ -45,7 +45,8 @@ const getModuleURL = function (module) {
         case "removeSourceBaseURL":            return "/dcadmin/endpointManagement/removeSourceBaseURL";
         case "getResourcesWithoutBaseURL":     return "/dcadmin/endpointManagement/getResourcesWithoutBaseURL";
         case "getAlertBoxResults":             return "/dcadmin/endpointManagement/getAlertBoxResults";
-        case "forceValidateEndpoints":         return "/dcadmin/operations/validateEndpoints";
+        case "forceValidateEndpoints":         return "/dcadmin/operations/validateAllEndpoints";
+        case "validateEndpoints":              return "/dcadmin/operations/validateEndpoints";
         default:                               return "";
     }
 };

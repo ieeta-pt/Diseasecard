@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="" />
+    <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/endpointAlertBox/alertBoxSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/endpointAlertBox/alertBoxSlice.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/features/endpointAlertBox/statusAlertBox/StatusAlertBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/endpointAlertBox/statusAlertBox/StatusAlertBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/alertBox/AlertBoxValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/alertBox/AlertBoxValidation.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -187,6 +194,7 @@
       <workItem from="1623489711347" duration="8303000" />
       <workItem from="1623576504122" duration="841000" />
       <workItem from="1623678366947" duration="6080000" />
+      <workItem from="1624634853909" duration="3038000" />
     </task>
     <servers />
   </component>
