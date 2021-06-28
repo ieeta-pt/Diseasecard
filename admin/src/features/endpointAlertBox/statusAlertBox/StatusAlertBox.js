@@ -24,11 +24,6 @@ import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Doughnut } from 'react-chartjs-2';
 import {Alert} from "@material-ui/lab";
 import {useStyles} from "../../sourcesManagement/addSource/forms/FormElements";
-import {
-    getResourcesWithoutBaseURL,
-    getSourcesURLS,
-    removeSourceURL
-} from "../../endpointManagement/endpointManagementSlice";
 
 export const StatusAlertBox = () => {
     const dispatch = useDispatch()
