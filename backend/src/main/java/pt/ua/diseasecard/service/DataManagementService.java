@@ -29,10 +29,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -619,7 +616,8 @@ public class DataManagementService {
 
 
     public void prepareAddSourceBaseURL(String resourceLabel, String baseURL) {
-        this.storage.addSourceBaseURL(resourceLabel.split("_")[1].toLowerCase(), baseURL);
+//        this.storage.addSourceBaseURL(resourceLabel.split("_")[1].toLowerCase(), baseURL);
+        this.storage.addSourceBaseURL(resourceLabel, baseURL);
     }
 
 
@@ -932,7 +930,84 @@ public class DataManagementService {
         this.alertBoxSchedule.searchInvalidItems();
     }
 
+
     public void validateEndpoints() {
         this.alertBoxSchedule.lightValidation();
+    }
+
+
+    public JSONObject getInstancesCount() {
+
+        JSONObject info = new JSONObject();
+
+        // Get number of entities
+        JSONArray results = performSimpleQuery("SELECT ?s (count(distinct ?s) as ?count) WHERE { ?s rdf:type coeus:Entity }");
+        if (results.size() > 0) info.put("numberOfEntities", ((JSONObject) ((JSONObject) results.get(0)).get("count")).get("value").toString());
+
+
+        // Get number of concepts
+        results = performSimpleQuery("SELECT ?s (count(distinct ?s) as ?count) WHERE { ?s rdf:type coeus:Concept }");
+        if (results.size() > 0) info.put("numberOfConcepts", ((JSONObject) ((JSONObject) results.get(0)).get("count")).get("value").toString());
+
+
+        // Get number of resources
+        results = performSimpleQuery("SELECT ?s (count(distinct ?s) as ?count) WHERE { ?s rdf:type coeus:Resource }");
+        if (results.size() > 0) info.put("numberOfResources", ((JSONObject) ((JSONObject) results.get(0)).get("count")).get("value").toString());
+
+
+        // Get number of Items
+        results = performSimpleQuery("SELECT ?s (count(distinct ?s) as ?count) WHERE { ?s rdf:type diseasecard:Item }");
+        if (results.size() > 0) info.put("numberOfItems", ((JSONObject) ((JSONObject) results.get(0)).get("count")).get("value").toString());
+
+
+        // Get number of Items
+        results = performSimpleQuery("SELECT ?s (count(distinct ?s) as ?count) WHERE { ?s rdf:type coeus:SourceBaseURLError }");
+        if (results.size() > 0) info.put("numberOfInvalidItems", ((JSONObject) ((JSONObject) results.get(0)).get("count")).get("value").toString());
+
+
+        // Get number of items per concept
+        results = performSimpleQuery("SELECT ?label ?item (count(distinct ?item) as ?itemCount) WHERE {"
+                + " ?s rdf:type coeus:Concept . "
+                + " ?s rdfs:label ?label . "
+                + " ?s coeus:isConceptOf ?item } GROUP BY ?label");
+
+        List<String> labels = new ArrayList<>();
+        List<Integer> itemsPerConcept = new ArrayList<>();
+
+        for (Object o : results) {
+            JSONObject binding = (JSONObject) o;
+            String label = ( (JSONObject) binding.get("label")).get("value").toString();
+
+            labels.add(label.substring(label.lastIndexOf("_") + 1) );
+            itemsPerConcept.add(Integer.parseInt(( (JSONObject) binding.get("itemCount")).get("value").toString()));
+        }
+
+        List<Integer> invalidItemsPerConcept = new ArrayList<Integer>(Collections.nCopies(itemsPerConcept.size()-1, 0));
+
+        results = performSimpleQuery("SELECT ?label ?e (count(distinct ?e) as ?itemCount) WHERE {"
+                + " ?s rdf:type coeus:Resource . "
+                + " ?s coeus:isResourceOf ?c . "
+                + " ?e coeus:hasResource ?s . "
+                + " ?e rdf:type coeus:SourceBaseURLError . "
+                + " ?c rdfs:label ?label . } GROUP BY ?label");
+
+
+        for (Object o : results) {
+            JSONObject binding = (JSONObject) o;
+
+            String label = ( (JSONObject) binding.get("label")).get("value").toString();
+            Integer itemCount = Integer.parseInt(( (JSONObject) binding.get("itemCount")).get("value").toString());
+
+            if (labels.contains(label.substring(label.lastIndexOf("_") + 1))) {
+                int index = labels.indexOf(label.substring(label.lastIndexOf("_") + 1));
+                invalidItemsPerConcept.add(index, itemCount);
+            }
+        }
+
+        info.put("graphLabels", labels);
+        info.put("validItems", itemsPerConcept);
+        info.put("invalidItems", invalidItemsPerConcept);
+
+        return info;
     }
 }

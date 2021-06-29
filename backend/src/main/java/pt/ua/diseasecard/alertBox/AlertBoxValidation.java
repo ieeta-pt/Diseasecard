@@ -30,7 +30,7 @@ public class AlertBoxValidation {
 
     private SparqlAPI sparqlAPI;
     private Storage storage;
-    private HashMap<String, String> sourceBaseURLs;
+    private HashMap<String, String[]> sourceBaseURLs;
     private Model model;
     private DiseasecardProperties config;
 
@@ -60,13 +60,13 @@ public class AlertBoxValidation {
 
             String[] info = itemUri.substring(itemUri.lastIndexOf("/")).replace("/", "").split("_", 2);
 
-            String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
+            String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase())[0].replace("#replace#", info[1]);
 
             executorService.submit(() -> {
                 int responseCode = this.validateEndpoint(finalURL, info);
 
                 if (responseCode != 200) {
-                    this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, responseCode+"");
+                    this.storage.saveSourceBaseURLsError(this.sourceBaseURLs.get(info[0].toLowerCase())[1], info[0], info[1], finalURL, responseCode+"");
                 }
             });
         }
@@ -89,7 +89,7 @@ public class AlertBoxValidation {
             - second, minute, hour, day, month, weekday
      */
     //@Scheduled(cron = "0 0 0 1,15 * ?" )
-    @Scheduled(fixedRate = 5000000 )
+//    @Scheduled(fixedRate = 5000000 )
     public void lightValidation() {
         if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );
 
@@ -99,12 +99,6 @@ public class AlertBoxValidation {
 
         Map<String, String> labels = this.storage.getResourcesLabels();
 
-        /*
-            TODO:
-                - Select 10/15 items per resource;
-                - Test the endpoints;
-                - Save errors, if any;
-         */
 
         ExecutorService executorService = Executors.newFixedThreadPool(4);
 
@@ -121,7 +115,7 @@ public class AlertBoxValidation {
             String itemUri = item.getURI();
             String[] info = itemUri.substring(itemUri.lastIndexOf("/")).replace("/", "").split("_", 2);
 
-            String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
+            String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase())[0].replace("#replace#", info[1]);
 
             System.out.print(finalURL);
 
@@ -134,7 +128,7 @@ public class AlertBoxValidation {
                     int responseCode = this.validateEndpoint(finalURL, info);
                     
                     if (responseCode != 200) {
-                        this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, responseCode+"");
+                        this.storage.saveSourceBaseURLsError(this.sourceBaseURLs.get(info[0].toLowerCase())[1], info[0], info[1], finalURL, responseCode+"");
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -164,7 +158,7 @@ public class AlertBoxValidation {
         while (iter.hasNext()) {
             String value = iter.next();
             String[] info = value.split(":");
-            String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase()).replace("#replace#", info[1]);
+            String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase())[0].replace("#replace#", info[1]);
 
             executorService.submit(() -> {
                 int responseCode = this.validateEndpoint(finalURL, info);
@@ -207,7 +201,7 @@ public class AlertBoxValidation {
         catch (Exception e)
         {
             System.out.println("Error with URL " + finalURL);
-            this.storage.saveSourceBaseURLsError(info[0], info[1], finalURL, e.getClass().getSimpleName());
+            this.storage.saveSourceBaseURLsError(this.sourceBaseURLs.get(info[0].toLowerCase())[1], info[0], info[1], finalURL, e.getClass().getSimpleName());
             e.printStackTrace();
         }
 
@@ -224,23 +218,27 @@ public class AlertBoxValidation {
             JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT *"
                     + " WHERE { ?s rdf:type coeus:SourceBaseURL ."
                     + " ?s rdfs:label ?source ."
-                    + " ?s coeus:baseURL ?url } ", "js", false));
+                    + " ?s coeus:baseURL ?url ."
+                    + " ?s coeus:hasResource ?resource } ", "js", false));
 
             JSONObject results = (JSONObject) response.get("results");
             JSONArray bindings = (JSONArray) results.get("bindings");
 
             for (Object o : bindings) {
                 JSONObject binding = (JSONObject) o;
-                sourceBaseURLs.put(((JSONObject) binding.get("source")).get("value").toString(), ((JSONObject) binding.get("url")).get("value").toString());
+                String[] info = new String[2];
+
+                info[0] = ((JSONObject) binding.get("url")).get("value").toString();
+                info[1] = ((JSONObject) binding.get("resource")).get("value").toString();
+
+                sourceBaseURLs.put(((JSONObject) binding.get("source")).get("value").toString(), info);
             }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
 
-//        sourceBaseURLs.entrySet().forEach(entry -> {
-//            System.out.println(entry.getKey() + " " + entry.getValue());
-//        });
+        sourceBaseURLs.forEach((key, value) -> System.out.println(key + " " + Arrays.toString(value)));
 
     }
 }

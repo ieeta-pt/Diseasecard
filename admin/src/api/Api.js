@@ -47,6 +47,7 @@ const getModuleURL = function (module) {
         case "getAlertBoxResults":             return "/dcadmin/endpointManagement/getAlertBoxResults";
         case "forceValidateEndpoints":         return "/dcadmin/operations/validateAllEndpoints";
         case "validateEndpoints":              return "/dcadmin/operations/validateEndpoints";
+        case "getSystemStats":                 return "/dcadmin/utils/systemStats";
         default:                               return "";
     }
 };

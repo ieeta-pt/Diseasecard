@@ -377,13 +377,21 @@ public class Storage {
 
 
     public void addSourceBaseURL(String s, String baseURL) {
-        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Add Source Base URL with " + s );
 
-        Resource newSourceBaseURL = this.model.createResource(this.config.getPrefixes().get("diseasecard")  + "baseURL_" +  s);
+        String label = s.split("_")[1].toLowerCase();
+
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][DataManagementService] Add Source Base URL with " + label );
+
+        // .split("_")[1].toLowerCase()
+
+        Resource newSourceBaseURL = this.model.createResource(this.config.getPrefixes().get("diseasecard")  + "baseURL_" +  label);
         Resource type = this.model.getResource(this.config.getPrefixes().get("coeus") + "SourceBaseURL");
         newSourceBaseURL.addProperty(Predicate.get("rdf:type"), type);
         newSourceBaseURL.addProperty(Predicate.get("coeus:baseURL"), baseURL);
-        newSourceBaseURL.addProperty(Predicate.get("rdfs:label"), s);
+        newSourceBaseURL.addProperty(Predicate.get("rdfs:label"), label);
+
+        Resource resource = this.model.getResource(this.config.getPrefixes().get("diseasecard") + label);
+        newSourceBaseURL.addProperty(Predicate.get("coeus:hasResource"), resource);
     }
 
 
@@ -576,7 +584,7 @@ public class Storage {
     }
 
 
-    public void saveSourceBaseURLsError(String source, String id,  String url, String error) {
+    public void saveSourceBaseURLsError(String resourceLabel, String source, String id,  String url, String error) {
 
         if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][Storage] Adding Base URL Error to " + source + "_" + id + " with " + error);
 
@@ -587,6 +595,11 @@ public class Storage {
         instance.addProperty(Predicate.get("coeus:source"), source);
         instance.addProperty(Predicate.get("coeus:url"), url);
         instance.addProperty(Predicate.get("coeus:error"), error);
+
+        System.out.println("while saving some shit....... Resource: " + resourceLabel);
+
+        Resource resource = this.model.getResource(resourceLabel);
+        instance.addProperty(Predicate.get("coeus:hasResource"), resource);
     }
 
 

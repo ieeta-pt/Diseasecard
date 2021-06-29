@@ -47,7 +47,6 @@ const alertBoxSlice = createSlice({
         },
         [getAlertBoxResults.fulfilled]: (state, action) => {
             console.log("Alert Box Results: ")
-            console.log(action.payload.results)
             state.alerts = action.payload.results.list
             state.status = action.payload.results.status
             state.totalErrors = action.payload.results.totalErrors

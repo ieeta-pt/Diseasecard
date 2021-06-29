@@ -9,6 +9,7 @@ import endpointManagementSlice from "../features/endpointManagement/endpointMana
 import alertBoxSlice from "../features/endpointAlertBox/alertBoxSlice";
 import { getDefaultMiddleware } from '@reduxjs/toolkit'
 import { reducer as formReducer } from 'redux-form';
+import dashboardSlice from "../features/dashboard/dashboardSlice";
 
 
 const customizedMiddleware = getDefaultMiddleware({
@@ -19,6 +20,7 @@ export default configureStore({
   reducer: {
     template: templateReducer,
     addSource: addSourceSlice,
+    dashboard: dashboardSlice,
     querySystem: querySystemSlice,
     listResources: listResourceSlice,
     systemStatus: systemStatusSlice,

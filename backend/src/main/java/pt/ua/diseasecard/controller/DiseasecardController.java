@@ -311,15 +311,16 @@ public class DiseasecardController {
 
 
     @GetMapping(value = "/dcadmin/operations/validateAllEndpoints")
-    public ResponseEntity validateAllEndpoints() throws InterruptedException {
+    public ResponseEntity<Object> validateAllEndpoints() throws InterruptedException {
         Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO, "[Diseasecard][Controller] Forcing validation");
         new Thread(() -> dataManagementService.validateAllEndpoints()).start();
         Thread.sleep(1000);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
+
     @GetMapping(value = "/dcadmin/operations/validateEndpoints")
-    public ResponseEntity validateEndpoints() throws InterruptedException {
+    public ResponseEntity<Object> validateEndpoints() throws InterruptedException {
         Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO, "[Diseasecard][Controller] Forcing validation");
         new Thread(() -> dataManagementService.validateEndpoints()).start();
         Thread.sleep(1000);
@@ -437,4 +438,15 @@ public class DiseasecardController {
     public void removeSourceBaseURL(@RequestParam("resourceLabel") String resourceLabel) {
         dataManagementService.prepareRemoveSourceBaseURL(resourceLabel);
     }
+
+
+    @GetMapping("/dcadmin/utils/systemStats")
+    @ResponseBody
+    public JSONObject getSystemStats() {
+        // TODO:
+        //  - Get graph info: "Number of items and invalid items per external source";
+
+        return this.dataManagementService.getInstancesCount();
+    }
+
 }
