@@ -443,10 +443,13 @@ public class DiseasecardController {
     @GetMapping("/dcadmin/utils/systemStats")
     @ResponseBody
     public JSONObject getSystemStats() {
-        // TODO:
-        //  - Get graph info: "Number of items and invalid items per external source";
-
         return this.dataManagementService.getInstancesCount();
     }
 
+
+    @GetMapping("/dcadmin/utils/ontology")
+    @ResponseBody
+    public JSONArray getOntology() {
+        return this.dataManagementService.getSimplifiedOntologyStructure();
+    }
 }

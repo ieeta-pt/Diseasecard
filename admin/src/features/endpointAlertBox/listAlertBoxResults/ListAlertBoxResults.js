@@ -30,14 +30,14 @@ export const ListSourcesURLs = () => {
             dataField: "url",
             text: "URL",
             headerStyle: () => {
-                return { width: "75%" };
+                return { width: "58.4%" };
             }
         },
         {
             dataField: "error",
             text: "Error",
             headerStyle: () => {
-                return { width: "30%" };
+                return { width: "25%" };
             }
         },
     ];

@@ -553,6 +553,11 @@ public class DataManagementService {
     }
 
 
+    public JSONArray getSimplifiedOntologyStructure() {
+        return null;
+    }
+
+
     private JSONArray performSimpleQuery(String query) {
         JSONArray bindings = new JSONArray();
         try

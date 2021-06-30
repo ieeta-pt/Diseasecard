@@ -44,13 +44,13 @@ export const StatusAlertBox = () => {
     const theme = createMuiTheme({
         palette: {
             primary: {
-                main: '#ef9a9a'
+                main: '#ffab91'
             },
             secondary: {
                 main: '#81d4fa'
             },
             full: {
-                main: '#ef9a9a'
+                main: '#ffab91'
             },
             base: {
                 main: '#eeeeee'

@@ -43,8 +43,8 @@ const Dashboard = () => {
             {
                 label: '# of Invalid Items',
                 data: invalidItems,
-                backgroundColor: 'rgba(185, 183, 189, 0.2)',
-                borderColor: 'rgba(185, 183, 189, 1)',
+                backgroundColor: 'rgba(121, 134, 203, 0.2)',
+                borderColor: 'rgba(121, 134, 203, 1)',
                 borderWidth: 1
             },
         ],
