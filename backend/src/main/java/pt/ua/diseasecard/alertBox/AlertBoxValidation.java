@@ -13,6 +13,8 @@ import pt.ua.diseasecard.components.data.Storage;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.utils.Predicate;
 import pt.ua.diseasecard.utils.PrefixFactory;
+
+import javax.annotation.PostConstruct;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -83,12 +85,18 @@ public class AlertBoxValidation {
     }
 
 
+    @PostConstruct
+    public void init() {
+        this.lightValidation();
+    }
+
+
     /*
         With the specified cron we are telling the program to execute this method at 0am of the 15º and last day of each month.
         The cron annotation follows this structure:
             - second, minute, hour, day, month, weekday
      */
-    //@Scheduled(cron = "0 0 0 1,15 * ?" )
+    @Scheduled(cron = "0 0 0 1,15 * ?" )
 //    @Scheduled(fixedRate = 5000000 )
     public void lightValidation() {
         if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );

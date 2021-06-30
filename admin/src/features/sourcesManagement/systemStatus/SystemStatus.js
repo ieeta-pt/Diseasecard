@@ -10,7 +10,7 @@ import {
 } from "./systemStatusSlice";
 import BootstrapTable from "react-bootstrap-table-next";
 import {Avatar, Button, Chip} from "@material-ui/core";
-import {green, grey, red} from "@material-ui/core/colors";
+import {deepOrange, green, grey, red} from "@material-ui/core/colors";
 import SockJsClient from 'react-stomp';
 import { api_url } from '../../../../package.json';
 import {makeStyles} from "@material-ui/core/styles";
@@ -30,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
         padding: "0.5px 10px 1px 10px",
         fontSize: "14px",
         textTransform: "none",
-        borderColor: "#1de9b6",
-        color: "#1de9b6",
+        borderColor: "#E94F3F",
+        color: "#E94F3F",
         '&:hover':{
-            borderColor: "#1dc4e9",
-            color: "#1dc4e9"
+            borderColor: "#f3ab9b",
+            color: "#f3ab9b"
         },
     },
     buttonBuild: {
@@ -43,14 +43,14 @@ const useStyles = makeStyles((theme) => ({
         padding: "0.5px 10px 1px 10px",
         fontSize: "14px",
         textTransform: "none",
-        borderColor: "#1de9b6",
+        borderColor: "#E94F3F",
         color: "#fff",
         marginTop: "10px",
         marginRight: "12%",
         '&:hover':{
-            borderColor: "#1de9b6",
+            borderColor: "#E94F3F",
         },
-        background: "linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%)",
+        background: "linear-gradient(-135deg, #E94F3F 0%, #f3ab9b 100%)",
     },
     buttonBuildDisable: {
         borderRadius: "15px",
@@ -58,12 +58,12 @@ const useStyles = makeStyles((theme) => ({
         padding: "0.5px 10px 1px 10px",
         fontSize: "14px",
         textTransform: "none",
-        borderColor: "#1de9b6",
+        borderColor: "#E94F3F",
         color: "#fff",
         marginTop: "10px",
         marginRight: "10%",
         '&:hover':{
-            borderColor: "#1de9b6",
+            borderColor: "#E94F3F",
         },
         background: "rgba(0, 0, 0, 0.26)",
     },
@@ -75,12 +75,12 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "10%",
         fontSize: "14px",
         textTransform: "none",
-        borderColor: "#A389D4",
+        borderColor: "#fbe9e7",
         color: "#fff",
         '&:hover':{
-            borderColor: "#A389D4",
+            borderColor: "#fbe9e7",
         },
-        background: "linear-gradient(-135deg, #899FD4 0%, #A389D4 100%)"
+        background: "linear-gradient(-135deg, #f3ab9b 0%, #fbe9e7 100%)"
     },
     buttonUnbuildDisable: {
         borderRadius: "15px",
@@ -90,10 +90,10 @@ const useStyles = makeStyles((theme) => ({
         marginRight: "8%",
         fontSize: "14px",
         textTransform: "none",
-        borderColor: "#A389D4",
+        borderColor: "#fbe9e7",
         color: "#fff",
         '&:hover':{
-            borderColor: "#A389D4",
+            borderColor: "#fbe9e7",
         },
         background: "rgba(0, 0, 0, 0.26)",
     }
@@ -124,7 +124,7 @@ export const SystemStatus = () => {
             case "completed":
                 return green;
             case "blocked":
-                return red;
+                return deepOrange;
             default:
                 return grey;
         }
@@ -155,13 +155,13 @@ export const SystemStatus = () => {
             formatter: (cell) => {
                 if (cell === false) {
                     return (
-                        <Chip label="Unbuilt" size="small" style={{ backgroundColor: colorForStatus("blocked")[300], color: "white" }}/>
+                        <Chip label="Unbuilt" size="small" style={{ backgroundColor: colorForStatus("blocked")[200], color: "white", textAlign: "center", marginLeft: "13%"  }}/>
                     )
                 }
                 else
                 {
                     return (
-                        <Chip label="Built"  size="small" style={{ backgroundColor: colorForStatus("completed")[300], color: "white" , marginLeft: "15px"}}/>
+                        <Chip label="Built"  size="small" style={{ backgroundColor: colorForStatus("completed")[300], color: "white" , textAlign: "center", marginLeft:"23%" }}/>
                     )
                 }
 

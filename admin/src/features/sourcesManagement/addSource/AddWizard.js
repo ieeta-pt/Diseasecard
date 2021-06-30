@@ -120,7 +120,7 @@ export const Stats = ({ nextStep, previousStep, totalSteps, step, permissionToGo
                 <Row className="justify-content-md-center">
                     <Col sm="6" className="centerStuff">
                         { step > 1 &&
-                        <a href="#" className='label theme-bg text-white f-14' style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }} onClick={ previousStep }>Go Back</a>
+                        <a href="#" className='label theme-bg2 text-white f-14' style={{ borderRadius: "15px", boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)" }} onClick={ previousStep }>Go Back</a>
                         }
                     </Col>
                     <Col sm="6" className="centerStuff">
@@ -244,7 +244,7 @@ const UploadOntology = props => {
 
     return (
         <div>
-            <p className='text-center'style={{color: "#1dc4e9"}}><b>Please, select a file:</b></p>
+            <p className='text-center'style={{color: "#f3ab9b"}}><b>Please, select a file:</b></p>
             <section className="container">
                 <div {...getRootProps({style})}>
                     <input {...getInputProps()} />
@@ -393,7 +393,7 @@ const ValidateEndpoints = props => {
 
     return (
         <div>
-            <p className='text-center' style={{color: "#1dc4e9"}}><b>Validate the specified endpoints:</b></p>
+            <p className='text-center' style={{color: "#f3ab9b"}}><b>Validate the specified endpoints:</b></p>
             <section className="container">
                 {items}
             </section>
@@ -413,7 +413,7 @@ const Instructions = props => {
 
     return (
         <div>
-            <p className='text-center' style={{color: "#1dc4e9"}}><b>Brief Contextualization</b></p>
+            <p className='text-center' style={{color: "#f3ab9b"}}><b>Brief Contextualization</b></p>
             <p align="justify">
                 The Diseasecard platform is based on an ontology, organized according to four instances: <i>Entities</i>,
                 <i>Concepts</i>, <i>Resources</i> and <i>Parsers</i>.
@@ -533,7 +533,7 @@ const AddEntities = props => {
 
     return (
         <div>
-            <p className='text-center' style={{color: "#1dc4e9"}}><b>Add an Entity</b></p>
+            <p className='text-center' style={{color: "#f3ab9b"}}><b>Add an Entity</b></p>
 
             <AddEntityFrom onSubmit={submit} formDetails={props} labels={labels}/>
         </div>
@@ -555,7 +555,7 @@ const AddConcepts = props => {
 
     return (
         <div>
-            <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Concept</b></p>
+            <p className='text-center' style={{color: "#f3ab9b"}}><b>Add a Concept</b></p>
             <AddConceptForm onSubmit={submit} formDetails={props} labels={labels}/>
         </div>
     );
@@ -577,7 +577,7 @@ const AddResources = props => {
 
     return (
         <div>
-            <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Resource</b></p>
+            <p className='text-center' style={{color: "#f3ab9b"}}><b>Add a Resource</b></p>
             <AddResourceForm onSubmit={submit} formDetails={props} permissionToGo={permissionToGo} labels={labels}/>
         </div>
     );
@@ -650,7 +650,7 @@ const AddParsers = props => {
         <div style={{textAlign: "center"}}>
             <Row className="justify-content-end">
                 <Col sm="8">
-                    <p className='text-center' style={{color: "#1dc4e9"}}><b>Add a Parser</b></p>
+                    <p className='text-center' style={{color: "#f3ab9b"}}><b>Add a Parser</b></p>
                 </Col>
                 <Col sm="2" className="text-right">
                     <IconButton  aria-label="delete" size="small" onClick={handleClickOpen}>

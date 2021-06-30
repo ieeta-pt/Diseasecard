@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
         padding: "0.5px 10px 1px 10px",
         fontSize: "14px",
         textTransform: "none",
-        borderColor: "#1de9b6",
-        color: "#1de9b6",
+        borderColor: "#E94F3F",
+        color: "#E94F3F",
         '&:hover':{
-            borderColor: "#1dc4e9",
-            color: "#1dc4e9"
+            borderColor: "#f3ab9b",
+            color: "#f3ab9b"
         },
     },
     buttonG: {
@@ -48,12 +48,12 @@ const useStyles = makeStyles((theme) => ({
         padding: "0.5px 10px 1px 10px",
         fontSize: "14px",
         textTransform: "none",
-        borderColor: "#1de9b6",
+        borderColor: "#E94F3F",
         color: "#fff",
         '&:hover':{
-            borderColor: "#1de9b6",
+            borderColor: "#E94F3F",
         },
-        background: "linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%)"
+        background: "linear-gradient(-135deg, #E94F3F 0%, #f3ab9b 100%)"
     }
 }));
 

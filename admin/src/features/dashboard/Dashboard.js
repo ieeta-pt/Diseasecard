@@ -36,15 +36,15 @@ const Dashboard = () => {
             {
                 label: '# of Items',
                 data: validItems,
-                backgroundColor: 'rgba(137, 159, 212, 0.2)',
-                borderColor: 'rgba(137, 159, 212, 1)',
+                backgroundColor: 'rgba(233, 79, 63, 0.2)',
+                borderColor: 'rgba(233, 79, 63, 1)',
                 borderWidth: 1
             },
             {
                 label: '# of Invalid Items',
                 data: invalidItems,
-                backgroundColor: 'rgba(29, 233, 182, 0.2)',
-                borderColor: 'rgba(29, 233, 182, 1)',
+                backgroundColor: 'rgba(185, 183, 189, 0.2)',
+                borderColor: 'rgba(185, 183, 189, 1)',
                 borderWidth: 1
             },
         ],
@@ -138,7 +138,7 @@ const Dashboard = () => {
                                     <h5 className="m-0">Number of Invalid Items</h5>
                                 </div>
                                 <div className="col-auto">
-                                    <label className="label theme-bg2 text-white f-14 f-w-400 float-right">{invalidPercentage}%</label>
+                                    <label className="label theme-bg text-white f-14 f-w-400 float-right">{invalidPercentage}%</label>
                                 </div>
                             </div>
                             <h2 className="mt-2 f-w-300">{nInvalidItems}<sub className="text-muted f-14"> Endpoints</sub></h2>

@@ -32,11 +32,11 @@ export const useStyles = makeStyles((theme) => ({
         padding: "0.5px 10px 1px 10px",
         fontSize: "14px",
         textTransform: "none",
-        borderColor: "#1de9b6",
-        color: "#1de9b6",
+        borderColor: "#E94F3F",
+        color: "#E94F3F",
         '&:hover':{
-            borderColor: "#1dc4e9",
-            color: "#1dc4e9"
+            borderColor: "#f3ab9b",
+            color: "#f3ab9b"
         },
     },
     buttonG: {
@@ -45,52 +45,51 @@ export const useStyles = makeStyles((theme) => ({
         padding: "0.5px 10px 1px 10px",
         fontSize: "14px",
         textTransform: "none",
-        borderColor: "#1de9b6",
+        borderColor: "#f3ab9b",
         color: "#fff",
         '&:hover':{
-            borderColor: "#1de9b6",
+            borderColor: "#E94F3F",
         },
-        background: "linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%)"
+        background: "linear-gradient(-135deg, #E94F3F 0%, #f3ab9b 100%)"
     },
     buttonP: {
         borderRadius: "15px",
         boxShadow: "0 5px 10px 0 rgba(0,0,0,0.2)",
         padding: "0.5px 10px 1px 10px",
-        marginTop: "10px",
         marginRight: "5%",
         fontSize: "14px",
         textTransform: "none",
-        borderColor: "#A389D4",
+        borderColor: "#ffccbc",
         color: "#fff",
         '&:hover':{
-            borderColor: "#A389D4",
+            borderColor: "#fbe9e7",
         },
-        background: "linear-gradient(-135deg, #899FD4 0%, #A389D4 100%)"
+        background: "linear-gradient(-135deg, #f3ab9b 0%, #fbe9e7 100%)"
     },
     field: {
-        borderColor: "#1dc4e9",
+        borderColor: "#f3ab9b",
         '& label.Mui-focused': {
-            color: "#1dc4e9",
+            color: "#f3ab9b",
         },
         '& .MuiInput-underline:after': {
-            borderBottomColor: "#1dc4e9",
+            borderBottomColor: "#f3ab9b",
         },
         '& .MuiOutlinedInput-root': {
             '&:hover fieldset': {
-                borderColor: "#1dc4e9",
+                borderColor: "#f3ab9b",
             },
             '&.Mui-focused fieldset': {
-                borderColor: "#1dc4e9",
+                borderColor: "#f3ab9b",
             },
         }
     },
     switch: {
-        borderColor: "#1de9b6",
+        borderColor: "#E94F3F",
         '& .MuiSwitch-colorPrimary.Mui-checked': {
-            color: "#1de9b6",
+            color: "#E94F3F",
         },
         '& .MuiSwitch-colorPrimary.Mui-checked + .MuiSwitch-track': {
-            backgroundColor: "#1de9b6",
+            backgroundColor: "#E94F3F",
         },
         width: "100%"
     },
@@ -228,7 +227,7 @@ export const FootForm = (props, c, type) => {
         <div style={{ marginTop: '20px', marginBottom: "20px", width: "100%"}}>
             <Row className="justify-content-md-center">
                 <Col sm="6" className="centerStuff">
-                    <Button variant="outlined" color="primary" className={ c.buttonG } type="button" onClick={goBack}>
+                    <Button variant="outlined" color="primary" className={ c.buttonP } type="button" onClick={goBack}>
                         Go Back
                     </Button>
                 </Col>

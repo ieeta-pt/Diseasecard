@@ -664,11 +664,17 @@ public class Storage {
 
         DateTimeFormatter f = DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss");
 
-        LocalDateTime startDate = LocalDateTime.parse( start , f ) ;
-        LocalDateTime stopDate = LocalDateTime.parse( last , f ) ;
+        try {
+            LocalDateTime startDate = LocalDateTime.parse( start , f ) ;
+            LocalDateTime stopDate = LocalDateTime.parse( last , f ) ;
+            results.put("isValidating", stopDate.isBefore( startDate ));
+        } catch (Exception e) {
+            results.put("isValidating", true);
+        }
+
 
         // if true system is validating
-        results.put("isValidating", stopDate.isBefore( startDate ));
+
 
         return results;
     }

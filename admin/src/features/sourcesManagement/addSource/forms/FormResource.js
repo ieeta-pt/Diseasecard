@@ -296,7 +296,7 @@ const AddResourceForm = props => {
                     <div style={{ marginTop: '20px', marginBottom: "20px", width: "100%"}}>
                         <Row className="justify-content-md-center">
                             <Col sm="6" className="centerStuff">
-                                <Button variant="outlined" color="primary" className={ c.buttonG } type="button" onClick={goBack}>
+                                <Button variant="outlined" color="primary" className={ c.buttonP } type="button" onClick={goBack}>
                                     Go Back
                                 </Button>
                             </Col>
