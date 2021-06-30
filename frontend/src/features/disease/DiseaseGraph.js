@@ -24,6 +24,7 @@ export const DiseaseGraph = ({ omim }) => {
       top: 40%;
       left: 45%;
     `;
+
     let series;
     useEffect(() => {
         // Create chart

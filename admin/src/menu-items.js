@@ -59,13 +59,6 @@ export default {
             icon: 'icon-group',
             children: [
                 {
-                    id: 'form-basic',
-                    title: 'Report',
-                    type: 'item',
-                    url: '/sources/report',
-                    icon: 'feather icon-file-text'
-                },
-                {
                     id: 'bootstrap',
                     title: 'Management',
                     type: 'item',

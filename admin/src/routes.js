@@ -11,7 +11,6 @@ const AlertBoxPage = React.lazy(() => import('./features/endpointAlertBox/AlertB
 const EndpointManagementPage = React.lazy(() => import('./features/endpointManagement/EndpointManagementPage'));
 const SourceManagementPage = React.lazy(() => import('./features/sourcesManagement/SourceManagementPage'));
 const SourceMapPage = React.lazy(() => import('./features/sourcesMap/SourceMapPage'));
-const SourceReportPage = React.lazy(() => import('./features/sourcesReport/SourceReportPage'));
 const SPARQLEndpoint = React.lazy(() => import('./features/sparqlEndpoint/SPARQLEndpoint'));
 
 
@@ -22,7 +21,6 @@ const routes = [
     { path: '/endpoint/management', exact: true, name: 'Endpoints Management', component: EndpointManagementPage },
     { path: '/sources/management', exact: true, name: 'Sources Management', component: SourceManagementPage },
     { path: '/sources/map', exact: true, name: 'Sources Map', component: SourceMapPage },
-    { path: '/sources/report', exact: true, name: 'Sources Report', component: SourceReportPage },
 ];
 
 export default routes;
