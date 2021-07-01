@@ -85,10 +85,10 @@ public class AlertBoxValidation {
     }
 
 
-    @PostConstruct
-    public void init() {
-        this.lightValidation();
-    }
+//    @PostConstruct
+//    public void init() {
+//        this.lightValidation();
+//    }
 
 
     /*

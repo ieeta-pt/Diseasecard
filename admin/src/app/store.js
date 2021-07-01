@@ -10,6 +10,7 @@ import alertBoxSlice from "../features/endpointAlertBox/alertBoxSlice";
 import { getDefaultMiddleware } from '@reduxjs/toolkit'
 import { reducer as formReducer } from 'redux-form';
 import dashboardSlice from "../features/dashboard/dashboardSlice";
+import sourceMapSlice from "../features/sourcesMap/sourceMapSlice";
 
 
 const customizedMiddleware = getDefaultMiddleware({
@@ -25,9 +26,10 @@ export default configureStore({
     listResources: listResourceSlice,
     systemStatus: systemStatusSlice,
     form: formReducer,
-    listPrefixes:listPrefixesSlice,
-    endpointManagement:endpointManagementSlice,
-    alertBox:alertBoxSlice,
+    listPrefixes: listPrefixesSlice,
+    endpointManagement: endpointManagementSlice,
+    alertBox: alertBoxSlice,
+    sourceMap: sourceMapSlice
   },
   middleware: customizedMiddleware
 });

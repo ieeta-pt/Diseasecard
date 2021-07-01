@@ -48,6 +48,7 @@ const getModuleURL = function (module) {
         case "forceValidateEndpoints":         return "/dcadmin/operations/validateAllEndpoints";
         case "validateEndpoints":              return "/dcadmin/operations/validateEndpoints";
         case "getSystemStats":                 return "/dcadmin/utils/systemStats";
+        case "getOntology":                    return "/dcadmin/utils/ontology";
         default:                               return "";
     }
 };

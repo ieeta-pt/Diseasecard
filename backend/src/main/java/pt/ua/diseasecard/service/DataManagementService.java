@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.openjena.atlas.json.JSON;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -553,8 +554,49 @@ public class DataManagementService {
     }
 
 
-    public JSONArray getSimplifiedOntologyStructure() {
-        return null;
+    public JSONObject getSimplifiedOntologyStructure() {
+        String baseUrl = this.config.getPrefixes().get("diseasecard");
+
+        JSONObject ontology = new JSONObject();
+
+        ontology.put("name", this.storage.getSeedURI().replace(baseUrl, ""));
+        ontology.put("children", new JSONArray());
+
+        JSONObject entities = this.getAllEntities();
+        JSONObject concepts = this.getAllConcepts();
+
+        for (Object key : entities.keySet()) {
+
+            JSONObject infoEntity = new JSONObject();
+            infoEntity.put("name", ((JSONObject) entities.get(key)).get("label"));
+            infoEntity.put("children", new JSONArray());
+
+            JSONArray entityOf = (JSONArray) ((JSONObject) entities.get(key)).get("isEntityOf");
+            for (Object conceptURI : entityOf)
+            {
+                JSONObject infoConcept = new JSONObject();
+                infoConcept.put("name", ((JSONObject) concepts.get(conceptURI)).get("label"));
+                infoConcept.put("children", new JSONArray());
+
+                JSONArray resourcesExtending = (JSONArray) ((JSONObject) concepts.get(conceptURI)).get("hasResource");
+
+                for (Object resourceURI : resourcesExtending)
+                {
+                    JSONObject resource = this.getResource(resourceURI.toString());
+                    JSONObject infoResource = new JSONObject();
+                    infoResource.put("name", resource.get("label"));
+                    infoResource.put("value", 20);
+
+                    ((JSONArray) infoConcept.get("children")).add(infoResource);
+                }
+
+                ((JSONArray) infoEntity.get("children")).add(infoConcept);
+            }
+
+            ((JSONArray) ontology.get("children")).add(infoEntity);
+
+        }
+        return ontology;
     }
 
 

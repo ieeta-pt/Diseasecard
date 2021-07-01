@@ -449,7 +449,7 @@ public class DiseasecardController {
 
     @GetMapping("/dcadmin/utils/ontology")
     @ResponseBody
-    public JSONArray getOntology() {
+    public JSONObject getOntology() {
         return this.dataManagementService.getSimplifiedOntologyStructure();
     }
 }
