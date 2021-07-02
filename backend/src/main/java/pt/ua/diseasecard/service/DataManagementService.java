@@ -947,6 +947,8 @@ public class DataManagementService {
 
     public JSONObject validateDiseaseEndpoints(String d)  {
 
+        if (d == null) return new JSONObject();
+
         try {
             JSONParser parser = new JSONParser();
             JSONObject json = (JSONObject) parser.parse(d);

@@ -109,7 +109,7 @@ export const BrowserResults = ({ match })  => {
     };
 
     const handleSelectedOption = ( selected ) => {
-        dispatch(getDiseaseByOMIM(selected.omim))
+        // dispatch(getDiseaseByOMIM(selected.omim))
         history.push('/disease/' + selected.omim)
     }
 

@@ -97,7 +97,7 @@ public class AlertBoxValidation {
             - second, minute, hour, day, month, weekday
      */
     @Scheduled(cron = "0 0 0 1,15 * ?" )
-//    @Scheduled(fixedRate = 5000000 )
+    @Scheduled(fixedRate = 5000000 )
     public void lightValidation() {
         if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );
 
@@ -165,8 +165,9 @@ public class AlertBoxValidation {
         Iterator<String> iter = network.iterator();
         while (iter.hasNext()) {
             String value = iter.next();
-            String[] info = value.split(":");
-            String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase())[0].replace("#replace#", info[1]);
+            String[] info = value.split(":", 2);
+            System.out.println("OLÁ: " + Arrays.toString(info));
+            String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase())[0].replace("#replace#", info[1].replace(":", "_"));
 
             executorService.submit(() -> {
                 int responseCode = this.validateEndpoint(finalURL, info);

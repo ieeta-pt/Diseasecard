@@ -7,7 +7,8 @@ const initialState = {
     network: [],
     listOfIds: [],
     omim: '',
-    status: 'idle',
+    status: '',
+    ready: '',
     error: null,
     showFrame: false,
     url: ''
@@ -19,25 +20,16 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
         let values = {};
         const data = res.data
 
-        console.log("NETWORK")
-        console.log(data.network)
-
-        //console.log(data)
         const network = data.network
         network.push("OMIM:" + data.omim)
-        //console.log(network)
-
 
         for (const connection in network) {
             const info = network[connection].split(/:(.+)/)
-            //console.log(info)
             if (info.length > 1) {
                 if (!(info[0] in values)) values[info[0]] = []
                 values[info[0]].push(info[1].replaceAll(":", "_"))
             }
         }
-
-        //console.log(values)
 
         let results = []
         let id = 1
@@ -59,7 +51,7 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
                 id++;
             }
         }
-        //console.log(results)
+        console.log(results)
         return {data, results, listOfIds};
     })
 })
@@ -86,11 +78,13 @@ const diseaseSlice = createSlice({
             state.omim = action.meta.arg
         },
         [getDiseaseByOMIM.fulfilled]: (state, action) => {
+            state.status = 'succeeded'
             state.disease = action.payload.data
             state.network = action.payload.results
             state.omim = action.meta.arg
             state.listOfIds = action.payload.listOfIds
-            state.status = 'succeeded'
+
+            state.ready = 'go'
         },
         [getDiseaseByOMIM.rejected]: (state, action) => {
             state.status = 'failed'
@@ -118,6 +112,7 @@ const diseaseSlice = createSlice({
 export const selectOMIM = state => state.disease.omim
 export const selectNetwork = state => state.disease.network
 export const getStatus = state => state.disease.status
+export const getReady = state => state.disease.ready
 export const getDescription = state => state.disease.disease.description
 export const getListOfIds = state => state.disease.listOfIds
 export const getURL= state => state.disease.url

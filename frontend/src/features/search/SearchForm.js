@@ -43,7 +43,7 @@ export const SearchForm = () => {
 
     const handleSelectedOption = ( selected ) => {
         dispatch(showFrame(false))
-        dispatch(getDiseaseByOMIM(selected[0].omim))
+        // dispatch(getDiseaseByOMIM(selected[0].omim))
         history.push('/disease/' + selected[0].omim)
     }
 

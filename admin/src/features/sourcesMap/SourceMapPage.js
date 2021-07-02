@@ -19,12 +19,11 @@ const SourceMapPage = () => {
     let series;
 
     useEffect(async () => {
-        console.log(await dispatch(getOntology()))
+        await dispatch(getOntology())
 
         let chart = am4core.create("chartdiv", am4plugins_forceDirected.ForceDirectedTree);
         series = chart.series.push(new am4plugins_forceDirected.ForceDirectedSeries())
 
-        console.log(ontology)
         series.data = [ontology];
 
         // Set up data fields
@@ -44,7 +43,6 @@ const SourceMapPage = () => {
         });
 
         if (status === 'fulfilled') {
-            console.log("olaaa")
             return () => {
                 chart.dispose();
             }

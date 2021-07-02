@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import   PropTypes  from 'prop-types';
-import { getListOfIds, getSourceURL, getStatus, selectNetwork, showFrame } from "./diseaseSlice";
+import {getListOfIds, getReady, getSourceURL, getStatus, selectNetwork, showFrame} from "./diseaseSlice";
 import { Typography, Divider, Paper, Tooltip } from "@material-ui/core";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { ArrowDropDown, ArrowRight, BubbleChart, AllOut, FormatListBulleted } from "@material-ui/icons";
@@ -16,6 +16,7 @@ export const DiseaseContentTree = () => {
     const listOfIds = useSelector(getListOfIds)
     const [expanded, setExpanded] = useState(["root"]);
     const status = useSelector(getStatus)
+    const ready = useSelector(getReady)
     const dispatch = useDispatch();
     let tree;
 
@@ -179,7 +180,7 @@ export const DiseaseContentTree = () => {
     };
 
 
-    if (status === 'succeeded'){
+    if (ready === 'go'){
         tree = <div>
                     <Paper elevation={0} className={classes.paper}>
                         <StyledToggleButtonGroup
@@ -236,7 +237,7 @@ export const DiseaseContentTree = () => {
     }
 
     return (
-        <div style={{ paddingTop: "5%", paddingLeft: "4%", overflow: "scroll" , minHeight:"calc(100vh - 3.5em)", borderRight: '1px solid rgba(0, 0, 0, 0.12)'}}>
+        <div style={{ paddingTop: "5%", paddingLeft: "4%", overflow: "auto" , minHeight:"calc(100vh - 3.5em)", borderRight: '1px solid rgba(0, 0, 0, 0.12)'}}>
             { tree }
         </div>
     );
