@@ -57,7 +57,6 @@ public class Browsier {
 
         db.connect();
         Connection con = db.getConnection();
-        System.out.println("CONNECTION: " + con);
 
         while (rs.hasNext()) {
             try {

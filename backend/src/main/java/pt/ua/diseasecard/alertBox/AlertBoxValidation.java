@@ -119,7 +119,6 @@ public class AlertBoxValidation {
         Collections.shuffle(items);
         
         for (Resource item : items) {
-            System.out.println(item);
             String itemUri = item.getURI();
             String[] info = itemUri.substring(itemUri.lastIndexOf("/")).replace("/", "").split("_", 2);
 
@@ -158,7 +157,6 @@ public class AlertBoxValidation {
 
     public JSONObject diseaseRealTimeValidation(JSONObject disease) {
         this.getSourcesBaseURLs();
-        System.out.println(disease);
 
         JSONArray network = (JSONArray) disease.get("network");
         ExecutorService executorService = Executors.newFixedThreadPool(64);
@@ -166,7 +164,6 @@ public class AlertBoxValidation {
         while (iter.hasNext()) {
             String value = iter.next();
             String[] info = value.split(":", 2);
-            System.out.println("OLÁ: " + Arrays.toString(info));
             String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase())[0].replace("#replace#", info[1].replace(":", "_"));
 
             executorService.submit(() -> {
@@ -246,8 +243,5 @@ public class AlertBoxValidation {
         catch (Exception e) {
             e.printStackTrace();
         }
-
-        sourceBaseURLs.forEach((key, value) -> System.out.println(key + " " + Arrays.toString(value)));
-
     }
 }

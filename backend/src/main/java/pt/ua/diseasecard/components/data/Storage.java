@@ -232,8 +232,6 @@ public class Storage {
                 concept.addProperty(hasEntityProperty, newEntity);
                 newEntity.addProperty(entityOfProperty, concept);
             }
-
-            System.out.println(newEntity);
         } catch (IOException ex) {
             if (this.config.getDebug()) {
                 Logger.getLogger(Storage.class.getName()).log(Level.INFO,"[COEUS][Storage] Error while preparing model");
@@ -318,7 +316,6 @@ public class Storage {
         if (!resourceInfoInAttribute)   resourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "resourceID");
         else                            resourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "resourceInfoAttribute");
         parser.addProperty(resourceInfoProperty, resourceInfo);
-        System.out.println("ResourceInfoProperty: " + resourceInfoProperty);
 
         Property externalResourceInfoProperty;
         if (!externalResourceInfoInAttribute)   externalResourceInfoProperty = this.model.getProperty(this.config.getPrefixes().get("coeus") + "externalResourceID");
@@ -419,7 +416,6 @@ public class Storage {
     public void editConcept(String uri, Map<String, String> propertiesToUpdate) {
         Resource concept = this.model.getResource(uri);
 
-        System.out.println(propertiesToUpdate);
 
         for(Map.Entry<String,String> entry : propertiesToUpdate.entrySet()) {
             String propertyLabel = entry.getKey();
@@ -432,10 +428,10 @@ public class Storage {
                 this.model.remove(oldEntity, isEntityOfProperty, concept);
 
                 StmtIterator l = oldEntity.listProperties();
-                System.out.println("\nOLD ENTITY PROPERTIES: ");
-                while (l.hasNext()) {
-                    System.out.println("- " + l.nextStatement().toString());
-                }
+//                System.out.println("\nOLD ENTITY PROPERTIES: ");
+//                while (l.hasNext()) {
+//                    System.out.println("- " + l.nextStatement().toString());
+//                }
 
 
                 Resource entity = this.model.getResource(this.config.getPrefixes().get("diseasecard") + entry.getValue());
@@ -444,12 +440,6 @@ public class Storage {
                 // Note: In this case we're removing all properties of this type, but it's irrelevant since the concept can only have one entity.
                 concept.removeAll(hasEntityProperty);
                 concept.addProperty(hasEntityProperty, entity);
-
-                l = concept.listProperties();
-                System.out.println("\nCONCEPT: ");
-                while (l.hasNext()) {
-                    System.out.println("- " + l.nextStatement().toString());
-                }
             }
             else if (propertyLabel.equals("relatedResourceLabel")) {
                 Property hasResourceProperty = this.model.getProperty(this.config.getPrefixes().get(this.getPropertyPrefix(propertyLabel)) + "hasResource");
@@ -596,8 +586,6 @@ public class Storage {
         instance.addProperty(Predicate.get("coeus:url"), url);
         instance.addProperty(Predicate.get("coeus:error"), error);
 
-        System.out.println("while saving some shit....... Resource: " + resourceLabel);
-
         Resource resource = this.model.getResource(resourceLabel);
         instance.addProperty(Predicate.get("coeus:hasResource"), resource);
     }
@@ -609,7 +597,6 @@ public class Storage {
         StmtIterator iter = this.model.listStatements(null, Predicate.get("rdf:type"), item);
         while (iter.hasNext()) {
             String resource = iter.nextStatement().getSubject().toString();
-            System.out.println("Source Base URL to delete: " + resource);
             this.removeItem(resource);
         }
     }
@@ -765,7 +752,6 @@ public class Storage {
             Resource resource = statement.getSubject();
             flags.add(resource.getProperty(builtProperty).getObject().asLiteral().getBoolean());
         }
-        System.out.println("flags: " + flags);
         if (flags.size() > 1) this.setBuildPhase("Inconsistent");
     }
 
