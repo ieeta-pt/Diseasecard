@@ -3,15 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="64bdb5cd-9cfb-4012-8805-7d240dbec4e4" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/Api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/Api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/app/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/app/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/dashboard/Dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/dashboard/Dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/features/endpointAlertBox/alertBoxSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/features/endpointAlertBox/alertBoxSlice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/alertBox/AlertBoxValidation.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/alertBox/AlertBoxValidation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/components/data/Storage.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/components/data/Storage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/controller/DiseasecardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend/src/main/java/pt/ua/diseasecard/service/DataManagementService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,6 +193,9 @@
       <workItem from="1624634853909" duration="3038000" />
       <workItem from="1624870973784" duration="8590000" />
       <workItem from="1624898111730" duration="5417000" />
+      <workItem from="1625044578408" duration="13766000" />
+      <workItem from="1625134867926" duration="4945000" />
+      <workItem from="1625214686952" duration="5028000" />
     </task>
     <servers />
   </component>
