@@ -16,7 +16,6 @@ export const DiseaseContentTree = () => {
     const listOfIds = useSelector(getListOfIds)
     const [expanded, setExpanded] = useState(["root"]);
     const status = useSelector(getStatus)
-    const ready = useSelector(getReady)
     const dispatch = useDispatch();
     let tree;
 
@@ -180,7 +179,7 @@ export const DiseaseContentTree = () => {
     };
 
 
-    if (ready === 'go'){
+    if (status === 'succeeded'){
         tree = <div>
                     <Paper elevation={0} className={classes.paper}>
                         <StyledToggleButtonGroup

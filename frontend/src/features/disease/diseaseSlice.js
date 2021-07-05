@@ -46,12 +46,11 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
 
                 }
                 if (key==='omim') results.push( { "id": id.toString(), "fullName":'OMIM', "name": 'OMIM', "children":children } )
-                else results.push( { "id": id.toString(), "fullName":key, "name": key, "children":children } )
+                else results.push( { "id": id.toString(), "fullName":key, "name": key, "children": children } )
                 listOfIds.push(id.toString());
                 id++;
             }
         }
-        console.log(results)
         return {data, results, listOfIds};
     })
 })
@@ -83,7 +82,6 @@ const diseaseSlice = createSlice({
             state.network = action.payload.results
             state.omim = action.meta.arg
             state.listOfIds = action.payload.listOfIds
-
             state.ready = 'go'
         },
         [getDiseaseByOMIM.rejected]: (state, action) => {

@@ -9,10 +9,7 @@ import { DiseaseSourceFrame } from "./DiseaseSourceFrame";
 
 export const DiseasePage = ({ match, location }) => {
     let { omim } = match.params
-    if (!omim ) {
-        omim = location.search.split('=').pop();
-    }
-
+    if (!omim ) { omim = location.search.split('=').pop(); }
 
     const showFrame = useSelector(showFrameSource)
 
