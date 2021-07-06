@@ -7,10 +7,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     getDescription,
     getDiseaseByOMIM, getInitialTreeStructure,
-    getReady,
     getSourceURL,
-    getStatus, getTreeStructure,
-    selectNetwork,
+    getStatus,
     showFrame
 } from "./diseaseSlice";
 import { DotLoader } from "react-spinners";
@@ -66,6 +64,7 @@ export const DiseaseGraph = ({ omim }) => {
             series.dataFields.value = "value";
             series.dataFields.name = "name";
             series.dataFields.children = "children";
+            series.dataFields.color = "color";
 
             // Add labels
             series.nodes.template.label.text = "{name}";
@@ -123,7 +122,6 @@ export const DiseaseGraph = ({ omim }) => {
             { status !== 'failed' &&
                 <div id="chartdiv" style={{ paddingLeft:"-5%", width: "100%", height: "90%"}} />
             }
-
         </div>
     );
 }

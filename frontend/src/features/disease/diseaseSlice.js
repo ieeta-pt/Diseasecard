@@ -43,11 +43,11 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
                 for ( const index in value ) {
                     aux = key + ":" + value[index];
                     listOfIds.push(aux)
-                    if (value[index].length >= 8)   children.push( { "id": aux , "fullName": value[index], "name" : value[index].substring(0,7) + "...", "value":1 } )
-                    else                            children.push( { "id": aux , "fullName": value[index], "name" : value[index], "value":1 } )
+                    if (value[index].length >= 8)   children.push( { "id": aux , "fullName": value[index], "name" : value[index].substring(0,7) + "...", "value":1, "color":"#fc9879" } )
+                    else                            children.push( { "id": aux , "fullName": value[index], "name" : value[index], "value":1, "color":"#fc9879" } )
                 }
-                if (key==='omim') results.push( { "id": id.toString(), "fullName":'OMIM', "name": 'OMIM', "children":children } )
-                else results.push( { "id": id.toString(), "fullName":key, "name": key, "children": children } )
+                if (key==='omim') results.push( { "id": id.toString(), "fullName":'OMIM', "name": 'OMIM', "children":children, "color":"#e4582d" } )
+                else results.push( { "id": id.toString(), "fullName":key, "name": key, "children": children, "color":"#e4582d" } )
                 listOfIds.push(id.toString());
                 id++;
             }
