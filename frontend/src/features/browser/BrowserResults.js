@@ -26,6 +26,10 @@ const TextField = styled.input`
       &:hover {
         cursor: pointer;
       }
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px #e5e5e5;
+      }
     `;
 
 const ClearButton = styled(Button)`
@@ -36,9 +40,12 @@ const ClearButton = styled(Button)`
       height: 34px;
       width: 32px;
       text-align: center;
+      padding-left: 21px;
+      padding-right: 21px;
       display: flex;
       align-items: center;
       justify-content: center;
+      background: #e4582d;
     `;
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (<>
@@ -183,7 +190,7 @@ export const BrowserResults = ({ match })  => {
     else if (status === 'succeeded') {
         if ( results.length !== 0 ) {
             content = <DataTable
-                title={<h4> Diseases started with letter <Badge variant="primary" id="queryField">{ letter }</Badge></h4>}
+                title={<h4> Diseases started with letter <Badge style={{backgroundColor: "#283250", color: "#fff"}} id="queryField">{ letter }</Badge></h4>}
                 columns={columns}
                 data={filteredItems}
                 pagination={true}

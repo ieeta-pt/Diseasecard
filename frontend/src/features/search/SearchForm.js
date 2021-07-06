@@ -74,7 +74,6 @@ export const SearchForm = () => {
                             <Link to={'/searchResults'} onClick={ onSearchButtonClicked } className="btn btn-primary"><FontAwesomeIcon icon={ faSearch }/></Link>
                         </InputGroup.Append>
                     </InputGroup>
-
                 </Form.Group>
             </Form>
             <div style={{ marginTop: "50px" }}>
