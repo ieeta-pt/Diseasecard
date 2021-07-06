@@ -4,11 +4,57 @@ import {getResults, getStatus, selectBrowserResults} from "./browserSlice";
 import {Badge, Container, ProgressBar, Row} from "react-bootstrap";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import DataTable from "react-data-table-component";
-import {getDiseaseByOMIM} from "../disease/diseaseSlice";
 import {useHistory} from "react-router-dom";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import styled from 'styled-components';
+import Button from './BrowserSearchBtn';
+import {faAlignJustify} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+
+const TextField = styled.input`
+      height: 32px;
+      width: 200px;
+      border-radius: 3px;
+      border-top-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+      border: 1px solid #e5e5e5;
+      padding: 0 32px 0 16px;
+      &:hover {
+        cursor: pointer;
+      }
+    `;
+
+const ClearButton = styled(Button)`
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+      border-top-right-radius: 5px;
+      border-bottom-right-radius: 5px;
+      height: 34px;
+      width: 32px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `;
+
+const FilterComponent = ({ filterText, onFilter, onClear }) => (<>
+        <TextField
+            id="search"
+            type="text"
+            placeholder="Filter By Name"
+            aria-label="Search Input"
+            value={filterText}
+            onChange={onFilter}
+        />
+        <ClearButton type="button" onClick={onClear}>
+            <FontAwesomeIcon icon={faAlignJustify}/>
+        </ClearButton>
+    </>);
+
 
 export const BrowserResults = ({ match })  => {
     const [letter, setLetter] = useState(["A"]);
@@ -16,6 +62,10 @@ export const BrowserResults = ({ match })  => {
     const status = useSelector(getStatus)
     const results = useSelector(selectBrowserResults)
     const history = useHistory();
+
+    const [filterText, setFilterText] = React.useState('');
+    const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+    const filteredItems = results.filter(item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()));
 
 
     // DataTable Fields
@@ -54,7 +104,7 @@ export const BrowserResults = ({ match })  => {
             sortable: true,
         },
         {
-            name: 'Progress',
+            name: 'Concepts',
             selector: 'c',
             width:"20%",
             sortable: true,
@@ -115,6 +165,17 @@ export const BrowserResults = ({ match })  => {
 
     const classes = useStyles();
 
+    const subHeaderComponentMemo = React.useMemo(() => {
+        const handleClear = () => {
+            if (filterText) {
+                setResetPaginationToggle(!resetPaginationToggle);
+                setFilterText('');
+            }
+        };
+
+        return <FilterComponent onFilter={e => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />;
+    }, [filterText, resetPaginationToggle]);
+
     // Content management
     if (status === 'loading') {
         content = <div>Loading...</div>
@@ -124,8 +185,13 @@ export const BrowserResults = ({ match })  => {
             content = <DataTable
                 title={<h4> Diseases started with letter <Badge variant="primary" id="queryField">{ letter }</Badge></h4>}
                 columns={columns}
-                data={results}
+                data={filteredItems}
                 pagination={true}
+                paginationTotalRows={1000}
+                paginationRowsPerPageOptions={[10,50,100]}
+                paginationResetDefaultPage={resetPaginationToggle} // optionally, a hook to reset pagination to page 1
+                subHeader
+                subHeaderComponent={subHeaderComponentMemo}
                 keyField="omim"
                 sortIcon={sortIcon}
                 customStyles={customStyles}
