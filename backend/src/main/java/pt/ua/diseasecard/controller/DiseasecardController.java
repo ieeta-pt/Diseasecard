@@ -130,6 +130,14 @@ public class DiseasecardController {
     }
 
 
+    @GetMapping("/services/treeStructure")
+    @ResponseBody
+    public JSONArray getTreeStructure() {
+        return this.dataManagementService.getTreeStructure();
+    }
+
+
+
     @PostMapping("/startup")
     public void startInternalProcess() {
         Logger.getLogger(DiseasecardController.class.getName()).log(Level.INFO, "[Diseasecard][Controller] Receive alert to start my internal processing");
@@ -393,6 +401,20 @@ public class DiseasecardController {
     }
 
 
+    @GetMapping("/dcadmin/utils/systemStats")
+    @ResponseBody
+    public JSONObject getSystemStats() {
+        return this.dataManagementService.getInstancesCount();
+    }
+
+
+    @GetMapping("/dcadmin/utils/ontology")
+    @ResponseBody
+    public JSONObject getOntology() {
+        return this.dataManagementService.getSimplifiedOntologyStructure();
+    }
+
+
     @GetMapping("/dcadmin/endpointManagement/getSourcesURLS")
     @ResponseBody
     public JSONArray getSourcesURLS() {
@@ -436,17 +458,4 @@ public class DiseasecardController {
         dataManagementService.prepareRemoveSourceBaseURL(resourceLabel);
     }
 
-
-    @GetMapping("/dcadmin/utils/systemStats")
-    @ResponseBody
-    public JSONObject getSystemStats() {
-        return this.dataManagementService.getInstancesCount();
-    }
-
-
-    @GetMapping("/dcadmin/utils/ontology")
-    @ResponseBody
-    public JSONObject getOntology() {
-        return this.dataManagementService.getSimplifiedOntologyStructure();
-    }
 }

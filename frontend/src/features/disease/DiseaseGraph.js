@@ -6,10 +6,10 @@ import * as am4plugins_forceDirected from "@amcharts/amcharts4/plugins/forceDire
 import {useDispatch, useSelector} from "react-redux";
 import {
     getDescription,
-    getDiseaseByOMIM,
+    getDiseaseByOMIM, getInitialTreeStructure,
     getReady,
     getSourceURL,
-    getStatus,
+    getStatus, getTreeStructure,
     selectNetwork,
     showFrame
 } from "./diseaseSlice";
@@ -35,6 +35,7 @@ export const DiseaseGraph = ({ omim }) => {
     `;
 
     const getInfo = useCallback(async () => {
+        await dispatch(getInitialTreeStructure())
         let response = await dispatch(getDiseaseByOMIM(omim))
         setNetwork(response.payload.results)
     }, [omim])

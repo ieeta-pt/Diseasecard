@@ -17,7 +17,6 @@ export const getResults = createAsyncThunk('search/getResults', async (searchInp
 
 export const getAutocomplete = createAsyncThunk('search/autocomplete', async (searchInput) => {
     return API.GET("searchAutocomplete", "", [searchInput] ).then(res => {
-        //console.log(res.data)
         return res.data;
     })
 })

@@ -11,7 +11,9 @@ const initialState = {
     ready: '',
     error: null,
     showFrame: false,
-    url: ''
+    url: '',
+    concepts: [],
+    tree: [],
 }
 
 export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', async (omim) => {
@@ -43,7 +45,6 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
                     listOfIds.push(aux)
                     if (value[index].length >= 8)   children.push( { "id": aux , "fullName": value[index], "name" : value[index].substring(0,7) + "...", "value":1 } )
                     else                            children.push( { "id": aux , "fullName": value[index], "name" : value[index], "value":1 } )
-
                 }
                 if (key==='omim') results.push( { "id": id.toString(), "fullName":'OMIM', "name": 'OMIM', "children":children } )
                 else results.push( { "id": id.toString(), "fullName":key, "name": key, "children": children } )
@@ -60,6 +61,17 @@ export const getSourceURL = createAsyncThunk('disease/getSourceURL', async (url)
         let url = res.data.url
         let protection = res.data.protection
         return { url, protection };
+    })
+})
+
+export const getInitialTreeStructure = createAsyncThunk('disease/treeStructure', async (url) => {
+    return API.GET("treeStructure", "", [] ).then(res => {
+        let concepts = res.data
+        let tree = []
+        concepts.forEach((value) => tree.push(value.replace("concept_", "")))
+
+        console.log(tree)
+        return { tree };
     })
 })
 
@@ -83,6 +95,21 @@ const diseaseSlice = createSlice({
             state.omim = action.meta.arg
             state.listOfIds = action.payload.listOfIds
             state.ready = 'go'
+
+            console.log("OK: ")
+            console.log(state.network)
+
+            state.tree = []
+            state.concepts.forEach(function (key, i) {
+                let bool = true;
+                for (const elem in state.network) {
+                    if (state.network[elem].name === key) {
+                        bool = false;
+                        state.tree.push( { "id": state.network[elem].id, "fullName":key, "name": key, "children": state.network[elem].children}    )
+                    }
+                }
+                if (bool) state.tree.push({ "id": i.toString()+"_", "fullName":key, "name": key, "children": [] })
+            })
         },
         [getDiseaseByOMIM.rejected]: (state, action) => {
             state.status = 'failed'
@@ -103,12 +130,17 @@ const diseaseSlice = createSlice({
             state.omim = action.meta.arg
             state.error = action.error.message
         },
+
+        [getInitialTreeStructure.fulfilled]: (state, action) => {
+            state.concepts = action.payload.tree
+        }
     }
 })
 
 
 export const selectOMIM = state => state.disease.omim
 export const selectNetwork = state => state.disease.network
+export const selectTree = state => state.disease.tree
 export const getStatus = state => state.disease.status
 export const getReady = state => state.disease.ready
 export const getDescription = state => state.disease.disease.description

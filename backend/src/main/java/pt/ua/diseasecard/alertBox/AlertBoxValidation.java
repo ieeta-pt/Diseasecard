@@ -97,7 +97,7 @@ public class AlertBoxValidation {
             - second, minute, hour, day, month, weekday
      */
     @Scheduled(cron = "0 0 0 1,15 * ?" )
-    @Scheduled(fixedRate = 5000000 )
+//    @Scheduled(fixedRate = 5000000 )
     public void lightValidation() {
         if (this.config.getDebug()) java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Searching Invalid Items at " + dateFormat.format(new Date()) );
 

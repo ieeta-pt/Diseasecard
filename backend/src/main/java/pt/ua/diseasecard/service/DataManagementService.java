@@ -789,6 +789,33 @@ public class DataManagementService {
         return p;
     }
 
+    /*
+        This method allows to retrieve all concept's labels.
+        This information is currently used by the Tree component at Disease Page.
+     */
+    public JSONArray getTreeStructure() {
+
+        JSONArray results = new JSONArray();
+
+        /*
+        SELECT ?label
+        WHERE {
+             ?s rdf:type coeus:Concept .
+             ?s rdfs:label ?label
+        }
+        ORDER BY ASC(UCASE(str(?label)))
+         */
+
+        JSONArray queryResults = performSimpleQuery("SELECT ?label WHERE { ?s rdf:type coeus:Concept . ?s rdfs:label ?label } ORDER BY ASC(UCASE(str(?label)))");
+
+        for (Object o : queryResults) {
+            JSONObject binding = (JSONObject) o;
+            results.add(((JSONObject) binding.get("label")).get("value").toString());
+        }
+
+        return results;
+    }
+
 
     public JSONArray queryJenaModel(String query) throws ParseException {
         JSONParser parser = new JSONParser();
