@@ -10,7 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
 import styled from 'styled-components';
 import Button from './BrowserSearchBtn';
-import {faAlignJustify} from "@fortawesome/free-solid-svg-icons";
+import {faEraser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const TextField = styled.input`
@@ -58,7 +58,7 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (<>
             onChange={onFilter}
         />
         <ClearButton type="button" onClick={onClear}>
-            <FontAwesomeIcon icon={faAlignJustify}/>
+            <FontAwesomeIcon icon={faEraser} style={{fontSize: "14px"}}/>
         </ClearButton>
     </>);
 
