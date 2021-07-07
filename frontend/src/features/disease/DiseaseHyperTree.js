@@ -71,7 +71,7 @@ export const DiseaseHyperTree = ({ omim }) => {
                         if (node.id && node.id.includes(":")) {
                             console.log(node.id)
                             dispatch(getSourceURL(node.id))
-                            dispatch(showFrame(true))
+                            dispatch(showFrame("frame"))
                         }
                         ht.onClick(node.id, {
                             onComplete: function() {

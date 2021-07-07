@@ -14,7 +14,7 @@ export const NavbarD = () => {
     const dispatch = useDispatch();
 
     const prepare = () => {
-        dispatch(showFrame(false));
+        dispatch(showFrame("graph"));
     }
 
     return (

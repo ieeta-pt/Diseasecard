@@ -79,7 +79,7 @@ public class DiseasecardController {
 
     @GetMapping("/services/disease")
     @ResponseBody
-    public JSONObject getDiseaseByOMIM(@RequestParam(name = "omim", required = true) String omim) {
+    public String getDiseaseByOMIM(@RequestParam(name = "omim", required = true) String omim) {
         String disease;
 
         try {
@@ -91,7 +91,8 @@ public class DiseasecardController {
 
         // TODO:
         //  - Please note that this operation can take to much time. It would be better without having to perform this validation here...
-        return this.dataManagementService.validateDiseaseEndpoints(disease);
+        // return this.dataManagementService.validateDiseaseEndpoints(disease);
+        return disease;
     }
 
 
@@ -135,7 +136,6 @@ public class DiseasecardController {
     public JSONArray getTreeStructure() {
         return this.dataManagementService.getTreeStructure();
     }
-
 
 
     @PostMapping("/startup")

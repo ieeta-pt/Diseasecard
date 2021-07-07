@@ -27,7 +27,7 @@ export const SearchForm = () => {
 
     const onSearchButtonClicked = () => {
         if (searchInput) {
-            dispatch(showFrame(false))
+            dispatch(showFrame("graph"))
             dispatch(getResults(searchInput))
             setSearchInput('')
         }
@@ -42,7 +42,7 @@ export const SearchForm = () => {
     };
 
     const handleSelectedOption = ( selected ) => {
-        dispatch(showFrame(false))
+        dispatch(showFrame("graph"))
         history.push('/disease/' + selected[0].omim)
     }
 

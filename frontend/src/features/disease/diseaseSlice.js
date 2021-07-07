@@ -10,7 +10,7 @@ const initialState = {
     status: '',
     ready: '',
     error: null,
-    showFrame: false,
+    showFrame: "graph",
     url: '',
     concepts: [],
     tree: [],

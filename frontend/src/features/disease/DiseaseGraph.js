@@ -82,7 +82,7 @@ export const DiseaseGraph = ({ omim }) => {
                     const id = ev.target._dataItem._dataContext.id
                     if (id.includes(":")) {
                         dispatch(getSourceURL(id))
-                        dispatch(showFrame(true))
+                        dispatch(showFrame("frame"))
                     }
                 }
             })
