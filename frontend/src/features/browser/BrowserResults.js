@@ -115,8 +115,9 @@ export const BrowserResults = ({ match })  => {
             selector: 'c',
             width:"20%",
             sortable: true,
-            //TODO: MUDAR PARA IR BUSCAR O TYPE!
-            cell: row => <ProgressBar style={{width: "100%"}} variant={row.type} now={row.c} label={row.c}/>
+            center: true
+            // //TODO: MUDAR PARA IR BUSCAR O TYPE!
+            // cell: row => <ProgressBar style={{width: "100%"}} variant={row.type} now={row.c} label={row.c}/>
         }
     ];
 
@@ -192,6 +193,7 @@ export const BrowserResults = ({ match })  => {
             content = <DataTable
                 title={<h4> Diseases started with letter <Badge style={{backgroundColor: "#283250", color: "#fff"}} id="queryField">{ letter }</Badge></h4>}
                 columns={columns}
+                // striped={true}
                 data={filteredItems}
                 pagination={true}
                 paginationTotalRows={1000}

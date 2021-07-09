@@ -175,16 +175,11 @@ export const DiseaseContentTree = () => {
 
     const handleView = (event, info) => {
         setView(info)
-        console.log("EVENT")
-        console.log(event)
         dispatch(showFrame("graph"))
     };
 
-
     const handleViewHyperTree = (event, info) => {
         setView(info)
-        console.log("oi")
-        console.log(event)
         dispatch(showFrame("hypertree"))
     };
 

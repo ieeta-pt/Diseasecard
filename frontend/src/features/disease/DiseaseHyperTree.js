@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     getDescription,
     getDiseaseByOMIM, getInitialTreeStructure, getSourceURL,
-    getStatus, showFrame,
+    getStatus, selectNetwork, showFrame,
 } from "./diseaseSlice";
 import { DotLoader } from "react-spinners";
 import { css } from "@emotion/core";
@@ -11,7 +11,7 @@ import {Col, Jumbotron, Row} from "react-bootstrap";
 
 export const DiseaseHyperTree = ({ omim }) => {
     const status = useSelector(getStatus)
-    const [network, setNetwork] = useState([])
+    const network = useSelector(selectNetwork)
     const description = useSelector(getDescription)
     const dispatch = useDispatch();
 
@@ -23,16 +23,15 @@ export const DiseaseHyperTree = ({ omim }) => {
       left: 45%;
     `;
 
-    const getInfo = useCallback(async () => {
-        await dispatch(getInitialTreeStructure())
-        let response = await dispatch(getDiseaseByOMIM(omim))
-        setNetwork(response.payload.results)
-    }, [omim])
-
-    useEffect( () => {
-        getInfo()
-    }, [getInfo])
-
+    // const getInfo = useCallback(async () => {
+    //     await dispatch(getInitialTreeStructure())
+    //     let response = await dispatch(getDiseaseByOMIM(omim))
+    //     setNetwork(response.payload.results)
+    // }, [omim])
+    //
+    // useEffect( () => {
+    //     getInfo()
+    // }, [getInfo])
 
     useEffect(() => {
         if (network.length !== 0) {
@@ -115,8 +114,6 @@ export const DiseaseHyperTree = ({ omim }) => {
 
             document.body.appendChild(script);
         }
-
-
     }, [network])
 
 
@@ -142,7 +139,6 @@ export const DiseaseHyperTree = ({ omim }) => {
             </Row>
         </div>
     }
-
 
     return (
         <div style={{height: "90%"}}>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { Container, Form, InputGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import {faAlignJustify, faSearch} from '@fortawesome/free-solid-svg-icons'
 import { getResults, getAutocomplete } from "./searchSlice";
 import { Link, useHistory } from "react-router-dom";
 import { AsyncTypeahead, Token } from 'react-bootstrap-typeahead';
@@ -78,6 +78,10 @@ export const SearchForm = () => {
             </Form>
             <div style={{ marginTop: "50px" }}>
                 <p>Welcome to <b style={{fontWeight: "bold"}}>Diseasecard</b>!</p>
+                <p> Try the system by entering the name of a disease in the search field above <b style={{fontWeight: "bold"}}>or</b> navigating through our
+                    Browser (accessible from the icon <FontAwesomeIcon style={{fontSize: "13px"}} icon={faAlignJustify}/>  in the upper right corner).
+                </p>
+                <br/>
                 <p>
                     We are currently reshaping DiseaseCard, so some features and sources will be gradually updated.<br />
                     Thank you for your patience.

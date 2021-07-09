@@ -8,7 +8,7 @@ import {
     getDescription,
     getDiseaseByOMIM, getInitialTreeStructure,
     getSourceURL,
-    getStatus,
+    getStatus, selectLastOMIM, selectNetwork,
     showFrame
 } from "./diseaseSlice";
 import { DotLoader } from "react-spinners";
@@ -20,7 +20,9 @@ am4core.useTheme(am4themes_animated);
 
 export const DiseaseGraph = ({ omim }) => {
     const status = useSelector(getStatus)
-    const [network, setNetwork] = useState([])
+    const network = useSelector(selectNetwork)
+    const lastOMIM = useSelector(selectLastOMIM)
+    // const [network, setNetwork] = useState([])
     const description = useSelector(getDescription)
     const dispatch = useDispatch();
 
@@ -33,9 +35,11 @@ export const DiseaseGraph = ({ omim }) => {
     `;
 
     const getInfo = useCallback(async () => {
-        await dispatch(getInitialTreeStructure())
-        let response = await dispatch(getDiseaseByOMIM(omim))
-        setNetwork(response.payload.results)
+        if ( omim !== lastOMIM) {
+            await dispatch(getInitialTreeStructure())
+            let response = await dispatch(getDiseaseByOMIM(omim))
+            // setNetwork(response.payload.results)
+        }
     }, [omim])
 
     useEffect( () => {

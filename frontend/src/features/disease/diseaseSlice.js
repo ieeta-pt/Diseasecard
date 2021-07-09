@@ -7,6 +7,7 @@ const initialState = {
     network: [],
     listOfIds: [],
     omim: '',
+    lastOmim: '',
     status: '',
     ready: '',
     error: null,
@@ -86,6 +87,7 @@ const diseaseSlice = createSlice({
     extraReducers: {
         [getDiseaseByOMIM.pending]: (state, action) => {
             state.status = 'loading'
+            state.network = []
             state.omim = action.meta.arg
         },
         [getDiseaseByOMIM.fulfilled]: (state, action) => {
@@ -110,6 +112,7 @@ const diseaseSlice = createSlice({
                 }
                 if (bool) state.tree.push({ "id": i.toString()+"_", "fullName":key, "name": key, "children": [] })
             })
+            state.lastOmim = state.omim
         },
         [getDiseaseByOMIM.rejected]: (state, action) => {
             state.status = 'failed'
@@ -139,6 +142,7 @@ const diseaseSlice = createSlice({
 
 
 export const selectOMIM = state => state.disease.omim
+export const selectLastOMIM = state => state.disease.lastOmim
 export const selectNetwork = state => state.disease.network
 export const selectTree = state => state.disease.tree
 export const getStatus = state => state.disease.status
