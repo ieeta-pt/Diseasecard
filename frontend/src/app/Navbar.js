@@ -23,7 +23,7 @@ export const NavbarD = () => {
 
             <Nav className="ml-auto">
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Jump to Diseasecard about section</Tooltip>}>
-                        <Nav.Link as={Link} to={'/'} ><FontAwesomeIcon icon={faBook}/></Nav.Link>
+                        <Nav.Link as={Link} to={'/about'} ><FontAwesomeIcon icon={faBook}/></Nav.Link>
                 </OverlayTrigger>
 
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Jump to Diseasecard rare diseases browsing</Tooltip>}>

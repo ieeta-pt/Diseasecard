@@ -7,7 +7,7 @@ import { getResults, getAutocomplete } from "./searchSlice";
 import { Link, useHistory } from "react-router-dom";
 import { AsyncTypeahead, Token } from 'react-bootstrap-typeahead';
 import { unwrapResult } from "@reduxjs/toolkit";
-import { getDiseaseByOMIM, showFrame } from "../disease/diseaseSlice";
+import { showFrame } from "../disease/diseaseSlice";
 
 import logo from "../../images/logo.png"
 

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getResults, getStatus, selectBrowserResults} from "./browserSlice";
-import {Badge, Container, ProgressBar, Row} from "react-bootstrap";
+import {Badge, Container,  Row} from "react-bootstrap";
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 import DataTable from "react-data-table-component";
 import {useHistory} from "react-router-dom";

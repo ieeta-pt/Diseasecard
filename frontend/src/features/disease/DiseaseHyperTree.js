@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {
     getDescription,
-    getDiseaseByOMIM, getInitialTreeStructure, getSourceURL,
+    getSourceURL,
     getStatus, selectNetwork, showFrame,
 } from "./diseaseSlice";
 import { DotLoader } from "react-spinners";
@@ -41,7 +41,7 @@ export const DiseaseHyperTree = ({ omim }) => {
             var json =  { "name": "OMIM: " + omim , "children" : network }
 
             var infovis = document.getElementById('infovis');
-            var w = infovis.offsetWidth - 10, h = infovis.offsetHeight - 100;
+            var w = infovis.offsetWidth - 10;
 
             var ht = new window.$jit.Hypertree({
                 //id of the visualization container
@@ -68,7 +68,6 @@ export const DiseaseHyperTree = ({ omim }) => {
                     domElement.innerHTML = node.name;
                     window.$jit.util.addEvent(domElement, 'click', function () {
                         if (node.id && node.id.includes(":")) {
-                            console.log(node.id)
                             dispatch(getSourceURL(node.id))
                             dispatch(showFrame("frame"))
                         }
@@ -89,7 +88,7 @@ export const DiseaseHyperTree = ({ omim }) => {
                         style.fontSize = "0.8em";
                         style.color = "#283250";
 
-                    } else if(node._depth == 2){
+                    } else if(node._depth === 2){
                         style.fontSize = "0.7em";
                         style.color = "#283250";
 

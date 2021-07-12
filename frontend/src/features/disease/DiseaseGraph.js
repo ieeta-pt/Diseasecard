@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import * as am4core from "@amcharts/amcharts4/core";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4themes_dataviz from "@amcharts/amcharts4/themes/dataviz";
@@ -37,7 +37,7 @@ export const DiseaseGraph = ({ omim }) => {
     const getInfo = useCallback(async () => {
         if ( omim !== lastOMIM) {
             await dispatch(getInitialTreeStructure())
-            let response = await dispatch(getDiseaseByOMIM(omim))
+            await dispatch(getDiseaseByOMIM(omim))
             // setNetwork(response.payload.results)
         }
     }, [omim])
@@ -58,10 +58,7 @@ export const DiseaseGraph = ({ omim }) => {
             div.style.visibility = "hidden";
         });
 
-        console.log(network)
-
         if (network.length !== 0) {
-            console.log("ola")
             series.data = [ { "name": "OMIM: " + omim , "children" : network} ]
 
             // Set up data fields

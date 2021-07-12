@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import   PropTypes  from 'prop-types';
-import {getListOfIds, getReady, getSourceURL, getStatus, selectNetwork, selectTree, showFrame} from "./diseaseSlice";
+import {getListOfIds, getSourceURL, getStatus, selectTree, showFrame} from "./diseaseSlice";
 import { Typography, Divider, Paper, Tooltip } from "@material-ui/core";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { ArrowDropDown, ArrowRight, BubbleChart, AllOut, FormatListBulleted } from "@material-ui/icons";
@@ -239,7 +239,7 @@ export const DiseaseContentTree = () => {
                         onNodeToggle={handleToggle}
                         onNodeSelect={handleSelect}
                     >
-                        {renderTree( { "id":"root", "name": "Sources", "children" : info} )}
+                        {renderTree( { "id":"root", "fullName": "Sources", "children" : info} )}
                     </TreeView>
                </div>
     }

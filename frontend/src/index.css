@@ -127,3 +127,7 @@ mark {
   margin-top: 2%;
 }
 /** { border: 1px so lid red; }*/
+
+#scrollStuff::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}

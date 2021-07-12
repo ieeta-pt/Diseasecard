@@ -71,7 +71,6 @@ export const getInitialTreeStructure = createAsyncThunk('disease/treeStructure',
         let tree = []
         concepts.forEach((value) => tree.push(value.replace("concept_", "")))
 
-        console.log(tree)
         return { tree };
     })
 })
@@ -97,9 +96,6 @@ const diseaseSlice = createSlice({
             state.omim = action.meta.arg
             state.listOfIds = action.payload.listOfIds
             state.ready = 'go'
-
-            console.log("OK: ")
-            console.log(state.network)
 
             state.tree = []
             state.concepts.forEach(function (key, i) {
