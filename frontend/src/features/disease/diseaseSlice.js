@@ -7,10 +7,11 @@ const initialState = {
     network: [],
     listOfIds: [],
     omim: '',
+    lastOmim: '',
     status: '',
     ready: '',
     error: null,
-    showFrame: false,
+    showFrame: "graph",
     url: '',
     concepts: [],
     tree: [],
@@ -43,11 +44,11 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
                 for ( const index in value ) {
                     aux = key + ":" + value[index];
                     listOfIds.push(aux)
-                    if (value[index].length >= 8)   children.push( { "id": aux , "fullName": value[index], "name" : value[index].substring(0,7) + "...", "value":1 } )
-                    else                            children.push( { "id": aux , "fullName": value[index], "name" : value[index], "value":1 } )
+                    if (value[index].length >= 8)   children.push( { "id": aux , "fullName": value[index], "name" : value[index].substring(0,7) + "...", "value":1, "color":"#fc9879" } )
+                    else                            children.push( { "id": aux , "fullName": value[index], "name" : value[index], "value":1, "color":"#fc9879" } )
                 }
-                if (key==='omim') results.push( { "id": id.toString(), "fullName":'OMIM', "name": 'OMIM', "children":children } )
-                else results.push( { "id": id.toString(), "fullName":key, "name": key, "children": children } )
+                if (key==='omim') results.push( { "id": id.toString(), "fullName":'OMIM', "name": 'OMIM', "children":children, "color":"#e4582d" } )
+                else results.push( { "id": id.toString(), "fullName":key, "name": key, "children": children, "color":"#e4582d" } )
                 listOfIds.push(id.toString());
                 id++;
             }
@@ -70,7 +71,6 @@ export const getInitialTreeStructure = createAsyncThunk('disease/treeStructure',
         let tree = []
         concepts.forEach((value) => tree.push(value.replace("concept_", "")))
 
-        console.log(tree)
         return { tree };
     })
 })
@@ -86,6 +86,7 @@ const diseaseSlice = createSlice({
     extraReducers: {
         [getDiseaseByOMIM.pending]: (state, action) => {
             state.status = 'loading'
+            state.network = []
             state.omim = action.meta.arg
         },
         [getDiseaseByOMIM.fulfilled]: (state, action) => {
@@ -95,9 +96,6 @@ const diseaseSlice = createSlice({
             state.omim = action.meta.arg
             state.listOfIds = action.payload.listOfIds
             state.ready = 'go'
-
-            console.log("OK: ")
-            console.log(state.network)
 
             state.tree = []
             state.concepts.forEach(function (key, i) {
@@ -110,6 +108,7 @@ const diseaseSlice = createSlice({
                 }
                 if (bool) state.tree.push({ "id": i.toString()+"_", "fullName":key, "name": key, "children": [] })
             })
+            state.lastOmim = state.omim
         },
         [getDiseaseByOMIM.rejected]: (state, action) => {
             state.status = 'failed'
@@ -139,6 +138,7 @@ const diseaseSlice = createSlice({
 
 
 export const selectOMIM = state => state.disease.omim
+export const selectLastOMIM = state => state.disease.lastOmim
 export const selectNetwork = state => state.disease.network
 export const selectTree = state => state.disease.tree
 export const getStatus = state => state.disease.status

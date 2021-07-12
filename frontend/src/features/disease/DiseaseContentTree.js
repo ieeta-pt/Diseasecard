@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import   PropTypes  from 'prop-types';
-import {getListOfIds, getReady, getSourceURL, getStatus, selectNetwork, selectTree, showFrame} from "./diseaseSlice";
+import {getListOfIds, getSourceURL, getStatus, selectTree, showFrame} from "./diseaseSlice";
 import { Typography, Divider, Paper, Tooltip } from "@material-ui/core";
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { ArrowDropDown, ArrowRight, BubbleChart, AllOut, FormatListBulleted } from "@material-ui/icons";
+import DeviceHubIcon from '@material-ui/icons/DeviceHub';
 import { TreeItem, TreeView, ToggleButtonGroup, ToggleButton }  from '@material-ui/lab';
 
 
@@ -142,7 +143,7 @@ export const DiseaseContentTree = () => {
     const handleSelect = (event, nodeIds) => {
         if (nodeIds.includes(":")) {
             dispatch(getSourceURL(nodeIds))
-            dispatch(showFrame(true))
+            dispatch(showFrame("frame"))
             setView('none')
         }
     };
@@ -174,8 +175,12 @@ export const DiseaseContentTree = () => {
 
     const handleView = (event, info) => {
         setView(info)
-        //console.log(info)
-        dispatch(showFrame(false))
+        dispatch(showFrame("graph"))
+    };
+
+    const handleViewHyperTree = (event, info) => {
+        setView(info)
+        dispatch(showFrame("hypertree"))
     };
 
 
@@ -201,16 +206,20 @@ export const DiseaseContentTree = () => {
                             size="small"
                             exclusive
                             aria-label="text formatting"
-                            onChange={handleView}
                             value={view}
                         >
 
-                            <ToggleButton value="graph" aria-label="bold">
+                            <ToggleButton value="graph" aria-label="bold" onClick={handleView}>
                                 <Tooltip title="Show Graph" aria-label="add" placement="top">
                                     <BubbleChart />
                                 </Tooltip>
                             </ToggleButton>
 
+                            <ToggleButton value="hypertree" aria-label="bold" onClick={handleViewHyperTree}>
+                                <Tooltip title="Show HyperTree" aria-label="add" placement="top">
+                                    <DeviceHubIcon />
+                                </Tooltip>
+                            </ToggleButton>
 
                             <ToggleButton value="detailed" aria-label="left aligned" disabled>
                                 <Tooltip title="Show Detailed Info" aria-label="add" placement="top">
@@ -230,7 +239,7 @@ export const DiseaseContentTree = () => {
                         onNodeToggle={handleToggle}
                         onNodeSelect={handleSelect}
                     >
-                        {renderTree( { "id":"root", "name": "Sources", "children" : info} )}
+                        {renderTree( { "id":"root", "fullName": "Sources", "children" : info} )}
                     </TreeView>
                </div>
     }

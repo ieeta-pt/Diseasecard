@@ -3,9 +3,10 @@ import { SearchForm } from "./features/search/SearchForm";
 import { SearchResults } from "./features/search/SearchResults";
 import { DiseasePage } from "./features/disease/DiseasePage";
 import { BrowserResults } from "./features/browser/BrowserResults";
-import {BrowserRouter as Router, Route, Redirect, Link} from "react-router-dom";
+import {BrowserRouter as Router, Route } from "react-router-dom";
 import Switch from "react-bootstrap/Switch";
 import {NavbarD} from "./app/Navbar";
+import {AboutPage} from "./features/about/AboutPage";
 
 
 
@@ -20,6 +21,7 @@ class App extends React.Component {
                         <Route exact path="/disease/:omim" component={ DiseasePage }/>
                         <Route exact path="/searchResults" component={ SearchResults }/>
                         <Route exact path="/browse" component={ BrowserResults }/>
+                        <Route exact path="/about" component={ AboutPage }/>
                         <Route exact path="/evaluateCard.do" component={ DiseasePage }/>
                     </Switch>
                 </Router>

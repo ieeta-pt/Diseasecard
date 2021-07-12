@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { useDispatch } from "react-redux";
 import { Container, Form, InputGroup } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import {faAlignJustify, faSearch} from '@fortawesome/free-solid-svg-icons'
 import { getResults, getAutocomplete } from "./searchSlice";
 import { Link, useHistory } from "react-router-dom";
 import { AsyncTypeahead, Token } from 'react-bootstrap-typeahead';
 import { unwrapResult } from "@reduxjs/toolkit";
-import { getDiseaseByOMIM, showFrame } from "../disease/diseaseSlice";
+import { showFrame } from "../disease/diseaseSlice";
 
 import logo from "../../images/logo.png"
 
@@ -27,7 +27,7 @@ export const SearchForm = () => {
 
     const onSearchButtonClicked = () => {
         if (searchInput) {
-            dispatch(showFrame(false))
+            dispatch(showFrame("graph"))
             dispatch(getResults(searchInput))
             setSearchInput('')
         }
@@ -42,7 +42,7 @@ export const SearchForm = () => {
     };
 
     const handleSelectedOption = ( selected ) => {
-        dispatch(showFrame(false))
+        dispatch(showFrame("graph"))
         history.push('/disease/' + selected[0].omim)
     }
 
@@ -74,11 +74,14 @@ export const SearchForm = () => {
                             <Link to={'/searchResults'} onClick={ onSearchButtonClicked } className="btn btn-primary"><FontAwesomeIcon icon={ faSearch }/></Link>
                         </InputGroup.Append>
                     </InputGroup>
-
                 </Form.Group>
             </Form>
             <div style={{ marginTop: "50px" }}>
                 <p>Welcome to <b style={{fontWeight: "bold"}}>Diseasecard</b>!</p>
+                <p> Try the system by entering the name of a disease in the search field above <b style={{fontWeight: "bold"}}>or</b> navigating through our
+                    Browser (accessible from the icon <FontAwesomeIcon style={{fontSize: "13px"}} icon={faAlignJustify}/>  in the upper right corner).
+                </p>
+                <br/>
                 <p>
                     We are currently reshaping DiseaseCard, so some features and sources will be gradually updated.<br />
                     Thank you for your patience.

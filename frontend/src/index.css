@@ -26,6 +26,10 @@ code {
   min-height: 100vh;
 }
 
+a {
+  font-family: 'Titillium Web', sans-serif;
+}
+
 /**
       Search CSS
  */
@@ -61,19 +65,19 @@ mark {
 }
 
 .btn  {
-  background-color: #46b8da;
-  border-color: #46b8da;
+  background-color: #e4582d;
+  border-color: #e4582d;
 }
 
 .btn-primary  {
-  background-color: #46b8da;
-  border-color: #46b8da;
+  background-color: #e4582d;
+  border-color: #e4582d;
 }
 
 .btn:hover, .btn:focus, .btn:active, .btn.active, .open>.dropdown-toggle.btn {
   color: #fff;
-  background-color: #46b8da;
-  border-color: #46b8da; /*set the color you want here*/
+  background-color: #e4582d;
+  border-color: #e4582d; /*set the color you want here*/
 }
 
 .results_title {
@@ -116,7 +120,7 @@ mark {
 }
 
 #queryField {
-  background-color: #46b8da ;
+  background-color: #e4582d ;
 }
 
 .custom-switch {
@@ -127,3 +131,7 @@ mark {
   margin-top: 2%;
 }
 /** { border: 1px so lid red; }*/
+
+#scrollStuff::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+}

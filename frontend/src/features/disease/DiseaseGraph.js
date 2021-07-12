@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import * as am4core from "@amcharts/amcharts4/core";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4themes_dataviz from "@amcharts/amcharts4/themes/dataviz";
@@ -7,10 +7,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     getDescription,
     getDiseaseByOMIM, getInitialTreeStructure,
-    getReady,
     getSourceURL,
-    getStatus, getTreeStructure,
-    selectNetwork,
+    getStatus, selectLastOMIM, selectNetwork,
     showFrame
 } from "./diseaseSlice";
 import { DotLoader } from "react-spinners";
@@ -22,7 +20,9 @@ am4core.useTheme(am4themes_animated);
 
 export const DiseaseGraph = ({ omim }) => {
     const status = useSelector(getStatus)
-    const [network, setNetwork] = useState([])
+    const network = useSelector(selectNetwork)
+    const lastOMIM = useSelector(selectLastOMIM)
+    // const [network, setNetwork] = useState([])
     const description = useSelector(getDescription)
     const dispatch = useDispatch();
 
@@ -35,9 +35,11 @@ export const DiseaseGraph = ({ omim }) => {
     `;
 
     const getInfo = useCallback(async () => {
-        await dispatch(getInitialTreeStructure())
-        let response = await dispatch(getDiseaseByOMIM(omim))
-        setNetwork(response.payload.results)
+        if ( omim !== lastOMIM) {
+            await dispatch(getInitialTreeStructure())
+            await dispatch(getDiseaseByOMIM(omim))
+            // setNetwork(response.payload.results)
+        }
     }, [omim])
 
     useEffect( () => {
@@ -56,16 +58,14 @@ export const DiseaseGraph = ({ omim }) => {
             div.style.visibility = "hidden";
         });
 
-        console.log(network)
-
         if (network.length !== 0) {
-            console.log("ola")
             series.data = [ { "name": "OMIM: " + omim , "children" : network} ]
 
             // Set up data fields
             series.dataFields.value = "value";
             series.dataFields.name = "name";
             series.dataFields.children = "children";
+            series.dataFields.color = "color";
 
             // Add labels
             series.nodes.template.label.text = "{name}";
@@ -83,7 +83,7 @@ export const DiseaseGraph = ({ omim }) => {
                     const id = ev.target._dataItem._dataContext.id
                     if (id.includes(":")) {
                         dispatch(getSourceURL(id))
-                        dispatch(showFrame(true))
+                        dispatch(showFrame("frame"))
                     }
                 }
             })
@@ -123,7 +123,6 @@ export const DiseaseGraph = ({ omim }) => {
             { status !== 'failed' &&
                 <div id="chartdiv" style={{ paddingLeft:"-5%", width: "100%", height: "90%"}} />
             }
-
         </div>
     );
 }
