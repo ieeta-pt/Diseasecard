@@ -26,6 +26,10 @@ code {
   min-height: 100vh;
 }
 
+a {
+  font-family: 'Titillium Web', sans-serif;
+}
+
 /**
       Search CSS
  */

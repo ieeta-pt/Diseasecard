@@ -61,32 +61,32 @@ export const AboutPage = ({}) => {
                                 className={classes.root}
                             >
                                 <ListItem button>
-                                    <ListItemText><a href="#section-1">Overview</a></ListItemText>
+                                    <ListItemText><a href="#section-1" style={{color: "#e4582d"}}>Overview</a></ListItemText>
                                 </ListItem>
                                 <ListItem button>
-                                    <ListItemText><a href="#section-2">Main Features</a></ListItemText>
+                                    <ListItemText><a href="#section-2" style={{color: "#e4582d"}}>Main Features</a></ListItemText>
                                 </ListItem>
                                 <Collapse in="true" timeout="auto" unmountOnExit>
                                     <List component="div" disablePadding>
                                         <ListItem button className={classes.nested}>
-                                            <ListItemText><a href="#section-search">Search</a></ListItemText>
+                                            <ListItemText><a href="#section-search" style={{color: "#e4582d"}}>Search</a></ListItemText>
                                         </ListItem>
                                         <ListItem button className={classes.nested}>
-                                            <ListItemText><a href="#section-browser">Browser</a></ListItemText>
+                                            <ListItemText><a href="#section-browser" style={{color: "#e4582d"}}>Browser</a></ListItemText>
                                         </ListItem>
                                         <ListItem button className={classes.nested}>
-                                            <ListItemText><a href="#section-explorer">Explorer</a></ListItemText>
+                                            <ListItemText><a href="#section-explorer" style={{color: "#e4582d"}}>Explorer</a></ListItemText>
                                         </ListItem>
                                         <ListItem button className={classes.nested}>
-                                            <ListItemText><a href="#section-liveview">LiveView</a></ListItemText>
+                                            <ListItemText><a href="#section-liveview" style={{color: "#e4582d"}}>LiveView</a></ListItemText>
                                         </ListItem>
                                     </List>
                                 </Collapse>
                                 <ListItem button>
-                                    <ListItemText><a href="#section-3">Disclaimer</a></ListItemText>
+                                    <ListItemText><a href="#section-3" style={{color: "#e4582d"}}>Disclaimer</a></ListItemText>
                                 </ListItem>
                                 <ListItem button>
-                                    <ListItemText><a href="#section-4">Contacts</a></ListItemText>
+                                    <ListItemText><a href="#section-4" style={{color: "#e4582d"}}>Contacts</a></ListItemText>
                                 </ListItem>
                             </List>
                         </Paper>
@@ -101,9 +101,9 @@ export const AboutPage = ({}) => {
                                 Resorting to this integrated environment, clinicians are able to access and relate diseases data already available in the Internet, scattered along multiple databases.
                             </p>
                             <p align="justify">
-                                This new version of Diseasecard was developed by <a href="http://www.ua.pt">University of Aveiro</a> <a href="http://bioinformatics.ua.pt/">Bioinformatics Group</a>.
+                                This new version of Diseasecard was developed by <a href="http://www.ua.pt" style={{color: "#e4582d"}}>University of Aveiro</a> <a href="http://bioinformatics.ua.pt/" style={{color: "#e4582d"}}>Bioinformatics Group</a>.
                             </p>
-                            <p align="justify"> Feel free to evaluate and give us <b>feedback</b> on Diseasecard <a href="https://forms.gle/qCv5junYiVaFHNTw7" >here</a>. </p>
+                            <p align="justify"> Feel free to evaluate and give us <b>feedback</b> on Diseasecard <a style={{color: "#e4582d"}} href="https://forms.gle/qCv5junYiVaFHNTw7" >here</a>. </p>
                         </section>
 
                         <section id="section-2" style={{marginBottom: "10%"}} >
