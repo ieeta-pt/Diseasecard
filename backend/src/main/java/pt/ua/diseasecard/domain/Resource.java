@@ -17,19 +17,12 @@ public class Resource {
     private String label;
     private String title;
     private String uri;
-    private String source;
-    private String subject;
-    private String method;
     private String publisher;
-    private Concept isResourceOf;
     private String extendsConcept;
     private String endpoint;
-    private String extension;
-    private String query;
-    private String regex;
-    private String extendsIdentifier;
-    private String extendsIdentifierRegex;
     private String identifiers;
+    private Concept isResourceOf;
+    private Parser hasParser;
 
     private final SparqlAPI sparqlAPI = BeanUtil.getBean(SparqlAPI.class);;
 
@@ -37,14 +30,13 @@ public class Resource {
 
     private boolean built = false;
 
-    public Resource(String uri, String title, String label, String description, String publisher, String endpoint, String method) {
+    public Resource(String uri, String title, String label, String description, String publisher, String endpoint) {
         this.uri = uri;
         this.description = description;
         this.label = label;
         this.title = title;
         this.publisher = publisher;
         this.endpoint = endpoint;
-        this.method = method;
     }
 
     public String getDescription() {
@@ -75,27 +67,6 @@ public class Resource {
         this.uri = uri;
     }
 
-    public String getSource() {
-        return source;
-    }
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getMethod() {
-        return method;
-    }
-    public void setMethod(String method) {
-        this.method = method;
-    }
-
     public Concept getIsResourceOf() {
         return isResourceOf;
     }
@@ -117,28 +88,6 @@ public class Resource {
         this.endpoint = endpoint;
     }
 
-    public String getExtension() {
-        return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-
-    public String getQuery() {
-        return query;
-    }
-    public void setQuery(String query) {
-        this.query = query;
-    }
-
-    public String getRegex() {
-        return regex;
-    }
-    public void setRegex(String regex) {
-        this.regex = regex;
-    }
-
     public String getIdentifiers() {
         return identifiers;
     }
@@ -146,19 +95,6 @@ public class Resource {
         this.identifiers = identifiers;
     }
 
-    public String getExtendsIdentifier() {
-        return extendsIdentifier;
-    }
-    public void setExtendsIdentifier(String extendsIdentifier) {
-        this.extendsIdentifier = extendsIdentifier;
-    }
-
-    public String getExtendsIdentifierRegex() {
-        return extendsIdentifierRegex;
-    }
-    public void setExtendsIdentifierRegex(String extendsIdentifierRegex) {
-        this.extendsIdentifierRegex = extendsIdentifierRegex;
-    }
 
     public String getPublisher() {
         return publisher;
@@ -174,9 +110,16 @@ public class Resource {
         this.built = built;
     }
 
+    public Parser getHasParser() {
+        return hasParser;
+    }
+    public void setHasParser(Parser hasParser) {
+        this.hasParser = hasParser;
+    }
+
 
     public HashMap<String, String> getExtended() {
-        HashMap<String, String> extensions = new HashMap<String, String>();
+        HashMap<String, String> extensions = new HashMap<>();
         try
         {
             if (this.config.getDebug()) System.out.println("[COEUS][Resource] " + title + " loading extension data");
@@ -192,7 +135,6 @@ public class Resource {
                 JSONObject tit = (JSONObject) binding.get("title");
                 extensions.put(tit.get("value").toString(), tit.get("value").toString());
             }
-
         }
         catch (Exception ex)
         {
@@ -203,6 +145,7 @@ public class Resource {
 
         return extensions;
     }
+
 
     public HashMap<String, String> getExtended(String uri) {
         HashMap<String, String> extensions = new HashMap<String, String>();
@@ -234,6 +177,7 @@ public class Resource {
         return extensions;
     }
 
+
     public void loadConcept() {
         try
         {
@@ -262,4 +206,149 @@ public class Resource {
     }
 
 
+    public void loadParser() {
+        try
+        {
+            JSONParser parser = new JSONParser();
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT *" +
+                    " WHERE { " + PrefixFactory.encode(this.uri) + " coeus:hasParser ?s ."
+                    + " ?s coeus:resourceID ?resourceID . "
+                    + " OPTIONAL { ?s coeus:externalResourceID ?externalResourceID} . "
+                    + " OPTIONAL { ?s coeus:mainNode ?mainNode} . "
+                    + " OPTIONAL { ?s coeus:methodByReplace ?methodByReplace} . "
+                    + " OPTIONAL { ?s coeus:resourceInfoInAttribute ?resourceInfoInAttribute} . "
+                    + " OPTIONAL { ?s coeus:resourceInfoAttribute ?resourceInfoAttribute} . "
+                    + " OPTIONAL { ?s coeus:resourceRegex ?resourceRegex} . "
+                    + " OPTIONAL { ?s coeus:externalResourceNode ?externalResourceNode} . "
+                    + " OPTIONAL { ?s coeus:externalResourceID ?externalResourceID} . "
+                    + " OPTIONAL { ?s coeus:externalResourceInfoInAttribute ?externalResourceInfoInAttribute} . "
+                    + " OPTIONAL { ?s coeus:externalResourceInfoAttribute ?externalResourceInfoAttribute} . "
+                    + " OPTIONAL { ?s coeus:externalResourceRegex ?externalResourceRegex} . "
+                    + " OPTIONAL { ?s coeus:filterBy ?filterBy} . "
+                    + " OPTIONAL { ?s coeus:filterValue ?filterValue} . "
+                    + " OPTIONAL { ?s coeus:uniqueResource ?uniqueResource} . "
+                    + " OPTIONAL { ?s coeus:uniqueExternalResource ?uniqueExternalResource}}", "js", false));
+
+            JSONObject results = (JSONObject) response.get("results");
+            JSONArray bindings = (JSONArray) results.get("bindings");
+
+            for (Object obj : bindings)
+            {
+                JSONObject binding = (JSONObject) obj;
+                JSONObject mainNode = (JSONObject) binding.get("mainNode");
+                JSONObject methodByReplace = (JSONObject) binding.get("methodByReplace");
+                JSONObject resourceID = (JSONObject) binding.get("resourceID");
+                JSONObject resourceInfoInAttribute = (JSONObject) binding.get("resourceInfoInAttribute");
+                JSONObject resourceInfoAttribute = (JSONObject) binding.get("resourceInfoAttribute");
+                JSONObject resourceRegex = (JSONObject) binding.get("resourceRegex");
+
+                JSONObject externalResourceNode = (JSONObject) binding.get("externalResourceNode");
+                JSONObject externalResourceID = (JSONObject) binding.get("externalResourceID");
+                JSONObject externalResourceInfoInAttribute = (JSONObject) binding.get("externalResourceInfoInAttribute");
+                JSONObject externalResourceInfoAttribute = (JSONObject) binding.get("externalResourceInfoAttribute");
+                JSONObject externalResourceRegex = (JSONObject) binding.get("externalResourceRegex");
+                JSONObject filterBy = (JSONObject) binding.get("filterBy");
+                JSONObject filterValue = (JSONObject) binding.get("filterValue");
+                JSONObject uniqueResource = (JSONObject) binding.get("uniqueResource");
+                JSONObject uniqueExternalResource = (JSONObject) binding.get("uniqueExternalResource");
+
+                Parser resourceParser = new Parser(resourceID.get("value").toString());
+                resourceParser.setMainNode(!(mainNode == null) ? mainNode.get("value").toString() : "");
+                resourceParser.setMethodByReplace(!(methodByReplace == null) ? Boolean.parseBoolean(methodByReplace.get("value").toString()) : false);
+                resourceParser.setResourceInfoInAttribute(!(resourceInfoInAttribute == null) ? Boolean.parseBoolean(resourceInfoInAttribute.get("value").toString()) : false);
+                resourceParser.setResourceInfoAttribute(!(resourceInfoAttribute == null) ? resourceInfoAttribute.get("value").toString() : "");
+                resourceParser.setResourceRegex(!(resourceRegex == null) ? resourceRegex.get("value").toString() : "");
+
+                resourceParser.setExternalResourceID(!(externalResourceID == null) ? externalResourceID.get("value").toString() : "");
+                resourceParser.setExternalResourceNode(!(externalResourceNode == null) ? externalResourceNode.get("value").toString() : "");
+                resourceParser.setExternalResourceInfoInAttribute(!(externalResourceInfoInAttribute == null) ? Boolean.parseBoolean(externalResourceInfoInAttribute.get("value").toString()) : false);
+                resourceParser.setExternalResourceInfoAttribute(!(externalResourceInfoAttribute == null) ? externalResourceInfoAttribute.get("value").toString() : "");
+                resourceParser.setExternalResourceRegex(!(externalResourceRegex == null) ? externalResourceRegex.get("value").toString() : "");
+                resourceParser.setFilterBy(!(filterBy == null) ? filterBy.get("value").toString() : "");
+                resourceParser.setFilterValue(!(filterValue == null) ? filterValue.get("value").toString() : "");
+                resourceParser.setUniqueResource(!(uniqueResource == null) ? Boolean.parseBoolean(uniqueResource.get("value").toString()) : true);
+                resourceParser.setUniqueExternalResource(!(uniqueExternalResource == null) ? Boolean.parseBoolean(uniqueExternalResource.get("value").toString()) : false);
+
+                this.hasParser = resourceParser;
+            }
+        }
+        catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][Resource] Unable to load resource parser information");
+            Logger.getLogger(Resource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+
+    public void loadOMIMParser() {
+        try
+        {
+            JSONParser parser = new JSONParser();
+            JSONObject response = (JSONObject) parser.parse(this.sparqlAPI.select("SELECT *" +
+                    " WHERE { " + PrefixFactory.encode(this.uri) + " coeus:hasParser ?s ."
+                    + " ?s coeus:genemap_cName ?genemap_cName . "
+                    + " ?s coeus:genemap_cOMIM ?genemap_cOMIM . "
+                    + " ?s coeus:genemap_cLocation ?genemap_cLocation . "
+                    + " ?s coeus:genemap_cGenes ?genemap_cGenes . "
+                    + " ?s coeus:morbidmap_cName ?morbidmap_cName . "
+                    + " ?s coeus:morbidmap_cOMIM ?morbidmap_cOMIM . "
+                    + " ?s coeus:morbidmap_cLocation ?morbidmap_cLocation . "
+                    + " ?s coeus:morbidmap_cGenes ?morbidmap_cGenes}", "js", false));
+
+            JSONObject results = (JSONObject) response.get("results");
+            JSONArray bindings = (JSONArray) results.get("bindings");
+
+            for (Object obj : bindings)
+            {
+                JSONObject binding = (JSONObject) obj;
+
+                JSONObject genemap_cName = (JSONObject) binding.get("genemap_cName");
+                JSONObject genemap_cOMIM = (JSONObject) binding.get("genemap_cOMIM");
+                JSONObject genemap_cLocation = (JSONObject) binding.get("genemap_cLocation");
+                JSONObject genemap_cGenes = (JSONObject) binding.get("genemap_cGenes");
+                JSONObject morbidmap_cName = (JSONObject) binding.get("morbidmap_cName");
+                JSONObject morbidmap_cOMIM = (JSONObject) binding.get("morbidmap_cOMIM");
+                JSONObject morbidmap_cLocation = (JSONObject) binding.get("morbidmap_cLocation");
+                JSONObject morbidmap_cGenes = (JSONObject) binding.get("morbidmap_cGenes");
+
+                Parser resourceParser = new Parser();
+
+                resourceParser.setGenecardName(Integer.parseInt(genemap_cName.get("value").toString()));
+                resourceParser.setGenecardOMIM(Integer.parseInt(genemap_cOMIM.get("value").toString()));
+                resourceParser.setGenecardLocation(Integer.parseInt(genemap_cLocation.get("value").toString()));
+                resourceParser.setGenecardGenes(Integer.parseInt(genemap_cGenes.get("value").toString()));
+                resourceParser.setMorbidmapName(Integer.parseInt(morbidmap_cName.get("value").toString()));
+                resourceParser.setMorbidmapOMIM(Integer.parseInt(morbidmap_cOMIM.get("value").toString()));
+                resourceParser.setMorbidmapLocation(Integer.parseInt(morbidmap_cLocation.get("value").toString()));
+                resourceParser.setMorbidmapGene(Integer.parseInt(morbidmap_cGenes.get("value").toString()));
+
+                this.hasParser = resourceParser;
+            }
+        }
+        catch (Exception ex)
+        {
+            if (this.config.getDebug()) System.out.println("[COEUS][Resource] Unable to load resource parser information");
+            Logger.getLogger(Resource.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return "Resource{" +
+                "description='" + description + '\'' +
+                ", label='" + label + '\'' +
+                ", title='" + title + '\'' +
+                ", uri='" + uri + '\'' +
+                ", publisher='" + publisher + '\'' +
+                ", extendsConcept='" + extendsConcept + '\'' +
+                ", endpoint='" + endpoint + '\'' +
+                ", identifiers='" + identifiers + '\'' +
+                ", isResourceOf=" + isResourceOf +
+                ", hasParser=" + hasParser +
+                ", sparqlAPI=" + sparqlAPI +
+                ", config=" + config +
+                ", built=" + built +
+                '}';
+    }
 }

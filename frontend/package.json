@@ -2,7 +2,7 @@
   "name": "diseasecardapp",
   "version": "0.1.0",
   "private": true,
-  "api_url": "https://TOREPLACE/diseasecard/api" ,
+  "api_url": "http://TOREPLACE/diseasecard/api",
   "homepage": "http://localhost:3000/diseasecard/",
   "dependencies": {
     "@amcharts/amcharts4": "^4.10.9",
@@ -21,11 +21,13 @@
     "react-bootstrap-typeahead": "^5.1.2",
     "react-data-table-component": "^6.11.5",
     "react-dom": "^16.13.1",
+    "react-helmet": "^6.1.0",
     "react-iframe": "^1.8.0",
     "react-redux": "^7.2.1",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",
+    "react-scrollspy": "^3.4.3",
     "react-spinners": "^0.9.0",
     "redux": "^4.0.5",
     "styled-components": "^5.2.0"
@@ -54,8 +56,9 @@
   "devDependencies": {
     "@emotion/core": "^10.1.0",
     "@material-ui/icons": "^4.9.1",
-    "@reduxjs/toolkit": "^1.4.0",
-    "axios": "^0.20.0",
+    "@reduxjs/toolkit": "^1.5.1",
+    "axios": "^0.21.1",
+    "jquery": "^3.6.0",
     "prop-types": "^15.7.2"
   }
 }

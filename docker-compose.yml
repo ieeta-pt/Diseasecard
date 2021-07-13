@@ -6,9 +6,9 @@ services:
         restart: unless-stopped
         command: --default-authentication-plugin=mysql_native_password
         ports:
-            - ${MYSQL_PORT}
+            - ${MYSQL_PORT}:${MYSQL_PORT}
         expose:
-            - 3306
+            - ${MYSQL_PORT}
         environment:
             MYSQL_DATABASE: ${MYSQL_DATABASE}
             MYSQL_USER: ${MYSQL_USER}
@@ -37,7 +37,7 @@ services:
         restart: unless-stopped
         build: ./docker/solr
         ports:
-            - ${SOLR_PORT}
+            - ${SOLR_PORT}:${SOLR_PORT}
         volumes:
             - ${SOLR_VOLUME}:/opt/solr/solr/collection1/conf
             - solr_data:/opt/solr/solr/collection1/data
@@ -59,6 +59,8 @@ services:
             - mysql:container_mysql
             - dc_redis:container_redis
             - dc_solr:container_solr
+        volumes:
+            - backend_data:/submittedFiles
         networks:
             - backend
         environment:
@@ -125,3 +127,4 @@ volumes:
     redis_data:
     mysql_data:
     solr_data:
+    backend_data:

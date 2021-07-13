@@ -7,18 +7,20 @@ global.jQuery = $;
 
 
 const DashboardDefault = React.lazy(() => import('./features/dashboard/Dashboard'));
-const AlertPage = React.lazy(() => import('./features/alertBox/AlertPage'));
-const SourceManagementPage = React.lazy(() => import('./features/management/SourceManagementPage'));
-const SourceMapPage = React.lazy(() => import('./features/map/SourceMapPage'));
-const SourceReportPage = React.lazy(() => import('./features/report/SourceReportPage'));
+const AlertBoxPage = React.lazy(() => import('./features/endpointAlertBox/AlertBoxPage'));
+const EndpointManagementPage = React.lazy(() => import('./features/endpointManagement/EndpointManagementPage'));
+const SourceManagementPage = React.lazy(() => import('./features/sourcesManagement/SourceManagementPage'));
+const SourceMapPage = React.lazy(() => import('./features/sourcesMap/SourceMapPage'));
+const SPARQLEndpoint = React.lazy(() => import('./features/sparqlEndpoint/SPARQLEndpoint'));
 
 
 const routes = [
     { path: '/dashboard/default', exact: true, name: 'Default', component: DashboardDefault },
-    { path: '/alerts', exact: true, name: 'Alerts', component: AlertPage },
+    { path: '/utils/sparql', exact: true, name: 'SPARQL Endpoint', component: SPARQLEndpoint },
+    { path: '/endpoint/alertbox', exact: true, name: 'AlertBox', component: AlertBoxPage },
+    { path: '/endpoint/management', exact: true, name: 'Endpoints Management', component: EndpointManagementPage },
     { path: '/sources/management', exact: true, name: 'Sources Management', component: SourceManagementPage },
     { path: '/sources/map', exact: true, name: 'Sources Map', component: SourceMapPage },
-    { path: '/sources/report', exact: true, name: 'Sources Report', component: SourceReportPage },
 ];
 
 export default routes;

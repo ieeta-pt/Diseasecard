@@ -17,11 +17,38 @@ const getModuleURL = function (module) {
         case "uploadEndpoints":                return "/dcadmin/uploadEndpoints";
         case "getAllEntities":                 return "/dcadmin/status/entities";
         case "getFormLabels":                  return "/dcadmin/status/labels";
+        case "getParserFields":                return "/dcadmin/status/parserFields";
         case "getAllEntitiesInfo":             return "/dcadmin/status/allEntities";
         case "getOntologyStructureInfo":       return "/dcadmin/status/ontologyStructure";
+        case "getAllResources":                return "/dcadmin/status/allResources";
         case "addEntity":                      return "/dcadmin/operations/addEntity";
         case "addConcept":                     return "/dcadmin/operations/addConcept";
         case "addResource":                    return "/dcadmin/operations/addResource";
+        case "addParser  ":                    return "/dcadmin/operations/addParser";
+        case "addResourceWithURLEndpoint":     return "/dcadmin/operations/addResourceWithURLEndpoint";
+        case "addOMIMResource":                return "/dcadmin/operations/addOMIMResource";
+        case "addXMLParser":                   return "/dcadmin/operations/addXMLParser";
+        case "addCSVParser":                   return "/dcadmin/operations/addCSVParser";
+        case "addOMIMParser":                  return "/dcadmin/operations/addOMIMParser";
+        case "editInstance":                   return "/dcadmin/operations/editInstance";
+        case "editResourceSingleEndpoint":     return "/dcadmin/operations/editResourceSingleEndpoint";
+        case "editResourceOMIMEndpoint":       return "/dcadmin/operations/editResourceOMIMEndpoint";
+        case "removeInstance":                 return "/dcadmin/operations/removeInstance";
+        case "startBuildSystem":               return "/dcadmin/operations/buildSystem";
+        case "startUnbuildSystem":             return "/dcadmin/operations/unbuildSystem";
+        case "getSystemBuild":                 return "/dcadmin/status/systemBuild";
+        case "sendQuery":                      return "/dcadmin/utils/queryJenaModel";
+        case "getPrefixes":                    return "/dcadmin/utils/getPrefixes";
+        case "getSourcesURLS":                 return "/dcadmin/endpointManagement/getSourcesURLS";
+        case "addSourceBaseURL":               return "/dcadmin/endpointManagement/addSourceBaseURL";
+        case "editSourceBaseURL":              return "/dcadmin/endpointManagement/editSourceBaseURL";
+        case "removeSourceBaseURL":            return "/dcadmin/endpointManagement/removeSourceBaseURL";
+        case "getResourcesWithoutBaseURL":     return "/dcadmin/endpointManagement/getResourcesWithoutBaseURL";
+        case "getAlertBoxResults":             return "/dcadmin/endpointManagement/getAlertBoxResults";
+        case "forceValidateEndpoints":         return "/dcadmin/operations/validateAllEndpoints";
+        case "validateEndpoints":              return "/dcadmin/operations/validateEndpoints";
+        case "getSystemStats":                 return "/dcadmin/utils/systemStats";
+        case "getOntology":                    return "/dcadmin/utils/ontology";
         default:                               return "";
     }
 };
@@ -29,6 +56,8 @@ const getModuleURL = function (module) {
 const getTypeParameters = function (module) {
     switch (module){
         case "searchResults":                  return ["query"];
+        case "getParserFields":                return ["parserType"];
+        case "sendQuery":                      return ["query"];
         default:                               return "";
     }
 }
@@ -44,7 +73,6 @@ const buildGETPath = function (globalPath, urlPath, typeParameters, parameters) 
 
     for (let i = 0 ; i < typeParameters.length; i++) path = path + "?" + typeParameters[i] + "=" + parameters[i]
 
-    //console.log(path)
     return path;
 };
 

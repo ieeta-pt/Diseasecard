@@ -2,7 +2,7 @@
 # Build and Run React Application
 #####################################################################################
 
-FROM node:alpine as build
+FROM node:10 as build
 
 ARG SERVERNAME
 

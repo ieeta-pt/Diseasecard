@@ -14,16 +14,16 @@ export const NavbarD = () => {
     const dispatch = useDispatch();
 
     const prepare = () => {
-        dispatch(showFrame(false));
+        dispatch(showFrame("graph"));
     }
 
     return (
-        <Navbar bg="dark" variant="dark">
+        <Navbar style={{background: "#283250"}} variant="dark">
             <Navbar.Brand as={Link} to={'/'}><img alt="" className="d-inline-block align-top" src={logo} onClick={prepare}/> </Navbar.Brand>
 
             <Nav className="ml-auto">
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Jump to Diseasecard about section</Tooltip>}>
-                        <Nav.Link as={Link} to={'/'} ><FontAwesomeIcon icon={faBook}/></Nav.Link>
+                        <Nav.Link as={Link} to={'/about'} ><FontAwesomeIcon icon={faBook}/></Nav.Link>
                 </OverlayTrigger>
 
                 <OverlayTrigger placement="bottom" overlay={<Tooltip id="button-tooltip-2">Jump to Diseasecard rare diseases browsing</Tooltip>}>

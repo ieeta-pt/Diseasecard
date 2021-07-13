@@ -1,10 +1,12 @@
 package pt.ua.diseasecard.connectors.plugins;
 
 import au.com.bytecode.opencsv.CSVReader;
+import com.hp.hpl.jena.rdf.model.Statement;
 import org.springframework.beans.factory.annotation.Configurable;
 import pt.ua.diseasecard.components.data.SparqlAPI;
 import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.domain.Disease;
+import pt.ua.diseasecard.domain.Parser;
 import pt.ua.diseasecard.domain.Resource;
 import pt.ua.diseasecard.utils.BeanUtil;
 import pt.ua.diseasecard.utils.Predicate;
@@ -25,6 +27,7 @@ import java.util.regex.Pattern;
 public class OMIMPlugin {
 
     private Resource res;
+    private Parser parser;
     private HashMap<String, Disease> diseases;
     private HashMap<String, Disease> genotypes;
     private static HashMap<String, String[]> omims;
@@ -35,13 +38,20 @@ public class OMIMPlugin {
 
     public OMIMPlugin(Resource res) {
         this.res = res;
+        this.parser = res.getHasParser();
         this.diseases = new HashMap<>();
         this.genotypes = new HashMap<>();
         omims = new HashMap<>();
     }
 
-    public HashMap<String, String[]> itemize() {
+    public HashMap<String, String[]> itemize() throws Exception {
         if (loadGenotype() && loadPhenotype()) triplify();
+
+        com.hp.hpl.jena.rdf.model.Resource resource = api.getResource(this.config.getPrefixes().get("diseasecard") + "resource_OMIM");
+        Statement statementToRemove = api.getModel().createLiteralStatement(resource, Predicate.get("coeus:built"), false);
+        api.removeStatement(statementToRemove);
+        api.addStatement(resource, Predicate.get("coeus:built"), true);
+
         return omims;
     }
 
@@ -56,13 +66,13 @@ public class OMIMPlugin {
             List<String[]> genemap = reader.readAll();
             for (String[] genes : genemap)
             {
-                Disease d = new Disease(genes[7], genes[9]);
-                d.setLocation(genes[4]);
+                Disease d = new Disease( genes[this.parser.getGenecardName()], genes[this.parser.getGenecardOMIM()]); // genes[7], genes[9]
+                d.setLocation( genes[this.parser.getGenecardLocation()] );
                 genotypes.put(d.getOmimId(), d);
 
-                omims.put(genes[9], new String[]{genes[5], genes[4]});
+                omims.put(genes[this.parser.getGenecardOMIM()], new String[]{ genes[this.parser.getGenecardGenes()] , genes[this.parser.getGenecardLocation()]}); // genes[9], new String[]{genes[5], genes[4]}
 
-                String[] genelist = genes[5].split(", ");
+                String[] genelist = genes[this.parser.getGenecardName()].split(", "); //genes[5]
                 d.getGenes().addAll(Arrays.asList(genelist));
             }
             success = true;
@@ -89,7 +99,7 @@ public class OMIMPlugin {
 
             for (String[] disease : morbidmap) {
                 Disease d;
-                Matcher m = p.matcher(disease[0]);
+                Matcher m = p.matcher(disease[this.parser.getMorbidmapName()]);
                 String pheno_omim = "";
                 String dis_name = "";
 
@@ -97,7 +107,7 @@ public class OMIMPlugin {
                     if (m.find())
                     {
                         pheno_omim = m.group(0);
-                        dis_name = disease[0].substring(0, disease[0].length() - 12);
+                        dis_name = disease[this.parser.getMorbidmapName()].substring(0, disease[this.parser.getMorbidmapName()].length() - 12);
 
                         if (diseases.containsKey(pheno_omim))
                         {
@@ -107,25 +117,25 @@ public class OMIMPlugin {
                         else
                         {
                             d = new Disease(dis_name, pheno_omim);
-                            d.setLocation(disease[3]);
+                            d.setLocation(disease[this.parser.getMorbidmapLocation()]);
                             d.getNames().add(dis_name);
                             diseases.put(pheno_omim, d);
                         }
 
-                        Disease genotype = genotypes.get(disease[2]);
+                        Disease genotype = genotypes.get(disease[this.parser.getMorbidmapOMIM()]);
                         if (!d.getGenotypes().contains(genotype))      d.getGenotypes().add(genotype);
                         if (!genotype.getPhenotypes().contains(d))     genotype.getPhenotypes().add(d);
 
-                        String[] genelist = disease[1].split(", ");
+                        String[] genelist = disease[this.parser.getMorbidmapGene()].split(", ");
                         d.getGenes().addAll(Arrays.asList(genelist));
                         omims.put(pheno_omim, new String[] {d.getGenes().toString(), d.getLocation()});
                     }
                     else
                     {
-                        Disease genotype = genotypes.get(disease[2]);
-                        d = new Disease(disease[0], genotype.getOmimId());
-                        d.getNames().add(disease[0]);
-                        d.setLocation(disease[3]);
+                        Disease genotype = genotypes.get(disease[this.parser.getMorbidmapOMIM()]);
+                        d = new Disease(disease[this.parser.getMorbidmapName()], genotype.getOmimId());
+                        d.getNames().add(disease[this.parser.getMorbidmapName()]);
+                        d.setLocation(disease[this.parser.getMorbidmapLocation()]);
                         if (!d.getGenotypes().contains(genotype))     d.getGenotypes().add(genotype);
                         if (!genotype.getPhenotypes().contains(d))    genotype.getPhenotypes().add(d);
 
@@ -159,7 +169,7 @@ public class OMIMPlugin {
                     api.addStatement(geno_item, Predicate.get("rdf:type"), geno_obj);
 
                     // set Item label
-                    api.addStatement(geno_item, Predicate.get("rdfs:label"), "omim_" + genotype.getOmimId());
+                    api.addStatement(geno_item, Predicate.get("rdfs:label"), "OMIM_" + genotype.getOmimId());
 
                     // associate Item with Concept
                     com.hp.hpl.jena.rdf.model.Resource con = api.getResource(res.getIsResourceOf().getUri());
@@ -184,7 +194,7 @@ public class OMIMPlugin {
                         api.addStatement(pheno_item, Predicate.get("rdf:type"), pheno_obj);
 
                         // set Item label
-                        api.addStatement(pheno_item, Predicate.get("rdfs:label"), "omim_" + phenotype.getOmimId());
+                        api.addStatement(pheno_item, Predicate.get("rdfs:label"), "OMIM_" + phenotype.getOmimId());
 
                         // associate Item with Concept
                         com.hp.hpl.jena.rdf.model.Resource pheno_concept = api.getResource(res.getIsResourceOf().getUri());

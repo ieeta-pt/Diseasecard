@@ -33,13 +33,13 @@ $Menu-collapsed-width: 80px;
 
 // color list for build layouts
 // temp variables
-$theme-color: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
-$theme-color2: linear-gradient(-135deg, #899FD4 0%, #A389D4 100%);
-$primary-color: #04a9f5;
+$theme-color: linear-gradient(-135deg, #E94F3F 0%, #f3ab9b 100%);
+$theme-color2: linear-gradient(-135deg, #f3ab9b 0%, #fbe9e7 100%);
+$primary-color: #E94F3F;
 $warning-color: #f4c22b;
 $danger-color: #f44236;
-$success-color: #1de9b6;
-$purple-color: #a389d4;
+$success-color: #E94F3F;
+$purple-color: #fbe9e7;
 $info-color: #3ebfea;
 $secondary-color: #748892;
 $default-color: #d6d6d6;
@@ -49,19 +49,19 @@ $inverse-color: $dark-color;
 $theme-border: #eaeaea;
 
 // header
-$brand-background: #3f4d67;
-$header-dark-background: #3f4d67;
+$brand-background: #283250;
+$header-dark-background: #283250;
 $header-dark-text-color: #fff;
 $header-light-background: #fff;
-$header-light-text-color: #3f4d67;
+$header-light-text-color: #283250;
 
 // Menu
 $menu-caption-color: #14171d;
-$menu-dark-background: #3f4d67;
+$menu-dark-background: #283250;
 $menu-dark-text-color: #a9b7d0;
 $menu-light-background: #fff;
-$menu-light-text-color: #3f4d67;
-$menu-active-color: #04a9f5;
+$menu-light-text-color: #283250;
+$menu-active-color: #E94F3F;
 
 // dark layout colors
 $dark-layout: #212224;

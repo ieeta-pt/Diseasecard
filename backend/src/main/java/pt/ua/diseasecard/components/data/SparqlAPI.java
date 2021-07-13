@@ -22,12 +22,11 @@ public class SparqlAPI {
     private DiseasecardProperties config;
 
 
-    public SparqlAPI(Storage storage, DiseasecardProperties diseasecardProperties) {
-        Objects.requireNonNull(storage);
+    public SparqlAPI(DiseasecardProperties diseasecardProperties) {
         Objects.requireNonNull(diseasecardProperties);
         this.config = diseasecardProperties;
-        this.model = storage.getModel();
-        this.inferredModel = storage.getInfmodel();
+//        this.model = storage.getModel();
+//        this.inferredModel = storage.getInfmodel();
     }
 
 
@@ -240,5 +239,15 @@ public class SparqlAPI {
 
     public Model getModel() {
         return this.model;
+    }
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public InfModel getInferredModel() {
+        return inferredModel;
+    }
+    public void setInferredModel(InfModel inferredModel) {
+        this.inferredModel = inferredModel;
     }
 }

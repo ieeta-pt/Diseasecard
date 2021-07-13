@@ -45,37 +45,70 @@
     -->
 
     <owl:AnnotationProperty rdf:about="&coeus;built"/>
-    <owl:AnnotationProperty rdf:about="&coeus;endpoint"/>
-    <owl:AnnotationProperty rdf:about="&coeus;extends"/>
-    <owl:AnnotationProperty rdf:about="&coeus;extension"/>
-    <owl:AnnotationProperty rdf:about="&coeus;hasEntity"/>
-    <owl:AnnotationProperty rdf:about="&coeus;hasKey"/>
-    <owl:AnnotationProperty rdf:about="&coeus;hasResource"/>
-    <owl:AnnotationProperty rdf:about="&coeus;includes"/>
-    <owl:AnnotationProperty rdf:about="&coeus;isEntityOf"/>
-    <owl:AnnotationProperty rdf:about="&coeus;isExtendedBy"/>
-    <owl:AnnotationProperty rdf:about="&coeus;isIncludedIn"/>
-    <owl:AnnotationProperty rdf:about="&coeus;isKeyOf"/>
-    <owl:AnnotationProperty rdf:about="&coeus;isResourceOf"/>
-    <owl:AnnotationProperty rdf:about="&coeus;loadsFor"/>
-    <owl:AnnotationProperty rdf:about="&coeus;loadsFrom"/>
-    <owl:AnnotationProperty rdf:about="&coeus;method"/>
-    <owl:AnnotationProperty rdf:about="&coeus;order"/>
-    <owl:AnnotationProperty rdf:about="&coeus;identifiers"/>
-    <owl:AnnotationProperty rdf:about="&coeus;query"/>
-    <owl:AnnotationProperty rdf:about="&coeus;regex"/>
-    <owl:AnnotationProperty rdf:about="&dc;creator"/>
-    <owl:AnnotationProperty rdf:about="&dc;date"/>
-    <owl:AnnotationProperty rdf:about="&dc;description"/>
-    <owl:AnnotationProperty rdf:about="&dc;format"/>
-    <owl:AnnotationProperty rdf:about="&dc;identifier"/>
-    <owl:AnnotationProperty rdf:about="&dc;language"/>
-    <owl:AnnotationProperty rdf:about="&dc;publisher"/>
-    <owl:AnnotationProperty rdf:about="&dc;rights"/>
-    <owl:AnnotationProperty rdf:about="&dc;source"/>
-    <owl:AnnotationProperty rdf:about="&dc;subject"/>
-    <owl:AnnotationProperty rdf:about="&dc;title"/>
+        <owl:AnnotationProperty rdf:about="&coeus;endpoint"/>
+        <owl:AnnotationProperty rdf:about="&coeus;extends"/>
+        <owl:AnnotationProperty rdf:about="&coeus;hasEntity"/>
+        <owl:AnnotationProperty rdf:about="&coeus;hasKey"/>
+        <owl:AnnotationProperty rdf:about="&coeus;hasResource"/>
+        <owl:AnnotationProperty rdf:about="&coeus;includes"/>
+        <owl:AnnotationProperty rdf:about="&coeus;isEntityOf"/>
+        <owl:AnnotationProperty rdf:about="&coeus;isExtendedBy"/>
+        <owl:AnnotationProperty rdf:about="&coeus;isIncludedIn"/>
+        <owl:AnnotationProperty rdf:about="&coeus;isKeyOf"/>
+        <owl:AnnotationProperty rdf:about="&coeus;isResourceOf"/>
+        <owl:AnnotationProperty rdf:about="&coeus;loadsFor"/>
+        <owl:AnnotationProperty rdf:about="&coeus;loadsFrom"/>
+        <owl:AnnotationProperty rdf:about="&coeus;order"/>
+        <owl:AnnotationProperty rdf:about="&coeus;identifiers"/>
+        <owl:AnnotationProperty rdf:about="&dc;creator"/>
+        <owl:AnnotationProperty rdf:about="&dc;date"/>
+        <owl:AnnotationProperty rdf:about="&dc;description"/>
+        <owl:AnnotationProperty rdf:about="&dc;format"/>
+        <owl:AnnotationProperty rdf:about="&dc;identifier"/>
+        <owl:AnnotationProperty rdf:about="&dc;language"/>
+        <owl:AnnotationProperty rdf:about="&dc;publisher"/>
+        <owl:AnnotationProperty rdf:about="&dc;rights"/>
+        <owl:AnnotationProperty rdf:about="&dc;source"/>
+        <owl:AnnotationProperty rdf:about="&dc;subject"/>
+        <owl:AnnotationProperty rdf:about="&dc;title"/>
 
+        <owl:AnnotationProperty rdf:about="&dc;hasParser"/>
+        <owl:AnnotationProperty rdf:about="&dc;isParserOf"/>
+        <owl:AnnotationProperty rdf:about="&dc;methodByReplace"/>
+        <owl:AnnotationProperty rdf:about="&dc;mainNode"/>
+        <owl:AnnotationProperty rdf:about="&dc;resourceID"/>
+        <owl:AnnotationProperty rdf:about="&dc;resourceInfoInAttribute"/>
+        <owl:AnnotationProperty rdf:about="&dc;resourceInfoAttribute"/>
+        <owl:AnnotationProperty rdf:about="&dc;resourceRegex"/>
+        <owl:AnnotationProperty rdf:about="&dc;uniqueResource"/>
+        <owl:AnnotationProperty rdf:about="&dc;externalResourceNode"/>
+        <owl:AnnotationProperty rdf:about="&dc;externalResourceID"/>
+        <owl:AnnotationProperty rdf:about="&dc;externalResourceInfoInAttribute"/>
+        <owl:AnnotationProperty rdf:about="&dc;externalResourceInfoAttribute"/>
+        <owl:AnnotationProperty rdf:about="&dc;externalResourceRegex"/>
+        <owl:AnnotationProperty rdf:about="&dc;filterBy"/>
+        <owl:AnnotationProperty rdf:about="&dc;filterValue"/>
+        <owl:AnnotationProperty rdf:about="&dc;uniqueExternalResource"/>
+
+        <owl:AnnotationProperty rdf:about="&dc;genemap_cName"/>
+        <owl:AnnotationProperty rdf:about="&dc;genemap_cOMIM"/>
+        <owl:AnnotationProperty rdf:about="&dc;genemap_cLocation"/>
+        <owl:AnnotationProperty rdf:about="&dc;genemap_cGenes"/>
+
+        <owl:AnnotationProperty rdf:about="&dc;morbidmap_cName"/>
+        <owl:AnnotationProperty rdf:about="&dc;morbidmap_cOMIM"/>
+        <owl:AnnotationProperty rdf:about="&dc;morbidmap_cLocation"/>
+        <owl:AnnotationProperty rdf:about="&dc;morbidmap_cGenes"/>
+
+        <owl:AnnotationProperty rdf:about="&dc;systemBuiltPhase"/>
+        <owl:AnnotationProperty rdf:about="&dc;baseURL"/>
+        <owl:AnnotationProperty rdf:about="&dc;hasBaseURL"/>
+
+        <owl:AnnotationProperty rdf:about="&dc;error"/>
+        <owl:AnnotationProperty rdf:about="&dc;source"/>
+        <owl:AnnotationProperty rdf:about="&dc;url"/>
+        <owl:AnnotationProperty rdf:about="&dc;lastValidationDate"/>
+        <owl:AnnotationProperty rdf:about="&dc;beginValidationDate"/>
 
 
 
@@ -104,7 +137,9 @@
     <owl:Class rdf:about="&coeus;SQL"/>
     <owl:Class rdf:about="&coeus;Seed"/>
     <owl:Class rdf:about="&coeus;XML"/>
-
+    <owl:Class rdf:about="&coeus;BuiltStatus"/>
+    <owl:Class rdf:about="&coeus;SourceBaseURL"/>
+    <owl:Class rdf:about="&coeus;SourceBaseURLError"/>
 
 
 
@@ -129,6 +164,18 @@
 
 
 
+    <!--
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Source Base URL
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+    -->
+    <owl:NamedIndividual rdf:about="&diseasecard;baseURL_string">
+        <rdf:type rdf:resource="&coeus;SourceBaseURL"/>
+        <rdfs:label rdf:datatype="&xsd;string">string</rdfs:label>
+        <baseURL rdf:datatype="&xsd;string">https://string-db.org/newstring_cgi/show_network_section.pl?identifier=#replace#</baseURL>
+    </owl:NamedIndividual>
 
     <!--
     ///////////////////////////////////////////////////////////////////////////////////////

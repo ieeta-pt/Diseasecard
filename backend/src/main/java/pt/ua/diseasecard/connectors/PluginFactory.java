@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/*
+    Need to rethink about this class, because now we don't have HGNC plugin, only OMIM
+ */
 public class PluginFactory implements ResourceFactory{
 
     private Resource res;

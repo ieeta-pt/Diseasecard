@@ -16,6 +16,7 @@ const getModuleURL = function (module) {
         case "diseaseByOMIM":                  return "/services/disease";
         case "sourceURL":                      return "/services/linkout";
         case "browserResults":                 return "/services/browse";
+        case "treeStructure":                  return "/services/treeStructure";
         default:                               return "";
     }
 };

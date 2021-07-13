@@ -2,7 +2,7 @@ FROM ubuntu:14.04
 
 RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 
-RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main 9.6" > /etc/apt/sources.list.d/pgdg.list
+RUN echo "deb http://apt-archive.postgresql.org/pub/repos/apt/ precise-pgdg main 9.6" > /etc/apt/sources.list.d/pgdg.list
 
 RUN apt-get update && apt-get -y -q install software-properties-common libjpeg-dev vim 
 

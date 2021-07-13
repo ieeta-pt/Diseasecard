@@ -35,15 +35,16 @@ public class DiseaseAPI {
             this.map.put("omim", this.omim);
 
             // the SPARQL query
-            ResultSet rs = api.selectRS("SELECT * WHERE { diseasecard:omim_" + omim + " diseasecard:chromosomalLocation ?chromo . " +
-                    "diseasecard:omim_" + omim + " dc:description ?d . " +
-                    "diseasecard:omim_" + omim + " coeus:isAssociatedTo ?a1 . " +
+            ResultSet rs = api.selectRS("SELECT * WHERE { " +
+                    "diseasecard:OMIM_" + omim + " diseasecard:chromosomalLocation ?chromo . " +
+                    "diseasecard:OMIM_" + omim + " dc:description ?d . " +
+                    "diseasecard:OMIM_" + omim + " coeus:isAssociatedTo ?a1 . " +
                     "?a1 coeus:isAssociatedTo ?a2 . " +
-                    "{ OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasGenotype ?g} . " +
-                    "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:hasPhenotype ?p }. " +
-                    "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:name ?n } . " +
-                    "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:phenotype ?pheno} . " +
-                    "OPTIONAL { diseasecard:omim_" + omim + " diseasecard:genotype ?geno .}}}", false);
+                    "{ OPTIONAL { diseasecard:OMIM_" + omim + " diseasecard:hasGenotype ?g} . " +
+                    "OPTIONAL { diseasecard:OMIM_" + omim + " diseasecard:hasPhenotype ?p }. " +
+                    "OPTIONAL { diseasecard:OMIM_" + omim + " diseasecard:name ?n } . " +
+                    "OPTIONAL { diseasecard:OMIM_" + omim + " diseasecard:phenotype ?pheno} . " +
+                    "OPTIONAL { diseasecard:OMIM_" + omim + " diseasecard:genotype ?geno .}}}", false);
 
 
             JSONArray synonyms = new JSONArray();
@@ -55,6 +56,7 @@ public class DiseaseAPI {
                 String a1 = "";
                 String a2 = "";
                 QuerySolution row = rs.next();
+
                 if (row.get("a1").toString().contains("malacards")) {
                     a1 = row.get("a1").toString().replace("http://bioinformatics.ua.pt/diseasecard/resource/malacards_", "malacards:");
                 } else {
@@ -88,7 +90,7 @@ public class DiseaseAPI {
                         this.list.add("String:" + a1.replace("uniprot:", ""));
                     }
                 }
-                if (!a2.contains("omim")) {
+                if (!a2.contains("OMIM")) {
                     if (!this.list.contains(a2)) {
                         this.list.add(a2);
                     }
@@ -134,7 +136,7 @@ public class DiseaseAPI {
         this.map.put("hgnc", hgnc);
 
         try {
-            ResultSet rs = this.api.selectRS("SELECT DISTINCT ?a1 ?a2 ?a3 WHERE { diseasecard:hgnc_" + hgnc + " coeus:isAssociatedTo ?a1 . ?a1 coeus:isAssociatedTo ?a2 . ?a2 coeus:isAssociatedTo ?a3}", false);
+            ResultSet rs = this.api.selectRS("SELECT DISTINCT ?a1 ?a2 ?a3 WHERE { diseasecard:HGNC_" + hgnc + " coeus:isAssociatedTo ?a1 . ?a1 coeus:isAssociatedTo ?a2 . ?a2 coeus:isAssociatedTo ?a3}", false);
 
             JSONArray results = new JSONArray();
 

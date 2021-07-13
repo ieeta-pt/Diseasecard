@@ -82,7 +82,7 @@
 
 .rides-bar {
     i.rides-icon {
-        background: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
+        background: linear-gradient(-135deg, #E94F3F 0%, #f3ab9b 100%);
         border-radius: 50px;
         padding: 15px;
     }
@@ -104,7 +104,7 @@
 
 .profit-bar {
     i {
-        background: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
+        background: linear-gradient(-135deg, #E94F3F 0%, #f3ab9b 100%);
         border-radius: 50px;
         padding: 13px;
     }
@@ -137,7 +137,7 @@
 
 .chat-sanders {
     .card-header {
-        background: linear-gradient(-135deg, #3f4d67 0%, #3f4d67 100%);
+        background: linear-gradient(-135deg, #283250 0%, #283250 100%);
     }
 
     .msg {
@@ -184,7 +184,7 @@
         }
 
         .msg {
-            background: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
+            background: linear-gradient(-135deg, #E94F3F 0%, #f3ab9b 100%);
             box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.1);
 
             &:after {
@@ -194,7 +194,7 @@
                 bottom: 18px;
                 transform: rotate(450deg);
                 border: 6px solid transparent;
-                border-bottom-color: #1de9b6;
+                border-bottom-color: #E94F3F;
             }
         }
     }
@@ -352,7 +352,7 @@
         }
 
         label input[type=checkbox]:checked+.cr {
-            background: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
+            background: linear-gradient(-135deg, #E94F3F 0%, #f3ab9b 100%);
             border: 0;
         }
     }
@@ -660,7 +660,7 @@
 
 .card-Impression {
     i {
-        background: linear-gradient(-135deg, #1de9b6 0%, #1dc4e9 100%);
+        background: linear-gradient(-135deg, #E94F3F 0%, #f3ab9b 100%);
         width: 52px;
         height: 52px;
         border-radius: 5px;
@@ -1396,16 +1396,16 @@
 .datepicker-dropdown {
     padding: 20px;
     color: #fff;
-    background: #3f4d67;
+    background: #283250;
     font-size: 14px;
 
     &:after {
-        border-bottom: 6px solid #3f4d67;
+        border-bottom: 6px solid #283250;
     }
 }
 
 .datepicker-dropdown.datepicker-orient-top:after {
-    border-top: 6px solid #3f4d67;
+    border-top: 6px solid #283250;
 }
 
 .datepicker table tr td.active.active,.datepicker table tr td.active.highlighted.active,.datepicker table tr td.active.highlighted:active,
@@ -1511,7 +1511,7 @@
 div.code-toolbar{
     > .toolbar a, > .toolbar button, >.toolbar span{
         padding: 3px 0.9em !important;
-        background:#04a9f5 !important;
+        background:#E94F3F !important;
         color:#fff !important;
         box-shadow:none !important;
     }

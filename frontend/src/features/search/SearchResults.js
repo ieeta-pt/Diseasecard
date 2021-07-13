@@ -1,13 +1,12 @@
 import React  from 'react';
 import DataTable from "react-data-table-component";
-import {useDispatch, useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import { selectAllResults, selectQuery, getNumberOfResults, getStatus } from "./searchSlice";
 import { Container, Badge } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBookmark } from '@fortawesome/free-regular-svg-icons'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from "react-router-dom";
-import {getDiseaseByOMIM} from "../disease/diseaseSlice";
 
 
 
@@ -17,7 +16,6 @@ export const SearchResults = () => {
     const numberOfResults = useSelector(getNumberOfResults)
     const status = useSelector(getStatus)
     const history = useHistory();
-    const dispatch = useDispatch();
 
     // DataTable Fields
     let content;
@@ -59,7 +57,7 @@ export const SearchResults = () => {
         </div>;
 
     const handleSelectedOption = ( selected ) => {
-        dispatch(getDiseaseByOMIM(selected.omim))
+        // dispatch(getDiseaseByOMIM(selected.omim))
         history.push('/disease/' + selected.omim)
     }
 

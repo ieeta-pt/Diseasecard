@@ -4,11 +4,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableLoadTimeWeaving;
 import org.springframework.context.annotation.aspectj.EnableSpringConfigured;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @SpringBootApplication
 @EnableSpringConfigured
+@EnableScheduling
 public class DiseasecardApplication {
 
 	public static void main(String[] args) {

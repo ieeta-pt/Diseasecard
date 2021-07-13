@@ -8,12 +8,10 @@ import Navigation from './Navigation';
 import NavBar from './NavBar';
 import Breadcrumb from './Breadcrumb';
 import Loader from "../Loader";
-
 import './app.scss';
 import Aux from "../../aux";
 import {collapse_menu, full_screen_exit} from "../../templateSlice"
 import routes from "../../../routes";
-import Dashboard from "../../../features/dashboard/Dashboard";
 
 class AdminLayout extends Component {
 
@@ -60,7 +58,7 @@ class AdminLayout extends Component {
             <Aux>
                 <Fullscreen enabled={this.props.isFullScreen}>
                     <Navigation />
-                    <NavBar />
+                    {/*<NavBar />*/}
                     <div className="pcoded-main-container" onClick={() => this.mobileOutClickHandler}>
                         <div className="pcoded-wrapper">
                             <div className="pcoded-content">

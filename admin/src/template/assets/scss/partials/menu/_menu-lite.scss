@@ -1098,7 +1098,7 @@
             &:focus,
             &:hover {
 
-                    color: #1dc4e9;
+                    color: #f3ab9b;
 
             }
 
@@ -1108,7 +1108,7 @@
                 &:hover {
                     > a {
                         &:before {
-                            background: #1dc4e9;
+                            background: #f3ab9b;
                         }
                     }
                 }
@@ -1120,7 +1120,7 @@
             &.pcoded-trigger {
                 &:after {
                     content: "";
-                    background-color: #1dc4e9;
+                    background-color: #f3ab9b;
                     z-index: 1027;
                     position: absolute;
                     left: 0;
@@ -1289,7 +1289,7 @@
                 &.pcoded-trigger {
                     &:after {
                         content: "";
-                        background-color: #1dc4e9;
+                        background-color: #f3ab9b;
                         z-index: 1027;
                         position: absolute;
                         left: 19px;

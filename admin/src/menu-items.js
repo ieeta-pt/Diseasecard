@@ -17,16 +17,38 @@ export default {
         },
         {
             id: 'ui-element',
-            title: 'AlertBox',
+            title: 'Endpoints Management',
             type: 'group',
             icon: 'icon-ui',
             children: [
                 {
                     id: 'basic',
-                    title: 'Alerts',
+                    title: 'AlertBox',
                     type: 'item',
-                    url: '/alerts',
+                    url: '/endpoint/alertbox',
                     icon: 'feather icon-box'
+                },
+                {
+                    id: 'endpointAlertBox',
+                    title: 'Management',
+                    type: 'item',
+                    url: '/endpoint/management',
+                    icon: 'feather icon-server'
+                }
+            ]
+        },
+        {
+            id: 'utils',
+            title: 'Utils',
+            type: 'group',
+            icon: 'icon-ui',
+            children: [
+                {
+                    id: 'sparql',
+                    title: 'SPARQL Endpoint',
+                    type: 'item',
+                    url: '/utils/sparql',
+                    icon: 'feather icon-crosshair'
                 }
             ]
         },
@@ -36,13 +58,6 @@ export default {
             type: 'group',
             icon: 'icon-group',
             children: [
-                {
-                    id: 'form-basic',
-                    title: 'Report',
-                    type: 'item',
-                    url: '/sources/report',
-                    icon: 'feather icon-file-text'
-                },
                 {
                     id: 'bootstrap',
                     title: 'Management',
@@ -58,6 +73,6 @@ export default {
                     url: '/sources/map'
                 }
             ]
-        },
+        }
     ]
 }
