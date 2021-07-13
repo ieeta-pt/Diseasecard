@@ -603,6 +603,7 @@ public class Storage {
 
 
     public void updateDateOfLastValidation() {
+        if (this.config.getDebug()) Logger.getLogger(DataManagementService.class.getName()).log(Level.INFO,"[Diseasecard][Storage] Saving last validation");
         DateTimeZone zone = DateTimeZone.forID( "Europe/Lisbon" );
         DateTime jodaTime = new DateTime(zone);
         DateTimeFormatter formatter = DateTimeFormat.forPattern("YYYY-MM-dd HH:mm:ss");

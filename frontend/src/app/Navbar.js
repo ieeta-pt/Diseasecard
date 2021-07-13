@@ -18,7 +18,7 @@ export const NavbarD = () => {
     }
 
     return (
-        <Navbar bg="dark" variant="dark">
+        <Navbar style={{background: "#283250"}} variant="dark">
             <Navbar.Brand as={Link} to={'/'}><img alt="" className="d-inline-block align-top" src={logo} onClick={prepare}/> </Navbar.Brand>
 
             <Nav className="ml-auto">
