@@ -9,9 +9,10 @@ COPY package*.json ./
 
 
 RUN npm install --silent express axios mime morgan cors
-RUN npm install
+RUN npm install --silent
 
 COPY . ./
 RUN sed -i "s/TOREPLACE/$SERVERNAME/" package.json
 
 EXPOSE 3000
+CMD ["node", "index.js"]

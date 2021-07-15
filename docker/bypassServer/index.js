@@ -38,14 +38,14 @@ app.get('/', (req, res) => {
         .then(({ data }) => {
             const urlMime = getMimeType(url); // get mime type of the requested url
             if (urlMime === 'text/html') { // replace links only in html
-                data = data.toString().replace(regex, (match, p1, p2, p3) => {
+                data = data.toString().replace(regex, (match, p1, p2) => {
                     let newUrl = '';
 
-                    if (p2 && p2.indexOf('http') !== -1) {
+                    if (p2.indexOf('http') !== -1) {
                         newUrl = p2;
-                    } else if (p2 && p2.substr(0, 2) === '//') {
+                    } else if (p2.substr(0, 2) === '//') {
                         newUrl = 'http:' + p2;
-                    } else if (p2) {
+                    } else {
                         const searchURL = new URL(url);
                         let protoHost = searchURL.protocol + '//' + searchURL.host;
                         newUrl = protoHost + p2;

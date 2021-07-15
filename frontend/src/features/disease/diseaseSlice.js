@@ -20,6 +20,7 @@ const initialState = {
 export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', async (omim) => {
     return API.GET("diseaseByOMIM", "", [omim] ).then(res => {
         // Organize data from different sources and concat their values
+
         let values = {};
         const data = res.data
 
@@ -28,9 +29,10 @@ export const getDiseaseByOMIM = createAsyncThunk('disease/getDiseaseByOMIM', asy
 
         for (const connection in network) {
             const info = network[connection].split(/:(.+)/)
+
             if (info.length > 1) {
                 if (!(info[0] in values)) values[info[0]] = []
-                values[info[0]].push(info[1].replaceAll(":", "_"))
+                values[info[0]].push(info[1].split(":").join("_"))
             }
         }
 

@@ -2,6 +2,7 @@
   "name": "x-frame-options-bypass",
   "version": "1.0.0",
   "description": "",
+  "bypass_url":"https://TOREPLACE/diseasecard/bypass",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
