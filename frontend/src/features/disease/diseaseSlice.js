@@ -117,15 +117,15 @@ const diseaseSlice = createSlice({
         },
 
         [getSourceURL.pending]: (state, action) => {
-            state.status = 'loading'
+            //state.status = 'loading'
         },
         [getSourceURL.fulfilled]: (state, action) => {
             state.url = action.payload.url
             state.protection = action.payload.protection
-            state.status = 'succeeded'
+            //state.status = 'succeeded'
         },
         [getSourceURL.rejected]: (state, action) => {
-            state.status = 'failed'
+            //state.status = 'failed'
             state.omim = action.meta.arg
             state.error = action.error.message
         },

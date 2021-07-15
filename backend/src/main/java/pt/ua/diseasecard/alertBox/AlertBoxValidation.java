@@ -85,10 +85,10 @@ public class AlertBoxValidation {
     }
 
 
-    @PostConstruct
-    public void init() {
-        this.lightValidation();
-    }
+//    @PostConstruct
+//    public void init() {
+//        this.lightValidation();
+//    }
 
 
     /*
@@ -125,6 +125,7 @@ public class AlertBoxValidation {
             String finalURL = this.sourceBaseURLs.get(info[0].toLowerCase())[0].replace("#replace#", info[1]);
 
             System.out.print(finalURL);
+            java.util.logging.Logger.getLogger(AlertBoxValidation.class.getName()).log(Level.INFO,"[Diseasecard][AlertBoxSchedule] Validating URL: " + finalURL);
 
             Random random = new Random();
             executorService.submit(() -> {

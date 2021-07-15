@@ -77,9 +77,23 @@ services:
             - dc_frontend:container_frontend
             - dc_admin:container_admin
             - dc_backend:containerbackend
+            - dc_bypass:container_bypass
         networks:
             - backend
         
+    dc_bypass:
+        container_name: dc_bypass
+        restart: unless-stopped
+        build: 
+            context: ./docker/bypassServer
+            args: 
+                - SERVERNAME=${SERVERNAME}
+        ports:
+            - ${BYPASS_PORT}
+        networks:
+            - backend        
+                
+
     dc_frontend:
         container_name: dc_frontend
         restart: unless-stopped

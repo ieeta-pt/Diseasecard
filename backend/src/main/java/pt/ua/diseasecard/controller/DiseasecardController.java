@@ -15,7 +15,6 @@ import pt.ua.diseasecard.configuration.DiseasecardProperties;
 import pt.ua.diseasecard.service.DataManagementService;
 import pt.ua.diseasecard.utils.Finder;
 import redis.clients.jedis.Jedis;
-
 import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
