@@ -14,7 +14,7 @@
     "bootstrap": "4.3.1",
     "chart.js": "^3.3.2",
     "lodash": "^4.17.21",
-    "node-sass": "^5.0.0",
+    "node-sass": "^7.0.0",
     "nvd3": "1.8.6",
     "object-diff": "0.0.4",
     "react": "^17.0.2",
