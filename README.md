@@ -1,12 +1,6 @@
 Diseasecard
 ===========
 
-// TODO: Contextualization
-
-
-
-
-
 <br><br>How to deploy Diseasecard?
 ==========================
 
